@@ -1,0 +1,24 @@
+package com.dodam.persistence.board.missing;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
+
+import com.dodam.domain.missing.MissingBoardListDTO;
+
+@Repository
+public class MissingBoardDAOImpl implements MissingBoardDAO {
+
+	private static String ns = "com.dodam.mappers.MissingBoardMapper"; 
+	
+	@Inject
+	private SqlSession ses;
+
+	@Override
+	public List<MissingBoardListDTO> selectMissingBoardList() {
+		return ses.selectList(ns + ".selectAll");
+	}
+}

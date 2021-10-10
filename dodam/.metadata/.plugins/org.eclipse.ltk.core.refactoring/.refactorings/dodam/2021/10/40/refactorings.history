@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;dodam/src/main/webapp/WEB-INF/views/missing/registermissinglist.jsp&apos; to &apos;registermissing.jsp&apos;" description="Rename resource &apos;registermissinglist.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/WEB-INF/views/missing/registermissinglist.jsp" name="registermissing.jsp" stamp="1633074641293" updateReferences="true"/>
+</session>
