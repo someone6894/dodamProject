@@ -175,22 +175,14 @@ function ActiveBar(){
                   <li><a href="#">동물병원 찾기</a></li>
                </ul>
             </li>
-<<<<<<< HEAD
             <li id="adoptBoard"><a href="/board/proud/listAll?pageNo=1"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
-=======
-            <li id="adoptBoard"><a href=""><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
->>>>>>> db70f540e9056bf49ccd19968f9d72c50f42d193
             <li class="dropdown"><a href="#"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 축제</a>
                <ul class="dropdown-content" style="padding-left: 0;">
                   <li><a href="#">반려동물 전시회</a></li>
                   <li><a href="#">반려동물 행사</a></li>
                </ul>
             </li>
-<<<<<<< HEAD
             <li><a href=""><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
-=======
-            <li><a href="/board/qna/listAll?pageNo=1"><img src="../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
->>>>>>> db70f540e9056bf49ccd19968f9d72c50f42d193
             
          </ul>
       </div>
@@ -226,8 +218,4 @@ function ActiveBar(){
 
    
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> db70f540e9056bf49ccd19968f9d72c50f42d193

@@ -33,8 +33,24 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<context:component-scan base-package="com.dodam.etc.missing" />
-	<context:component-scan base-package="com.dodam.etc.uploadfiles" />
+	<!-- 이메일 인증 확인 관리자 아이디 -->
+	<bean id="mailSender2"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="dodamServer@gmail.com" />
+		<property name="password" value="rnxmdkzkepal911" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+		
+
+	<context:component-scan base-package="com.dodam.etc.adopt" />
 	<context:component-scan base-package="com.dodam.interceptor.login" />
 	
 	
