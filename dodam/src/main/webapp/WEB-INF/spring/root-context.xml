@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
+      <property name="url" value="jdbc:mysql://someone09.cafe24.com:3306/someone09?serverTimezone=Asia/Seoul"></property>
+      <property name="username" value="someone09"></property>
+      <property name="password" value="rnxmdkzkepal911"></property>
+   </bean>
+
+	<!-- Mybatis를 위한 SqlSessionFactory 객체 설정 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+<!-- 		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml"></property> -->
+	</bean>
+	
+	<!-- SqlSessionTemplate 객체 설정 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	
+
+	<context:component-scan base-package="com.dodam.etc.uploadfiles" />
+	<context:component-scan base-package="com.dodam.interceptor.login" />
+	
+	
+	<context:component-scan base-package="com.dodam.persistence.admin" />
+	<context:component-scan base-package="com.dodam.service.admin" />
+	<context:component-scan base-package="com.dodam.domain.admin" />
+
+	
+	<context:component-scan base-package="com.dodam.service.board.adopt" />
+	<context:component-scan base-package="com.dodam.persistence.board.adopt" />
+	<context:component-scan base-package="com.dodam.domain.adopt" />
+
+	
+	<context:component-scan base-package="com.dodam.service.board.event" />
+	<context:component-scan base-package="com.dodam.persistence.board.event" />
+	<context:component-scan base-package="com.dodam.domain.event" />
+	
+	
+	<context:component-scan base-package="com.dodam.service.board.hospital" />
+	<context:component-scan base-package="com.dodam.persistence.board.hospital" />
+	<context:component-scan base-package="com.dodam.domain.hospital" />
+	
+	<context:component-scan base-package="com.dodam.service.board.missing" />
+	<context:component-scan base-package="com.dodam.persistence.board.missing" />
+	<context:component-scan base-package="com.dodam.domain.missing" />
+	
+	
+	<context:component-scan base-package="com.dodam.service.board.notice" />
+	<context:component-scan base-package="com.dodam.persistence.board.notice" />
+	<context:component-scan base-package="com.dodam.domain.notice" />
+	
+	
+	<context:component-scan base-package="com.dodam.service.board.proud" />
+	<context:component-scan base-package="com.dodam.persistence.board.proud" />
+	<context:component-scan base-package="com.dodam.domain.proud" />
+	
+	
+	<context:component-scan base-package="com.dodam.service.board.qna" />
+	<context:component-scan base-package="com.dodam.persistence.board.qna" />
+	<context:component-scan base-package="com.dodam.domain.qna" />
+	
+
+	<context:component-scan base-package="com.dodam.service.login" />
+	<context:component-scan base-package="com.dodam.persistence.login" />
+	<context:component-scan base-package="com.dodam.domain.login" />
+	
+	
+	<context:component-scan base-package="com.dodam.service.members" />
+	<context:component-scan base-package="com.dodam.persistence.members" />
+	<context:component-scan base-package="com.dodam.domain.members" />
+	
+	
+	<context:component-scan base-package="com.dodam.service.mypage" />
+	<context:component-scan base-package="com.dodam.persistence.mypage" />
+	<context:component-scan base-package="com.dodam.domain.mypage" />
+	
+	
+
+
+</beans>
