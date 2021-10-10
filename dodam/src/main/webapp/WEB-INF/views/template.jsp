@@ -77,7 +77,7 @@ function ActiveBar(){
 .banner {
    height: 350px;
    background-color: #3C6E9F;
-   <!-- test2.jpg와 같은 색상 -->
+   /* test2와 같은 색상 */
 }
 
 #bannerimg {
@@ -189,7 +189,7 @@ function ActiveBar(){
    </nav>
    
 
-<%--    <jsp:include page="adoptboardmini.jsp"></jsp:include> --%>
+   <!-- <jsp:include page="adoptboardmini.jsp"></jsp:include> -->
    
    <!-- <div class="container"> -->
 
@@ -218,3 +218,4 @@ function ActiveBar(){
 
    
 </body>
+</html>
