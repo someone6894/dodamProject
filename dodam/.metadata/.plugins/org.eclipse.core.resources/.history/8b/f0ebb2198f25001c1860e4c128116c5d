@@ -1,0 +1,18 @@
+package com.dodam.service.board.missing;
+
+import java.util.List;
+
+import com.dodam.domain.missing.MissingBoardListDTO;
+
+public interface MissingBoardService {
+	
+	// CREATE
+	
+	// READ
+	List<MissingBoardListDTO> selectMissingBoardList();
+	
+	// UPDATE
+	
+	// DELETE
+}
+

@@ -1,0 +1,26 @@
+package com.dodam.service.board.missing;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.dodam.domain.missing.MissingBoardListDTO;
+import com.dodam.persistence.board.missing.MissingBoardDAO;
+
+@Service
+public class MissingBoardServiceImpl implements MissingBoardService{
+
+	@Inject
+	private MissingBoardDAO dao;
+
+	@Override
+	public List<MissingBoardListDTO> selectMissingBoardList() {
+		 List<MissingBoardListDTO> lst = dao.selectMissingBoardList();
+		 for(MissingBoardListDTO ld : lst) {
+			 System.out.println(ld.getImg().split(", "));
+		 }
+		 return null;
+	}
+}

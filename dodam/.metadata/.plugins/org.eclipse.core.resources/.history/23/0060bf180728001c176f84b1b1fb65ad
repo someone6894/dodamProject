@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.dodam.mappers.MissingBoardMapper">
+  
+  <select id="selectAll" resultType="com.dodam.domain.missing.MissingBoardListDTO">
+  	select no, title, writer, contact, age, breed, location, gender, img, thumbimg, missingdate, name from missingboard order by registerdate desc
+  </select>
+  
+  <select id="selectMissingBoard" resultType="com.dodam.domain.missing.MissingBoardVo">
+  	select * from missingboard where no = #{no}
+  </select>
+  
+  <insert id="insertMissing">
+  	insert into missingboard(title, writer, password, animal, breed, name, age, gender, location, dlocation, contents, contact, img, thumbimg, missingdate)
+  		values (#{title}, #{writer}, sha1(md5(#{password})), #{animal}, #{breed}, #{name}, #{age}, #{gender}, #{location}, #{dlocation}, #{contents}, #{contact}, #{img}, #{thumbimg}, #{missingdate})
+  </insert>
+  
+  <delete id="deleteMissing">
+  	delete from missingboard where no = #{no};
+  </delete>
+  
+  </mapper>

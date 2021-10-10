@@ -1,0 +1,11 @@
+package com.dodam.persistence.board.missing;
+
+import java.util.List;
+
+import com.dodam.domain.missing.MissingBoardListDTO;
+
+public interface MissingBoardDAO {
+
+	List<MissingBoardListDTO> selectMissingBoardList();
+
+}

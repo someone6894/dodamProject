@@ -1,0 +1,74 @@
+package com.dodam.service.board.missing;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.dodam.domain.missing.MissingBoardListDTO;
+import com.dodam.domain.missing.MissingBoardVo;
+import com.dodam.domain.missing.MissingWriteDTO;
+import com.dodam.persistence.board.missing.MissingBoardDAO;
+
+@Service
+public class MissingBoardServiceImpl implements MissingBoardService{
+
+	@Inject
+	private MissingBoardDAO dao;
+
+	@Override
+	public List<MissingBoardListDTO> selectMissingBoardList(int pageNo) {
+		 List<MissingBoardListDTO> lst = dao.selectMissingBoardList(pageNo);
+		 for(MissingBoardListDTO ld : lst) {
+			 if(ld.getImg().length() > 1) {
+				 ld.setImg(ld.getImg().split(",")[0]);
+			 }
+			 
+			 if (ld.getGender().equals("M")) {
+				 ld.setGender("수컷");
+			 } else if (ld.getGender().equals("F")) {
+				 ld.setGender("암컷");
+			 } else {
+				 ld.setGender("성별모름");
+			 }
+		 }
+		 return lst;
+	}
+
+	@Override
+	public MissingBoardVo getMissingBoard(int no) {
+		return dao.getMissingBoard(no);
+	}
+
+	@Override
+	public boolean insertBoard(MissingWriteDTO mw) {
+		boolean result = false;
+		if (dao.insertBoard(mw)==1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean deleteBoard(int no) {
+		boolean result = false;
+		if (dao.deleteBoard(no)==1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean updateBoard(MissingWriteDTO mw) {
+		boolean result = false;
+		if (dao.updateBoard(mw)==1) {
+			result = true;
+		}
+		
+		return result;
+	}
+	
+}
