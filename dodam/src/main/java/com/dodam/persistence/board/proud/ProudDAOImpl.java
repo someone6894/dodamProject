@@ -15,7 +15,7 @@ import com.dodam.domain.proud.ProudVo;
 @Repository
 public class ProudDAOImpl implements ProudDAO {
 	
-	private static String namespace = "com.dodam.mapper.boardMapper";
+	private static String namespace = "com.dodam.mapper.proudBoardMapper";
 	@Inject
 	private SqlSession ses;
 	

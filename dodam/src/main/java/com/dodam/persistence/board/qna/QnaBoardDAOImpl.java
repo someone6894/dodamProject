@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 import com.dodam.domain.qna.QnaVo;
 
 @Repository
-public class BoardDAOImpl implements BoardDAO {
+public class QnaBoardDAOImpl implements QnaBoardDAO {
 
-	private static String namespace = "com.dodam.mapper.boardMapper";
+	private static String namespace = "com.dodam.mapper.qnaBoardMapper";
 
 	@Inject
 	private SqlSession ses;

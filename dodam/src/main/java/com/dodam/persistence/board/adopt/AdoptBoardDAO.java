@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.adopt.PagingInfoDTO;
 
-public interface BoardDAO {
+public interface AdoptBoardDAO {
 
 	// Create
 	// adoptboardUser 게시판 글 저장 하기

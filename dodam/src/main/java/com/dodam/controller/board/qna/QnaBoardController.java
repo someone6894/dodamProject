@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dodam.domain.qna.QnaVo;
-import com.dodam.service.board.qna.BoardService;
+import com.dodam.service.board.qna.QnaBoardService;
 
 
 @Controller
 @RequestMapping("/board/*")
-public class BoardController {
+public class QnaBoardController {
 	@Inject
-	private BoardService service;
+	private QnaBoardService service;
 
-	private static Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static Logger logger = LoggerFactory.getLogger(QnaBoardController.class);
 
 	@RequestMapping(value = "qna/listAll", method = RequestMethod.GET)
 	public void listAll(Model model) throws Exception {

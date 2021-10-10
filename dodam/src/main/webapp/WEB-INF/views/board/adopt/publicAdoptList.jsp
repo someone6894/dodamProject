@@ -30,7 +30,7 @@
 
 
 
-	<jsp:include page="../template.jsp"></jsp:include>
+	<jsp:include page="../../template.jsp"></jsp:include>
 	
 	<div class="container">
 		<h2 style="text-align: center;">유기동물 공고 게시판</h2>

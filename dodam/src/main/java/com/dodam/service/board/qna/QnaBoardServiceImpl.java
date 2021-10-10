@@ -10,12 +10,12 @@ import javax.naming.NamingException;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.qna.QnaVo;
-import com.dodam.persistence.board.qna.BoardDAO;
+import com.dodam.persistence.board.qna.QnaBoardDAO;
 
 @Service
-public class BoardServiceImpl implements BoardService {
+public class QnaBoardServiceImpl implements QnaBoardService {
 	@Inject
-	private BoardDAO dao;
+	private QnaBoardDAO dao;
 
 
 	@Override

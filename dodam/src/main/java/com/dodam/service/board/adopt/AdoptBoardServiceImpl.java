@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.adopt.PagingInfoDTO;
-import com.dodam.persistence.board.adopt.BoardDAO;
+import com.dodam.persistence.board.adopt.AdoptBoardDAO;
 
 @Service
-public class BoardServiceImpl implements BoardService {
+public class AdoptBoardServiceImpl implements AdoptBoardService {
 
 	@Inject
-	private BoardDAO dao;
+	private AdoptBoardDAO dao;
 
 	// adoptboarduser 게시글 등록
 	@Override

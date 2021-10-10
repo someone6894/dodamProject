@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import com.dodam.domain.qna.QnaVo;
 
 
-public interface BoardDAO {
+public interface QnaBoardDAO {
 	// Create
 		// 게시판에 글 저장 하기 
 //	내가하는 작업

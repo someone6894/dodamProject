@@ -9,7 +9,7 @@ import com.dodam.domain.qna.QnaVo;
 
 
 
-public interface BoardService {
+public interface QnaBoardService {
 	// Create
 			// 게시판에 글 저장 하기
 //	내가

@@ -7,7 +7,7 @@ import javax.naming.NamingException;
 
 import com.dodam.domain.adopt.AdoptVo;
 
-public interface BoardService {
+public interface AdoptBoardService {
 
 	
 	    // Create
