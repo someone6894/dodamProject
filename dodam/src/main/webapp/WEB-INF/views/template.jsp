@@ -166,23 +166,23 @@ function ActiveBar(){
             <li id="main" class="active"><a href="/">
                <img src="../../resources/images/main/paw.png" width="24px;" style="padding: 0 6px 3px 0;"/>메인</a></li>
             <li><a href="#"><img src="../../resources/images/main/notice.png" width="24px;" style="padding: 0 6px 3px 0;"/>공지사항</a></li>
-               <!--       <li><a href="/board/register">게시판 만들기</a></li> -->
-            <li id="adoptBoard"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾기,보호,분양</a></li>
+            <li id="adoptBoard"><a href="/missing/list"><img src="../../resources/images/main/missing.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾아요</a></li>
+            <li id="adoptBoard"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>보호중</a></li>
 <!--                <li><a href="/board/publicAdoptList"><img src="../resources/images/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a> -->
-            <li class="dropdown"><a href="#"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a>
+            <li class="dropdown"><a href="/"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a>
                <ul class="dropdown-content" style="padding-left: 0;">
                   <li><a href="#">공공기관 찾기</a></li>
                   <li><a href="#">동물병원 찾기</a></li>
                </ul>
             </li>
-            <li id="adoptBoard"><a href="/board/proud/listAll?pageNo=1"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
+            <li id="adoptBoard"><a href="/board/proud/listAll"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
             <li class="dropdown"><a href="#"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 축제</a>
                <ul class="dropdown-content" style="padding-left: 0;">
                   <li><a href="#">반려동물 전시회</a></li>
                   <li><a href="#">반려동물 행사</a></li>
                </ul>
             </li>
-            <li><a href=""><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
+            <li><a href="/board/qna/listAll"><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
             
          </ul>
       </div>
