@@ -103,4 +103,14 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		
 		return pi;
 	}
+
+	@Override
+	public boolean changeToFound(int no) {
+		boolean result = false;
+		if (dao.updateToFound(no) == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
 }

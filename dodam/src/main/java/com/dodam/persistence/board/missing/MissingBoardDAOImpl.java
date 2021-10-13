@@ -51,4 +51,9 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	public int selectCntPost() {
 		return ses.selectOne(ns + ".selectCntPost");
 	}
+
+	@Override
+	public int updateToFound(int no) {
+		return ses.update(ns + ".updateToFound", no);
+	}
 }

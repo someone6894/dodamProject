@@ -164,5 +164,14 @@ public class MissingBoardController {
 		
 		return "redirect:/missing/detail?no=" + mw.getNo();
 	}
+	
+	@RequestMapping(value="/changeToFound", method=RequestMethod.POST)
+	public ResponseEntity<String> changeToFound(@RequestParam("no") int no) {
+		if (service.changeToFound(no)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		}
+	}
 }
 

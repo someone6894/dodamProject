@@ -48,6 +48,13 @@
 			$("#animal_breed").html(animal);
 			$("#gender").html(gender);
 			
+			if ("${MissingBoard.category}" == "found") {
+				$("#foundBtn").css("background-color", "#d9d9d9");
+				$("#foundBtn").html("찾았어요 취소");
+				$("#found_span").html("<찾았어요>");
+				$("#found_span").css("color", "green");			
+			}
+			
 		});
 		
 		function process_animal() {
@@ -95,13 +102,32 @@
 			});
 		}
 		
-		function showReply() {
-			$("#replyDiv").show(500);
+		function chageCategory(obj) {
+			
+			console.log(obj);
+			let no = "${MissingBoard.no}";
+			
+			let url = "/missing/changeToFound";
+			$.ajax({
+				url : url, // ajax와 통신 할 곳
+				data : {no : no}, // 서블릿에 보낼 데이터
+				dataType : "text", // 수신될 데이터의 타입
+				type : "POST", // 통신 방식
+				success : function(data) { // 통신 성공시 수행될 콜백 함수
+					console.log(data);
+						if (data == "success") {
+							$("#foundBtn").css("background-color", "#d9d9d9").css("width", "130px");
+							$("#foundBtn").html("찾았어요 취소");
+							$("#foundBtn").attr("id", "missingBtn");
+							$("#found_span").html("<찾았어요>");
+							$("#found_span").css("color", "green");							
+						}
+				}
+			});
 		}
 		
-		function chageToFound() {
-			let no = "${MissingBoard.no}";
-			console.log(no);
+		function showReply() {
+			$("#replyDiv").show(500);
 		}
 	
 	</script>
@@ -160,7 +186,7 @@
 		
 		#foundBtn {
 			background-color: #ff7f00;
-			width: 90px;
+			width: 130px;
 			height: 30px;
 			border-radius: 4px;
 			font-size: 16px;
@@ -178,14 +204,14 @@
 		<div class="wrap">
 			<table>
 				<tr>
-					<td colspan="2"><h1 style="color: #ff7f00;">※ ${MissingBoard.title } ※</h1>
+					<td colspan="2"><h1 style="color: #ff7f00;"><span id="found_span"></span>※ ${MissingBoard.title } ※</h1>
 					<!-- <td></td> -->
 				</tr>
 				<tr>
 					<td><div style="margin: 10px 0 20px 0;">${MissingBoard.writer } | <span id="registerdate"></span> |
 					 조회 ${MissingBoard.readcount } | 좋아요 
 					 <img src="../../resources/images/kmj/missing/dislike.png" id="like" /> ${MissingBoard.likecount } </div>
-					 <div id="foundBtn" onclick="chageToFound();">찾았어요!</div></td></td>
+					 <div id="foundBtn" onclick="chageCategory(this);">찾았어요!</div></td></td>
 					<!-- <td></td> -->
 				</tr>
 				<tr class="img_tr">

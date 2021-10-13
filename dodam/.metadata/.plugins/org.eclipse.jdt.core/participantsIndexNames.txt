@@ -1,5 +1,0 @@
-INDEX VERSION 1.131
-C:\lecture\final\dodam\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4137430465.index
-\dodam\src\main\java
-C:\lecture\final\dodam\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3162076245.index
-\dodam\src\main\java

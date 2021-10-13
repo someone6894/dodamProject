@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+C:\lecture\final\dodam\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-4137430465.index
-3309468424.index
-1063922446.index
-2297824053.index
-1928896444.index
-1101916732.index
-4261713050.index

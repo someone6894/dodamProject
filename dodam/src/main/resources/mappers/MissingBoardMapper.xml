@@ -32,4 +32,8 @@
   	select count(*) from missingboard;
   </select>
   
+  <update id="updateToFound">
+  	update missingboard set category = "found" where no = #{no}
+  </update>
+  
   </mapper>

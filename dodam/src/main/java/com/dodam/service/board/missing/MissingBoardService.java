@@ -13,20 +13,24 @@ import com.dodam.domain.missing.MissingWriteDTO;
 public interface MissingBoardService {
 	
 	// CREATE
+	boolean insertBoard(MissingWriteDTO mw);
+	
 	
 	// READ
 	Map<String, Object> selectMissingBoardList(int pageNo) throws NamingException, SQLException;
 
 	MissingBoardVo getMissingBoard(int no);
 
-	boolean insertBoard(MissingWriteDTO mw);
 
-	boolean deleteBoard(int no);
 
+	// UPDATE
 	boolean updateBoard(MissingWriteDTO mw);
 	
-	// UPDATE
+	boolean changeToFound(int no);
 	
+
 	// DELETE
+	boolean deleteBoard(int no);
+	
 }
 
