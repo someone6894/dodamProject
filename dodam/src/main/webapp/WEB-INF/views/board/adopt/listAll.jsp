@@ -45,7 +45,7 @@
   
   
 	<jsp:include page="../../template.jsp"></jsp:include>
-	<jsp:include page="../../adoptboardmini.jsp"></jsp:include>
+<%-- 	<jsp:include page="../../adoptboardmini.jsp"></jsp:include> --%>
 	
 	<div class="container">
 <!-- 		<h2 style="text-align: center;">분양 게시판</h2> -->
