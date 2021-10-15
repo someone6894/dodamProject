@@ -52,7 +52,7 @@ public class ProudController {
 		PagingProud pi = (PagingProud)map.get("pagingInfo");
 
 		model.addAttribute("pagingInfo", pi); // 페이징 정보0
-		model.addAttribute("listBoard", lst); // 게시판 글 데이터
+		model.addAttribute("proudlistBoard", lst); // 게시판 글 데이터
 		
 	}
 	
