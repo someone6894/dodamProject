@@ -21,7 +21,7 @@
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class= "container">
 		<c:choose>
-			<c:when test="${listBoard != null }">
+			<c:when test="${proudlistBoard != null }">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -34,7 +34,7 @@
 						</tr>
 					</thead>						
 					<tbody>
-						<c:forEach var ="board" items="${listBoard }">
+						<c:forEach var ="board" items="${proudlistBoard }">
 						<tr onclick="readBoard(${board.no});">
 							<td>${board.no }</td>
 							<td>${board.title }</td>
