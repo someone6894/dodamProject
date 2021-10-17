@@ -1,36 +1,31 @@
 package com.dodam.service.board.missing;
 
-import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
-import javax.naming.NamingException;
-
-import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 
 public interface MissingBoardService {
 	
 	// CREATE
-	boolean insertBoard(MissingWriteDTO mw);
+	boolean insertBoard(MissingWriteDTO mw) throws Exception;
 	
 	
 	// READ
-	Map<String, Object> selectMissingBoardList(int pageNo) throws NamingException, SQLException;
+	Map<String, Object> selectMissingBoardList(int pageNo) throws Exception;
 
-	MissingBoardVo getMissingBoard(int no);
+	MissingBoardVo getMissingBoard(int no) throws Exception;
 
 
 
 	// UPDATE
-	boolean updateBoard(MissingWriteDTO mw);
+	boolean updateBoard(MissingWriteDTO mw) throws Exception;
 	
-	boolean changeToFound(int no);
+	boolean updateCategory(int no, String category);
 	
 
 	// DELETE
-	boolean deleteBoard(int no);
+	boolean deleteBoard(int no) throws Exception;
 	
 }
 

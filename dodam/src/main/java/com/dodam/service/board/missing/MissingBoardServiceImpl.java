@@ -1,6 +1,8 @@
 package com.dodam.service.board.missing;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,11 +11,15 @@ import javax.inject.Inject;
 import javax.naming.NamingException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.PagingInfoDTO;
+import com.dodam.domain.missing.ReadCntVo;
+import com.dodam.etc.missing.IPChecking;
 import com.dodam.persistence.board.missing.MissingBoardDAO;
 
 @Service
@@ -23,7 +29,7 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	private MissingBoardDAO dao;
 
 	@Override
-	public Map<String, Object> selectMissingBoardList(int pageNo) throws NamingException, SQLException {
+	public Map<String, Object> selectMissingBoardList(int pageNo) throws Exception {
 		 PagingInfoDTO pi = pagingProcess(pageNo);
 		 List<MissingBoardListDTO> lst = dao.selectMissingBoardList(pi);
 		 for(MissingBoardListDTO ld : lst) {
@@ -48,12 +54,7 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public MissingBoardVo getMissingBoard(int no) {
-		return dao.getMissingBoard(no);
-	}
-
-	@Override
-	public boolean insertBoard(MissingWriteDTO mw) {
+	public boolean insertBoard(MissingWriteDTO mw) throws Exception {
 		boolean result = false;
 		if (dao.insertBoard(mw)==1) {
 			result = true;
@@ -61,9 +62,42 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		
 		return result;
 	}
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED) // 조회수 update문이 commit된 데이터(DML문이 먼저 나와야 한다)에 한해 select되도록 격리 레벨을 올림
+	@Override
+	public MissingBoardVo getMissingBoard(int no) throws Exception {
+		IPChecking ipCheck = new IPChecking();
+		String ip = ipCheck.getIp(); // ip 주소
+		
+		// 수정사항!! ########### // userid 실어보내야함!!!!! ############
+		
+
+		ReadCntVo ri = new ReadCntVo(no, ip, null, null); 
+		
+		Timestamp ts = dao.getLastReadTime(ri);
+		
+		if (ts == null) { // (ip, readno)의 조회 정보가 없으면
+			// 조회정보를 새롭게 입력
+			dao.insertReadHistory(ri);
+			dao.updateReadCount(no);
+		} else { // 조회 정보가 있으면
+			long readTime = ts.getTime();
+			long currentTime = System.currentTimeMillis();
+			long timeDiff = currentTime - readTime;
+			
+			if (timeDiff > 24 * 60 * 60 * 1000) { // 마지막 조회 이후 24시간 초과했다면
+				dao.updateReadCount(no); // 조회수 증가
+				dao.insertReadHistory(ri); // 조회정보 새롭게 입력
+			}
+		}
+		
+		MissingBoardVo mbv = dao.getMissingBoard(no);
+
+		return mbv;
+	}
 
 	@Override
-	public boolean deleteBoard(int no) {
+	public boolean deleteBoard(int no) throws Exception {
 		boolean result = false;
 		if (dao.deleteBoard(no)==1) {
 			result = true;
@@ -73,7 +107,7 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public boolean updateBoard(MissingWriteDTO mw) {
+	public boolean updateBoard(MissingWriteDTO mw) throws Exception {
 		boolean result = false;
 		if (dao.updateBoard(mw)==1) {
 			result = true;
@@ -82,8 +116,9 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		return result;
 	}
 	
+	
 	// 페이징을 위한 처리 작업 전담 메서드
-	private PagingInfoDTO pagingProcess(int pageNo) throws NamingException, SQLException {
+	private PagingInfoDTO pagingProcess(int pageNo) throws Exception {
 		PagingInfoDTO pi = new PagingInfoDTO();
 		
 		pi.setPostPerPage(20);
@@ -105,12 +140,17 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public boolean changeToFound(int no) {
+	public boolean updateCategory(int no, String category) {
 		boolean result = false;
-		if (dao.updateToFound(no) == 1) {
+		Map<String, Object> categoryInfo = new HashMap<String, Object>();
+		categoryInfo.put("no", no);
+		categoryInfo.put("category", category);
+		
+		if (dao.updateCategory(categoryInfo) == 1) {
 			result = true;
 		}
 		
 		return result;
 	}
+
 }

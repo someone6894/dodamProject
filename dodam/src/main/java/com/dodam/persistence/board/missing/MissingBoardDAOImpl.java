@@ -1,6 +1,8 @@
 package com.dodam.persistence.board.missing;
 
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +13,7 @@ import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.PagingInfoDTO;
+import com.dodam.domain.missing.ReadCntVo;
 
 @Repository
 public class MissingBoardDAOImpl implements MissingBoardDAO {
@@ -53,7 +56,22 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	}
 
 	@Override
-	public int updateToFound(int no) {
-		return ses.update(ns + ".updateToFound", no);
+	public int updateReadCount(int no) {
+		return ses.update(ns + ".updateReadCount", no);
+	}
+
+	@Override
+	public Timestamp getLastReadTime(ReadCntVo ri) {
+		return ses.selectOne(ns + ".selectReadHistory", ri);
+	}
+
+	@Override
+	public int insertReadHistory(ReadCntVo ri) {
+		return ses.insert(ns + ".insertReadHistory", ri);
+	}
+
+	@Override
+	public int updateCategory(Map<String, Object> categoryInfo) {
+		return ses.update(ns + ".updateCategory", categoryInfo);
 	}
 }

@@ -32,8 +32,20 @@
   	select count(*) from missingboard;
   </select>
   
-  <update id="updateToFound">
-  	update missingboard set category = "found" where no = #{no}
+  <update id="updateCategory">
+  	update missingboard set category = #{category} where no = #{no}
   </update>
+  
+  <update id="updateReadCount">
+  	update missingboard set readcount = readcount+1 where no = #{no}
+  </update>
+  
+  <select id="selectReadHistory" resultType="java.sql.Timestamp">
+  	select readtime from missingreadcntprocess where ipaddress = #{ipaddress} and readno = #{readno} order by readtime desc limit 1
+  </select>
+  
+  <insert id="insertReadHistory">
+  	insert into missingreadcntprocess(readno, ipaddress) values (#{readno}, #{ipaddress})
+  </insert>
   
   </mapper>
