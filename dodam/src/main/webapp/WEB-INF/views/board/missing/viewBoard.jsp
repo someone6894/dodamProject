@@ -57,7 +57,33 @@
 			}
 			
 			$("#like").click(function() {
-				alert("좋아요 버튼 클릭됨");
+				let no = "${MissingBoard.no }";
+				
+				if (status == "foundBtn") {
+					category = "found";
+				} else if (status == "missingBtn"){
+					category = "missing";
+				}
+				
+				let url = '/missing/changeCategory';
+				
+				$.ajax({
+					url : url, // ajax와 통신 할 곳
+					data : {no : no, category : category}, // 서블릿에 보낼 데이터
+					dataType : "text", // 수신될 데이터의 타입
+					type : "POST", // 통신 방식
+					success : function(data) { // 통신 성공시 수행될 콜백 함수
+						if (data == "success") {
+							if (category == "found") {
+								$("#category").attr("class", "missingBtn");
+								$("#category").html("찾았어요 취소");
+							} else {
+								$("#category").attr("class", "foundBtn");
+								$("#category").html("찾았어요!");
+							}
+						}
+					}
+				});
 			});
 		});
 		
