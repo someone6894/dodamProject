@@ -59,6 +59,18 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 		
 		return vo;
 	}
+	
+	@Override
+	public int deleteBoard(int no) throws NamingException, SQLException {
+		return dao.deleteBoard(no);
+		
+		
+	}
+
+	@Override
+	public int updateBoard(QnaVo vo) throws NamingException, SQLException {
+		return dao.updateBoard(vo);
+	}
 
 	
 

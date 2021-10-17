@@ -24,4 +24,12 @@ public interface QnaBoardService {
 			// 게시판 상세정보보기 번호로
 //			내가
 			QnaVo readBoard(int no) throws NamingException, SQLException;
+			
+			
+		// update
+			int updateBoard(QnaVo vo) throws NamingException, SQLException;
+			
+			
+		// delete
+			int deleteBoard(int no) throws NamingException, SQLException;
 }

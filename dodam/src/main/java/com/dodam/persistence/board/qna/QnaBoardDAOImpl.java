@@ -37,4 +37,17 @@ public class QnaBoardDAOImpl implements QnaBoardDAO {
 	public QnaVo selectBoard(int no) throws NamingException, SQLException {
 		return ses.selectOne(namespace + ".selectBoard", no);
 	}
+	
+
+	@Override
+	public int deleteBoard(int no) throws NamingException, SQLException {
+		return ses.delete(namespace + ".deleteBoard", no);
+	}
+
+	@Override
+	public int updateBoard(QnaVo vo) throws NamingException, SQLException {
+		return ses.update(namespace + ".updateBoard", vo);
+	}
+	
+	
 }

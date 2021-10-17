@@ -21,23 +21,27 @@ import com.dodam.service.board.qna.QnaBoardService;
 
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping("/board/qna/*")
 public class QnaBoardController {
 	@Inject
 	private QnaBoardService service;
 
 	private static Logger logger = LoggerFactory.getLogger(QnaBoardController.class);
 
-	@RequestMapping(value = "qna/listAll", method = RequestMethod.GET)
+	//전체 리스트
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
 	public void listAll(Model model) throws Exception {
 
 		Map<String, Object> map = service.readAllBoard();
 		List<QnaVo> lst = (List<QnaVo>)map.get("boardList");
-
-		model.addAttribute("listBoard", lst);  // 게시판 글 데이터
+		
+		System.out.println(lst.toString());
+		
+		model.addAttribute("qnaListBoard", lst);  // 게시판 글 데이터
 
 	}
 
+	// 글 등록
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String registerBoard() {
 		return "/board/qna/createBoard";
@@ -64,5 +68,30 @@ public class QnaBoardController {
 		QnaVo vo = service.readBoard(no);
 		
 		model.addAttribute("board", vo);
+		
+		
+	}
+	
+	@RequestMapping(value="/deleteBoard", method = RequestMethod.GET)
+	public String deleteBoard(@RequestParam("no") String tmp) throws NamingException, SQLException {
+		int no = Integer.parseInt(tmp);
+		
+		service.deleteBoard(no);
+		
+		return "redirect:/board/qna/listAll?pageNo=1";
+		
+
+	}
+	
+	
+	@RequestMapping(value="/updateBoard", method = RequestMethod.GET)
+	public String updateBoard(@RequestParam("no") String tmp, QnaVo vo) throws NamingException, SQLException {
+		int no = Integer.parseInt(tmp);
+		
+		service.updateBoard(vo);
+		
+		return "redirect:/board/qna/listAll?pageNo=1";
+		
+
 	}
 }

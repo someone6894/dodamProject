@@ -8,9 +8,29 @@ public class QnaVo {
 	private String writer;
 	private String contents;
 	private Timestamp regdate;
-	
+	private int readcount;
+	private int likecount;
+	private String image;
+	private String notimage;
+	private String thumbimage;
+
 	public QnaVo() {
 		super();
+	}
+
+	public QnaVo(int no, String title, String writer, String contents, Timestamp regdate, int readcount, int likecount,
+			String image, String notimage, String thumbimage) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.writer = writer;
+		this.contents = contents;
+		this.regdate = regdate;
+		this.readcount = readcount;
+		this.likecount = likecount;
+		this.image = image;
+		this.notimage = notimage;
+		this.thumbimage = thumbimage;
 	}
 
 	public int getNo() {
@@ -53,11 +73,53 @@ public class QnaVo {
 		this.regdate = regdate;
 	}
 
+	public int getReadcount() {
+		return readcount;
+	}
+
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+
+	public int getLikecount() {
+		return likecount;
+	}
+
+	public void setLikecount(int likecount) {
+		this.likecount = likecount;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getNotimage() {
+		return notimage;
+	}
+
+	public void setNotimage(String notimage) {
+		this.notimage = notimage;
+	}
+
+	public String getThumbimage() {
+		return thumbimage;
+	}
+
+	public void setThumbimage(String thumbimage) {
+		this.thumbimage = thumbimage;
+	}
+
 	@Override
 	public String toString() {
 		return "QnaVo [no=" + no + ", title=" + title + ", writer=" + writer + ", contents=" + contents + ", regdate="
-				+ regdate + "]";
+				+ regdate + ", readcount=" + readcount + ", likecount=" + likecount + ", image=" + image + ", notimage="
+				+ notimage + ", thumbimage=" + thumbimage + "]";
 	}
+
 	
 
 }
