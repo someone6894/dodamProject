@@ -93,7 +93,7 @@ public class AdoptBoardController {
 		logger.info("업로드된 파일의 타입 : " + upFiles.getContentType());
 		logger.info("파일 separator : " + File.separator);
 
-		String upPath = request.getSession().getServletContext().getRealPath("resources/uploads");
+		String upPath = request.getSession().getServletContext().getRealPath("resources/uploads/phs");
 		logger.info("업로드 되는 실제 경로 : " + upPath);
 
 		UploadFiles files;
@@ -122,7 +122,7 @@ public class AdoptBoardController {
 			@RequestParam("notImg") String notImg, HttpServletRequest request) {
 		System.out.println("origin : " + origin + ", thumb : " + thumb);
 		String path = request.getSession().getServletContext().getRealPath("resources");
-		path += File.separator + "uploads";
+		path += File.separator + "uploads/phs";
 		System.out.println(path);
 
 		// 이미지가 아닌 파일의 삭제
