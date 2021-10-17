@@ -8,6 +8,9 @@
 <title>전시회 목록</title>
 </head>
 <body>
+
+<jsp:include page="../../template.jsp"></jsp:include>
+
 <table>
 		<thead>
 			<tr>
