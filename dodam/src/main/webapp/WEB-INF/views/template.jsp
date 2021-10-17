@@ -203,15 +203,16 @@ function ActiveBar(){
    <!-- </div> -->
 
 
-<!--    <div class="bxslider"> --><!--
-       <div> -->
+<!--    <div class="bxslider"> -->
+<!--       <div> -->
 <!--          <img -->
 <!--             src="https://movie-phinf.pstatic.net/20200721_250/1595306482797hfWqC_JPEG/movie_image.jpg?type=m665_443_2" -->
 <!--             alt="슬라이드 이미지1"> -->
 <!--       </div> -->
 <!--       <div> -->
 <!--          <img -->
-<!--             src="https://movie-phinf.pstatic.net/20200721_131/1595306483541uxv0I_JPEG/movie_image.jpg?type=m665_443_2" -->
+<!--             src="https://movie-phinf.pstatic.net/20200721_131/ -->
+<!-- 1595306483541uxv0I_JPEG/movie_image.jpg?type=m665_443_2" -->
 <!--             alt="슬라이드 이미지2"> -->
 <!--       </div> -->
 <!--    </div> -->

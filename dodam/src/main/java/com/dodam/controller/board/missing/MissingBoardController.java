@@ -47,10 +47,7 @@ public class MissingBoardController {
 		// #### 예외처리 페이지 만들기!!!!! ####
 		try {
 			map = service.selectMissingBoardList(pageNo);
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -118,7 +115,14 @@ public class MissingBoardController {
 	
 	@RequestMapping("/detail")
 	public String viewDetailPage(@RequestParam("no") int no, Model model) {
-		MissingBoardVo mb = service.getMissingBoard(no);
+		MissingBoardVo mb = null;
+		try {
+			mb = service.getMissingBoard(no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		model.addAttribute("MissingBoard", mb);
 		return "/board/missing/viewBoard";
 	}
@@ -126,10 +130,15 @@ public class MissingBoardController {
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String registerBoard(MissingWriteDTO mw, RedirectAttributes rttr) {
 		mw.setContents(mw.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
-		if(service.insertBoard(mw)) {
-			rttr.addFlashAttribute("result", "success");
-		} else {
-			rttr.addFlashAttribute("result", "fail");
+		try {
+			if(service.insertBoard(mw)) {
+				rttr.addFlashAttribute("result", "success");
+			} else {
+				rttr.addFlashAttribute("result", "fail");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return "redirect:/missing/list";
@@ -137,16 +146,28 @@ public class MissingBoardController {
 	
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
 	public ResponseEntity<String> deleteBoard(@RequestParam("no") int no) {
-		if (service.deleteBoard(no)) {
-			return new ResponseEntity<String>("success", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		try {
+			if (service.deleteBoard(no)) {
+				return new ResponseEntity<String>("success", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	@RequestMapping(value="/modify")
 	public String modfiyMissing(@RequestParam("no") int no, Model model) {
-		MissingBoardVo mb = service.getMissingBoard(no);
+		MissingBoardVo mb = null;
+		try {
+			mb = service.getMissingBoard(no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mb.setContents(mb.getContents().replaceAll("<br />", "\r\n"));
 		model.addAttribute("MissingBoard", mb);
 		
@@ -156,13 +177,33 @@ public class MissingBoardController {
 	@RequestMapping(value="/update")
 	public String updateBoard(MissingWriteDTO mw, RedirectAttributes rttr) {
 		mw.setContents(mw.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
-		if(service.updateBoard(mw)) {
-			rttr.addFlashAttribute("result", "success");
-		} else {
-			rttr.addFlashAttribute("result", "fail");
+		try {
+			if(service.updateBoard(mw)) {
+				rttr.addFlashAttribute("result", "success");
+			} else {
+				rttr.addFlashAttribute("result", "fail");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return "redirect:/missing/detail?no=" + mw.getNo();
+	}
+	
+	@RequestMapping(value="/changeCategory", method=RequestMethod.POST)
+	public ResponseEntity<String> changeCategory(@RequestParam("no") int no, @RequestParam("category") String category) {
+		try {
+			if (service.updateCategory(no, category)) {
+				return new ResponseEntity<String>("success", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
 
