@@ -21,16 +21,5 @@
   		select * from qna where no = #{no}
   	</select>
   	
-<!--   	딜리트 -->
-  	<delete id="deleteBoard">
-  		DELETE FROM qna WHERE no = #{no}
-  	</delete>
-  	
-<!--   	업데이트 -->
-	<update id="updateBoard">
-		UPDATE qna SET contents=#{contents} where no = #{no}
-
-	</update>
-  	
   	
   </mapper>

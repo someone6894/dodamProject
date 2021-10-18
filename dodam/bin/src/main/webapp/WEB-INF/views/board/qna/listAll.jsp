@@ -16,7 +16,7 @@
 </head>
 <script>
 	function readBoard(no) {
-		location.href='/board/qna/readBoard?no=' + no;
+		location.href='/board/readBoard?no=' + no;
 	}
 </script>
 <style>
@@ -28,7 +28,7 @@
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
 		<c:choose>
-			<c:when test="${qnaListBoard != null }">
+			<c:when test="${listBoard != null }">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -37,21 +37,16 @@
 							<th>작성자</th>
 							<th>글내용</th>
 							<th>작성일</th>
-							<th>조회수</th>
-							<th>좋아요</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="board" items="${qnaListBoard }">
+						<c:forEach var="board" items="${listBoard }">
 							<tr onclick="readBoard(${board.no});">
 								<td>${board.no }</td>
 								<td>${board.title }</td>
 								<td>${board.writer }</td>
 								<td>${board.contents }</td>
 								<td>${board.regdate }</td>
-								<td>${board.readcount }</td>
-								<td>${board.likecount }</td>
-								
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -61,7 +56,7 @@
 
 		<div style="float: right">
 			<button type="button" class="btn btn-success"
-				onclick="location.href='/board/qna/register';">글 등록</button>
+				onclick="location.href='/board/register';">글 등록</button>
 		</div>
 
 

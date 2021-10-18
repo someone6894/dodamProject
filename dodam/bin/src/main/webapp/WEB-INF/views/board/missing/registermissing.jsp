@@ -244,7 +244,7 @@
 		padding: .5em .5em;
 		border: 1px solid #999;
 		font-family: inherit;
-		background: url('../../resources/images/kmj/missing/arrow.jpg') no-repeat 100% 50%;
+		background: url('../resources/images/missing/arrow.jpg') no-repeat 100% 50%;
 		border-radius: 4px;
 		-webkit-appearance: none;
 		-moz-appearance: none;

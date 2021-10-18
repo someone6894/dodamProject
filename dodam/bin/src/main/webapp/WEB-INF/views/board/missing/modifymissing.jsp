@@ -38,8 +38,8 @@
 					i = parseInt(i);
 					$(".fileContent").show();
 					console.log(i+1);
-					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbAr[i] + '" style="margin-right: 5px;" />' +
-						'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
+					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../resources/uploads/kmj/missing' + thumbAr[i] + '" style="margin-right: 5px;" />' +
+						'<img src="../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
 						
 					// 썸네일과 원래이미지를 input hidden에 저장
 					$("#upImgNameThumb" + (i+1)).val(thumbAr[i]);
@@ -58,7 +58,7 @@
 				if (imgAr[i] != '') {
 					$(".fileContent").show();
 					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="' + imgAr[i] + '" style="margin-right: 5px;" />' +
-					'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delUrlImg(this);" /></span>';
+					'<img src="../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delUrlImg(this);" /></span>';
 					
 					$("#upImgNameOrigin" + (i+1)).val(imgAr[i]);
 				}
@@ -112,7 +112,7 @@
 						let output = "";
 						for(let i = 0; i < thumbImgs.length-1; i++) {
 							output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../resources/uploads/kmj/missing' + thumbImgs[i] + '" style="margin-right: 5px;" />' +
-							'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
+							'<img src="../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
 							
 							// 썸네일과 원래이미지를 input hidden에 저장
 							$("#upImgNameThumb" + (i+1)).val(thumbImgs[i]);

@@ -319,11 +319,6 @@ function updateBoard(no) {
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<jsp:include page="../../adoptboardmini.jsp"></jsp:include>
 
-
-
-	<img src="dodam/images/1.jpg" width="500px" height="500px" />
-						
-						
 	<div class="container"
 		style="height: 30%; width: 50%; border: 2px gray solid; margin-top: 50px; margin-bottom: 100px; padding: 20px">
 		<h2>${board.title }</h2>

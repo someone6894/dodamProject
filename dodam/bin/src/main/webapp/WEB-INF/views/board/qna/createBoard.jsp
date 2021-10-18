@@ -155,7 +155,7 @@
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
 		<h2>글 쓰기 페이지</h2>
-		<form action="/board/qna/createBoard" method="post">
+		<form action="/board/createBoard" method="post">
 			
 
 			<div class="form-group">
