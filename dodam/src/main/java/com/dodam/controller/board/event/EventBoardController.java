@@ -65,8 +65,9 @@ import com.dodam.service.board.event.EventBoardService;
 		 public String postModify(EventBoardVO vo) throws Exception {
 
 		  service.modify(vo);
+		  System.out.println(vo);
 		    
-		  return "redirect:/view?no=" + vo.getNo();
+		  return "redirect:/board/event/view?no=" + vo.getNo();
 		 }
 		 
 		 //게시물 삭제
