@@ -183,8 +183,6 @@ function ActiveBar(){
       </div>
    </nav>
    
-
-
    
 </body>
 </html>

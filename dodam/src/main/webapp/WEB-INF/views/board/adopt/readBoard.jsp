@@ -317,7 +317,7 @@ function updateBoard(no) {
 
 
 	<jsp:include page="../../template.jsp"></jsp:include>
-	<jsp:include page="../../adoptboardmini.jsp"></jsp:include>
+	
 
 
 
