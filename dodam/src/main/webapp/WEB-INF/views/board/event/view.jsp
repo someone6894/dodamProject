@@ -16,7 +16,7 @@
 		${view.admin}<br />
 		
 	<label>내용</label><br />
-		${view.content}<br />
+		${view.contents}<br />
 	<div>
 		<a href="/board/event/modify?no=${view.no}">게시물 수정</a>, <a href="/board/event/delete?no=${view.no}">게시물 삭제</a>
 	</div>
