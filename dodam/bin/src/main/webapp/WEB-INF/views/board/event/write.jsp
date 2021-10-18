@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>게시판 글 등록 페이지</title>
+<title>게시물 작성</title>
 <script>
 	$(function() {
 		$(".fileDrop").on("dropenter dragover", function(evt) {
@@ -52,7 +52,7 @@
 													"gif" ];
 											for (let i = 0; i < imgAr.length; i++) {
 												if (ext == imgAr[i]) { // 이미지 파일이면
-													output += "<img src='../resources/uploads" + data + "' />";
+													output += "<img src='../resources/yjw/uploads" + data + "' />";
 
 													isImg = true;
 													$("#upfileNameThumb").val(
@@ -155,8 +155,8 @@
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
 		<h2>글 쓰기 페이지</h2>
-		<form action="/board/qna/createBoard" method="post">
-			
+		<form action="/board/event/write" method="post">
+
 
 			<div class="form-group">
 				<label for="title">제목:</label> <input type="text"
@@ -164,23 +164,17 @@
 					id="titleError" class="error"></span>
 			</div>
 
-			<div class="form-group">
-				<label for="pwd">수정/삭제 비밀번호 :</label> <input type="password"
-					class="form-control" id="pwd" placeholder="Enter password"
-					name="pwd"><span id="pwdError" class="error"></span>
-			</div>
 
-<!-- 나중에 다 연결했을때 userid} 옆에다가 readonly를 붙여야한다 -->
 			<div class="form-group">
 				<label for="writer">작성자 :</label> <input type="text"
 					class="form-control" id="writer" name="writer"
-					value="${loginMember.userid }" ><span
+					value="${loginMember.userid }" readonly><span
 					id="writerError" class="error"></span>
 			</div>
 
 			<div class="form-group">
 				<label for="content">내용 :</label>
-				<textarea rows="20" cols="150" id="content" name="contents"></textarea>
+				<textarea rows="20" cols="150" id="content" name="content"></textarea>
 
 			</div>
 
