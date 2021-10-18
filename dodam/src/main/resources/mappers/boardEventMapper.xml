@@ -50,7 +50,7 @@
 		<!-- 게시물 목록 + 페이징 -->
 	<select id="listPage" parameterType="hashMap" resultType="com.dodam.domain.event.EventBoardVO">
 	 select
-	 no, title, thumbimg, registerdate, readcount, likecount, area
+	 no, title, thumbimg, registerdate, readcnt, likecount, area
 	 from eventboard
 	 order by no desc
 	 limit #{displayPost}, #{postNum}

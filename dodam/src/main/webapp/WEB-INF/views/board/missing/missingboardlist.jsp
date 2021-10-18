@@ -12,10 +12,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
+	let categoryVal = 'missing';
+	let pageNo = "${param.pageNo}";
 	$(function(){
-		console.log("${listMissingBoard}");
+		// console.log("${listMissingBoard}");
 		
-		console.log("${param.pageNo}");
+		// console.log("${param.pageNo}");
 		
 		for(let i="${pagingInfo.startPageNoOfBlock}"; i <= "${pagingInfo.endPageNoOfBlock}"; i++) {
 			console.log(i);
@@ -35,6 +37,34 @@
 		$.ajax({
 			url : url, // ajax와 통신 할 곳
 			data : {no : no}, // 서블릿에 보낼 데이터
+			dataType : "text", // 수신될 데이터의 타입
+			type : "POST", // 통신 방식
+			success : function(data) { // 통신 성공시 수행될 콜백 함수
+				console.log(data);
+				if(data == "success") {
+					history.go(0);
+				} else {
+					alert("이미지를 불러오는 데에 문제가 발생했습니다! 다시 시도해주세요.");
+				}
+			}
+		});
+	}
+	
+	function setCategory(ctg) {
+		categoryVal = ctg;
+	}
+	
+	function search() {
+		let searchWord = $("#keyword").val();
+		let location = $("#location").val();
+		let animal = $("#animal").val();
+		let category = categoryVal;
+		
+		let url = '/missing/detail';
+		
+		$.ajax({
+			url : url, // ajax와 통신 할 곳
+			data : {pageNo : pageNo, }, // 서블릿에 보낼 데이터
 			dataType : "text", // 수신될 데이터의 타입
 			type : "POST", // 통신 방식
 			success : function(data) { // 통신 성공시 수행될 콜백 함수
@@ -76,7 +106,7 @@
 		height : 74%;
 	}
 	
-	.above_list {
+	.above_search {
 		float: right;
 		margin-right: 25px;
 	}
@@ -90,14 +120,30 @@
 		border-radius: 4px;
 	}
 	
+	.categoryBtn {
+		width: 140px;
+		height: 40px;
+		cursor: pointer;
+		display: table-cell;
+		text-align: center;
+		border: 1px solid black;
+		margin-top: 10px;
+		padding-top: 10px;
+		border-radius: 4px;
+	}
+	
+	.above_category {
+		margin: 40px 0 0 25px;
+	}
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container wrap">
 		<h1>신고 목록</h1>
-		<div class="above_list">
+		<div class="above_search">
 			<div>
-				<select>
+				<select id="location">
+					<option value="">--- 지역 ---</option>
 				    <option value="서울특별시">서울특별시</option>
 				    <option value="경기도">경기도</option>
 				    <option value="인천광역시">인천광역시</option>
@@ -116,17 +162,22 @@
 				    <option value="전라북도">전라북도</option>
 					<option value="제주특별자치도">제주도</option>
 				</select>
-				<select>
+				<select id="animal">
+					<option value="">-- 동물 --</option>
 					<option value="dog">강아지</option>
 					<option value="cat">고양이</option>
 					<option value="">다른 동물</option>
 				</select>
 				<input type="text" id="keyword" />
-				<button type="button" class="btn btn-default" id="searchBtn">검색</button>
+				<button type="button" class="btn btn-default" id="searchBtn" onclick="search();">검색</button>
 			</div>
 			<div style="float: right;">
 				<button type="button" class="btn btn-primary" onclick="location.href='/missing/write'">글등록</button>
 			</div>
+		</div>
+		<div class="above_category">
+			<span class="categoryBtn" onclick="setCategory('missing');">찾습니다</span>
+			<span class="categoryBtn" onclick="setCategory('found');">찾았어요</span>
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">

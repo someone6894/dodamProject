@@ -54,36 +54,15 @@
 			} else {
 				$("#category").attr("class", "missingBtn");
 				$("#category").html("찾았어요 취소");
+				$("#found_span").html("<찾았어요>");
 			}
 			
 			$("#like").click(function() {
-				let no = "${MissingBoard.no }";
+				alert("좋아요 버튼 눌림!");
 				
-				if (status == "foundBtn") {
-					category = "found";
-				} else if (status == "missingBtn"){
-					category = "missing";
-				}
+				// ####### id, no 넘겨줘서 ajax해야함!! ######
+				// missingboard like 추가하고, dislike는 -1하고, likehistory테이블 insert, delete 하기
 				
-				let url = '/missing/changeCategory';
-				
-				$.ajax({
-					url : url, // ajax와 통신 할 곳
-					data : {no : no, category : category}, // 서블릿에 보낼 데이터
-					dataType : "text", // 수신될 데이터의 타입
-					type : "POST", // 통신 방식
-					success : function(data) { // 통신 성공시 수행될 콜백 함수
-						if (data == "success") {
-							if (category == "found") {
-								$("#category").attr("class", "missingBtn");
-								$("#category").html("찾았어요 취소");
-							} else {
-								$("#category").attr("class", "foundBtn");
-								$("#category").html("찾았어요!");
-							}
-						}
-					}
-				});
 			});
 		});
 		
@@ -159,9 +138,11 @@
 						if (category == "found") {
 							$("#category").attr("class", "missingBtn");
 							$("#category").html("찾았어요 취소");
+							$("#found_span").html("<찾았어요>");
 						} else {
 							$("#category").attr("class", "foundBtn");
 							$("#category").html("찾았어요!");
+							$("#found_span").html("");
 						}
 					}
 				}
@@ -229,8 +210,6 @@
 			border-radius: 4px;
 			font-size: 16px;
 			text-align: center;
-			display: table-cell;
-      		vertical-align: middle;
       		float: right;
       		cursor: pointer;
 		}
@@ -242,10 +221,12 @@
 			border-radius: 4px;
 			font-size: 16px;
 			text-align: center;
-			display: table-cell;
-      		vertical-align: middle;
       		float: right;
       		cursor: pointer;
+		}
+		
+		#found_span {
+			color: #008d62;
 		}
 	</style>
 </head>
@@ -255,7 +236,7 @@
 		<div class="wrap">
 			<table>
 				<tr>
-					<td colspan="2"><h1 style="color: #ff7f00;"><span id="found_"></span>※ ${MissingBoard.title } ※</h1>
+					<td colspan="2"><h1 style="color: #ff7f00;"><span id="found_span"></span>※ ${MissingBoard.title } ※</h1>
 					<!-- <td></td> -->
 				</tr>
 				<tr>
@@ -307,6 +288,12 @@
 								<tr>
 									<td>특이사항</td>
 									<td>${MissingBoard.contents }</td>
+								</tr>
+								<tr>
+									<td>연락처</td>
+									<td>${MissingBoard.contact }</td>
+									<!-- ####### 로그인한 회원에게만 연락처 노출될 수 있도록 함 ###### -->
+									<!-- 가짜연락처임 내가 임의로 만든 거임!!! 기억해... -->
 								</tr>
 							</tbody>
 						</table>
