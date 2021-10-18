@@ -1,15 +1,11 @@
 package com.dodam.service.board.missing;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.naming.NamingException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;

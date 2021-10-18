@@ -35,7 +35,7 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 
 	@Override
 	public EventBoardVO view(int no) throws NamingException, SQLException {
-		return sql.selectOne(namespace + ".readBoard", no);
+		return sql.selectOne(namespace + ".view", no);
 	}
 
 	@Override
