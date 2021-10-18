@@ -1,7 +1,6 @@
 package com.dodam.controller;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import javax.inject.Inject;
@@ -26,7 +25,7 @@ public class DaoTest {
 			Connection con = dataSource.getConnection();
 			
 			if (con != null) {
-				System.out.println("con someone09.cafe24 DB立加 己傍 : " + con);
+				System.out.println("con someone09.cafe24 DB鞝戩啀 靹标车 : " + con);
 		}
 	}
 }
