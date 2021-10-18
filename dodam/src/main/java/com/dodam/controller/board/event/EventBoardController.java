@@ -1,4 +1,4 @@
-﻿package com.dodam.controller.board.event;
+package com.dodam.controller.board.event;
 
 import java.util.List;
 
@@ -93,7 +93,7 @@ import com.dodam.service.board.event.EventBoardService;
 			 int count = service.count();
 			 
 			 //한 페이지에 출력할 게시물 갯수
-			 int postNum = 0;
+			 int postNum = 10;
 			 
 			 //하단 페이징 번호 [ (게시물 총 갯수 % 한페이지에 출력할 갯수) 의 올림]
 			 int pageNum = (int)Math.ceil((double)count/postNum);
@@ -104,8 +104,12 @@ import com.dodam.service.board.event.EventBoardService;
 			 
 			 List<EventBoardVO> list= null; 
 			 list= service.listPage(displayPost, postNum);
+			 
+			 System.out.println(pageNum);
+			 
 			 model.addAttribute("list",list);
 			 model.addAttribute("pageNum", pageNum);
+			 
 		 }
 		}
 

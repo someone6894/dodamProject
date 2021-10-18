@@ -8,6 +8,9 @@
 <title>전시회 목록</title>
 </head>
 <body>
+
+<jsp:include page="../../template.jsp"></jsp:include>
+
 <table>
 		<thead>
 			<tr>
@@ -34,6 +37,10 @@
 		</c:forEach>
 	</tbody>
 </table>	
+
+<div>
+		<a href="/board/event/write">게시물 작성</a>
+	</div>
 
 <div>
 		<c:forEach begin="1" end="${pageNum }" var="num">

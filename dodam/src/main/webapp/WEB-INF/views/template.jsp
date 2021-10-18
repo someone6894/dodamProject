@@ -176,7 +176,7 @@ function ActiveBar(){
                </ul>
             </li>
             <li id="adoptBoard"><a href="/board/proud/listAll"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
-            <li class="dropdown"><a href="/board/event/list"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 전시회</a></li>
+            <li class="dropdown"><a href="/board/event/listPage"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 전시회</a></li>
             <li><a href="/board/qna/listAll"><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
             
          </ul>
