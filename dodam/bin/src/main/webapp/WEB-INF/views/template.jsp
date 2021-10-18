@@ -176,12 +176,7 @@ function ActiveBar(){
                </ul>
             </li>
             <li id="adoptBoard"><a href="/board/proud/listAll"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
-            <li class="dropdown"><a href="#"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 축제</a>
-               <ul class="dropdown-content" style="padding-left: 0;">
-                  <li><a href="#">반려동물 전시회</a></li>
-                  <li><a href="#">반려동물 행사</a></li>
-               </ul>
-            </li>
+            <li class="dropdown"><a href="/board/event/list"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 전시회</a></li>
             <li><a href="/board/qna/listAll"><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
             
          </ul>
@@ -189,32 +184,6 @@ function ActiveBar(){
    </nav>
    
 
-   <!-- <jsp:include page="adoptboardmini.jsp"></jsp:include> -->
-   
-   <!-- <div class="container"> -->
-
-   <!--   <h1>메인 페이지를 어떻게 꾸밀까요</h1> -->
-   <!--   <p1> 기능구현이 주력이기 때문에 메인 페이지는 간단하고 깔끔해서 비어보이지만 않게끔 로고 블럭버튼 형식으로 꾸밀까요? ex) 건보공단 홈페이지</p1> -->
-
-   <!--   <h3>메인 바디</h3> -->
-   <!--   <p> 부트스트랩 각종 폼 따와서 넣어서 메인바디 꾸미기  -->
-   <!--       ex) 인풋 폼, 리스트 폼, 페이징 넘버 폼 etc -->
-   <!--   </p> -->
-   <!-- </div> -->
-
-
-<!--    <div class="bxslider"> --><!--
-       <div> -->
-<!--          <img -->
-<!--             src="https://movie-phinf.pstatic.net/20200721_250/1595306482797hfWqC_JPEG/movie_image.jpg?type=m665_443_2" -->
-<!--             alt="슬라이드 이미지1"> -->
-<!--       </div> -->
-<!--       <div> -->
-<!--          <img -->
-<!--             src="https://movie-phinf.pstatic.net/20200721_131/1595306483541uxv0I_JPEG/movie_image.jpg?type=m665_443_2" -->
-<!--             alt="슬라이드 이미지2"> -->
-<!--       </div> -->
-<!--    </div> -->
 
    
 </body>
