@@ -28,5 +28,5 @@ public interface EventBoardService {
 		public int count() throws NamingException, SQLException;
 		
 		//게시물 목록 + 페이징
-		public List listPage(String displayPost, int postNum) throws NamingException, SQLException;
+		public List listPage(int displayPost, int postNum) throws NamingException, SQLException;
 	}

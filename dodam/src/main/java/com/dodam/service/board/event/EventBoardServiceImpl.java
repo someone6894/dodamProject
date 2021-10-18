@@ -56,7 +56,7 @@ public class EventBoardServiceImpl implements EventBoardService {
 	}
 
 	@Override
-	public List listPage(String displayPost, int postNum) throws NamingException, SQLException {
+	public List listPage(int displayPost, int postNum) throws NamingException, SQLException {
 		
 		return dao.listPage(displayPost, postNum);
 	}

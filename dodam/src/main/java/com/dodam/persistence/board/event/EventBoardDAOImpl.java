@@ -57,7 +57,7 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 	}
 
 	@Override
-	public List<EventBoardVO> listPage(String displayPost, int postNum) throws NamingException, SQLException {
+	public List<EventBoardVO> listPage(int displayPost, int postNum) throws NamingException, SQLException {
 		
 		//두개 이상의 데이터를 다룰땐 value object를 사용하거나 HashMap을 사용 , 난 후자 
 		HashMap<String, Integer> data= new HashMap<String, Integer>();
