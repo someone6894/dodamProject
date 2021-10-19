@@ -9,8 +9,10 @@ import com.dodam.domain.notice.NoticeVo;
 
 public interface NoticeService {
 
-	Map<String, Object> readAllBoard() throws NamingException, SQLException;
 
 	NoticeVo addnotice();
+	
+	//전체글 불러오기
+	Map<String, Object> readAllBoard(int pageNo) throws NamingException, SQLException;;
 
 }
