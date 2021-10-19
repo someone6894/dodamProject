@@ -45,7 +45,7 @@
 <div>
 		<c:forEach begin="1" end="${pageNum }" var="num">
 			<span>
-				<a href="/board/event/listPage?num=${num }">${num}</a>
+				<a href="/board/event/searchPage?num=${num }">${num}</a>
 			</span>
 		</c:forEach>
 </div>

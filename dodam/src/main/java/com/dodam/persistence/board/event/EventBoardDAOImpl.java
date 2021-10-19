@@ -53,7 +53,7 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 	@Override
 	public int count() throws NamingException, SQLException {
 	
-		return sql.selectOne(namespace, ".count");
+		return sql.selectOne(namespace + ".count");
 	}
 
 	@Override
