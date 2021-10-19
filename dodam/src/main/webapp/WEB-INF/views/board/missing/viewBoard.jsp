@@ -150,9 +150,10 @@
 		}
 		
 		function addReply() {
-			let bno = "${param.no }";
-			bno = parseInt(bno);
-			let writer = "${loginMember.userid }";
+			let pno = "${param.no }";
+			pno = parseInt(pno);
+			let writer = "user01";
+			// let writer = "${loginMember.userid }";
 			let content = $("#replyContents").val();
 			let isSecret = 'N';
 			if (document.getElementById("isSecret").checked) {
@@ -162,7 +163,7 @@
 			
 			$.ajax({
 	            url : url, // ajax와 통신 할 곳
-	            data : {bno : bno, replyer : writer, contents : content, issecret : isSecret}, // 서블릿에 보낼 데이터
+	            data : {pno : pno, replyer : writer, contents : content, issecret : isSecret}, // 서블릿에 보낼 데이터
 	            dataType : "text", // 수신될 데이터의 타입
 	            type : "POST", // 통신 방식
 	            success : function(data) { // 통신 성공시 수행될 콜백 함수
@@ -170,7 +171,7 @@
 					if (data == "success") {
 						alert("댓글 등록 완료!");
 						$("#replyDiv").hide(500);
-						viewAllReplies();
+						// viewAllReplies();
 					} else if (data == "fail") {
 						alert("댓글 등록 실패!\r\n 다시 시도해주세요!\r\n 계속 실패 시 고객응대 이메일로 문의해주세요.");
 					}
@@ -180,6 +181,24 @@
 	            }
 	         });
 		}
+		
+		/*function viewAllReplies() {
+			let pno = "${param.no}";
+			
+			let url = "/missing/reply/register";
+			$.ajax({
+	            url : url, // ajax와 통신 할 곳
+	            data : {pno : pno},
+	            dataType : "json", // 수신될 데이터의 타입
+	            type : "GET", // 통신 방식
+	            success : function(data) { // 통신 성공시 수행될 콜백 함수
+	            	parseReply(data);
+	            },
+	            error : function() { // 통신 실패시 수행될 콜백 함수
+
+	            }
+	         });
+		}*/
 	
 	</script>
 	<style>

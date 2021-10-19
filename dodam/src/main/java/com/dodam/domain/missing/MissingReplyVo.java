@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class MissingReplyVo {
 	private int no; // 댓글 테이블 pk
-	private int bno; // 부모글 fk
+	private int pno; // 부모글 fk
 	private String contents;
 	private String replyer;
 	private Timestamp lastmodifieddate;
@@ -15,18 +15,18 @@ public class MissingReplyVo {
 	public MissingReplyVo() {
 		super();
 	}
-	public MissingReplyVo(int bno, String contents, String replyer, String issecret) {
+	public MissingReplyVo(int pno, String contents, String replyer, String issecret) {
 		super();
-		this.bno = bno;
+		this.pno = pno;
 		this.contents = contents;
 		this.replyer = replyer;
 		this.issecret = issecret;
 	}
-	public MissingReplyVo(int no, int bno, String contents, String replyer, Timestamp lastmodifieddate, String issecret,
+	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, String issecret,
 			int ref, int step, int reforder) {
 		super();
 		this.no = no;
-		this.bno = bno;
+		this.pno = pno;
 		this.contents = contents;
 		this.replyer = replyer;
 		this.lastmodifieddate = lastmodifieddate;
@@ -41,11 +41,11 @@ public class MissingReplyVo {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public int getBno() {
-		return bno;
+	public int getPno() {
+		return pno;
 	}
-	public void setBno(int bno) {
-		this.bno = bno;
+	public void setPno(int pno) {
+		this.pno = pno;
 	}
 	public String getContents() {
 		return contents;
@@ -91,7 +91,7 @@ public class MissingReplyVo {
 	}
 	@Override
 	public String toString() {
-		return "MissingReplyVo [no=" + no + ", bno=" + bno + ", contents=" + contents + ", replyer=" + replyer
+		return "MissingReplyVo [no=" + no + ", pno=" + pno + ", contents=" + contents + ", replyer=" + replyer
 				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ref=" + ref + ", step="
 				+ step + ", reforder=" + reforder + "]";
 	}

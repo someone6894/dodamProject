@@ -58,6 +58,15 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	@Override
 	public boolean insertBoard(MissingWriteDTO mw) throws Exception {
 		boolean result = false;
+		// 타이틀에 태그 실행 방지
+        mw.setTitle(mw.getTitle().replace("<", "&lt;")); 
+        mw.setTitle(mw.getTitle().replace(">", "&gt;")); 
+        
+		// escape문자들 -> 태그로 전환해서 저장(DB에는 개행문자 등이 저장 안됨)
+        mw.setContents(mw.getContents().replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
+		mw.setContents(mw.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
+		
+		
 		if (dao.insertBoard(mw)==1) {
 			result = true;
 		}

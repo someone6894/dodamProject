@@ -138,7 +138,6 @@ public class MissingBoardController {
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String registerBoard(MissingWriteDTO mw, RedirectAttributes rttr) {
-		mw.setContents(mw.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
 		try {
 			if(service.insertBoard(mw)) {
 				rttr.addFlashAttribute("result", "success");
