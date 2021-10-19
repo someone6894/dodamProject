@@ -36,7 +36,9 @@
 					<tbody>
 						<c:forEach var ="board" items="${proudlistBoard }">
 						<tr onclick="readBoard(${board.no});">
-							<td>${board.no }</td>
+							<td>
+     						<img id='thumnail' src='../../resources/${board.image }'  width="120px" height="120px;"/>
+     						</td>
 							<td>${board.title }</td>
 							<td>${board.writer }</td>
 							<td>${board.postdate }</td>

@@ -1,3 +1,4 @@
+
 package com.dodam.persistence.board.event;
 
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 
 	@Override
 	public EventBoardVO view(int no) throws NamingException, SQLException {
-		return sql.selectOne(namespace + ".readBoard", no);
+		return sql.selectOne(namespace + ".view", no);
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 	@Override
 	public int count() throws NamingException, SQLException {
 	
-		return sql.selectOne(namespace, ".count");
+		return sql.selectOne(namespace + ".count");
 	}
 
 	@Override

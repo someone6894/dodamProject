@@ -13,7 +13,7 @@ import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.adopt.PagingInfoDTO;
 
 @Repository
-public class Adopt implements AdoptBoardDAO {
+public class AdoptBoardDAOImpl implements AdoptBoardDAO {
 
 	private static String namespace = "com.dodam.mapper.boardadoptMapper";
 

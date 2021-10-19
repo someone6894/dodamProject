@@ -1,10 +1,12 @@
 package com.dodam.service.members;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.mail.MessagingException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,4 +74,14 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	
+	@Override
+	public MemberVo loginMember(MemberVo mem) {
+		
+		MemberVo member = dao.loginMember(mem);
+		
+		return member;
+	}
+	
+	
 }

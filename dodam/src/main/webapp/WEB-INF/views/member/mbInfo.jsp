@@ -15,6 +15,14 @@
 		} else if (status == "fail") {
 			alert("회원가입에 실패하셨습니다. \n 잠시후 다시 입력해주세요.");
 		}
+		
+		if (status == "logingsuccess") {
+			alert("로그인 성공!");
+			
+		} else if (status == "logingfail") {
+			alert("로그인 실패. \n 아이디와 비밀번호를 다시 확인해주세요.");
+		}
+		
 
 	};
 </script>
@@ -39,10 +47,15 @@
 	<div>userid : ${memberInfo.userid }</div>
 	<div>password : ${memberInfo.password }</div>
 	<div>name : ${memberInfo.name }</div>
-<%-- 	<div>name : ${memberInfo.nickname }</div> --%>
 	<div>email : ${memberInfo.email }</div>
 	<div>phone : ${memberInfo.phone }</div>
 	<br/>
+<%-- 	<div id='loginsession'> login_session : ${loginSession} </div> --%>
+	<div>login_session_userid : ${loginSession.userid }</div>
+	<div>login_session_password : ${loginSession.password }</div>
+	<div>login_session_name : ${loginSession.name }</div>
+	<div>login_session_email : ${loginSession.email }</div>
+	<div>login_session_phone : ${loginSession.phone }</div>
 	</div>
 </body>
 </html>

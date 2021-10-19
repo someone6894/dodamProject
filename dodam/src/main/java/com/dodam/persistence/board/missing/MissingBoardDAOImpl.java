@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
@@ -24,9 +25,9 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	private SqlSession ses;
 
 	@Override
-	public List<MissingBoardListDTO> selectMissingBoardList(PagingInfoDTO pi) {
-		System.out.println(pi);
-		return ses.selectList(ns + ".selectAll", pi);
+	public List<MissingBoardListDTO> selectMissingBoardList(ListParamDTO lpd) {
+		System.out.println(lpd);
+		return ses.selectList(ns + ".selectAll", lpd);
 	}
 
 	@Override
@@ -51,8 +52,8 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	}
 
 	@Override
-	public int selectCntPost() {
-		return ses.selectOne(ns + ".selectCntPost");
+	public int selectCntPost(ListParamDTO lpd) {
+		return ses.selectOne(ns + ".selectCntPost", lpd);
 	}
 
 	@Override

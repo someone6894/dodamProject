@@ -65,8 +65,9 @@ import com.dodam.service.board.event.EventBoardService;
 		 public String postModify(EventBoardVO vo) throws Exception {
 
 		  service.modify(vo);
+		  System.out.println(vo);
 		    
-		  return "redirect:/view?no=" + vo.getNo();
+		  return "redirect:/board/event/view?no=" + vo.getNo();
 		 }
 		 
 		 //게시물 삭제
@@ -80,8 +81,9 @@ import com.dodam.service.board.event.EventBoardService;
 		 }
 		 
 		 //게시물 목록 , 페이징 추가
-		 @RequestMapping(value = "/listPage", method = RequestMethod.GET)
-		 public void getListpage(Model model, @RequestParam("num") int num) throws Exception {
+		 @SuppressWarnings("unchecked")
+		@RequestMapping(value = "/listPage", method = RequestMethod.GET)
+		 public void getListpage(Model model, @RequestParam(value="num", required= false, defaultValue="1") int num) throws Exception {
 			 
 			 //게시물의 총갯수를 구하고, 한 페이지당 출력할 게시물 갯수 정하고, 
 			 //하단에 표시할 페이징 번호 갯수 구하고
@@ -91,7 +93,7 @@ import com.dodam.service.board.event.EventBoardService;
 			 int count = service.count();
 			 
 			 //한 페이지에 출력할 게시물 갯수
-			 int postNum = 0;
+			 int postNum = 10;
 			 
 			 //하단 페이징 번호 [ (게시물 총 갯수 % 한페이지에 출력할 갯수) 의 올림]
 			 int pageNum = (int)Math.ceil((double)count/postNum);
@@ -100,10 +102,17 @@ import com.dodam.service.board.event.EventBoardService;
 			 int displayPost = (num -1) * postNum;
 			 
 			 
+			 
 			 List<EventBoardVO> list= null; 
-			 list= service.listpage(displayPost, postNum);
+			 list= service.listPage(displayPost, postNum);
+			 
+			 System.out.println(pageNum);
+			 
 			 model.addAttribute("list",list);
 			 model.addAttribute("pageNum", pageNum);
+			 
 		 }
 		}
 
+	
+	

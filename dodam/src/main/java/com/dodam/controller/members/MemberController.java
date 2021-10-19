@@ -45,6 +45,10 @@ public class MemberController {
 	public void registerMember() {
 	}
 	
+	@RequestMapping(value="/login", method=RequestMethod.GET)
+	public void loginMember() {
+	}
+	
 	@RequestMapping(value="/registerMember.do", method=RequestMethod.POST)
 	public String registerMember(MemberVo member, RedirectAttributes rt) {
 		System.out.println(member.toString());
@@ -59,6 +63,38 @@ public class MemberController {
 		
 		return "redirect:/member/mbInfo";  
 	}
+	
+	
+	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	public String loginMember(MemberVo mem, RedirectAttributes rt, HttpServletRequest request) {
+		System.out.println("입력받은 회원정보 : " + mem.toString());
+		
+		MemberVo member = service.loginMember(mem);
+
+		System.out.println("db에서 확인하여 가져온 회원정보 : " + member.toString());	
+		
+		
+		if(member != null) {
+			rt.addFlashAttribute("status", "logingsuccess");
+			rt.addFlashAttribute("memberInfo", member);
+			
+			HttpSession ses = request.getSession();
+			ses.removeAttribute("loginSession"); // 로그인세션 갱신
+			ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
+			
+			System.out.println("ses : " + ses.toString());
+			System.out.println("loginSession : " + ses.getAttribute("loginSession"));
+			
+			
+		} else {
+			rt.addFlashAttribute("status", "logingfail");
+		}
+		
+		
+		return "redirect:/member/mbInfo";  
+	}
+	
+	
 	
 	@RequestMapping(value="/mbInfo", method=RequestMethod.GET)
 	public void mbInfo() {
