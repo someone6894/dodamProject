@@ -102,6 +102,7 @@ import com.dodam.service.board.event.EventBoardService;
 			 int displayPost = (num -1) * postNum;
 			 
 			 
+			 
 			 List<EventBoardVO> list= null; 
 			 list= service.listPage(displayPost, postNum);
 			 

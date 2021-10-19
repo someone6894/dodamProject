@@ -8,7 +8,7 @@ public class EventBoardVO {
 	private String admin;
 	private String thumbimg;
 	private Timestamp registerdate;
-	private int readcount;
+	private int readcnt;
 	private int likecount;
 	private String contents;
 	private String img;
@@ -18,7 +18,7 @@ public class EventBoardVO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public EventBoardVO(int no, String title, String admin, String thumbimg, Timestamp registerdate, int readcount,
+	public EventBoardVO(int no, String title, String admin, String thumbimg, Timestamp registerdate, int readcnt,
 			int likecount, String contents, String img, String area) {
 		super();
 		this.no = no;
@@ -26,7 +26,7 @@ public class EventBoardVO {
 		this.admin = admin;
 		this.thumbimg = thumbimg;
 		this.registerdate = registerdate;
-		this.readcount = readcount;
+		this.readcnt = readcnt;
 		this.likecount = likecount;
 		this.contents = contents;
 		this.img = img;
@@ -62,11 +62,11 @@ public class EventBoardVO {
 	public void setRegisterdate(Timestamp registerdate) {
 		this.registerdate = registerdate;
 	}
-	public int getReadcount() {
-		return readcount;
+	public int getreadcnt() {
+		return readcnt;
 	}
-	public void setReadcount(int readcount) {
-		this.readcount = readcount;
+	public void setreadcnt(int readcnt) {
+		this.readcnt = readcnt;
 	}
 	public int getLikecount() {
 		return likecount;
@@ -96,7 +96,7 @@ public class EventBoardVO {
 	@Override
 	public String toString() {
 		return "EventBoardVO [no=" + no + ", title=" + title + ", admin=" + admin + ", thumbimg=" + thumbimg
-				+ ", registerdate=" + registerdate + ", readcount=" + readcount + ", likecount=" + likecount
+				+ ", registerdate=" + registerdate + ", readcnt=" + readcnt + ", likecount=" + likecount
 				+ ", contents=" + contents + ", img=" + img + ", area=" + area + "]";
 	}
 

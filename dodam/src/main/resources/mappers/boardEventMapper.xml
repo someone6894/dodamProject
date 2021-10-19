@@ -57,4 +57,27 @@
 	 
 	</select>
 	
+		<!-- 게시물 목록 + 페이징 + 검색 -->
+	<select id="listPageSearch" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+	 select
+	  no, title, writer, regiaterdate, readcnt
+	 from eventboard
+	 
+	 <if test='searchType.equals("title")'>
+	  WHERE title LIKE concat('%', #{keyword}, '%')
+	 </if>
+	 
+	 <if test='searchType.equals("contents")'>
+	  WHERE contents LIKE concat('%', #{keyword}, '%')
+	 </if>
+	 
+	 <if test='searchType.equals("title_contents")'>
+	  WHERE title LIKE concat('%', #{keyword}, '%') 
+	   or contents LIKE concat('%', #{keyword}, '%')
+	 </if>
+	 
+	 order by no desc
+	  limit #{displayPost}, #{postNum}
+	</select> 
+	
   </mapper>
