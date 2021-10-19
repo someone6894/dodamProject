@@ -31,7 +31,7 @@
 				<td>
 				<fmt:formatDate value="${list.registerdate}" pattern="yyyy-MM-dd" />
 				</td>
-				<td>${list.readcount}</td>
+				<td>${list.readcnt}</td>
 				<td>${list.likecount}</td>
 			</tr>
 		</c:forEach>
