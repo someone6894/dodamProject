@@ -42,14 +42,26 @@
 		    				viewoutput ='<li id= "reply' + element.no + '"class="list-group-item">';							
 	    					viewoutput += '<div>작성자 : <span id="replyer' + element.no +'">' + element.replyer + '</sapn></div>';
 	    					viewoutput += '<div id="orcontent ' + element.no + '">내용 : ' + element.contents + '</div>';
-	    					viewoutput += "</li>"
+	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" ><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" />';
+	    					viewoutput += '수정</a><a href="onclick="showReply();"" ><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
+	    					viewoutput += '<a href="javascript:;" ><img class="fa fa-talk" src="../../resources/images/lcj/replyreply.png" /> 댓글</a></div>';
+	    					viewoutput += '</li>'
+	    					viewoutput += '<div id="replyUpdate" style="clear : both;">';
+	    					viewoutput += '<div class="form-group">';
+	    					viewoutput += '<label for="replyer"작성자 : </label> <input type="text" class="form-control" id="replyer" name="replyer">';
+	    					viewoutput += element.replyer;
+	    					viewoutput += '<label for ="replyContents">댓글 내용:</label>'
+	    					viewoutput += '<textarea id="replyContents" rows="6" cols="150"></textarea>'
+	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="updateReply();">댓글수정</button>';
+	    					viewoutput += '</div></div>';
+
 	    					output += viewoutput;
 		    			}); // 반복문 끝
 
 		    			output += "</ul>";
 		    			
 		    			$("#replyLst").html(output);
-		    		}    
+		    		}
 		         },
 		         error : function() { // 통신 실패시 수행될 콜백 함수
 		         }
@@ -102,6 +114,11 @@
 	function showReply() {
 		$("#replyDiv").show(500);
 	}
+	
+	function showReply() {
+		$("#replyUpdate").show(500);
+	}
+	
 </script>
 <style>
 	#image {
@@ -114,6 +131,24 @@
 		boarder : 1px dotted #e1bee7;
 		display : none;
 		padding : 5px;
+	}
+	
+	#replyUpdate {
+		boarder : 1px dotted #e1bee7;
+		display : none;
+		padding : 5px;
+	}
+	
+	.fdb_nav {
+		position : absolute;
+		top : 10px;
+		right : 8px;
+	}
+	
+	.fa {
+    width: 13px;
+    letter-spacing: 0;
+    text-align: center;
 	}
 </style>
 <body>
