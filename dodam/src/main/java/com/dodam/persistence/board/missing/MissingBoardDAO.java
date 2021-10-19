@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
@@ -14,13 +15,13 @@ public interface MissingBoardDAO {
 
 	// Read
 	// 게시판 목록 페이지 조회하는 메서드
-	List<MissingBoardListDTO> selectMissingBoardList(PagingInfoDTO pi);
+	List<MissingBoardListDTO> selectMissingBoardList(ListParamDTO lpd);
 
 	// 게시글 상세 페이지 조회하는 메서드
 	MissingBoardVo getMissingBoard(int no);
 
 	// 전체 게시글 수 조회하는 메서드
-	int selectCntPost();
+	int selectCntPost(ListParamDTO lpd);
 	
 	// 마지막 조회 날짜 조회하는 메서드
 	Timestamp getLastReadTime(ReadCntVo ri);
@@ -45,6 +46,7 @@ public interface MissingBoardDAO {
 
 	// 조회수 증가하는 메서드
 	int updateReadCount(int no);
+
 
 
 

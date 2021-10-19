@@ -19,9 +19,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
@@ -40,15 +42,20 @@ public class MissingBoardController {
 	private MissingBoardService service;
 	
 	@RequestMapping("/list")
-	public String missingboardlist(@RequestParam(value="pageNo", required=false, defaultValue="1") int pageNo, Model model) {
-		System.out.println(pageNo);
+	public String missingboardlist(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
+								@RequestParam(value="searchWord", defaultValue = "") String searchWord,
+								@RequestParam(value="location", defaultValue = "") String location,
+								@RequestParam(value="animal", defaultValue = "") String animal,
+								@RequestParam(value="category", defaultValue = "missing") String category,
+								Model model) {
+		ListParamDTO lpd = new ListParamDTO(pageNo, location, animal, category, searchWord);
+		
 		Map<String, Object> map = null;
 		
 		// #### 예외처리 페이지 만들기!!!!! ####
 		try {
-			map = service.selectMissingBoardList(pageNo);
+			map = service.selectMissingBoardList(lpd);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -57,6 +64,8 @@ public class MissingBoardController {
 		
 		model.addAttribute("listMissingBoard", lst);
 		model.addAttribute("pagingInfo", pi);
+		
+		System.out.println(map);
 		
 		return "/board/missing/missingboardlist";
 	}
@@ -155,8 +164,8 @@ public class MissingBoardController {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 		}
-		return null;
 	}
 	
 	@RequestMapping(value="/modify")
@@ -205,5 +214,6 @@ public class MissingBoardController {
 		}
 		return null;
 	}
+	
 }
 
