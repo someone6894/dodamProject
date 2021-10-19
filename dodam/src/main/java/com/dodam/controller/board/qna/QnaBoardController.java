@@ -83,10 +83,22 @@ public class QnaBoardController {
 
 	}
 	
+	@RequestMapping(value="/modifyBoard", method = RequestMethod.GET)
+	public String updateBoard(@RequestParam("no") int no, Model model) throws NamingException, SQLException {
+		QnaVo vo = service.readBoard(no);
+		
+		model.addAttribute("QnaVo", vo);
+		
+		return "/board/qna/updateBoard";
+
+	}
 	
-	@RequestMapping(value="/updateBoard", method = RequestMethod.GET)
-	public String updateBoard(@RequestParam("no") String tmp, QnaVo vo) throws NamingException, SQLException {
-		int no = Integer.parseInt(tmp);
+	
+
+	@RequestMapping(value="/updateBoard", method = RequestMethod.POST)
+	public String updateBoard(QnaVo vo) throws NamingException, SQLException {
+
+		System.out.println(vo);
 		
 		service.updateBoard(vo);
 		

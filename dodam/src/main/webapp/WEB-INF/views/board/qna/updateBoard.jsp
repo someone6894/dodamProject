@@ -155,7 +155,7 @@
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
 		<h2>글 쓰기 페이지</h2>
-		<form action="/board/qna/createBoard" method="post">
+		<form action="/board/qna/updateBoard" method="post">
 			
 
 			<div class="form-group">
@@ -164,11 +164,6 @@
 					id="titleError" class="error"></span>
 			</div>
 
-			<div class="form-group">
-				<label for="pwd">수정/삭제 비밀번호 :</label> <input type="password"
-					class="form-control" id="pwd" placeholder="Enter password"
-					name="pwd"><span id="pwdError" class="error"></span>
-			</div>
 
 <!-- 나중에 다 연결했을때 userid} 옆에다가 readonly를 붙여야한다 -->
 			<div class="form-group">
@@ -178,9 +173,11 @@
 					id="writerError" class="error"></span>
 			</div>
 
+			<input type="hidden" value="${QnaVo.no }" name="no" />
+
 			<div class="form-group">
 				<label for="content">내용 :</label>
-				<textarea rows="20" cols="150" id="content" name="contents"></textarea>
+				<textarea rows="20" cols="150" id="content" name="contents">${QnaVo.contents }</textarea>
 
 			</div>
 
