@@ -57,6 +57,8 @@
 				$("#found_span").html("<찾았어요>");
 			}
 			
+			viewAllReplies();
+			
 			$("#like").click(function() {
 				alert("좋아요 버튼 눌림!");
 				
@@ -64,6 +66,7 @@
 				// missingboard like 추가하고, dislike는 -1하고, likehistory테이블 insert, delete 하기
 				
 			});
+		
 		});
 		
 		function process_animal() {
@@ -148,7 +151,122 @@
 				}
 			});
 		}
-	
+		
+		function addReply() {
+			let pno = "${param.no }";
+			pno = parseInt(pno);
+			let writer = "user01";
+			// let writer = "${loginMember.userid }";
+			let content = $("#replyContents").val();
+			let isSecret = 'N';
+			if (document.getElementById("isSecret").checked) {
+				isSecret = 'Y';
+			}
+			let url = '/missing/reply/register';
+			
+			$.ajax({
+	            url : url, // ajax와 통신 할 곳
+	            data : {pno : pno, replyer : writer, contents : content, issecret : isSecret}, // 서블릿에 보낼 데이터
+	            dataType : "text", // 수신될 데이터의 타입
+	            type : "POST", // 통신 방식
+	            success : function(data) { // 통신 성공시 수행될 콜백 함수
+	            	console.log(data);
+					if (data == "success") {
+						alert("댓글 등록 완료!");
+						$("#replyDiv").hide(500);
+						viewAllReplies();
+					} else if (data == "fail") {
+						alert("댓글 등록 실패!\r\n 다시 시도해주세요!\r\n 계속 실패 시 고객응대 이메일로 문의해주세요.");
+					}
+	            },
+	            error : function() { // 통신 실패시 수행될 콜백 함수
+
+	            }
+	         });
+		}
+		
+		function viewAllReplies() {
+			let pno = "${param.no}";
+			
+			let url = "/missing/reply/viewAll";
+			$.ajax({
+	            url : url, // ajax와 통신 할 곳
+	            data : {pno : pno},
+	            dataType : "json", // 수신될 데이터의 타입
+	            type : "GET", // 통신 방식
+	            success : function(data) { // 통신 성공시 수행될 콜백 함수
+	            	parseReply(data);
+	            },
+	            error : function() { // 통신 실패시 수행될 콜백 함수
+
+	            }
+	         });
+		}
+		
+		function parseReply(data) {
+			if (data != null) {
+				console.log(data);
+				$("#replyLst").empty();
+				let output = '<ul class="list-group">'; // 보이는 댓글
+	    		$(data).each(function(i, element){
+	    			let secoutput ='';
+	    			let viewoutput = '';
+					// -------------- 비밀글 템플릿 ---------------------------
+	    			secoutput += '<li id="reply' + element.no + '" class="list-group-item">';
+	    			secoutput += '<div><img src="../resources/images/lock.png" width="15px" />';
+	    			secoutput += ' 댓글 작성자가 비밀글로 처리한 글입니다. </div>';
+	    			secoutput += '</li>';
+
+	    			// ------------비밀글이 아닌 댓글 템플릿 -----------------
+	    			viewoutput += '<li id="reply' + element.no + '" class="list-group-item">';
+	        		viewoutput += '<div id="'+ element.no +'" style="float:right; margin-right:10px;">' + 
+	        			'<img src="../resources/images/gear.png" width="25px" onclick="showReplyModify(' + element.no +')"/>';
+	        		viewoutput += '<img src="../resources/images/trash.png" width="25px" onclick="showReplyDel(' + element.no + ')"/></div>';
+					viewoutput += '<div>작성자 : <span id="replyer'+ element.no +'">' + element.replyer + '</span></div>';
+	        		viewoutput += '<div id="orcontent' + element.no + '">내용 : ' + element.contents + '</div>';
+	        		
+	        		regdate = calcReply(element.lastmodifieddate);
+	        		
+	        		viewoutput += '<div>작성일 : ' + regdate + '</div>';
+	        		
+	        		// -------------------------------------------------------
+	        		
+	        		let loginUser = '${loginMember.userid}'; // 로그인 유저
+	        		let bwriter = '${MissingBoard.writer}'; // 부모글 작성자
+	        		let replyer = element.replyer;
+	        		
+	        		if (element.issecret == 'Y') { // 비밀글이다
+						if (loginUser == "") { // 로그인 하지 않았다
+							output += secoutput;
+						} else { // 비밀글인데 로그인을 한 경우
+							if (loginUser == bwriter || loginUser ==  replyer) { // 보이는 조건에 해당
+								viewoutput += "<div style='color:red;'><img src='../resources/images/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
+								viewoutput += '</li>';
+								output += viewoutput;
+							} else { // 로그인을 했지만 보이는 조건에 맞지 않는 경우
+								output += secoutput;
+							}
+						}
+	        		} else {
+	        			viewoutput += '</li>';
+	        			output += viewoutput;
+	        		}
+	    		}); // 반복문 끝
+	    		output += "</ul>";
+	    		
+	    		$("#replyLst").html(output);
+	    	}
+		}
+		
+		// ####### 이거 이렇게 뷰단에서 계산해서 출력해야할까??? #########
+		function calcReply(regdate) {
+			let diff = new Date() - regdate; // 댓글 단 시간과 현재시간의 차이
+			let diffSecond = diff / 1000; // 현재시간 초단위
+			if (diffSecond < 60 * 5) return '방금 전';
+			let diffMinutes = diffSecond / 60; // 분단위
+			if (diffMinutes < 60) return Math.floor(diffMinutes) + '분전';
+			return new Date(regdate).toLocaleString();
+		}
 	</script>
 	<style>
 		h1 {

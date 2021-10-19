@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.dodam.mappers.MissingReplyMapper">
+  
+  <insert id="insertReply">
+  	insert into missingboardreply(pno, replyer, contents, issecret) values (#{pno}, #{replyer}, #{contents}, #{issecret})
+  </insert>
+  
+  <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
+  	select * from missingboardreply where pno = #{pno}
+  </select>
+  </mapper>

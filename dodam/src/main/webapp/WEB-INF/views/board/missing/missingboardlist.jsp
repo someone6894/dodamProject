@@ -13,19 +13,30 @@
 </head>
 <script>
 	let categoryVal = 'missing';
-	let pageNo = "${param.pageNo}";
 	$(function(){
-		// console.log("${listMissingBoard}");
-		
-		// console.log("${param.pageNo}");
+		if ("${param.location}" != "") {
+			$("#location").val("${param.location}");
+		}
+		if ("${param.animal}" != "") {
+			$("#animal").val("${param.animal}");
+		}
+		if ("${param.category}" == "" || "${param.category}" == "missing") {
+			$("#missing").css("background-color", "#3C6E9F");
+			$("#missing").css("color", "white");
+		} else if ("${param.category}" == "found") {
+			$("#found").css("background-color", "#3C6E9F");
+			$("#found").css("color", "white");
+		}
 		
 		for(let i="${pagingInfo.startPageNoOfBlock}"; i <= "${pagingInfo.endPageNoOfBlock}"; i++) {
 			console.log(i);
 			if ("${param.pageNo}" == "") {
 				$("#li1").children("a").css("color", "#ff7f00");
+				$("#li1").children("a").css("font-weight", "bold");
 				break;
 			} else if (i == "${param.pageNo}") {
 				$("#li"+i).children("a").css("color", "#ff7f00");
+				$("#li1").children("a").css("font-weight", "bold");
 				break;
 			}
 		}
@@ -50,32 +61,32 @@
 		});
 	}
 	
-	function setCategory(ctg) {
-		categoryVal = ctg;
+	function setCategory(obj) {
+		categoryVal = $(obj).attr("id");
+		if (categoryVal == "missing") {
+			$("#missing").css("background-color", "#3C6E9F");
+			$("#missing").css("color", "white");
+			$("#found").css("background-color", "#d5d5d5");
+			$("#found").css("color", "black");
+		} else if (categoryVal == "found") {
+			$("#missing").css("background-color", "#d5d5d5");
+			$("#missing").css("color", "black");
+			$("#found").css("background-color", "#3C6E9F");
+			$("#found").css("color", "white");
+		}
+		
+		
+		// ##### 아작스 구현 #####
+		window.location.href = '/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
 	}
 	
 	function search() {
 		let searchWord = $("#keyword").val();
 		let location = $("#location").val();
 		let animal = $("#animal").val();
-		let category = categoryVal;
 		
-		let url = '/missing/detail';
+		window.location.href = '/missing/list?pageNo=1&searchWord=' + searchWord + '&location=' + location + '&animal=' + animal + '&category=' + categoryVal;
 		
-		$.ajax({
-			url : url, // ajax와 통신 할 곳
-			data : {pageNo : pageNo, }, // 서블릿에 보낼 데이터
-			dataType : "text", // 수신될 데이터의 타입
-			type : "POST", // 통신 방식
-			success : function(data) { // 통신 성공시 수행될 콜백 함수
-				console.log(data);
-				if(data == "success") {
-					history.go(0);
-				} else {
-					alert("이미지를 불러오는 데에 문제가 발생했습니다! 다시 시도해주세요.");
-				}
-			}
-		});
 	}
 </script>
 <style>
@@ -113,6 +124,7 @@
 	
 	.container_list {
 		clear: both;
+		border-top: 5px solid #3C6E9F;
 	}
 	
 	input:focus {
@@ -129,11 +141,18 @@
 		border: 1px solid black;
 		margin-top: 10px;
 		padding-top: 10px;
-		border-radius: 4px;
+		border-radius: 4px 4px 0 0;
+		border: none;
+		background-color: #d5d5d5;
 	}
 	
 	.above_category {
 		margin: 40px 0 0 25px;
+	}
+	
+	#noResult {
+		text-align: center;
+		margin : 50px;
 	}
 </style>
 <body>
@@ -141,7 +160,10 @@
 	<div class="container wrap">
 		<h1>신고 목록</h1>
 		<div class="above_search">
-			<div>
+			<div style="float: right;">
+				<button type="button" class="btn btn-primary" onclick="location.href='/missing/write'">글등록</button>
+			</div>
+			<div style="clear: right;">
 				<select id="location">
 					<option value="">--- 지역 ---</option>
 				    <option value="서울특별시">서울특별시</option>
@@ -166,18 +188,15 @@
 					<option value="">-- 동물 --</option>
 					<option value="dog">강아지</option>
 					<option value="cat">고양이</option>
-					<option value="">다른 동물</option>
+					<option value="other">다른 동물</option>
 				</select>
 				<input type="text" id="keyword" />
-				<button type="button" class="btn btn-default" id="searchBtn" onclick="search();">검색</button>
-			</div>
-			<div style="float: right;">
-				<button type="button" class="btn btn-primary" onclick="location.href='/missing/write'">글등록</button>
+				<div class="btn btn-default" id="searchBtn" onclick="search();">검색</div>
 			</div>
 		</div>
 		<div class="above_category">
-			<span class="categoryBtn" onclick="setCategory('missing');">찾습니다</span>
-			<span class="categoryBtn" onclick="setCategory('found');">찾았어요</span>
+			<span class="categoryBtn" id="missing" onclick="setCategory(this);">찾습니다</span>
+			<span class="categoryBtn" id="found" onclick="setCategory(this);">찾았어요</span>
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">
@@ -225,17 +244,22 @@
 	<div style="text-align: center;">
 		<ul class="pagination">
 			<c:if test="${param.pageNo > 1 }">
-				<li><a href="/missing/list?&pageNo=1">&lt;&lt;</a></li>
-				<li><a href="/missing/list?&pageNo=${param.pageNo - 1 }">&lt;</a></li>
+				<li><a href="/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&lt;&lt;</a></li>
+				<li><a href="/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&lt;</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
-				<li id="li${i }"><a href="/missing/list?&pageNo=${i }">${i }</a></li>
+				<li id="li${i }"><a href="/missing/list?&pageNo=${i }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">${i }</a></li>
 			</c:forEach>
 			<c:if
 				test="${param.pageNo == null or param.pageNo < pagingInfo.totalPage }">
-				<li><a href="/missing/list?&pageNo=${param.pageNo + 1 }">&gt;</a></li>
-				<li><a href="/missing/list?&pageNo=${pagingInfo.totalPage }">&gt;&gt;</a></li>
+				<li><a href="/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&gt;</a></li>
+				<li><a href="/missing/list?&pageNo=${pagingInfo.totalPage }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&gt;&gt;</a></li>
 			</c:if>
 		</ul>
 	</div>
