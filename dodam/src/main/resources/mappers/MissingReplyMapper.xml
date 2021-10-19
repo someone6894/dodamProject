@@ -9,4 +9,7 @@
   	insert into missingboardreply(pno, replyer, contents, issecret) values (#{pno}, #{replyer}, #{contents}, #{issecret})
   </insert>
   
+  <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
+  	select * from missingboardreply where pno = #{pno}
+  </select>
   </mapper>

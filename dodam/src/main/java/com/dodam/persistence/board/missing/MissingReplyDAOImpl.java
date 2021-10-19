@@ -1,5 +1,7 @@
 package com.dodam.persistence.board.missing;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +20,11 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 	@Override
 	public int insertReply(MissingReplyVo mrv) {
 		return ses.insert(ns + ".insertReply", mrv);
+	}
+
+	@Override
+	public List<MissingReplyVo> selectAllReply(int pno) {
+		return ses.selectList(ns + ".selectAllReply", pno);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.dodam.service.board.missing;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -24,6 +26,11 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<MissingReplyVo> selectAllReply(int pno) {
+		return dao.selectAllReply(pno);
 	}
 
 }
