@@ -24,13 +24,12 @@ public class NoticeServicelmpl implements NoticeService {
 		return null;
 	}
 
-
 	@Override
-	public Map<String, Object> readAllBoard() throws NamingException, SQLException {
+	public Map<String, Object> readAllBoard(int pageNo) throws NamingException, SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("boardList", dao.selectAllBoard());
+		
 		return map;
-	
 	}
 
 }

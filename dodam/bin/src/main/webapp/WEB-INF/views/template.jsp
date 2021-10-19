@@ -165,7 +165,7 @@ function ActiveBar(){
          <ul class="nav navbar-nav">
             <li id="main" class="active"><a href="/">
                <img src="../../resources/images/main/paw.png" width="24px;" style="padding: 0 6px 3px 0;"/>메인</a></li>
-            <li><a href="#"><img src="../../resources/images/main/notice.png" width="24px;" style="padding: 0 6px 3px 0;"/>공지사항</a></li>
+            <li id="adoptBoard"><a href="/board/notice/listAll"><img src="../../resources/images/main/notice.png" width="24px;" style="padding: 0 6px 3px 0;"/>공지사항</a></li>
             <li id="adoptBoard"><a href="/missing/list"><img src="../../resources/images/main/missing.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾아요</a></li>
             <li id="adoptBoard"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>보호중</a></li>
 <!--                <li><a href="/board/publicAdoptList"><img src="../resources/images/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a> -->

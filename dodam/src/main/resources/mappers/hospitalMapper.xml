@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dodam.mapper.hopitalMapper">
+
+<select id="Allseoullist" resultType="com.dodam.domain.hospital.SeoulHospitalVo">
+	select * from seoul_hospital where state= "영업/정상"
+</select>
+
+<select id="cityseoullist" resultType="com.dodam.domain.hospital.SeoulHospitalVo">
+	select * from seoul_hospital where city = #{city} and state= "영업/정상";
+</select>
+
+<select id="Allgyeonggilist" resultType="com.dodam.domain.hospital.GyeonggiHospitalVo">
+	select * from gyeonggi_hospital where state= "정상"
+</select>
+
+<select id="citygyeonggillist" resultType="com.dodam.domain.hospital.GyeonggiHospitalVo">
+	select * from gyeonggi_hospital where city = #{city} and state = "정상"
+</select>
+
+
+
+
+</mapper>
