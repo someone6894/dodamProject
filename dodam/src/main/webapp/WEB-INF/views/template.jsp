@@ -149,14 +149,14 @@ function ActiveBar(){
                <span class="glyphicon glyphicon-user"></span> 회원가입</a>
          </li>
          <li>
-            <a href="#">
+            <a href="/member/login">
                <span class="glyphicon glyphicon-log-in"></span> 로그인</a>
          </li>
       </ul>
    </div>
 
    <div class="banner" style="padding-top: 30px;">
-      <img id='bannerimg' src='../../resources/images/main/banner.jpg' width="auto" height="300px;"/>
+      <a href="/"><img id='bannerimg' src='../../resources/images/main/banner.jpg' width="auto" height="300px;"/></a>
    </div>
 
    <!-- class = navbar navbar-inverse -->

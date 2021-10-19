@@ -1,5 +1,7 @@
 package com.dodam.persistence.members;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -12,10 +14,12 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.naming.NamingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.members.MemberVo;
 
 
@@ -25,9 +29,13 @@ public class MemberDaoImpl implements MemberDao {
 	@Inject
 	private SqlSession ses;  // sqlSessionTemplate 객체 주입
 	
+	private static String namespace = "com.dodam.mapper.MemberMapper";
+	
+	
+	
 	// 회원가입
 	public int insertMember(MemberVo mem) {
-		String query = "com.dodam.mapper.MemberMapper.insertMember";
+		String query = namespace + ".insertMember";
 		int row = ses.insert(query, mem);
 		return row;
 	}
@@ -81,6 +89,16 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 		
+	
+	
+	@Override
+	public MemberVo loginMember(MemberVo mem) {
+		
+		MemberVo member = ses.selectOne(namespace + ".loginMember", mem);
+		
+		return member;
+	}
+
 	
 	
 	

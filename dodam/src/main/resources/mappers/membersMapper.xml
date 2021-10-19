@@ -10,6 +10,12 @@
  			values(#{userid}, md5(#{password}), #{name}, #{nickname}, #{email}, #{phone})
 	</insert>
 
+	
+	<select id="loginMember" resultType="com.dodam.domain.members.MemberVo">
+		select * from members where userid = #{userid} and password = md5(#{password})
+	</select>
+
+
 </mapper>
 
 

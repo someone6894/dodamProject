@@ -14,6 +14,8 @@ public interface MemberService {
 	
 	public boolean sendMail(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException;
+
+	MemberVo loginMember(MemberVo mem);
 	
 	
 	
