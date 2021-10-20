@@ -52,4 +52,19 @@ public class ReplyController {
 		   
 		   return result;
 	   }
+	   
+	   @RequestMapping(value="/update", method=RequestMethod.POST)
+	   public ResponseEntity<String> updateReply(@RequestBody ReplyVo vo) { // responseentity는 모델 개념 , 응답하는 데이터
+	      System.out.println("Replies... POST... 글등록 시작");
+	      System.out.println(vo.toString());
+	      ResponseEntity<String> result = null;
+	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
+	         service.updateReply(vo);
+	         result = new ResponseEntity<String>("success", HttpStatus.OK);
+	      } catch (Exception e) {
+	         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+	      }
+	      
+	      return result;
+	   }
 }

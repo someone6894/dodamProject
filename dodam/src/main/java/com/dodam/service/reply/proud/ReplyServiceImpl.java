@@ -31,4 +31,16 @@ public class ReplyServiceImpl implements ReplyService {
 		return true;
 	}
 
+	@Override
+	public boolean updateReply(ReplyVo vo) throws Exception {
+		boolean result = false;
+
+		int row = dao.update(vo);
+		if (row == 1) {
+			result = true;
+		}
+		
+		return true;
+	}
+
 }

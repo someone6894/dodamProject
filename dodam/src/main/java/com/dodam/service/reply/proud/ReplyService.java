@@ -11,4 +11,6 @@ public interface ReplyService {
 	// 댓글 달기
 			public boolean addReply(ReplyVo vo) throws Exception;
 			
+			public boolean updateReply(ReplyVo vo) throws Exception;
+			
 }

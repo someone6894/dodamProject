@@ -21,7 +21,7 @@
 	function deleteBoard(no) {
 		location.href='/board/proud/deleteboard?no=' + no;
 	}
-	
+
 	function viewAllReplies() {
 		let bno = "${param.no}";
 		bno = parseInt(bno);
@@ -37,22 +37,29 @@
 		    			
 						$("#replyLst").empty();
 						let output = '<ul class="list-group">';
-		     			
+
 		    			$.each(data, function(i, element) {
 		    				viewoutput ='<li id= "reply' + element.no + '"class="list-group-item">';							
-	    					viewoutput += '<div>작성자 : <span id="replyer' + element.no +'">' + element.replyer + '</sapn></div>';
-	    					viewoutput += '<div id="orcontent ' + element.no + '">내용 : ' + element.contents + '</div>';
-	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" ><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" />';
-	    					viewoutput += '수정</a><a href="onclick="showReply();"" ><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
+	    					viewoutput += '<div>작성자 : <span id="rereplyer' + element.no +'">' + element.replyer + '</sapn></div>';
+	    					viewoutput += '<div id="orcontent' + element.no + '">내용 : ' + element.contents + '</div>';
+	    					if (element.registerdate == element.modifydate) {
+	    					viewoutput += '<div id="regdate' + element.no + '">작성 날짜 : ' + new Date(element.registerdate).toLocaleString() + '</div>';
+	    					}
+	    					else{
+		    					viewoutput += '<div id="regdate' + element.no + '">수정 날짜 : ' + new Date(element.modifydate).toLocaleString() + '</div>';
+		    				}		    					
+	    					viewoutput += '<div id="regreg' + element.no + '"></div>';
+	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" onclick="ReReply(' + element.no + ')";><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" />수정</a>';
+	    					viewoutput += '<a href="javascript:;" ><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
 	    					viewoutput += '<a href="javascript:;" ><img class="fa fa-talk" src="../../resources/images/lcj/replyreply.png" /> 댓글</a></div>';
 	    					viewoutput += '</li>'
-	    					viewoutput += '<div id="replyUpdate" style="clear : both;">';
+		    				viewoutput += '<div id="replyUpdate' + element.no + '" class="replyUpdate" style="clear : both;">';
 	    					viewoutput += '<div class="form-group">';
-	    					viewoutput += '<label for="replyer"작성자 : </label> <input type="text" class="form-control" id="replyer" name="replyer">';
-	    					viewoutput += element.replyer;
+	    					viewoutput += '<label for="replyer">작성자 : </label>';
+	    					viewoutput += '<input type="text" class="form-control" id="replyer' + element.no +'" name = "replyerupdate" value ="' + element.replyer + '">';
 	    					viewoutput += '<label for ="replyContents">댓글 내용:</label>'
-	    					viewoutput += '<textarea id="replyContents" rows="6" cols="150"></textarea>'
-	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="updateReply();">댓글수정</button>';
+	    					viewoutput += '<textarea id="replyContents' + element.no + '" rows="6" cols="130">' + element.contents + '</textarea>'
+	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="updateReply(' + element.no + ');">댓글수정</button>';
 	    					viewoutput += '</div></div>';
 
 	    					output += viewoutput;
@@ -96,6 +103,7 @@
   		         success : function(data) { // 통신 성공시 수행될 콜백 함수
 					if(data == "success") {
 						alert("댓글 등록 완료!");
+						
 						viewAllReplies();
 						$("#writer").val("");
 					} else if (data =="fail") {
@@ -111,12 +119,49 @@
 		
 	}
 	
+	function updateReply(no) {
+
+		let replyer = $("#replyer" + no).val();
+		let content = $("#replyContents" + no).val();
+		
+		let url = '/replies/update';
+		
+		let sendData = JSON.stringify({ // json 타입의 객체로 보이는 문자열 생성
+			no : no, replyer : replyer, contents : content 
+		});
+
+  		 $.ajax({
+  		         url : url, // ajax와 통신 할 곳
+  		         data : sendData, // 서블릿에 보낼 데이터
+  		         dataType : "text", // 수신될 데이터의 타입
+  		         type : "post", // 통신 방식
+				 headers : {
+					 "content-type" : "application/json",
+					 "X-HTTP-Method-Override" : "POST"
+				 },
+
+  		         success : function(data) { // 통신 성공시 수행될 콜백 함수
+					if(data == "success") {
+						alert("댓글 수정 완료!");
+						viewAllReplies();
+					} else if (data =="fail") {
+						alert('댓글 수정 실패! \r\n 문제가 지속되면 상현이한테 연락하세요!');
+					}
+
+  		         },
+  		         error : function() { // 통신 실패시 수행될 콜백 함수
+
+  		         }
+
+  		      });  
+	}
+	
 	function showReply() {
 		$("#replyDiv").show(500);
 	}
 	
-	function showReply() {
-		$("#replyUpdate").show(500);
+	function ReReply(no) {
+		$("#replyUpdate" + no).show(500);
 	}
 	
 </script>
@@ -133,7 +178,7 @@
 		padding : 5px;
 	}
 	
-	#replyUpdate {
+	.replyUpdate {
 		boarder : 1px dotted #e1bee7;
 		display : none;
 		padding : 5px;
@@ -222,17 +267,16 @@
     	</div>
   	</div>
 	</div>
-   
+
 	      <button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>	  
-   
-         
+
     <div id="replyDiv" style="clear : both;">
       		<div class="form-group">
-      		
+
             <label for="replyer">작성자 :</label> <input type="text"
                class="form-control" id="replyer" name="replyer" ><span
                id="writerError" class="error"></span>
-               
+
             <label for="replyContents">댓글 내용:</label>
             <textarea id="replyContents" rows="6" cols="150"></textarea>
             <button type="button" class = "btn btn-danger" onclick="addReply();">댓글등록</button>
