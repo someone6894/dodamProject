@@ -16,12 +16,14 @@
 			alert("회원가입에 실패하셨습니다. \n 잠시후 다시 입력해주세요.");
 		}
 		
-		if (status == "logingsuccess") {
-			alert("로그인 성공!");
+		// phs : login test check 
+		// 2021.10.20 test success. -> hide
+// 		if (status == "logingsuccess") {
+// 			alert("로그인 성공!");
 			
-		} else if (status == "logingfail") {
-			alert("로그인 실패. \n 아이디와 비밀번호를 다시 확인해주세요.");
-		}
+// 		} else if (status == "logingfail") {
+// 			alert("로그인 실패. \n 아이디와 비밀번호를 다시 확인해주세요.");
+// 		}
 		
 
 	};
@@ -41,15 +43,17 @@
 <body>
 
 	<jsp:include page="../template.jsp"></jsp:include>
-	<div id="info"><h2>${memberInfo.userid } 님의 마이 페이지</h2>
+	<div id="info"><h2>${loginSession.userid } 님의 마이 페이지</h2>
 	<hr />
+<!-- 	회원가입시 저장된 정보 불러오기 성공 -> hide -->
 <%-- 	<div>${memberInfo }</div> --%>
-	<div>userid : ${memberInfo.userid }</div>
-	<div>password : ${memberInfo.password }</div>
-	<div>name : ${memberInfo.name }</div>
-	<div>email : ${memberInfo.email }</div>
-	<div>phone : ${memberInfo.phone }</div>
+<%-- 	<div>userid : ${memberInfo.userid }</div> --%>
+<%-- 	<div>password : ${memberInfo.password }</div> --%>
+<%-- 	<div>name : ${memberInfo.name }</div> --%>
+<%-- 	<div>email : ${memberInfo.email }</div> --%>
+<%-- 	<div>phone : ${memberInfo.phone }</div> --%>
 	<br/>
+	
 <%-- 	<div id='loginsession'> login_session : ${loginSession} </div> --%>
 	<div>login_session_userid : ${loginSession.userid }</div>
 	<div>login_session_password : ${loginSession.password }</div>

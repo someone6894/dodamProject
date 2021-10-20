@@ -46,6 +46,7 @@
   		            	if (ext == imgAr[i]) { // 이미지 파일이면
   		            		output += "<img src='../../resources/uploads/lcj" + data + "' />";
   		            		isImg = true;
+  		            		
   		  		            $("#upfileNameThumb").val(data); // 썸네일 이미지 
     		  		        let origin1 = data.substring(0, data.lastIndexOf("/") + 1); // db에는 슬러쉬로 들어간다.
   		  		            let origin2 = data.split("thumb_")[1];

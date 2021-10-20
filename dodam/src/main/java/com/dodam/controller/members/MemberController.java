@@ -47,7 +47,26 @@ public class MemberController {
 	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public void loginMember() {
+		
 	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logoutMember(HttpServletRequest request) {
+		
+		HttpSession ses = request.getSession();
+		ses.removeAttribute("loginSession"); // 로그인세션 갱신
+		System.out.println("ses.toString() : " + ses.toString());
+		
+		return "index";
+		
+	}
+	
+	@RequestMapping(value="/mypage", method=RequestMethod.GET)
+	public String mypageMember() {
+		
+		return "member/mbInfo";
+	}
+	
 	
 	@RequestMapping(value="/registerMember.do", method=RequestMethod.POST)
 	public String registerMember(MemberVo member, RedirectAttributes rt) {
@@ -91,7 +110,7 @@ public class MemberController {
 		}
 		
 		
-		return "redirect:/member/mbInfo";  
+		return "index";  
 	}
 	
 	

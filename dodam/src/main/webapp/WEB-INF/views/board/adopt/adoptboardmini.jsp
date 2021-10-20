@@ -71,7 +71,7 @@ $(function(){
 							</div>
 <!-- 								<div>${board.no }</div> -->
 <!-- 								<div>${board.adoptarea }</div> -->
-								<div><img src= ../resources/${board.image} width= '200px' height= '200px' /></div>
+								<div><img src= ../../resources/${board.image} width= '200px' height= '200px' /></div>
 								<div>${board.title }</div>
 <!-- 								<div>${board.contents }</div> -->
 								<div>${board.regdate }</div>

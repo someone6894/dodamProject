@@ -148,10 +148,33 @@ function ActiveBar(){
             <a href="/member/register">
                <span class="glyphicon glyphicon-user"></span> 회원가입</a>
          </li>
-         <li>
-            <a href="/member/login">
-               <span class="glyphicon glyphicon-log-in"></span> 로그인</a>
-         </li>
+        
+           <c:choose>
+				<c:when test="${loginSession == null }">
+				 <li>
+				 	 <a href="/member/login"> <span class="glyphicon glyphicon-log-in"></span> 로그인</a>
+         		</li>
+				</c:when>
+           </c:choose>
+           
+            <c:choose>
+				<c:when test="${loginSession != null }">
+				 <li>
+				 	 <a href="/member/mypage"> <span class="glyphicon glyphicon-user"></span> 마이페이지 </a>
+         		</li>
+				</c:when>
+          	 </c:choose>
+          	 
+             <c:choose>
+				<c:when test="${loginSession != null }">
+				 <li>
+				 	 <a href="/member/logout"> <span class="glyphicon glyphicon-log-out"></span> 로그아웃</a>
+         		</li>
+				</c:when>
+          	 </c:choose>
+          	 
+          	 
+           
       </ul>
    </div>
 

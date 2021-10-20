@@ -24,11 +24,11 @@ public class AdoptBoardDAOImpl implements AdoptBoardDAO {
 	public int insertBoardVo(AdoptVo bo) throws NamingException, SQLException {
 		int result = 0;
 		if (bo.getNotimage().equals("") && !bo.getImage().equals("")) { // 이미지 인경우
-			bo.setImage("uploads" + bo.getImage());
-			bo.setThumbimage("uploads" + bo.getThumbimage());
+			bo.setImage("uploads/phs" + bo.getImage());
+			bo.setThumbimage("uploads/phs" + bo.getThumbimage());
 			result = ses.insert(namespace + ".createBoardWithImage", bo);
 		} else if (bo.getImage().equals("") && !bo.getNotimage().equals("")) { // 이미지 파일이 아닌경우
-			bo.setNotimage("uploads" + bo.getNotimage());
+			bo.setNotimage("uploads/phs" + bo.getNotimage());
 		} else if (bo.getImage().equals("") && bo.getImage().equals("")) { // 파일 올리지 않았을때
 			result = ses.insert(namespace + ".createBoard", bo);
 		}
@@ -85,11 +85,11 @@ public class AdoptBoardDAOImpl implements AdoptBoardDAO {
 	public int updateBoard(AdoptVo bo) throws NamingException, SQLException {
 		int result = 0;
 		if (bo.getNotimage().equals("") && !bo.getImage().equals("")) { // 이미지 인경우
-			bo.setImage("uploads" + bo.getImage());
-			bo.setThumbimage("uploads" + bo.getThumbimage());
+			bo.setImage("uploads/phs" + bo.getImage());
+			bo.setThumbimage("uploads/phs" + bo.getThumbimage());
 			result = ses.update(namespace + ".updateBoardWithImage", bo);
 		} else if (bo.getImage().equals("") && !bo.getNotimage().equals("")) { // 이미지 파일이 아닌경우
-			bo.setNotimage("uploads" + bo.getNotimage());
+			bo.setNotimage("uploads/phs" + bo.getNotimage());
 		} else if (bo.getImage().equals("") && bo.getImage().equals("")) { // 파일 올리지 않았을때
 			result = ses.update(namespace + ".updateBoard", bo);
 		}

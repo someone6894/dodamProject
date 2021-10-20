@@ -318,10 +318,6 @@ function updateBoard(no) {
 
 	<jsp:include page="../../template.jsp"></jsp:include>
 	
-
-
-
-	<img src="dodam/images/1.jpg" width="500px" height="500px" />
 						
 						
 	<div class="container"
@@ -437,11 +433,11 @@ function updateBoard(no) {
 				<c:when test="${board.image == '' }">
 				</c:when>
 				<c:when test="${board.image != null }">
-					<img src="../resources/${board.image }" width="500px"
+					<img src="../../resources/${board.image }" width="500px"
 						height="500px" />
 				</c:when>
 				<c:when test="${board.notimage != null }">
-					<a href='../resources/${board.notimage }'>${board.notimage }</a>
+					<a href='../../resources/${board.notimage }'>${board.notimage }</a>
 				</c:when>
 
 			</c:choose>

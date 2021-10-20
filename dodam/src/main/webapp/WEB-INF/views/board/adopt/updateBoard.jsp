@@ -46,7 +46,7 @@
 											let imgAr = [ "jpg", "png", "jpeg", "gif" ];
 											for (let i = 0; i < imgAr.length; i++) {
 												if (ext == imgAr[i]) { // 이미지 파일이면
-													output += "<img src='../resources/uploads/phs" + data + "' />";
+													output += "<img src='../../resources/uploads/phs" + data + "' />";
 
 													isImg = true;
 													$("#upfileNameThumb").val(data); // 썸네일 이미지 경로
@@ -60,12 +60,12 @@
 											}
 											if (!isImg) {
 												// 이미지 파일이 아니면
-												output += "<a href='../resources/uploads/phs" + data + "'>" + data + "</a>";
+												output += "<a href='../../resources/uploads/phs" + data + "'>" + data + "</a>";
 												$("#upfileName").val(data);
 											}
 
 											output += "<span id='" + data + "' onclick='delFile(this);'>"
-													+ "<img src='../resources/images/main/close.png' width='40px' />"
+													+ "<img src='../../resources/images/main/close.png' width='40px' />"
 													+ "</span>";
 											$(".fDropList").html(output);
 
