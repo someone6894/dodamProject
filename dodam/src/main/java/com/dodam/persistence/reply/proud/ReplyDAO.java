@@ -10,5 +10,9 @@ public interface ReplyDAO {
 		
 	// 댓글 달기
 		public int create(ReplyVo vo) throws Exception;
+
+	// 댓글 수정
+		public int update(ReplyVo vo) throws Exception;
+
 		
 }

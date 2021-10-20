@@ -27,4 +27,9 @@ public class ReplyDAOimpl implements ReplyDAO {
 		return ses.insert(ns + ".create", vo);
 	}
 
+	@Override
+	public int update(ReplyVo vo) throws Exception {
+		return ses.insert(ns + ".update", vo);
+	}
+
 }
