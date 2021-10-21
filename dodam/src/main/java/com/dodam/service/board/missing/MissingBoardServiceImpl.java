@@ -76,14 +76,13 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED) // 조회수 update문이 commit된 데이터(DML문이 먼저 나와야 한다)에 한해 select되도록 격리 레벨을 올림
 	@Override
-	public MissingBoardVo getMissingBoard(int no) throws Exception {
-		IPChecking ipCheck = new IPChecking();
-		String ip = ipCheck.getIp(); // ip 주소
-		
-		// 수정사항!! ########### // userid 실어보내야함!!!!! ############
-		
+	public MissingBoardVo getMissingBoard(int no, String userid) throws Exception {
+		if (userid == "") {
+			IPChecking ipCheck = new IPChecking();
+			userid = ipCheck.getIp(); // ip 주소
+		}
 
-		ReadCntVo ri = new ReadCntVo(no, ip, null, null); 
+		ReadCntVo ri = new ReadCntVo(no, userid, null, null); 
 		
 		Timestamp ts = dao.getLastReadTime(ri);
 		
@@ -161,6 +160,61 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 			result = true;
 		}
 		
+		return result;
+	}
+
+	@Override
+	public boolean updateLike(int no, String userid) {
+		System.out.println(no + ", " + userid);
+		boolean result = false;
+		int countUp = dao.updateLike(no);
+		
+		Map<String, Object> likeMap = new HashMap<String, Object>();
+		likeMap.put("userid", userid);
+		likeMap.put("no", no);
+		
+		int addHistory = dao.insertLikeHistory(likeMap);
+		
+		if (countUp == 1 || addHistory == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean updateDislike(int no, String userid) {
+		System.out.println(no + ", " + userid);
+		boolean result = false;
+		int countUp = dao.updateDislike(no);
+		
+		Map<String, Object> likeMap = new HashMap<String, Object>();
+		likeMap.put("userid", userid);
+		likeMap.put("no", no);
+		
+		int addHistory = dao.deleteLikeHistory(likeMap);
+		
+		if (countUp == 1 || addHistory == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int selectLikecount(int no) {
+		return dao.selectLikecount(no);
+	}
+
+	@Override
+	public boolean selectLikeHistory(int no, String userid) {
+		boolean result = false;
+		Map<String, Object> likeMap = new HashMap<String, Object>();
+		likeMap.put("no", no);
+		likeMap.put("userid", userid);
+		if (dao.selectLikeHistory(likeMap) != null) {
+			result = true;
+		}
 		return result;
 	}
 

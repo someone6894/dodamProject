@@ -124,7 +124,6 @@
 	
 	.container_list {
 		clear: both;
-		border-top: 5px solid #3C6E9F;
 	}
 	
 	input:focus {
@@ -147,7 +146,8 @@
 	}
 	
 	.above_category {
-		margin: 40px 0 0 25px;
+		margin: 40px 0 25px 0;
+		border-bottom: 5px solid #3C6E9F;
 	}
 	
 	#noResult {
@@ -200,7 +200,7 @@
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">
-				<a href="/missing/detail?no=${MissingBoard.no}" class="detailAnchor">
+				<a href="/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
 					<div class="col-sm-3">
 						<div class="img_container" style="padding: 20px 10px;">
 							<c:choose>

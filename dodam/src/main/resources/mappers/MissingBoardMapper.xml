@@ -54,4 +54,27 @@
   	insert into missingreadcntprocess(readno, ipaddress) values (#{readno}, #{ipaddress})
   </insert>
   
+  <update id="updateLike">
+  	update missingboard set likecount = likecount + 1 where no = #{no}
+  </update>
+  
+  <insert id="insertHistory">
+  	insert into missingboardlikehistory values (#{userid}, #{no})
+  </insert>
+  
+  <update id="updateDislike">
+  	update missingboard set likecount = likecount - 1 where no = #{no}
+  </update>
+  
+  <delete id="deleteHistory">
+  	delete from missingboardlikehistory where no = #{no} and userid = #{userid};
+  </delete>
+  
+  <select id="selectLikecount" resultType="int">
+    select likecount from missingboard where no = #{no}
+  </select>
+  
+  <select id="selectLikeHistory" resultType="com.dodam.domain.missing.LikeHistoryVo">
+  	select * from missingboardlikehistory where no = #{no} and userid = #{userid}
+  </select>
   </mapper>

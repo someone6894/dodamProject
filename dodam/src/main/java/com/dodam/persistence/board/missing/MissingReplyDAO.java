@@ -10,4 +10,6 @@ public interface MissingReplyDAO {
 
 	List<MissingReplyVo> selectAllReply(int pno);
 
+	int deleteReply(int no);
+
 }

@@ -10,4 +10,6 @@ public interface MissingReplyService {
 
 	List<MissingReplyVo> selectAllReply(int pno);
 
+	boolean deleteReply(int no);
+
 }

@@ -33,4 +33,14 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 		return dao.selectAllReply(pno);
 	}
 
+	@Override
+	public boolean deleteReply(int no) {
+		boolean result = false;
+		if (dao.deleteReply(no) == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
 }

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.dodam.domain.missing.LikeHistoryVo;
 import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
@@ -74,5 +75,35 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	@Override
 	public int updateCategory(Map<String, Object> categoryInfo) {
 		return ses.update(ns + ".updateCategory", categoryInfo);
+	}
+
+	@Override
+	public int updateLike(int no) {
+		return ses.update(ns + ".updateLike", no);
+	}
+
+	@Override
+	public int insertLikeHistory(Map likeMap) {
+		return ses.insert(ns + ".insertHistory", likeMap);
+	}
+
+	@Override
+	public int updateDislike(int no) {
+		return ses.update(ns + ".updateDislike", no);
+	}
+	
+	@Override
+	public int deleteLikeHistory(Map likeMap) {
+		return ses.insert(ns + ".insertHistory", likeMap);
+	}
+
+	@Override
+	public int selectLikecount(int no) {
+		return ses.selectOne(ns + ".selectLikecount", no);
+	}
+
+	@Override
+	public LikeHistoryVo selectLikeHistory(Map<String, Object> likeMap) {
+		return ses.selectOne(ns + ".selectLikeHistory", likeMap);
 	}
 }
