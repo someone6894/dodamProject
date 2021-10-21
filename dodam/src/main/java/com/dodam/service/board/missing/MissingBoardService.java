@@ -39,6 +39,9 @@ public interface MissingBoardService {
 
 
 	boolean selectLikeHistory(int no, String userid);
+
+
+	MissingBoardVo getMissingBoard(int no) throws Exception;
 	
 }
 

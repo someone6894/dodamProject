@@ -105,6 +105,14 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 
 		return mbv;
 	}
+	
+	@Override
+	public MissingBoardVo getMissingBoard(int no) throws Exception {
+		
+		MissingBoardVo mbv = dao.getMissingBoard(no);
+		
+		return mbv;
+	}
 
 	@Override
 	public boolean deleteBoard(int no) throws Exception {
