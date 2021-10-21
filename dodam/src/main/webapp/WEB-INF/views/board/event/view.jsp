@@ -17,6 +17,9 @@
 		
 	<label>내용</label><br />
 		${view.contents}<br />
+		
+		<img src= "${view.img}" style="width:20%"><br />
+		
 	<div>
 		<a href="/board/event/modify?no=${view.no}">게시물 수정</a>, <a href="/board/event/delete?no=${view.no}">게시물 삭제</a><a href="/board/event/listPage">글 목록</a>
 	</div>

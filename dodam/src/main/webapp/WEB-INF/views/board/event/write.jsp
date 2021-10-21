@@ -173,8 +173,8 @@
 			</div>
 
 			<div class="form-group">
-				<label for="content">내용 :</label>
-				<textarea rows="20" cols="150" id="content" name="content"></textarea>
+				<label for="contents">내용 :</label>
+				<textarea rows="20" cols="150" id="contents" name="contents"></textarea>
 
 			</div>
 
