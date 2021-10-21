@@ -32,7 +32,7 @@
 				<fmt:formatDate value="${list.registerdate}" pattern="yyyy-MM-dd" />
 				</td>
 				<td>${list.admin}</td>
-				<td>${list.readcount}</td>
+				<td>${list.readcnt}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
