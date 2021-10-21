@@ -95,7 +95,7 @@ function ActiveBar(){
    margin: 0 auto;
    position: relative;
    display: block;
-   padding-left: 300px;
+   padding-left: 200px;
 }
 
 .container li:active {
@@ -190,8 +190,8 @@ function ActiveBar(){
                <img src="../../resources/images/main/paw.png" width="24px;" style="padding: 0 6px 3px 0;"/>메인</a></li>
                       <li id="adoptBoard"><a href="/board/notice/listAll"><img src="../../resources/images/main/notice.png" width="24px;" style="padding: 0 6px 3px 0;"/>공지사항</a></li>
             <li id="adoptBoard"><a href="/missing/list"><img src="../../resources/images/main/missing.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾아요</a></li>
-            <li id="adoptBoard"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>보호중</a></li>
-<!--  <li><a href="/board/publicAdoptList"><img src="../resources/images/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a> -->
+            <li id="adoptBoard"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>분양해요</a></li>
+		    <li><a href="/board/adopt/publicAdoptList"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a>
             <li class="dropdown"><a href="/"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a>
                <ul class="dropdown-content" style="padding-left: 0;">
                   <li><a href="#">공공기관 찾기</a></li>

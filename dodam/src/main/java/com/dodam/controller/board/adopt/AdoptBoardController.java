@@ -1,7 +1,15 @@
 package com.dodam.controller.board.adopt;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +17,18 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -210,7 +223,7 @@ public class AdoptBoardController {
 
 	
 	// 공고 게시판 전체 글 보여주기
-//	// adoptboardPublic show list all
+	// adoptboardPublic show list all
 //	@RequestMapping(value = "/publicAdoptList", method = RequestMethod.GET)
 //	public void publicAdoptList(Model model) throws Exception {
 //
@@ -223,5 +236,111 @@ public class AdoptBoardController {
 //		model.addAttribute("listBoard", lst); // 게시판 글 데이터
 //
 //	}
+	
+	@CrossOrigin(origins = "http://localhost:8081") // 요청 자원을 허락할 origin
+	@RequestMapping(value = "/publicAdoptList", method = RequestMethod.GET)
+	public String publicAdoptList() throws Exception {
+		
+		return "board/adopt/public";
+	}
+	
+	
+	
+	// 유기동물 공고 api 불러오기
+	@RequestMapping(value = "/public.do", method = RequestMethod.GET)
+	public void publicDo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
 
-}
+		// 유기동물 보호관리 시스템. 유기동물 조회 api 주소
+		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20140301&endde=20140430&pageNo=1&numOfRows=10&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
+		
+
+//		String json = get(naverApiUrl, reqHeaders);
+		//
+		
+		
+		HttpURLConnection con = connect(apiUrl); // con 디비 접속 객체 = api 연결 준비
+		String adoptApiSource = null;
+		
+		
+		try {
+			con.setRequestMethod("GET"); // 통신방식 지정
+
+			int respCode = con.getResponseCode(); // 응답 코드 가져옴
+			
+			System.out.println("respCode : " + respCode); // 결과가 200이면 통신성공
+			if (respCode == HttpURLConnection.HTTP_OK) { // 응답 완료 == 통신성공
+				adoptApiSource = readBody(con.getInputStream()); // api 읽어와서 String타입 json 변수에 할당.
+			}
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("통신실패");
+			e1.printStackTrace();
+		} finally {
+			con.disconnect();
+		}
+		
+		//
+		System.out.println("받아온 adoptApiSource : " + adoptApiSource); 
+
+		response.setContentType("application/xml; charset=utf-8;");
+		PrintWriter out = response.getWriter();
+		out.print(adoptApiSource); // adoptApiSource 을 JSP의 ajax로 되돌려줌. => xml형식
+		
+	}
+	// 유기동물 공고 api 불러오기 publicDo 메소드 끝
+	
+	
+	// api url 접속개체 생성 메소드
+	private static HttpURLConnection connect(String apiUrl) {
+		HttpURLConnection con = null;
+
+		try {
+			URL url = new URL(apiUrl); // String 타입의 apiUrl 을 담은 url객체 생성
+			con = (HttpURLConnection) url.openConnection(); // 객체를 통해서 접속준비, HttpURLConnection 객체 con 에 할당
+		} catch (MalformedURLException e) {
+			System.out.println("url주소가 잘못되었습니다.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("서버 접속 실패");
+			e.printStackTrace();
+		}
+		return con;
+	}
+	// api url 접속개체 생성 메소드 끝
+	
+	
+	// db접속 con 객체 설정 한후의 응답코드로 api 읽어오는 메소드
+	private String readBody(InputStream inputStream ) { // InputStream 은 con.getInputStream()을 할당 받는다.
+
+		InputStreamReader streamReader = null;
+
+		try {
+			streamReader = new InputStreamReader(inputStream, "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		BufferedReader lineReader = new BufferedReader(streamReader);
+		StringBuilder responseBody = new StringBuilder();
+
+		String line = null;
+
+		try {
+			while ( (line = lineReader.readLine() ) != null ) {
+				responseBody.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return responseBody.toString();
+	}
+	// readBody 끝
+
+	
+	
+	
+} // controller 끝
