@@ -237,14 +237,13 @@ public class AdoptBoardController {
 //
 //	}
 	
-	@CrossOrigin(origins = "http://localhost:8081") // 요청 자원을 허락할 origin
+//	@CrossOrigin(origins = "http://localhost:8081") // 요청 자원을 허락할 origin
 	@RequestMapping(value = "/publicAdoptList", method = RequestMethod.GET)
 	public String publicAdoptList() throws Exception {
 		
 		return "board/adopt/public";
 	}
-	
-	
+
 	
 	// 유기동물 공고 api 불러오기
 	@RequestMapping(value = "/public.do", method = RequestMethod.GET)
@@ -252,12 +251,12 @@ public class AdoptBoardController {
 		request.setCharacterEncoding("utf-8");
 
 		// 유기동물 보호관리 시스템. 유기동물 조회 api 주소
-		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20140301&endde=20140430&pageNo=1&numOfRows=10&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
-		
+		// String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20140301&endde=20140430&pageNo=1&numOfRows=10&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
 
-//		String json = get(naverApiUrl, reqHeaders);
-		//
-		
+		// **경고 numOfRows 너무크게 주면 다운됨 **
+		// endde 없앰 -> 20210101 ~ 최근 자료까지나옴 , pageNo=1 , numOfRows=100 줌
+		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20210101&endde=&pageNo=1&numOfRows=100&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
+
 		
 		HttpURLConnection con = connect(apiUrl); // con 디비 접속 객체 = api 연결 준비
 		String adoptApiSource = null;
