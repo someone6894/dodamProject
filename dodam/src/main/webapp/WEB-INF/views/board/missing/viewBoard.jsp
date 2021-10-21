@@ -11,13 +11,14 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 
+  integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 	<script>
 		$(function() {
+
 			let imgAr = "${MissingBoard.img}".split(", ");
 			console.log(imgAr);
 			let output = "";
-			
-			// or 슬릭으로 해보던지??
 			
 			let imgCnt = 0;
 			for (let i=0; i<imgAr.length; i++) {
@@ -48,26 +49,140 @@
 			$("#animal_breed").html(animal);
 			$("#gender").html(gender);
 			
+			// 전화번호 뒷자리 로그인한 사용자에게만 공개되도록 설정
+			let contact = "${MissingBoard.contact }";
+			if ("${loginUser.userid}" == "") {
+				contact = contact.substring(0, 9) + "＊＊＊＊";
+				contact += "<div style='color: #3C6E9F;'>전화번호를 보러면 로그인하세요.</div>";
+			}
+			$("#contact").html(contact);
+			
+
+			// 찾았어요, 찾습니다 전환 버튼 나타나게 하기
 			if ("${MissingBoard.category}" == "missing") {
 				$("#category").attr("class", "foundBtn");
 				$("#category").html("찾았어요!");
 			} else {
 				$("#category").attr("class", "missingBtn");
 				$("#category").html("찾았어요 취소");
-				$("#found_span").html("<찾았어요>");
+				$("#found_span").html("<찾았어요!>");
 			}
 			
-			viewAllReplies();
+			// 글 작성자에게만 찾았어요, 찾습니다 버튼 나타나도록 설정
+			if("${loginSession.userid}" == "${MissingBoard.writer}") {
+				$("#category").show();
+			}
 			
-			$("#like").click(function() {
-				alert("좋아요 버튼 눌림!");
+			// 로그인 한 유저의 경우 좋아요 기록 가져와서 하트 채우기
+			if ("${loginSession.userid}" != "") {
+				let url = '/missing/likeHistory';
 				
-				// ####### id, no 넘겨줘서 ajax해야함!! ######
-				// missingboard like 추가하고, dislike는 -1하고, likehistory테이블 insert, delete 하기
-				
-			});
+				$.ajax({
+					url : url, // ajax와 통신 할 곳
+					data : {no : "${param.no}", userid : "${loginSession.userid}"}, // 서블릿에 보낼 데이터
+					dataType : "text", // 수신될 데이터의 타입
+					type : "GET", // 통신 방식
+					success : function(data) { // 통신 성공시 수행될 콜백 함수
+						console.log(data);
+						let output = '';
+						if (data == "exist") {
+							output += "<img src='../../resources/images/kmj/missing/like.png' id='dislike' onclick='Dislike();'/>";
+						} else {
+							output += "<img src='../../resources/images/kmj/missing/dislike.png' id='like' onclick='Like();'/>";
+						}
+						$("#likeSpan").html(output);
+					}
+				});
+			}
+			
+			
+
+			// 모든 댓글 가져오기
+			viewAllReplies();
 		
+			// 댓글 메뉴 이외의 배경 클릭시 메뉴리스트 사라지도록 설정
+			$('html').click(function(e) { 
+				if(!$(e.target).hasClass("target")) {
+					$(".replyMenu").hide();
+				}
+			});
+			
+			// JavaScript 코드---------------------------------------------------
+			// 삭제 모달에서 삭제 버튼 클릭시 게시물, 댓글 분기하여 삭제메서드 호출되도록 설정
+			document.getElementById("delete").addEventListener("click", function() {
+				closeRemove();
+				
+				let what = document.getElementsByClassName("boardOrReply")[0].innerHTML;
+				let no = document.getElementById("deleteNo").value;
+				if (what == "게시글") {
+					deleteBoard();
+				} else if (what == "댓글") {
+					deleteReply(no);
+				}
+			});
 		});
+		
+		// esc키 누르면 삭제모달 사라지면서 화면 잠김 해제 
+		$(document).keydown(function(event){ 
+			if(event.which=='27'){ 
+				$("#remove").fadeOut(300); 
+				$(".backLayer").fadeOut(1000); 
+				$('body').css("overflow", "scroll");
+			} 
+		}); 
+		
+		// 삭제모달 나타났을 때 보이는 반투명 배경 -> 윈도우가 resize될때마다 backLayer를 조정 
+		$(window).resize(function(){ 
+			let width = $(window).width(); 
+			let height = $(window).height(); 
+			$(".backLayer").width(width).height(height); 
+		});
+		
+		function Dislike() {
+		// 좋아요 버튼 클릭 해제 좋아요 수 -1 , 하트 비우기
+			let userid = "${loginSession.userid}";
+			let no = "${MissingBoard.no}";
+			
+			let url = "/missing/dislike";
+			
+			$.ajax({
+				url : url, // ajax와 통신 할 곳
+				data : {no : no, userid : userid}, // 서블릿에 보낼 데이터
+				dataType : "json", // 수신될 데이터의 타입
+				type : "POST", // 통신 방식
+				success : function(data) { // 통신 성공시 수행될 콜백 함수
+					console.log(data);
+					if (data.result == 1) {
+						let output = "<img src='../../resources/images/kmj/missing/dislike.png' id='like' onclick='Like();'/>";
+						$("#likeSpan").html(output);
+						$("#likecount").html(data.likecount);
+					}
+				}
+			});
+		}
+		
+		function Like() {
+		// 좋아요 버튼 클릭시 좋아요 수, 하트 채우기
+			let userid = "${loginSession.userid}";
+			let no = "${MissingBoard.no}";
+			
+			let url = "/missing/like";
+			
+			$.ajax({
+				url : url, // ajax와 통신 할 곳
+				data : {no : no, userid : userid}, // 서블릿에 보낼 데이터
+				dataType : "json", // 수신될 데이터의 타입
+				type : "POST", // 통신 방식
+				success : function(data) { // 통신 성공시 수행될 콜백 함수
+					console.log(data);
+					if (data.result == 1) {
+						let output = "<img src='../../resources/images/kmj/missing/like.png' id='dislike' onclick='Dislike();'/>";
+						$("#likeSpan").html(output);
+						$("#likecount").html(data.likecount);
+					}
+				}
+			});
+		}
 		
 		function process_animal() {
 			let animal = "";
@@ -115,9 +230,12 @@
 		}
 		
 		function showReply() {
-			$("#replyDiv").show(500);
+			$('#isSecret').prop('checked', false);
+			$("#replyContents").val("");
+			$("#replyDiv").fadeIn(500);
 		}
 		
+		// 찾았어요 찾았어요취소 버튼 바꾸는 메서드
 		function changeCategory() {
 			let status = $("#category").attr("class");
 			let category = '';
@@ -141,10 +259,12 @@
 						if (category == "found") {
 							$("#category").attr("class", "missingBtn");
 							$("#category").html("찾았어요 취소");
-							$("#found_span").html("<찾았어요>");
+							$("h1").css("color", "black");
+							$("#found_span").html("<찾았어요!>");
 						} else {
 							$("#category").attr("class", "foundBtn");
 							$("#category").html("찾았어요!");
+							$("h1").css("color", "#ff7f00");
 							$("#found_span").html("");
 						}
 					}
@@ -155,20 +275,27 @@
 		function addReply() {
 			let pno = "${param.no }";
 			pno = parseInt(pno);
-			let writer = "user01";
-			// let writer = "${loginMember.userid }";
+			let writer = "${loginSession.userid }";
 			let content = $("#replyContents").val();
 			let isSecret = 'N';
 			if (document.getElementById("isSecret").checked) {
 				isSecret = 'Y';
 			}
-			let url = '/missing/reply/register';
+			let url = '/missing/reply';
+			
+			let sendData = JSON.stringify({pno : pno, replyer : writer, contents : content, issecret : isSecret});
+			
+			console.log(sendData);
 			
 			$.ajax({
 	            url : url, // ajax와 통신 할 곳
-	            data : {pno : pno, replyer : writer, contents : content, issecret : isSecret}, // 서블릿에 보낼 데이터
+	            data : sendData, // 서블릿에 보낼 데이터
 	            dataType : "text", // 수신될 데이터의 타입
-	            type : "POST", // 통신 방식
+	            type : "PUT", // 통신 방식
+	            headers : {
+	            	"content-type" : "application/json",
+	            	"X-HTTP-Method-Override" : "GET" // 예전에 나온 프로그램은 PUT이나 DELETE방식을 모르기 때문에 비슷한 방법을 알려줘야함
+	            },
 	            success : function(data) { // 통신 성공시 수행될 콜백 함수
 	            	console.log(data);
 					if (data == "success") {
@@ -182,16 +309,15 @@
 	            error : function() { // 통신 실패시 수행될 콜백 함수
 
 	            }
-	         });
+	        });
 		}
 		
 		function viewAllReplies() {
 			let pno = "${param.no}";
 			
-			let url = "/missing/reply/viewAll";
+			let url = "/missing/reply/viewAll/" + pno;
 			$.ajax({
 	            url : url, // ajax와 통신 할 곳
-	            data : {pno : pno},
 	            dataType : "json", // 수신될 데이터의 타입
 	            type : "GET", // 통신 방식
 	            success : function(data) { // 통신 성공시 수행될 콜백 함수
@@ -200,72 +326,175 @@
 	            error : function() { // 통신 실패시 수행될 콜백 함수
 
 	            }
-	         });
+	        });
 		}
 		
 		function parseReply(data) {
 			if (data != null) {
 				console.log(data);
 				$("#replyLst").empty();
-				let output = '<ul class="list-group">'; // 보이는 댓글
+				let output = '<div class="list-group">'; // 보이는 댓글
 	    		$(data).each(function(i, element){
 	    			let secoutput ='';
 	    			let viewoutput = '';
+	        		let loginUser = '${loginSession.userid}'; // 로그인 유저
+	        		let bwriter = '${MissingBoard.writer}'; // 부모글 작성자
+	        		let replyer = element.replyer;
+	        		
 					// -------------- 비밀글 템플릿 ---------------------------
-	    			secoutput += '<li id="reply' + element.no + '" class="list-group-item">';
-	    			secoutput += '<div><img src="../resources/images/lock.png" width="15px" />';
+	    			secoutput += '<div id="reply' + element.no + '" class="list-group-item">';
+	    			secoutput += '<div><img src="../../resources/images/kmj/missing/lock.png" width="15px" />';
 	    			secoutput += ' 댓글 작성자가 비밀글로 처리한 글입니다. </div>';
-	    			secoutput += '</li>';
+	    			secoutput += '</div>';
 
 	    			// ------------비밀글이 아닌 댓글 템플릿 -----------------
-	    			viewoutput += '<li id="reply' + element.no + '" class="list-group-item">';
-	        		viewoutput += '<div id="'+ element.no +'" style="float:right; margin-right:10px;">' + 
-	        			'<img src="../resources/images/gear.png" width="25px" onclick="showReplyModify(' + element.no +')"/>';
-	        		viewoutput += '<img src="../resources/images/trash.png" width="25px" onclick="showReplyDel(' + element.no + ')"/></div>';
+	    			viewoutput += '<div id="reply' + element.no + '" class="list-group-item">';
+	        		if (loginUser != "") {
+	        			viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
+	        		}
 					viewoutput += '<div>작성자 : <span id="replyer'+ element.no +'">' + element.replyer + '</span></div>';
-	        		viewoutput += '<div id="orcontent' + element.no + '">내용 : ' + element.contents + '</div>';
+	        		viewoutput += '<div id="orcontent' + element.no + '">내용 : <div>' + element.contents + '</div></div>';
 	        		
 	        		regdate = calcReply(element.lastmodifieddate);
 	        		
 	        		viewoutput += '<div>작성일 : ' + regdate + '</div>';
+
 	        		
 	        		// -------------------------------------------------------
 	        		
-	        		let loginUser = '${loginMember.userid}'; // 로그인 유저
-	        		let bwriter = '${MissingBoard.writer}'; // 부모글 작성자
-	        		let replyer = element.replyer;
-	        		
 	        		if (element.issecret == 'Y') { // 비밀글이다
-						if (loginUser == "") { // 로그인 하지 않았다
-							output += secoutput;
-						} else { // 비밀글인데 로그인을 한 경우
-							if (loginUser == bwriter || loginUser ==  replyer) { // 보이는 조건에 해당
-								viewoutput += "<div style='color:red;'><img src='../resources/images/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
-								viewoutput += '</li>';
-								output += viewoutput;
-							} else { // 로그인을 했지만 보이는 조건에 맞지 않는 경우
-								output += secoutput;
+						if (loginUser == bwriter || loginUser ==  replyer) { // 보이는 조건에 해당
+								viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
+							if(loginUser == replyer) { // 댓글 작성자인 경우
+					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
+					       		viewoutput += '<li class="target" onclick="modifyReply(' + element.no + ')">수정하기</li>';
+					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
+					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
+					       		viewoutput += '<li class="target">신고하기</li>';
+					       		viewoutput += '<li class="target">차단하기</li></ul></div>';
 							}
+							viewoutput += '</div>';
+							output += viewoutput;
+							
+						} else { // 로그인을 했지만 보이는 조건에 맞지 않는 경우 or 비밀글인데 로그인을 하지 않은 경우
+							output += secoutput;
 						}
 	        		} else {
-	        			viewoutput += '</li>';
+	        			if(loginUser == replyer) { // 댓글 작성자인 경우
+					       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+					       	viewoutput += '<li class="target" onclick="modifyReply(' + element.no + ')">수정하기</li>';
+					       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+						} else if (loginUser == bwriter) { // 부모글 작성자인 경우
+					       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+					       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
+					       	viewoutput += '<li class="target">신고하기</li>';
+					       	viewoutput += '<li class="target">차단하기</li></ul></div>';
+						} else { // 비밀글이 아닌데 로그인을 한 경우 or 로그인을 하지 않은 경우
+			        		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+			        		viewoutput += '<li class="target replydel">신고하기</li>';
+			        		viewoutput += '<li class="target">차단하기</li></ul></div>';
+						}
+	        			
+	        			viewoutput += '</div>';
 	        			output += viewoutput;
 	        		}
 	    		}); // 반복문 끝
-	    		output += "</ul>";
+	    		output += "</div>";
 	    		
-	    		$("#replyLst").html(output);
+	    		if (data.length != 0) { // 댓글 data가 존재하면
+	    			$("#replyLst").html(output);
+	    			$("#replyLst").fadeIn(500);
+	    		} else {
+	    			$("#replyLst").fadeOut(500);
+	    		}
 	    	}
 		}
 		
-		// ####### 이거 이렇게 뷰단에서 계산해서 출력해야할까??? #########
+		// 댓글 단 날짜 표시하는 기준을 정하는 메서드
 		function calcReply(regdate) {
 			let diff = new Date() - regdate; // 댓글 단 시간과 현재시간의 차이
 			let diffSecond = diff / 1000; // 현재시간 초단위
 			if (diffSecond < 60 * 5) return '방금 전';
 			let diffMinutes = diffSecond / 60; // 분단위
-			if (diffMinutes < 60) return Math.floor(diffMinutes) + '분전';
+			if (diffMinutes < 60) return Math.floor(diffMinutes) + '분 전';
+			let diffHours = diffMinutes / 60; // 시간단위
+			if (diffHours < 24) return Math.floor(diffHours) + "시간 전";
+			let diffDays = diffHours / 24; // 일단위
+			if (diffDays < 7) return Math.floor(diffDays) + "일 전";
 			return new Date(regdate).toLocaleString();
+		}
+		
+		function showReplyMenu(no) {
+			$(".replyMenu").fadeOut(300);
+			$("#replyMenu" + no).fadeIn(300);
+		}
+
+		function remove(obj, no) {
+			if ($(obj).attr("class") == "target") {
+				$(".boardOrReply").html("댓글");
+			} else {
+				$(".boardOrReply").html("게시글");
+			}
+
+			$(".replyMenu").fadeOut(300);
+			
+			let width = $(window).width();
+			let height = $(window).height();
+			
+			//화면을 가리는 레이어의 사이즈 조정 
+			$(".backLayer").width(width); 
+			$(".backLayer").height(height); 
+			$(".backLayer").css("top", $(window).scrollTop());
+			
+			//화면을 가리는 레이어를 보여준다 (0.5초동안 30%의 농도의 투명도) 
+			$(".backLayer").fadeTo(500, 0.3); 
+			$('body').css("overflow", "hidden");
+			
+			
+			let div = $('#remove');
+			div.css("position", "absolute");
+			div.css("z-index", "999");
+			div.css("top", ((height - div.outerHeight()) / 2) + $(window).scrollTop() + "px");
+			div.css("left", ((width - div.outerWidth()) / 2) + $(window).scrollLeft() + "px");
+			$('#deleteNo').val(no);
+			$('#remove').fadeIn(500);
+		}
+		
+		function closeRemove() {
+			$('#remove').fadeOut(500);
+			$('body').css("overflow", "scroll");
+			$(".backLayer").fadeOut(1000); 
+		}
+		
+		function deleteReply(no) {
+			let url = "/missing/reply/" + no;
+			$.ajax({
+	            url : url, // ajax와 통신 할 곳
+	            dataType : "text", // 수신될 데이터의 타입
+	            type : "DELETE", // 통신 방식
+	            headers : {
+	            	"content-type" : "application/json",
+	            	"X-HTTP-Method-Override" : "POST" // 예전에 나온 프로그램은 PUT이나 DELETE방식을 모르기 때문에 비슷한 방법을 알려줘야함
+	            },
+	            success : function(data) { // 통신 성공시 수행될 콜백 함수
+	            	console.log(data);
+	            	if (data == "success") {
+						alert("댓글 삭제 완료!");
+						viewAllReplies();
+					} else if (data == "fail") {
+						alert("댓글 삭제 실패!\r\n 다시 시도해주세요!\r\n 계속 실패 시 고객응대 이메일로 문의해주세요.");
+					}
+	            },
+	            error : function() { // 통신 실패시 수행될 콜백 함수
+
+	            }
+	        });
+		}
+		
+		function modifyReply() {
+			$("#replyModify").show();
 		}
 	</script>
 	<style>
@@ -294,7 +523,7 @@
 		
 		.wrap {
 			width: 90%;
-			margin: auto;
+			margin: 100px auto;
 		}
 		
 		.add_border {
@@ -302,27 +531,28 @@
 		}
 		
 		.img_tr {
-			border-top: 1px solid #d9d9d9;
+			border-top: 1px solid #d5d5d5;
 		}
 		
 		#replyDiv {
-			boarder : 1px dotted #e1bee7;
 			display : none;
-			padding : 5px;
+			padding: 10px;
 		}
 		
 		textarea {
 			width: 80%;
 		}
 		
-		#like {
+		#like, #dislike {
 			width: 20px;
 			margin-bottom: 2px;
 			cursor: pointer;
 		}
 		
 		.foundBtn {
-			background-color: #ff7f00;
+			background-color: #3c6e9f;
+			padding-top: 4px;
+			color: #ffffff;
 			width: 130px;
 			height: 30px;
 			border-radius: 4px;
@@ -333,7 +563,8 @@
 		}
 		
 		.missingBtn {
-			background-color: #d9d9d9;
+			background-color: #d5d5d5;
+			padding-top: 4px;
 			width: 130px;
 			height: 30px;
 			border-radius: 4px;
@@ -344,7 +575,90 @@
 		}
 		
 		#found_span {
-			color: #008d62;
+			color: #008000;
+		}
+		
+		.replyMenu {
+			display: none;
+			position: absolute;
+			top: 35px;
+			right: -50px;
+			list-style: none;
+			z-index: 999;
+		}
+		
+		.replyMenu > li {
+			background-color: #ffffff;
+			padding: 8px 10px;
+			border: 1px solid #d5d5d5;
+			cursor: pointer;
+		}
+		
+		.replyMenu > li:first-child {
+			background-color: #ffffff;
+			padding: 8px 10px;
+			border: 1px solid #d5d5d5;
+			cursor: pointer;
+			border-radius: 4px 4px 0 0;
+		}
+		
+		.replyMenu > li:last-child {
+			background-color: #ffffff;
+			padding: 8px 10px;
+			border: 1px solid #d5d5d5;
+			cursor: pointer;
+			border-radius: 0 0 4px 4px;
+		}
+		
+		.replyMenu > li:hover {
+			background-color: #efefef;
+		}
+		
+		.target {
+			cursor: pointer;
+		}
+		
+		#category {
+			display: none;
+		}
+		
+		#replyLst {
+			margin: 25px auto;
+			border-top: 1px solid #d5d5d5;
+			padding-top: 30px;
+		}
+
+		#board_btn {
+			position: relative;
+			height: 25px;
+		}
+		
+		#list_btn {
+			position: absolute;
+			right:0px;
+		}
+		
+		#remove {
+			display: none;
+			background-color: #ffffff;
+			padding: 20px;
+			box-shadow: 1px 1px 3px 1px;
+		}
+		
+		div.backLayer {
+			display:none;
+			background-color:black;
+			position:absolute;
+			left:0px; 
+			top:0px; 
+		}
+		
+		div#loadingDiv { 
+			background-color:skyblue; 
+			display: none; 
+			position: absolute; 
+			width:300px; 
+			height:300px; 
 		}
 	</style>
 </head>
@@ -358,11 +672,16 @@
 					<!-- <td></td> -->
 				</tr>
 				<tr>
-					<td>
-						<div style="margin: 10px 0 20px 0;">${MissingBoard.writer } | 
+					<td style="padding-bottom: 10px;">
+						<div style="margin: 10px 0 10px 0;">${MissingBoard.writer } | 
 						<span id="registerdate"></span> |
 					 	조회 ${MissingBoard.readcount } | 좋아요 
-					 	<img src="../../resources/images/kmj/missing/dislike.png" id="like" /> ${MissingBoard.likecount } </div>
+					 	<c:if test="${loginSession.userid != null}">
+					 		<span id="likeSpan">
+					 			<img src="../../resources/images/kmj/missing/dislike.png" id="like" onclick="Like();" />
+					 		</span>
+					 	</c:if>
+					 	<span id="likecount"> ${MissingBoard.likecount }</span></div>
 					 	<div id="category" onclick="changeCategory();"></div>
 					 </td>
 					<!-- <td></td> -->
@@ -409,7 +728,8 @@
 								</tr>
 								<tr>
 									<td>연락처</td>
-									<td>${MissingBoard.contact }</td>
+									<c:if test=""></c:if>
+									<td id="contact"></td>
 									<!-- ####### 로그인한 회원에게만 연락처 노출될 수 있도록 함 ###### -->
 									<!-- 가짜연락처임 내가 임의로 만든 거임!!! 기억해... -->
 								</tr>
@@ -419,45 +739,56 @@
 					<!-- <td></td> -->
 				</tr>
 			</table>
-			<button type="button" class="btn btn-danger" onclick="location.href='/missing/list'">목록</button>
-			<button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>
-			<button type="button" class="btn btn-danger" onclick="location.href='/missing/modify?no=${MissingBoard.no}'">수정</button>
-			<button type="button" class="btn btn-danger" onclick="deleteBoard();">삭제</button>
+			<div id="board_btn">
+				<button type="button" class="btn btn-success" id="list_btn" onclick="location.href='/missing/list'">목록</button>
+				<c:if test="${loginSession.userid != null }">
+					<div>
+						<button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>
+						<button type="button" class="btn btn-danger" onclick="location.href='/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
+						<button type="button" class="btn btn-danger" onclick="remove(this, ${MissingBoard.no});">삭제</button>
+					</div>
+				</c:if>
+			</div>
 			
-			<div id="replyDiv" style="clear: both;">
+			<div id="replyDiv">
 				<div class="form-group">
 					<div class="checkbox">
-	  					<label><input type="checkbox" value="" id="isSecret">비밀글로 등록</label>
+	  					<label><input type="checkbox" id="isSecret">비밀글로 등록</label>
 					</div>
 	            	<label for="replyContents">댓글 내용: </label>
-	            	<div><textarea rows="6"  id="replyContents"></textarea></div>
+	            	<div><textarea rows="8" id="replyContents" style="width: 100%;"></textarea></div>
 	         	</div>
 	         	<button type="button" class="btn btn-danger" onclick="addReply();">댓글등록</button>
 			</div>
 			
-			<div id="replyLst"></div>
+			<div id="replyLst" style="display: none;"></div>
+
 			
 			<div id="replyModify" style="display: none;">
 				<div>댓글 수정</div>
 				<div class="form-group">
 					<div class="checkbox">
-	  					<label><input type="checkbox" value="" id="isSecretModify">비밀글로 등록</label>
+	  					<label><input type="checkbox" id="isSecretModify">비밀글로 등록</label>
 					</div>
 	            	<label for="replyContents">댓글 내용:</label>
 	            	<textarea rows="6" id="replyContentsModify"></textarea>
 	         	</div>
 	         	<button type="button" class="btn btn-danger" onclick="modifyReply();">댓글수정</button>
 			</div>
-			
-			<div id="replyRemove" style="display: none;">
-				<div>댓글 삭제</div>
-				<div class="form-group">
-					정말로 진심으로 진짜로 삭제할까요? (삭제된 댓글은 복구가 불가능 합니다!)
-				<button type="button" class="btn btn-info" onclick="closeRemove();">취소</button>
-				<button type="button" class="btn btn-warning" onclick="removeReply();">댓글 삭제</button>
-				</div>
-			</div>
 		</div>
 	</div>
+	
+	<div class='backLayer' style='position: absolute;' ></div>
+	<div id="remove">
+		<div style="font-size: 20px; margin-bottom: 10px;"><img src="../../resources/images/kmj/missing/exclamation.png" width="25px;" style="margin-bottom: 5px;"/> <span class="boardOrReply"></span> 삭제</div>
+		<div class="form-group">
+			삭제된 <span class="boardOrReply"></span>은 복구가 불가능합니다. 삭제할까요? <br />
+			<input type="hidden" id="deleteNo" />
+			<div style="float:right;">
+				<button type="button" class="btn btn-warning" id="delete">삭제</button>
+				<button type="button" class="btn" onclick="closeRemove();">취소</button>
+			</div>
+		</div>
+	</div> 
 </body>
 </html>

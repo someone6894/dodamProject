@@ -3,6 +3,7 @@ package com.dodam.controller.board.missing;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -123,10 +124,12 @@ public class MissingBoardController {
 	}
 	
 	@RequestMapping("/detail")
-	public String viewDetailPage(@RequestParam("no") int no, Model model) {
+	public String viewDetailPage(@RequestParam("no") int no,
+								@RequestParam("userid") String userid,
+								Model model) {
 		MissingBoardVo mb = null;
 		try {
-			mb = service.getMissingBoard(no);
+			mb = service.getMissingBoard(no, userid);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,10 +171,12 @@ public class MissingBoardController {
 	}
 	
 	@RequestMapping(value="/modify")
-	public String modfiyMissing(@RequestParam("no") int no, Model model) {
+	public String modfiyMissing(@RequestParam("no") int no,
+								@RequestParam("userid") String userid,
+								Model model) {
 		MissingBoardVo mb = null;
 		try {
-			mb = service.getMissingBoard(no);
+			mb = service.getMissingBoard(no, userid);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -204,14 +209,50 @@ public class MissingBoardController {
 		try {
 			if (service.updateCategory(no, category)) {
 				return new ResponseEntity<String>("success", HttpStatus.OK);
-			} else {
-				return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value="/like", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Integer>> updateLike(@RequestParam("no") int no,
+											@RequestParam("userid") String userid) {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		if (service.updateLike(no, userid)) {
+			int likecount = service.selectLikecount(no);
+			result.put("result", 1);
+			result.put("likecount", likecount);
+			return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+		}
+		
+		result.put("result", -1);
+		return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value="/dislike", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Integer>> updateDislike(@RequestParam("no") int no,
+											@RequestParam("userid") String userid) {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		if (service.updateDislike(no, userid)) {
+			int likecount = service.selectLikecount(no);
+			result.put("result", 1);
+			result.put("likecount", likecount);
+			return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
+		}
+		
+		result.put("result", -1);
+		return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value="likeHistory", method=RequestMethod.GET)
+	public ResponseEntity<String> selectLikeHistory(@RequestParam("no") int no,
+													@RequestParam("userid") String userid) {
+		if (service.selectLikeHistory(no, userid)) {
+			return new ResponseEntity<String>("exist", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("none", HttpStatus.BAD_REQUEST);
 	}
 	
 }

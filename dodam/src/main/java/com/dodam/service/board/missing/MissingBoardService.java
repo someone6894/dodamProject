@@ -15,7 +15,7 @@ public interface MissingBoardService {
 	// READ
 	Map<String, Object> selectMissingBoardList(ListParamDTO lpd) throws Exception;
 
-	MissingBoardVo getMissingBoard(int no) throws Exception;
+	MissingBoardVo getMissingBoard(int no, String userid) throws Exception;
 
 
 
@@ -27,6 +27,18 @@ public interface MissingBoardService {
 
 	// DELETE
 	boolean deleteBoard(int no) throws Exception;
+
+
+	boolean updateLike(int no, String userid);
+
+
+	boolean updateDislike(int no, String userid);
+
+
+	int selectLikecount(int no);
+
+
+	boolean selectLikeHistory(int no, String userid);
 	
 }
 

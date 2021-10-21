@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+import com.dodam.domain.missing.LikeHistoryVo;
 import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
@@ -46,6 +47,18 @@ public interface MissingBoardDAO {
 
 	// 조회수 증가하는 메서드
 	int updateReadCount(int no);
+
+	int updateLike(int no);
+
+	int insertLikeHistory(Map<String, Object> likeMap);
+
+	int updateDislike(int no);
+	
+	int deleteLikeHistory(Map<String, Object> likeMap);
+
+	int selectLikecount(int no);
+
+	LikeHistoryVo selectLikeHistory(Map<String, Object> likeMap);
 
 
 

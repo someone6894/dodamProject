@@ -27,4 +27,9 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 		return ses.selectList(ns + ".selectAllReply", pno);
 	}
 
+	@Override
+	public int deleteReply(int no) {
+		return ses.delete(ns + ".deleteReply", no);
+	}
+
 }

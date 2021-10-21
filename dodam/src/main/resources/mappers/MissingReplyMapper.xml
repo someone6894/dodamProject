@@ -12,4 +12,8 @@
   <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
   	select * from missingboardreply where pno = #{pno}
   </select>
+  
+  <delete id="deleteReply">
+  	delete from missingboardreply where no = #{no}
+  </delete>
   </mapper>
