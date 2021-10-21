@@ -12,18 +12,31 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
+	let categoryVal = 'missing';
 	$(function(){
-		console.log("${listMissingBoard}");
-		
-		console.log("${param.pageNo}");
+		if ("${param.location}" != "") {
+			$("#location").val("${param.location}");
+		}
+		if ("${param.animal}" != "") {
+			$("#animal").val("${param.animal}");
+		}
+		if ("${param.category}" == "" || "${param.category}" == "missing") {
+			$("#missing").css("background-color", "#3C6E9F");
+			$("#missing").css("color", "white");
+		} else if ("${param.category}" == "found") {
+			$("#found").css("background-color", "#3C6E9F");
+			$("#found").css("color", "white");
+		}
 		
 		for(let i="${pagingInfo.startPageNoOfBlock}"; i <= "${pagingInfo.endPageNoOfBlock}"; i++) {
 			console.log(i);
 			if ("${param.pageNo}" == "") {
 				$("#li1").children("a").css("color", "#ff7f00");
+				$("#li1").children("a").css("font-weight", "bold");
 				break;
 			} else if (i == "${param.pageNo}") {
 				$("#li"+i).children("a").css("color", "#ff7f00");
+				$("#li1").children("a").css("font-weight", "bold");
 				break;
 			}
 		}
@@ -46,6 +59,34 @@
 				}
 			}
 		});
+	}
+	
+	function setCategory(obj) {
+		categoryVal = $(obj).attr("id");
+		if (categoryVal == "missing") {
+			$("#missing").css("background-color", "#3C6E9F");
+			$("#missing").css("color", "white");
+			$("#found").css("background-color", "#d5d5d5");
+			$("#found").css("color", "black");
+		} else if (categoryVal == "found") {
+			$("#missing").css("background-color", "#d5d5d5");
+			$("#missing").css("color", "black");
+			$("#found").css("background-color", "#3C6E9F");
+			$("#found").css("color", "white");
+		}
+		
+		
+		// ##### 아작스 구현 #####
+		window.location.href = '/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
+	}
+	
+	function search() {
+		let searchWord = $("#keyword").val();
+		let location = $("#location").val();
+		let animal = $("#animal").val();
+		
+		window.location.href = '/missing/list?pageNo=1&searchWord=' + searchWord + '&location=' + location + '&animal=' + animal + '&category=' + categoryVal;
+		
 	}
 </script>
 <style>
@@ -76,13 +117,14 @@
 		height : 74%;
 	}
 	
-	.above_list {
+	.above_search {
 		float: right;
 		margin-right: 25px;
 	}
 	
 	.container_list {
 		clear: both;
+		border-top: 5px solid #3C6E9F;
 	}
 	
 	input:focus {
@@ -90,14 +132,40 @@
 		border-radius: 4px;
 	}
 	
+	.categoryBtn {
+		width: 140px;
+		height: 40px;
+		cursor: pointer;
+		display: table-cell;
+		text-align: center;
+		border: 1px solid black;
+		margin-top: 10px;
+		padding-top: 10px;
+		border-radius: 4px 4px 0 0;
+		border: none;
+		background-color: #d5d5d5;
+	}
+	
+	.above_category {
+		margin: 40px 0 0 25px;
+	}
+	
+	#noResult {
+		text-align: center;
+		margin : 50px;
+	}
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container wrap">
 		<h1>신고 목록</h1>
-		<div class="above_list">
-			<div>
-				<select>
+		<div class="above_search">
+			<div style="float: right;">
+				<button type="button" class="btn btn-primary" onclick="location.href='/missing/write'">글등록</button>
+			</div>
+			<div style="clear: right;">
+				<select id="location">
+					<option value="">--- 지역 ---</option>
 				    <option value="서울특별시">서울특별시</option>
 				    <option value="경기도">경기도</option>
 				    <option value="인천광역시">인천광역시</option>
@@ -116,17 +184,19 @@
 				    <option value="전라북도">전라북도</option>
 					<option value="제주특별자치도">제주도</option>
 				</select>
-				<select>
+				<select id="animal">
+					<option value="">-- 동물 --</option>
 					<option value="dog">강아지</option>
 					<option value="cat">고양이</option>
-					<option value="">다른 동물</option>
+					<option value="other">다른 동물</option>
 				</select>
 				<input type="text" id="keyword" />
-				<button type="button" class="btn btn-default" id="searchBtn">검색</button>
+				<div class="btn btn-default" id="searchBtn" onclick="search();">검색</div>
 			</div>
-			<div style="float: right;">
-				<button type="button" class="btn btn-primary" onclick="location.href='/missing/write'">글등록</button>
-			</div>
+		</div>
+		<div class="above_category">
+			<span class="categoryBtn" id="missing" onclick="setCategory(this);">찾습니다</span>
+			<span class="categoryBtn" id="found" onclick="setCategory(this);">찾았어요</span>
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">
@@ -174,17 +244,22 @@
 	<div style="text-align: center;">
 		<ul class="pagination">
 			<c:if test="${param.pageNo > 1 }">
-				<li><a href="/missing/list?&pageNo=1">&lt;&lt;</a></li>
-				<li><a href="/missing/list?&pageNo=${param.pageNo - 1 }">&lt;</a></li>
+				<li><a href="/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&lt;&lt;</a></li>
+				<li><a href="/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&lt;</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
-				<li id="li${i }"><a href="/missing/list?&pageNo=${i }">${i }</a></li>
+				<li id="li${i }"><a href="/missing/list?&pageNo=${i }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">${i }</a></li>
 			</c:forEach>
 			<c:if
 				test="${param.pageNo == null or param.pageNo < pagingInfo.totalPage }">
-				<li><a href="/missing/list?&pageNo=${param.pageNo + 1 }">&gt;</a></li>
-				<li><a href="/missing/list?&pageNo=${pagingInfo.totalPage }">&gt;&gt;</a></li>
+				<li><a href="/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&gt;</a></li>
+				<li><a href="/missing/list?&pageNo=${pagingInfo.totalPage }&searchWord=${param.searchWord }&location=${param.location }
+				&animal=${param.animal }&category=${category }">&gt;&gt;</a></li>
 			</c:if>
 		</ul>
 	</div>

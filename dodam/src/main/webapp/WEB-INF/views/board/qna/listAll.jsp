@@ -78,34 +78,28 @@
 
 
 
-<!-- 		<div style="margin-top: 15px; clear: right;"> -->
+	<div style="margin-top : 15px; clear:right;">
+			<ul class="pagination">
+            <c:if test="${param.pageNo > 1 }">
+               <li><a href="/board/qna/listAll?pageNo=1&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;&lt;</a></li>
+            </c:if>
+            <c:if test="${param.pageNo > 1 }">
+               <li>
+               <a href="/board/qna/listAll?pageNo=${param.pageNo - 1}&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;</a>
+            </c:if>
 
-<!-- 페이징 할 거 -->
-<!-- 			<ul class="pagination"> -->
-<%-- 				<c:if test="${param.pageNo > 1 }"> --%>
-<!-- 					<li><a -->
-<%-- 						href="/board/listAll?pageNo=1&searchType=${param.searchType}&searchWord=${param.searchWord}">&lt;&lt;</a></li> --%>
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${param.pageNo > 1 }"> --%>
-<!-- 					<li><a -->
-<%-- 						href="/board/listAll?pageNo=${param.pageNo - 1}&searchType=${param.searchType}&searchWord=${param.searchWord}">&lt;</a> --%>
-<%-- 				</c:if> --%>
-
-<%-- 				<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }" --%>
-<%-- 					end="${pagingInfo.endPageNoOfBlock }" step="1"> --%>
-<!-- 					<li><a -->
-<%-- 						href="/board/listAll?pageNo=${i }&searchType=${param.searchType}&searchWord=${param.searchWord}">${i }</a></li> --%>
-<%-- 				</c:forEach> --%>
-<%-- 				<c:if test="${param.pageNo < pagingInfo.totalPage }"> --%>
-<!-- 					<li><a -->
-<%-- 						href="/board/listAll?pageNo=${param.pageNo + 1 }&searchType=${param.searchType}&searchWord=${param.searchWord}">&gt;</a></li> --%>
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${param.pageNo < pagingInfo.totalPage }"> --%>
-<!-- 					<li><a -->
-<%-- 						href="/board/listAll?pageNo=${pagingInfo.totalPage }&searchType=${param.searchType}&searchWord=${param.searchWord}">&gt;&gt;</a></li> --%>
-<%-- 				</c:if> --%>
-<!-- 			</ul> -->
-<!-- 		</div> -->
+            <c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
+               end="${pagingInfo.endPageNoOfBlock }" step="1">
+               <li><a href="/board/qna/listAll?pageNo=${i }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">${i }</a></li>
+            </c:forEach>
+            <c:if test="${param.pageNo < pagingInfo.totalPage }">
+               <li><a href="/board/qna/listAll?pageNo=${param.pageNo + 1 }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;</a></li>
+            </c:if>
+            <c:if test="${param.pageNo < pagingInfo.totalPage }">
+               <li><a href="/board/qna/listAll?pageNo=${pagingInfo.totalPage }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;&gt;</a></li>
+            </c:if>
+         </ul>
+	</div>
 <!-- 주석처리 페이징 끝 -->
 
 	</div>

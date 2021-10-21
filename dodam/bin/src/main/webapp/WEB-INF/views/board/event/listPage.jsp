@@ -8,6 +8,9 @@
 <title>전시회 목록</title>
 </head>
 <body>
+
+<jsp:include page="../../template.jsp"></jsp:include>
+
 <table>
 		<thead>
 			<tr>
@@ -28,7 +31,7 @@
 				<td>
 				<fmt:formatDate value="${list.registerdate}" pattern="yyyy-MM-dd" />
 				</td>
-				<td>${list.readcount}</td>
+				<td>${list.readcnt}</td>
 				<td>${list.likecount}</td>
 			</tr>
 		</c:forEach>
@@ -36,9 +39,13 @@
 </table>	
 
 <div>
+		<a href="/board/event/write">게시물 작성</a>
+	</div>
+
+<div>
 		<c:forEach begin="1" end="${pageNum }" var="num">
 			<span>
-				<a href="/eventboard/listPage?num=${num }">${num}</a>
+				<a href="/board/event/listPage?num=${num }">${num}</a>
 			</span>
 		</c:forEach>
 </div>

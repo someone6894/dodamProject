@@ -28,8 +28,7 @@
   	
 <!--   	업데이트 -->
 	<update id="updateBoard">
-		UPDATE qna SET contents=#{contents} where no = #{no}
-
+		UPDATE qna SET contents = #{contents}, title = #{title} where no = #{no}
 	</update>
   	
   	

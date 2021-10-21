@@ -9,6 +9,8 @@ import javax.naming.NamingException;
 
 import org.springframework.stereotype.Service;
 
+import com.dodam.domain.proud.PagingProud;
+import com.dodam.domain.qna.PagingQna;
 import com.dodam.domain.qna.QnaVo;
 import com.dodam.persistence.board.qna.QnaBoardDAO;
 
@@ -19,12 +21,31 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
 
 	@Override
-	public Map<String, Object> readAllBoard() throws NamingException, SQLException {
+	public Map<String, Object> readAllBoard(int pageNo) throws NamingException, SQLException {
+		PagingQna pi = pagingProcess(pageNo);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("boardList", dao.selectAllBoard());
+		map.put("boardList", dao.selectAllBoard(pageNo, pi));
+		map.put("pagingInfo", pi);
 		return map;
 	}
 
+	private PagingQna pagingProcess(int pageNo) throws NamingException, SQLException {
+		 PagingQna pi = new PagingQna();
+	      
+	      pi.setStartNum(pageNo);  // 출력 시작할 번호
+	      int totalPost = 0;
+	     
+	      totalPost = dao.selectCntPost();
+	         pi.setTotalPage(totalPost); // 전체 페이지 수
+	         pi.setCurrentPagingBlock(pageNo); // 현재 페이지블록
+
+	         pi.setStartPageNoOfBlock(pi.getCurrentPagingBlock()); // 시작 페이지 블록
+	         pi.setEndPageNoOfBlock(pi.getStartPageNoOfBlock()); // 끝 페이지 블록
+	         pi.setTotalPagingBlockCnt(pi.getTotalPage()); 		// 페이지 블록 갯수
+	         
+	         System.out.println(pi.toString());
+	      return pi;
+	   }
 	
 //내가
 	@Override

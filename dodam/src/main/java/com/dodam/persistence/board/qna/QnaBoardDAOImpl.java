@@ -9,6 +9,8 @@ import javax.naming.NamingException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.dodam.domain.proud.PagingProud;
+import com.dodam.domain.qna.PagingQna;
 import com.dodam.domain.qna.QnaVo;
 
 @Repository
@@ -19,8 +21,9 @@ public class QnaBoardDAOImpl implements QnaBoardDAO {
 	@Inject
 	private SqlSession ses;
 
+
 	@Override
-	public List<QnaVo> selectAllBoard() throws NamingException, SQLException {
+	public List<QnaVo> selectAllBoard(int pageNo, PagingQna pi) throws NamingException, SQLException {
 		List<QnaVo> lst = null;
 		lst = ses.selectList(namespace + ".selectAllBoard");
 
@@ -47,6 +50,13 @@ public class QnaBoardDAOImpl implements QnaBoardDAO {
 	@Override
 	public int updateBoard(QnaVo vo) throws NamingException, SQLException {
 		return ses.update(namespace + ".updateBoard", vo);
+	}
+
+	
+
+	@Override
+	public int selectCntPost() throws NamingException, SQLException {
+		return ses.selectOne(namespace + ".getTotalPostCnt");
 	}
 	
 	

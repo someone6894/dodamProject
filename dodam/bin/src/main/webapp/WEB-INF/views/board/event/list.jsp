@@ -36,6 +36,10 @@
 			</tr>
 		</c:forEach>
 	</tbody>
+	
 </table>	
+<div>
+		<a href="/board/event/write">게시물 작성</a>
+	</div>
 </body>
 </html>

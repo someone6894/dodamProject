@@ -106,9 +106,11 @@
 			onclick="location.href='/board/qna/listAll?pageNo=1'">목록으로</button>
 
 		<button type="button" class="btn btn-info" style="float : left;"
-			onclick="deleteBoard(${board.no})">삭제</button>
+			onclick="deleteBoard(${board.no})">글 삭제하기</button>
 		
-		
+		<button type="button" class="btn btn-success"
+         onclick="location.href='/board/qna/modifyBoard?no=${board.no }'">글 수정</button>
+         
 		<div id="replyDiv" style="clear : both;">
 			<div class="form-group">
 				<div class="checkbox">

@@ -31,5 +31,8 @@
 		UPDATE qna SET contents = #{contents}, title = #{title} where no = #{no}
 	</update>
   	
+  	<select id="getTotalPostCnt" resultType="int">
+			select count(*) from qna
+  	</select>
   	
   </mapper>
