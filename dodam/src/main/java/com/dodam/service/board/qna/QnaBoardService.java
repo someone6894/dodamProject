@@ -19,7 +19,7 @@ public interface QnaBoardService {
 			
 		// Read
 			// 게시판의 전체글 불러오기
-			Map<String, Object> readAllBoard() throws NamingException, SQLException;
+			Map<String, Object> readAllBoard(int pageNo) throws NamingException, SQLException;
 			
 			// 게시판 상세정보보기 번호로
 //			내가

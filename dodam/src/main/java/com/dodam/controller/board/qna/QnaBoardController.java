@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import com.dodam.domain.qna.PagingQna;
 import com.dodam.domain.qna.QnaVo;
 import com.dodam.service.board.qna.QnaBoardService;
 
@@ -30,13 +32,22 @@ public class QnaBoardController {
 
 	//전체 리스트
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
-	public void listAll(Model model) throws Exception {
-
-		Map<String, Object> map = service.readAllBoard();
+	public void listAll(Model model, @RequestParam(value="pageNo", required=false, defaultValue="1") String tmp) throws Exception {
+		int pageNo = 1;
+		if(!tmp.equals("") || tmp != null) {
+			pageNo = Integer.parseInt(tmp);
+		} 
+		
+		
+		Map<String, Object> map = service.readAllBoard(pageNo);
 		List<QnaVo> lst = (List<QnaVo>)map.get("boardList");
+		PagingQna pi = (PagingQna)map.get("pagingInfo");
 
 		System.out.println(lst.toString());
+		
+		
 
+		model.addAttribute("pagingInfo", pi); // 페이징 정보0
 		model.addAttribute("qnaListBoard", lst);  // 게시판 글 데이터
 
 	}
