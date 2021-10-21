@@ -93,7 +93,7 @@ import com.dodam.service.board.event.EventBoardService;
 			 int count = service.count();
 			 
 			 //한 페이지에 출력할 게시물 갯수
-			 int postNum = 10;
+			 int postNum = 12;
 			 
 			 //하단 페이징 번호 [ (게시물 총 갯수 % 한페이지에 출력할 갯수) 의 올림]
 			 int pageNum = (int)Math.ceil((double)count/postNum);

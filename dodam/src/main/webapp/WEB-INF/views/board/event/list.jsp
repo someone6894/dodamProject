@@ -29,7 +29,6 @@
 				<td><a href="/board/event/view?no=${list.no}">${list.title}</a></td>
 				<td>${list.area}</td>
 				<td>
-				<fmt:formatDate value="${list.registerdate}" pattern="yyyy-MM-dd" />
 				</td>
 				<td>${list.admin}</td>
 				<td>${list.readcnt}</td>
