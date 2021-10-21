@@ -43,4 +43,28 @@ public class ReplyServiceImpl implements ReplyService {
 		return true;
 	}
 
+	@Override
+	public boolean deleteReply(ReplyVo vo) throws Exception {
+		boolean result = false;
+
+		int row = dao.delete(vo);
+		if (row == 1) {
+			result = true;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public boolean reReply(ReplyVo vo) throws Exception {
+		boolean result = false;
+
+		int row = dao.append(vo);
+		if (row == 1) {
+			result = true;
+		}
+		
+		return true;
+	}
+
 }

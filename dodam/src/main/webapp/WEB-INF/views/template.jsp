@@ -156,7 +156,7 @@ function ActiveBar(){
          		</li>
 				</c:when>
            </c:choose>
-           
+  
             <c:choose>
 				<c:when test="${loginSession != null }">
 				 <li>
@@ -173,8 +173,6 @@ function ActiveBar(){
 				</c:when>
           	 </c:choose>
           	 
-          	 
-           
       </ul>
    </div>
 

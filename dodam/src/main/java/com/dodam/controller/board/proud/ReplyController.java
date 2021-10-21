@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dodam.domain.proud.ReplyVo;
@@ -38,6 +39,20 @@ public class ReplyController {
 	      return result;
 	   }
 	   
+	   @RequestMapping(value="/replies", method=RequestMethod.POST)
+	   public ResponseEntity<String> reReply(@RequestBody ReplyVo vo) { // responseentity는 모델 개념 , 응답하는 데이터
+	      System.out.println(vo.toString());
+	      ResponseEntity<String> result = null;
+	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
+	         service.reReply(vo);
+	         result = new ResponseEntity<String>("success", HttpStatus.OK);
+	      } catch (Exception e) {
+	         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+	      }
+	      
+	      return result;
+	   }
+	   
 	   @RequestMapping(value="/all/{bno}", method = RequestMethod.GET)
 	   public ResponseEntity<List<ReplyVo>> list(@PathVariable("bno") int bno) { // URI에서 bno 값을 추출하여 변수 bno에 할당
 
@@ -55,8 +70,8 @@ public class ReplyController {
 	   
 	   @RequestMapping(value="/update", method=RequestMethod.POST)
 	   public ResponseEntity<String> updateReply(@RequestBody ReplyVo vo) { // responseentity는 모델 개념 , 응답하는 데이터
-	      System.out.println("Replies... POST... 글등록 시작");
-	      System.out.println(vo.toString());
+	      
+		  System.out.println(vo.toString());
 	      ResponseEntity<String> result = null;
 	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
 	         service.updateReply(vo);
@@ -67,4 +82,20 @@ public class ReplyController {
 	      
 	      return result;
 	   }
+	   
+	   @RequestMapping(value="/delete", method=RequestMethod.POST)
+	   public ResponseEntity<String> deleteReply(@RequestBody ReplyVo vo) { // responseentity는 모델 개념 , 응답하는 데이터
+
+		   System.out.println(vo.toString());
+		   ResponseEntity<String> result = null;		   
+		   try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
+		         service.deleteReply(vo);
+		         result = new ResponseEntity<String>("success", HttpStatus.OK);
+		      } catch (Exception e) {
+		         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		      }
+		   
+		   return result;
+	   }
+	   
 }

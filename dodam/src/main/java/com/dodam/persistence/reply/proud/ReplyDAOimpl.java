@@ -29,7 +29,17 @@ public class ReplyDAOimpl implements ReplyDAO {
 
 	@Override
 	public int update(ReplyVo vo) throws Exception {
-		return ses.insert(ns + ".update", vo);
+		return ses.update(ns + ".update", vo);
+	}
+
+	@Override
+	public int delete(ReplyVo vo) throws Exception {
+		return ses.delete(ns + ".delete", vo);
+	}
+
+	@Override
+	public int append(ReplyVo vo) throws Exception {
+		return ses.insert(ns + ".append", vo);
 	}
 
 }

@@ -10,7 +10,14 @@ public interface ReplyService {
 			
 	// 댓글 달기
 			public boolean addReply(ReplyVo vo) throws Exception;
-			
+
+	// 대댓글 달기
+			public boolean reReply(ReplyVo vo) throws Exception;
+
+	// 댓글 수정 
 			public boolean updateReply(ReplyVo vo) throws Exception;
+			
+	// 댓글 삭제
+			public boolean deleteReply(ReplyVo vo) throws Exception;
 			
 }
