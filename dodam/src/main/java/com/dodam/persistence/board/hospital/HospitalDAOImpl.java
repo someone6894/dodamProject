@@ -22,27 +22,22 @@ public class HospitalDAOImpl implements HospitalDAO {
 	
 	@Override
 	public List<SeoulHospitalVo> Allseoullist() throws SQLException, NamingException {	//서울시 전체 병원리스트 가져오기
-		// TODO Auto-generated method stub
-		return null;
+		return ses.selectList(namespace + ".Allseoullist");
 	}
 
 	@Override
 	public List<SeoulHospitalVo> cityseoullist() throws SQLException, NamingException {	// 서울시 지역별 동물병원 리스트 가져오기
-		List<SeoulHospitalVo> lst = null;
-		
-		return null;
+		return ses.selectList(namespace + ".cityseoullist");
 	}
 
 	@Override
 	public List<GyeonggiHospitalVo> Allgyeonggilist() throws SQLException, NamingException {	// 경기도 전체 동물병원 리스트 가져오기
-		// TODO Auto-generated method stub
-		return null;
+		return ses.selectList(namespace + ".Allgyeonggilist");
 	}
 
 	@Override
 	public List<GyeonggiHospitalVo> citygyeonggillist() throws SQLException, NamingException { 	// 경기도 지역별 동물병원 리스트 가져오기
-		// TODO Auto-generated method stub
-		return null;
+		return ses.selectList(namespace + ".citygyeonggillist");
 	}
 
 }

@@ -53,22 +53,22 @@
 			${pagingInfo }
 			<ul class="pagination">
 				<c:if test="${param.pageNo > 1 }">
-					<li><a href="/board/listAll?pageNo=1&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;&lt;</a></li>
+					<li><a href="/board/hosptal/listAll?pageNo=1&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;&lt;</a></li>
 				</c:if>
 				<c:if test="${param.pageNo > 1 }">
 					<li>
-					<a href="/board/listAll?pageNo=${param.pageNo - 1}&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;</a>
+					<a href="/board/hosptal/listAll?pageNo=${param.pageNo - 1}&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;</a>
 				</c:if>
 
 				<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 					end="${pagingInfo.endPageNoOfBlock }" step="1">
-					<li><a href="/board/listAll?pageNo=${i }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">${i }</a></li>
+					<li><a href="/board/hosptal/listAll?pageNo=${i }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">${i }</a></li>
 				</c:forEach>
 				<c:if test="${param.pageNo < pagingInfo.totalPage }">
-					<li><a href="/board/listAll?pageNo=${param.pageNo + 1 }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;</a></li>
+					<li><a href="/board/hosptal/listAll?pageNo=${param.pageNo + 1 }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;</a></li>
 				</c:if>
 				<c:if test="${param.pageNo < pagingInfo.totalPage }">
-					<li><a href="/board/listAll?pageNo=${pagingInfo.totalPage }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;&gt;</a></li>
+					<li><a href="/board/hosptal/listAll?pageNo=${pagingInfo.totalPage }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;&gt;</a></li>
 				</c:if>
 			</ul>
 		</div>
