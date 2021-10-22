@@ -17,35 +17,20 @@
 	<div class="container"> <br/>
 	
 		<h2>전시회 목록</h2><br/>
-			<table class= "table table-striped" style="text-align:center; border: 1px solid#dddddd">
-				<thead>
-					<tr>
-						<th style="background-color: #eeeeee; text-align: center;">번호</th>
-						<th style="background-color: #eeeeee; text-align: center;">제목</th>
-						<th style="background-color: #eeeeee; text-align: left;"></th>
-						<th style="background-color: #eeeeee; text-align: center;">작성일</th>
-						<th style="background-color: #eeeeee; text-align: center;">지역</th>
-						<th style="background-color: #eeeeee; text-align: center;">조회수</th>
-						<th style="background-color: #eeeeee; text-align: center;">좋아요</th>
-						
+		<!-- 카테고리 컬럼명 검색 -->
+	  <div class="w3-row-padding w3-padding-16 w3-center" id="event">
+	<c:forEach items = "${list }" var ="list">
+	<div class="w3-quarter" style="margin-bottom:35px">
+	<a href="/board/event/view?no=${list.no}">
+      <img src="${list.thumbimg }" style="height:350px">
+      <h3>${list.title }</h3>
+      <p>${list.contents }</p>
+      </a>
+    </div>
+	</c:forEach>
 	
+	</div>
 
-	<tbody>
-		<c:forEach items = "${list }" var ="list">
-			<tr>
-				<td>${list.no}</td>
-				<td><a href="/board/event/view?no=${list.no}">${list.title}</a></td>
-				<td><img src= "${list.thumbimg}" style="width:30%"></td>
-				<td>
-				<fmt:formatDate value="${list.registerdate}" pattern="yyyy-MM-dd" />
-				</td>
-				<td>${list.area}</td>
-				<td>${list.readcnt}</td>
-				<td>${list.likecount}</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>	
 </div>
 <div>
 		<a href="/board/event/write" class="btn btn-primary pull-right">게시물 작성</a>
@@ -54,14 +39,14 @@
 
   <div class="w3-center w3-padding-32">
     <div class="w3-bar">
+    	<a href="#" class="w3-bar-item w3-button #3C6E9F">«</a>
 		<c:forEach begin="1" end="${pageNum }" var="num">
 			<span>
-			    <a href="#" class="w3-bar-item w3-button #3C6E9F">«</a>
-				<a href="/board/event/listPage?num=${num }" class="w3-bar-item #3C6E9F w3-button" >${num}</a>
-				<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
-				
+				<a href="/board/event/listPage?num=${num }" class="w3-bar-item #3C6E9F w3-button" >${num}</a>				
 			</span>
 		</c:forEach>
+		<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
+		
 	</div>
 </div>
 </body>
