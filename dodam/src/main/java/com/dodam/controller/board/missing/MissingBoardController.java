@@ -219,14 +219,14 @@ public class MissingBoardController {
 		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 	}
 	
-	@RequestMapping(value="/like", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Integer>> updateLike(@RequestParam("no") int no,
+	@RequestMapping(value="/bookmark", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Integer>> updateBookmark(@RequestParam("no") int no,
 											@RequestParam("userid") String userid) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		if (service.updateLike(no, userid)) {
-			int likecount = service.selectLikecount(no);
+		if (service.updateBookmark(no, userid)) {
+			int bookmarkCount = service.selectBookmarkCount(no);
 			result.put("result", 1);
-			result.put("likecount", likecount);
+			result.put("bookmarkCount", bookmarkCount);
 			return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
 		}
 		
@@ -234,14 +234,14 @@ public class MissingBoardController {
 		return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.BAD_REQUEST);
 	}
 	
-	@RequestMapping(value="/dislike", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Integer>> updateDislike(@RequestParam("no") int no,
-											@RequestParam("userid") String userid) {
+	@RequestMapping(value="/unbookmark", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Integer>> updateUnbookmark(@RequestParam("no") int no,
+															@RequestParam("userid") String userid) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		if (service.updateDislike(no, userid)) {
-			int likecount = service.selectLikecount(no);
+		if (service.updateUnbookmark(no, userid)) {
+			int bookmarkCount = service.selectBookmarkCount(no);
 			result.put("result", 1);
-			result.put("likecount", likecount);
+			result.put("bookmarkCount", bookmarkCount);
 			return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
 		}
 		
@@ -249,13 +249,13 @@ public class MissingBoardController {
 		return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.BAD_REQUEST);
 	}
 	
-	@RequestMapping(value="likeHistory", method=RequestMethod.GET)
-	public ResponseEntity<String> selectLikeHistory(@RequestParam("no") int no,
-													@RequestParam("userid") String userid) {
-		if (service.selectLikeHistory(no, userid)) {
+	@RequestMapping(value="/bookmarkHistory", method=RequestMethod.POST)
+	public ResponseEntity<String> selectBookmard(@RequestParam("no") int no,
+												@RequestParam("userid") String userid) {
+		if (service.selectBookmark(no, userid)) {
 			return new ResponseEntity<String>("exist", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("none", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("none", HttpStatus.OK);
 	}
 	
 }

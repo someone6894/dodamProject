@@ -29,16 +29,16 @@ public interface MissingBoardService {
 	boolean deleteBoard(int no) throws Exception;
 
 
-	boolean updateLike(int no, String userid);
+	boolean updateBookmark(int no, String userid);
 
 
-	boolean updateDislike(int no, String userid);
+	boolean updateUnbookmark(int no, String userid);
 
 
-	int selectLikecount(int no);
+	int selectBookmarkCount(int no);
 
 
-	boolean selectLikeHistory(int no, String userid);
+	boolean selectBookmark(int no, String userid);
 
 
 	MissingBoardVo getMissingBoard(int no) throws Exception;

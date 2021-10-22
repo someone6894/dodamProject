@@ -23,7 +23,7 @@ public class MissingReplyController {
 	@Inject
 	private MissingReplyService service;
 	
-	@RequestMapping(value="", method=RequestMethod.PUT)
+	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<String> registerReply(@RequestBody MissingReplyVo mrv) {
 		
 		if (service.insertReply(mrv)) {
@@ -51,5 +51,14 @@ public class MissingReplyController {
 		}
 		
 		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value="/{no}", method=RequestMethod.PUT)
+	public ResponseEntity<String> updateReply(@PathVariable("no") int no, @RequestBody MissingReplyVo mrv) {
+		
+		if (service.updateReply(mrv)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
 	}
 }
