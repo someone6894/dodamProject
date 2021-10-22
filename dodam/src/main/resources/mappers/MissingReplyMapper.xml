@@ -16,4 +16,8 @@
   <delete id="deleteReply">
   	delete from missingboardreply where no = #{no}
   </delete>
+  
+  <update id="updateReply">
+  	update missingboardreply set contents = #{contents}, issecret = #{issecret}, lastmodifieddate = #{ where no = #{no}
+  </update>
   </mapper>

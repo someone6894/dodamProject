@@ -14,7 +14,6 @@ import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
-import com.dodam.domain.missing.PagingInfoDTO;
 import com.dodam.domain.missing.ReadCntVo;
 
 @Repository
@@ -78,32 +77,32 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	}
 
 	@Override
-	public int updateLike(int no) {
-		return ses.update(ns + ".updateLike", no);
+	public int updateBookmark(int no) {
+		return ses.update(ns + ".updateBookmark", no);
 	}
 
 	@Override
-	public int insertLikeHistory(Map likeMap) {
-		return ses.insert(ns + ".insertHistory", likeMap);
+	public int insertBookmarkHistory(Map<String, Object> bookMap) {
+		return ses.insert(ns + ".insertHistory", bookMap);
 	}
 
 	@Override
-	public int updateDislike(int no) {
-		return ses.update(ns + ".updateDislike", no);
+	public int updateUnbookmark(int no) {
+		return ses.update(ns + ".updateUnbookmark", no);
 	}
 	
 	@Override
-	public int deleteLikeHistory(Map likeMap) {
-		return ses.insert(ns + ".insertHistory", likeMap);
+	public int deleteBookmarkHistory(Map<String, Object> bookMap) {
+		return ses.insert(ns + ".deleteHistory", bookMap);
 	}
 
 	@Override
-	public int selectLikecount(int no) {
-		return ses.selectOne(ns + ".selectLikecount", no);
+	public int selectBookmarkCount(int no) {
+		return ses.selectOne(ns + ".selectBookmarkCount", no);
 	}
 
 	@Override
-	public LikeHistoryVo selectLikeHistory(Map<String, Object> likeMap) {
-		return ses.selectOne(ns + ".selectLikeHistory", likeMap);
+	public LikeHistoryVo selectBookmark(Map<String, Object> bookMap) {
+		return ses.selectOne(ns + ".selectBookmarkHistory", bookMap);
 	}
 }

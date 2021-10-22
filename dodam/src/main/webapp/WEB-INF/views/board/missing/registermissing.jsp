@@ -149,11 +149,22 @@
 	function validate() {
 		let chkResult = false;
 		
-		if (titleChk() && missingdateChk() && contactChk() && contentsChk()) {
+		if (titleChk() && missingdateChk() && contactChk() && contentsChk() && sessionChk()) {
 			chkResult = true;
 		}
 		
 		return chkResult;
+	}
+	
+	// 세션에 로그인 객체가 살아 있는지 확인
+	function sessionChk() {
+		
+		if ("${loginSession.userid}" == '') {
+			alert("로그인이 만료되었습니다. 다시 로그인 해주세요!");
+			window.location.href = '/member/login';
+		}
+		
+		return true;
 	}
 	
 	// 제목은 필수 입력사항. 입력됐으면 true, 입력되지 않았으면 false 반환

@@ -9,7 +9,6 @@ import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
-import com.dodam.domain.missing.PagingInfoDTO;
 import com.dodam.domain.missing.ReadCntVo;
 
 public interface MissingBoardDAO {
@@ -48,17 +47,17 @@ public interface MissingBoardDAO {
 	// 조회수 증가하는 메서드
 	int updateReadCount(int no);
 
-	int updateLike(int no);
+	int updateBookmark(int no);
 
-	int insertLikeHistory(Map<String, Object> likeMap);
+	int insertBookmarkHistory(Map<String, Object> likeMap);
 
-	int updateDislike(int no);
+	int updateUnbookmark(int no);
 	
-	int deleteLikeHistory(Map<String, Object> likeMap);
+	int deleteBookmarkHistory(Map<String, Object> likeMap);
 
-	int selectLikecount(int no);
+	int selectBookmarkCount(int no);
 
-	LikeHistoryVo selectLikeHistory(Map<String, Object> likeMap);
+	LikeHistoryVo selectBookmark(Map<String, Object> likeMap);
 
 
 

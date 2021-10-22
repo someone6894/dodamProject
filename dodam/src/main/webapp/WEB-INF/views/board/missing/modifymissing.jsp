@@ -36,9 +36,9 @@
 			for(let i in thumbAr) {
 				if (thumbAr[i] != '') {
 					i = parseInt(i);
-					$(".fileContent").show();
+					// $(".fileContent").show();
 					console.log(i+1);
-					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbAr[i] + '" style="margin-right: 5px;" />' +
+					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbAr[i] + '" style="margin-right: 5px;" width="200px;" />' +
 						'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
 						
 					// 썸네일과 원래이미지를 input hidden에 저장
@@ -56,8 +56,8 @@
 			for (let i in imgAr) {
 				i = parseInt(i);
 				if (imgAr[i] != '') {
-					$(".fileContent").show();
-					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="' + imgAr[i] + '" style="margin-right: 5px;" />' +
+					// $(".fileContent").show();
+					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="' + imgAr[i] + '" style="margin-right: 5px;" width="200px;" />' +
 					'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delUrlImg(this);" /></span>';
 					
 					$("#upImgNameOrigin" + (i+1)).val(imgAr[i]);
@@ -130,7 +130,23 @@
 		});
 		
 		$("#cancelBtn").click(function() {
-			location.href='/missing/detail?no=${MissingBoard.no}';
+			location.href='/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}';
+		});
+		
+		$("#cancelBtn").click(function() {
+			location.href='/missing/list';
+		});
+		
+		$("#title").keyup(function() {
+			titleChk();
+		});
+		
+		$("#contents").keyup(function(e) {
+			contentsChk();
+		});
+		
+		$("#contact").keyup(function() {
+			contactChk();
 		});
 	});
 	
@@ -203,6 +219,102 @@
 	function showDropDiv() {
 		$(".fileContent").show();
 	}
+	
+	function validate() {
+		let chkResult = false;
+		
+		if (titleChk() && missingdateChk() && contactChk() && contentsChk() && sessionChk()) {
+			chkResult = true;
+		}
+		
+		return chkResult;
+	}
+	
+	// 세션에 로그인 객체가 살아 있는지 확인
+	function sessionChk() {
+		
+		if ("${loginSession.userid}" == '') {
+			alert("로그인이 만료되었습니다. 다시 로그인 해주세요!");
+			window.location.href = '/member/login';
+		}
+		
+		return true;
+	}
+	
+	// 제목은 필수 입력사항. 입력됐으면 true, 입력되지 않았으면 false 반환
+	function titleChk() {
+		let chkTitle = false;
+		let title = $("#title").val();
+		
+		if (title.length == 0) {
+			$("#title_notice").html("제목을 입력해주세요.");
+			$("#title").focus();
+		} else if(title.length > 0 && title.length < 50) {
+			$("#title_notice").html("");
+			chkTitle = true;
+		} else {
+			$("#title_notice").html("제목은 50자 이하이여야 합니다.");
+		}
+
+		return chkTitle;
+	}
+	
+	// 특이사항은 필수 입력사항. 입력됐으면 true, 입력되지 않았으면 false 반환
+	function contentsChk() {
+		let chkContents = false;
+		let contents = $("#contents").val();
+		
+		if (contents.length == 0) {
+			$("#contents_notice").html("특이사항을 입력해주세요.");
+			$("#contents").focus();
+		} else if(contents.length > 0 && contents.length < 5000) {
+			$("#contents_notice").html("");
+			chkContents = true;
+		} else {
+			$("#contents_notice").html("특이사항은 5000자 이하이여야 합니다.");
+		}
+		
+		return chkContents;
+	}
+	
+	// 실종날짜는 필수 입력사항. 입력됐으면 true, 입력되지 않았으면 false 반환
+	function missingdateChk() {
+		let chkMissingdate = false;
+		let missingdate = $("#missingdate").val();
+
+		if (missingdate.length == "") {
+			$("#missingdate_notice").html("실종날짜를 입력해주세요.");
+			$("#missingdate").focus();
+		} else {
+			$("#missingdate_notice").html("");
+			chkMissingdate = true;
+		}
+		
+		return chkMissingdate;
+	}
+	
+	function contactChk() {
+		let chkContact = false;
+		let contact = $("#contact").val();
+		let regEx = /^[0-9]{3}-[0-9]{3,4}-[0-9]{4}/;
+		
+		if (contact.length == 0) {
+			$("#contact_notice").html("연락처를 입력해주세요.");
+			$("#contact_notice").attr("class", "notice");
+			$("#contact").focus();
+		} else {
+			if (contact.match(regEx)) {
+				$("#contact_notice").html("");
+				chkContact = true;
+			} else {
+				$("#contact_notice").html("※ 010-0000-0000의 형식으로 입력해주세요.");
+				$("#contact_notice").attr("class", "notice");
+				$("#contact").focus();
+			}
+		}
+
+		return chkContact;
+	}
 </script>
 <style>
 	.fileContent {
@@ -218,7 +330,7 @@
 		padding: .5em .5em;
 		border: 1px solid #999;
 		font-family: inherit;
-		background: url('../resources/images/missing/arrow.jpg') no-repeat 100% 50%;
+		background: url('../resources/images/kmj/missing/arrow.jpg') no-repeat 100% 50%;
 		border-radius: 4px;
 		-webkit-appearance: none;
 		-moz-appearance: none;
@@ -237,12 +349,7 @@
 		text-align: center;
 	}
 	
-	#phone_notice {
-		font-size: 14px;
-		color: #808080;
-	}
-	
-	#phone_error {
+	.notice {
 		font-size: 14px;
 		color: #ff7f00;
 	}
@@ -259,6 +366,7 @@
 			    	<label class="control-label col-sm-2" for="title">제목</label>
 			      	<div class="col-sm-10">
 			        	<input type="text" class="form-control" id="title" name="title">
+			        	<span id="title_notice" class="notice"></span>
 			      	</div>
 			    </div>
 			    <div class="form-group">
@@ -340,18 +448,19 @@
 				      	<label class="control-label col-sm-2" for="missingdate">실종일자</label>
 				      	<div class="col-sm-3">          
 				        	<input type="date" class="form-control" id="missingdate" name="missingdate">
+				      		<span id="missingdate_notice" class="notice"></span>
 				      	</div>
 				      	<label class="control-label col-sm-2" for="contact">연락처</label>
 				      	<div class="col-sm-5">          
 				        	<input type="text" class="form-control" id="contact" name="contact">
-				        	<div id="phone_notice">※ 010-0000-0000의 형식으로 입력해주세요</div>
-				        	<div id="phone_error"></div>
+				        	<div id="contact_notice">※ 010-0000-0000의 형식으로 입력해주세요</div>
 				      	</div>
 				    </div>
 				    <div class="form-group">
 				      	<label class="control-label col-sm-2" for="contents">특이사항</label>
 				      	<div class="col-sm-10">          
 				        	<textarea class="form-control" id="contents" name="contents" rows="15">${MissingBoard.contents }</textarea>
+				      		<span id="contents_notice" class="notice"></span>
 				      	</div>
 				    </div>
 				    <div class="form-group">
@@ -379,7 +488,7 @@
 			    </fieldset>
 			    <div class="form-group">        
 			      <div class="col-sm-offset-2 col-sm-10">
-			        <button type="submit" class="btn btn-primary">수정</button>
+			        <button type="submit" class="btn btn-primary" onclick="return validate();">수정</button>
 			        <button type="button" class="btn btn-default" id="cancelBtn">취소</button>
 			      </div>
 			    </div>

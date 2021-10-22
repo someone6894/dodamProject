@@ -32,4 +32,9 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 		return ses.delete(ns + ".deleteReply", no);
 	}
 
+	@Override
+	public int updateReply(MissingReplyVo mrv) {
+		return ses.update(ns + ".updateReply", mrv);
+	}
+
 }

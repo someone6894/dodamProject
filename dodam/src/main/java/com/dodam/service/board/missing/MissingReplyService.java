@@ -12,4 +12,6 @@ public interface MissingReplyService {
 
 	boolean deleteReply(int no);
 
+	boolean updateReply(MissingReplyVo mrv);
+
 }

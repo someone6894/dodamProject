@@ -54,27 +54,27 @@
   	insert into missingreadcntprocess(readno, ipaddress) values (#{readno}, #{ipaddress})
   </insert>
   
-  <update id="updateLike">
+  <update id="updateBookmark">
   	update missingboard set likecount = likecount + 1 where no = #{no}
   </update>
   
   <insert id="insertHistory">
-  	insert into missingboardlikehistory values (#{userid}, #{no})
+  	insert into missingboardbookmark values (#{userid}, #{no})
   </insert>
   
-  <update id="updateDislike">
+  <update id="updateUnbookmark">
   	update missingboard set likecount = likecount - 1 where no = #{no}
   </update>
   
   <delete id="deleteHistory">
-  	delete from missingboardlikehistory where no = #{no} and userid = #{userid};
+  	delete from missingboardbookmark where no = #{no} and userid = #{userid};
   </delete>
   
-  <select id="selectLikecount" resultType="int">
+  <select id="selectBookmarkCount" resultType="int">
     select likecount from missingboard where no = #{no}
   </select>
   
-  <select id="selectLikeHistory" resultType="com.dodam.domain.missing.LikeHistoryVo">
-  	select * from missingboardlikehistory where no = #{no} and userid = #{userid}
+  <select id="selectBookmarkHistory" resultType="com.dodam.domain.missing.LikeHistoryVo">
+  	select * from missingboardbookmark where no = #{no} and userid = #{userid}
   </select>
   </mapper>

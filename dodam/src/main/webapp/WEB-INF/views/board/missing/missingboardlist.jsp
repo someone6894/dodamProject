@@ -75,8 +75,6 @@
 			$("#found").css("color", "white");
 		}
 		
-		
-		// ##### 아작스 구현 #####
 		window.location.href = '/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
 	}
 	
@@ -194,7 +192,7 @@
 				<div class="btn btn-default" id="searchBtn" onclick="search();">검색</div>
 			</div>
 		</div>
-		<div class="above_category">
+		<div class="above_category" style="clear: right">
 			<span class="categoryBtn" id="missing" onclick="setCategory(this);">찾습니다</span>
 			<span class="categoryBtn" id="found" onclick="setCategory(this);">찾았어요</span>
 		</div>
