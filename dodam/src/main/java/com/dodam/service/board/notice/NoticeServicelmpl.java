@@ -26,6 +26,12 @@ public class NoticeServicelmpl implements NoticeService {
 	public boolean insertNotice(NoticeVo nvo) throws NamingException, SQLException {
 		boolean insertNotice = false;
 
+		int result = dao.insertNotice(nvo);
+	
+		if (result == 1) { // 글쓰기 정상
+			insertNotice = true;	
+		}
+		
 		return insertNotice;
 	}
 	

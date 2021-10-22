@@ -51,21 +51,12 @@ public class NoticeController {
 	
 
 	
-	@RequestMapping(value="/createBoard", method = RequestMethod.POST)
-	public String createBoard(NoticeVo vo, RedirectAttributes rttr) throws NamingException, SQLException {
-		System.out.println(vo.toString());
-		
-		if (service.insertNotice(vo)) {
-			rttr.addFlashAttribute("result", "success");
-		} else {
-			rttr.addFlashAttribute("result", "fail");
-		}
-		
-		return "/board/notice/createnotice";
-		
-	}
+	@RequestMapping(value = "/createBoard", method = RequestMethod.GET)
+	public String createBoard() throws NamingException, SQLException {
 	
-
+		
+		return "/board/notice/createBoard";
+	}
 	
 
 	
