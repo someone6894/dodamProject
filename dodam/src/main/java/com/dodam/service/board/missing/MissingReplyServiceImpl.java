@@ -49,7 +49,11 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 		boolean result = false;
 		
 		mrv.setLastmodifieddate(new Timestamp(System.currentTimeMillis()));
+		mrv.setIsmodified('Y');
+		
 		System.out.println(mrv.getLastmodifieddate());
+		// 줄바꿈 -> 태그로 전환해서 저장(DB에는 개행문자 저장 안됨)
+		mrv.setContents(mrv.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
 		if (dao.updateReply(mrv) == 1) {
 			result = true;
 		}

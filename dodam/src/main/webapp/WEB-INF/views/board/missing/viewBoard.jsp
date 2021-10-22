@@ -278,7 +278,6 @@
 		
 		// 댓글 등록하는 메서드----------------------------------------------------------------------------------
 		function addReply() {
-			
 			if ("${loginSession.userid}" != "") {
 				let pno = "${param.no }";
 				pno = parseInt(pno);
@@ -298,6 +297,7 @@
 		            url : url, // ajax와 통신 할 곳
 		            data : sendData, // 서블릿에 보낼 데이터
 		            dataType : "text", // 수신될 데이터의 타입
+		            contentType: "application/json;charset=UTF-8;",
 		            type : "POST", // 통신 방식
 		            success : function(data) { // 통신 성공시 수행될 콜백 함수
 		            	console.log(data);
@@ -352,7 +352,8 @@
 					// -------------- 비밀글 템플릿 ---------------------------
 	    			secoutput += '<div id="reply' + element.no + '" class="list-group-item">';
 	    			secoutput += '<div><img src="../../resources/images/kmj/missing/lock.png" width="15px" />';
-	    			secoutput += ' 댓글 작성자가 비밀글로 처리한 글입니다. </div>';
+	    			secoutput += ' 댓글 작성자가 비밀글로 처리한 글입니다. </div>'
+	    			secoutput += '<div id="secretDiv' + element.no + '" style="display: none;">' + element.issecret + '</div>';
 	    			secoutput += '</div>';
 
 	    			// ------------비밀글이 아닌 댓글 템플릿 -----------------
@@ -361,7 +362,14 @@
 	        			viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
 	        		}
 					viewoutput += '<div>작성자 : <span id="replyer'+ element.no +'">' + element.replyer + '</span></div>';
-	        		viewoutput += '<div>내용 : <div  id="orcontent' + element.no + '">' + element.contents + '</div></div>';
+	        		viewoutput += '<div>내용';
+	        		if (element.ismodified == 'Y') {
+	        			viewoutput += '(수정됨)'
+	        		}
+	        		
+	        		console.log(element.contents);
+	        		viewoutput += ' : <div  id="orcontent' + element.no + '">' + element.contents + '</div></div>';
+	    			viewoutput += '<div id="secretDiv' + element.no + '" style="display: none;">' + element.issecret + '</div>';
 	        		
 	        		regdate = calcReply(element.lastmodifieddate);
 	        		
@@ -380,8 +388,7 @@
 							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
 					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
 					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
-					       		viewoutput += '<li class="target">신고하기</li>';
-					       		viewoutput += '<li class="target">차단하기</li></ul></div>';
+					       		viewoutput += '<li class="target">신고하기</li></ul></div>';
 							}
 							viewoutput += '</div>';
 							output += viewoutput;
@@ -397,12 +404,10 @@
 						} else if (loginUser == bwriter) { // 부모글 작성자인 경우
 					       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
 					       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
-					       	viewoutput += '<li class="target">신고하기</li>';
-					       	viewoutput += '<li class="target">차단하기</li></ul></div>';
+					       	viewoutput += '<li class="target">신고하기</li></ul></div>';
 						} else { // 비밀글이 아닌데 로그인을 한 경우 or 로그인을 하지 않은 경우
 			        		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-			        		viewoutput += '<li class="target replydel">신고하기</li>';
-			        		viewoutput += '<li class="target">차단하기</li></ul></div>';
+			        		viewoutput += '<li class="target replydel">신고하기</li></ul></div>';
 						}
 	        			
 	        			viewoutput += '</div>';
@@ -523,6 +528,11 @@
 	        
 	        $("#no").val(no);
 	        $("#replyContentsModify").val(replyContents);
+	        if ($("#secretDiv" + no).html() == 'Y') {
+	        	$("#isSecretModify").attr("checked", true);
+	        } else {
+	        	$("#isSecretModify").attr("checked", false);
+	        }
 		}
 		
 		// 댓글 수정하기----------------------------------------------------------------------------------
@@ -547,6 +557,7 @@
 		            url : url, // ajax와 통신 할 곳
 		            data : sendData, // 서블릿에 보낼 데이터
 		            dataType : "text", // 수신될 데이터의 타입
+		            contentType: "application/json;charset=UTF-8;",
 		            type : "PUT", // 통신 방식
 		            headers : {
 		            	"content-type" : "application/json",
@@ -555,7 +566,7 @@
 		            success : function(data) { // 통신 성공시 수행될 콜백 함수
 						if (data == "success") {
 							alert("댓글이 수정되었습니다!");
-							viewAllReplies();
+							history.go(0);
 						} else if (data == "fail") {
 							alert("댓글 수정 실패!\r\n 잠시 후 다시 시도해주세요. \r\n 문제가 지속되면 고객응대 이메일로 문의해주세요.");
 						}
@@ -567,6 +578,14 @@
 			} else {
 				alert("세션이 만료되어 댓글 수정에 실패했습니다. \r\n 로그인 후 다시 시도해주세요.");
 			}
+		}
+		
+		function closeModify() {
+			$("#replyModify").hide(500);
+		}
+		
+		function closeReply() {
+			$("#replyDiv").hide(500);
 		}
 	</script>
 	<style>
@@ -829,6 +848,7 @@
 	            	<div><textarea rows="8" id="replyContents" style="width: 100%;"></textarea></div>
 	         	</div>
 	         	<button type="button" class="btn btn-danger" onclick="addReply();">댓글등록</button>
+	         	<button type="button" class="btn" onclick="closeReply();">닫기</button>
 			</div>
 			
 			<div id="replyLst" style="display: none;"></div>
@@ -844,6 +864,7 @@
 	            	<div><textarea rows="6" id="replyContentsModify" style="width: 100%;"></textarea></div>
 	         	</div>
 	         	<button type="button" class="btn btn-danger" onclick="modifyReply();">댓글수정</button>
+	         	<button type="button" class="btn" onclick="closeModify();">닫기</button>
 			</div>
 		</div>
 	</div>

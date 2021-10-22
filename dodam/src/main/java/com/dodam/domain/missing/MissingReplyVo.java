@@ -8,22 +8,23 @@ public class MissingReplyVo {
 	private String contents;
 	private String replyer;
 	private Timestamp lastmodifieddate;
-	private String issecret;
+	private char issecret;
+	private char ismodified;
 	private int ref;
 	private int step;
 	private int reforder;
 	public MissingReplyVo() {
 		super();
 	}
-	public MissingReplyVo(int pno, String contents, String replyer, String issecret) {
+	public MissingReplyVo(int pno, String contents, String replyer, char issecret) {
 		super();
 		this.pno = pno;
 		this.contents = contents;
 		this.replyer = replyer;
 		this.issecret = issecret;
 	}
-	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, String issecret,
-			int ref, int step, int reforder) {
+	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, char issecret,
+			char ismodified, int ref, int step, int reforder) {
 		super();
 		this.no = no;
 		this.pno = pno;
@@ -31,6 +32,7 @@ public class MissingReplyVo {
 		this.replyer = replyer;
 		this.lastmodifieddate = lastmodifieddate;
 		this.issecret = issecret;
+		this.ismodified = ismodified;
 		this.ref = ref;
 		this.step = step;
 		this.reforder = reforder;
@@ -65,11 +67,17 @@ public class MissingReplyVo {
 	public void setLastmodifieddate(Timestamp lastmodifieddate) {
 		this.lastmodifieddate = lastmodifieddate;
 	}
-	public String getIssecret() {
+	public char getIssecret() {
 		return issecret;
 	}
-	public void setIssecret(String issecret) {
+	public void setIssecret(char issecret) {
 		this.issecret = issecret;
+	}
+	public char getIsmodified() {
+		return ismodified;
+	}
+	public void setIsmodified(char ismodified) {
+		this.ismodified = ismodified;
 	}
 	public int getRef() {
 		return ref;
@@ -92,8 +100,8 @@ public class MissingReplyVo {
 	@Override
 	public String toString() {
 		return "MissingReplyVo [no=" + no + ", pno=" + pno + ", contents=" + contents + ", replyer=" + replyer
-				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ref=" + ref + ", step="
-				+ step + ", reforder=" + reforder + "]";
+				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ismodified=" + ismodified
+				+ ", ref=" + ref + ", step=" + step + ", reforder=" + reforder + "]";
 	}
 	
 	

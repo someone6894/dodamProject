@@ -29,8 +29,7 @@ public class MissingReplyController {
 		if (service.insertReply(mrv)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
 	}
 	
 	@ResponseBody
@@ -49,8 +48,7 @@ public class MissingReplyController {
 		if (service.deleteReply(no)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{no}", method=RequestMethod.PUT)

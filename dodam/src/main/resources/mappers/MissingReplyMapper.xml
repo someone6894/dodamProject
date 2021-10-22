@@ -18,6 +18,6 @@
   </delete>
   
   <update id="updateReply">
-  	update missingboardreply set contents = #{contents}, issecret = #{issecret}, lastmodifieddate = #{ where no = #{no}
+  	update missingboardreply set contents = #{contents}, issecret = #{issecret}, lastmodifieddate = #{lastmodifieddate}, ismodified = 'Y' where no = #{no}
   </update>
   </mapper>
