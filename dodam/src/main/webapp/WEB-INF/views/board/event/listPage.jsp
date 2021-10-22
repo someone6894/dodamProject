@@ -20,9 +20,9 @@
 		<!-- 카테고리 컬럼명 검색 -->
 	  <div class="w3-row-padding w3-padding-16 w3-center" id="event">
 	<c:forEach items = "${list }" var ="list">
-	<div class="w3-quarter" style="margin-bottom:20px">
+	<div class="w3-quarter" style="margin-bottom:35px">
 	<a href="/board/event/view?no=${list.no}">
-      <img src="${list.thumbimg }" style="width:100%">
+      <img src="${list.thumbimg }" style="height:350px">
       <h3>${list.title }</h3>
       <p>${list.contents }</p>
       </a>
@@ -39,14 +39,14 @@
 
   <div class="w3-center w3-padding-32">
     <div class="w3-bar">
+    	<a href="#" class="w3-bar-item w3-button #3C6E9F">«</a>
 		<c:forEach begin="1" end="${pageNum }" var="num">
 			<span>
-			    <a href="#" class="w3-bar-item w3-button #3C6E9F">«</a>
-				<a href="/board/event/listPage?num=${num }" class="w3-bar-item #3C6E9F w3-button" >${num}</a>
-				<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
-				
+				<a href="/board/event/listPage?num=${num }" class="w3-bar-item #3C6E9F w3-button" >${num}</a>				
 			</span>
 		</c:forEach>
+		<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
+		
 	</div>
 </div>
 </body>
