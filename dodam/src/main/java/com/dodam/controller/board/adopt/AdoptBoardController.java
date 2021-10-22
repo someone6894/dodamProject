@@ -40,6 +40,7 @@ import com.dodam.domain.adopt.PagingInfoDTO;
 import com.dodam.etc.adopt.UploadFileProcess;
 import com.dodam.etc.adopt.UploadFiles;
 import com.dodam.service.board.adopt.AdoptBoardService;
+import com.sun.tools.javac.util.DefinedBy.Api;
 
 @Controller
 @RequestMapping("/board/adopt/*")
@@ -254,10 +255,9 @@ public class AdoptBoardController {
 		// String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20140301&endde=20140430&pageNo=1&numOfRows=10&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
 
 		// **경고 numOfRows 너무크게 주면 다운됨 **
-		// endde 없앰 -> 20210101 ~ 최근 자료까지나옴 , pageNo=1 , numOfRows=100 줌
-		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20210101&endde=&pageNo=1&numOfRows=100&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
+		// endde 없앰 -> 20210101 ~ 최근 자료까지나옴 , pageNo=1 , numOfRows=50 줌
+		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20210101&endde=&pageNo=1&numOfRows=50&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
 
-		
 		HttpURLConnection con = connect(apiUrl); // con 디비 접속 객체 = api 연결 준비
 		String adoptApiSource = null;
 		
@@ -281,7 +281,7 @@ public class AdoptBoardController {
 		}
 		
 		//
-		System.out.println("받아온 adoptApiSource : " + adoptApiSource); 
+		System.out.println("받아온 adoptApiSource list : " + adoptApiSource); 
 
 		response.setContentType("application/xml; charset=utf-8;");
 		PrintWriter out = response.getWriter();
@@ -289,6 +289,55 @@ public class AdoptBoardController {
 		
 	}
 	// 유기동물 공고 api 불러오기 publicDo 메소드 끝
+	
+	
+	// pageInfo Page 호출
+		@RequestMapping(value = "/publicInfo", method = RequestMethod.GET)
+		public void publicInfo(@RequestParam("no") String no) throws Exception {
+			System.out.println("앞단의 선택한 dsertionNo : " + no);
+			
+			// return "board/adopt/publicInfo";
+		}
+		
+		
+	
+	// pageInfo 정보 ajax 통신 호출
+	@RequestMapping(value = "/publicInfo.do", method = RequestMethod.GET)
+	public void publicInfo(HttpServletResponse response, @RequestParam("no") String no) throws Exception {
+		System.out.println("앞단의 선택한 dsertionNo : " + no);
+		
+		
+		
+		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20210101&endde=&pageNo=1&numOfRows=100&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
+		HttpURLConnection con = connect(apiUrl); // con 디비 접속 객체 = api 연결 준비
+		String adoptApiSource = null;
+		
+		try {
+			con.setRequestMethod("GET"); // 통신방식 지정
+			int respCode = con.getResponseCode(); // 응답 코드 가져옴
+			System.out.println("respCode : " + respCode); // 결과가 200이면 통신성공
+			if (respCode == HttpURLConnection.HTTP_OK) { // 응답 완료 == 통신성공
+				adoptApiSource = readBody(con.getInputStream()); // api 읽어와서 String타입 json 변수에 할당.
+			}
+
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("통신실패");
+			e1.printStackTrace();
+		} finally {
+			con.disconnect();
+		}
+		
+		//
+		System.out.println("받아온 adoptApiSource detail : " + adoptApiSource); 
+		response.setContentType("application/xml; charset=utf-8;");
+		PrintWriter out = response.getWriter();
+		out.print(adoptApiSource); // adoptApiSource 을 JSP의 ajax로 되돌려줌. => xml형식
+		
+		// return "board/adopt/publicInfo";
+	}
+	
+	
 	
 	
 	// api url 접속개체 생성 메소드
