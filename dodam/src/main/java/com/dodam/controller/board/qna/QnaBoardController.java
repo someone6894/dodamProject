@@ -41,14 +41,14 @@ public class QnaBoardController {
 		
 		Map<String, Object> map = service.readAllBoard(pageNo);
 		List<QnaVo> lst = (List<QnaVo>)map.get("boardList");
-		PagingQna pi = (PagingQna)map.get("pagingInfo");
+		model.addAttribute("qnaListBoard", lst);  // 게시판 글 데이터
 
 		System.out.println(lst.toString());
 		
 		
-
+		PagingQna pi = (PagingQna)map.get("pagingInfo");
 		model.addAttribute("pagingInfo", pi); // 페이징 정보0
-		model.addAttribute("qnaListBoard", lst);  // 게시판 글 데이터
+		
 
 	}
 
@@ -72,6 +72,7 @@ public class QnaBoardController {
 
 	}
 
+	// 상세페이지
 	@RequestMapping(value="/readBoard", method = RequestMethod.GET)
 	public void readBoard(@RequestParam("no") String tmp, Model model) throws NamingException, SQLException {
 		int no = Integer.parseInt(tmp);
@@ -82,6 +83,7 @@ public class QnaBoardController {
 
 	}
 
+	// 글 삭제
 	@RequestMapping(value="/deleteBoard", method = RequestMethod.GET)
 	public String deleteBoard(@RequestParam("no") String tmp) throws NamingException, SQLException {
 		int no = Integer.parseInt(tmp);
@@ -92,7 +94,7 @@ public class QnaBoardController {
 		
 	}
 
-	
+	// 글 수정
 	@RequestMapping(value="/modifyBoard", method = RequestMethod.GET)
 	public String updateBoard(@RequestParam("no") int no, Model model) throws NamingException, SQLException {
 		QnaVo vo = service.readBoard(no);
@@ -103,13 +105,6 @@ public class QnaBoardController {
 
 	}
 	
-	
-
-//	@RequestMapping(value="/updateBoard", method = RequestMethod.POST)
-//	public String updateBoard(QnaVo vo) throws NamingException, SQLException {
-//
-//	}
-
 	@RequestMapping(value="/updateBoard", method = RequestMethod.POST)
 	public String updateBoard(@RequestParam("no") String tmp, QnaVo vo) throws NamingException, SQLException {
 		int no = Integer.parseInt(tmp);
@@ -121,4 +116,14 @@ public class QnaBoardController {
 		
 
 	}
+	
+	
+
+//	@RequestMapping(value="/updateBoard", method = RequestMethod.POST)
+//	public String updateBoard(QnaVo vo) throws NamingException, SQLException {
+//
+//	}
+
+	
+	
 }
