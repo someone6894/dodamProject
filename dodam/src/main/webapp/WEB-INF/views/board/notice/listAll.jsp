@@ -13,7 +13,7 @@
 </head>
 <script>
 	function readnotice(no) {
-		location.href='/notice/readBoard?no=' + no;
+		location.href='/board/notice/readBoard?no=' + no;
 	}
 </script>
 <body>
