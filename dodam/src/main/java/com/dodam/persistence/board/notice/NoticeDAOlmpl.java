@@ -20,17 +20,37 @@ public class NoticeDAOlmpl implements NoticeDAO {
 	private SqlSession ses;
 	
 	@Override
-	public List<NoticeVo> selectAllBoard() throws NamingException, SQLException {
-		List<NoticeVo> lst = null;
-		
-		return null;
+	public List<NoticeVo> selectnoticeall() throws NamingException, SQLException {
+		return ses.selectList(namespace+ ".selectnoticeall");
 	}
 
 	@Override
-	public int insertNoticeVo(NoticeVo nvo) throws NamingException, SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertNotice(NoticeVo nvo) throws NamingException, SQLException {
+		return ses.insert(namespace+ ".insertNotice", nvo);
 	}
+
+	@Override
+	public NoticeVo selectnotice(int no) throws NamingException, SQLException {
+		// TODO Auto-generated method stub
+		return ses.selectOne(namespace+".selectnotice", no);
+	}
+
+	@Override
+	public void updatenotice(NoticeVo vo) throws NamingException, SQLException {
+	ses.update(namespace+".updatenotice", vo);
+	}
+
+	@Override
+	public void delnotice(int no) throws NamingException, SQLException {
+		ses.delete(namespace+ ".delnotice", no);
+	}
+
+	@Override
+	public int selectCntPost() {
+		// TODO Auto-generated method stub
+		return Integer.parseInt(ses.selectOne(namespace + ".getTotalPostCnt"));
+	}
+	
 
 	
 }

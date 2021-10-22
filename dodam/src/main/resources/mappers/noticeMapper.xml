@@ -6,9 +6,13 @@
 <mapper namespace="com.dodam.mapper.noticeMapper">
 
 <!-- 새 공지글 작성 -->
-<insert id = "insertnotice">
+<insert id = "insertNotice">
 	insert into notice(title, writer, img, contents) values(#{title},#{writer}, #{img},#{contents})
 </insert>
+
+	<select id="getTotalPostCnt" resultType="string">
+  		select count(*) from notice
+  	</select>
 
 <!--  공지사항 전체글 가져오기 -->
 <select id= "selectnoticeall" resultType ="com.dodam.domain.notice.NoticeVo">
@@ -20,7 +24,7 @@
 	select * from notice where no = #{no}
 </select>
 
-<!--  공지사항 글 새로고침 -->
+<!--  공지사항 글 수정하기 -->
 <update id="updatenotice">
 	update notice set title= #{title}, writer = #{writer}, img= #{img}, contents = #{contents}
 </update>
@@ -29,5 +33,7 @@
 <delete id="delnotice">
 delete  from notice where no=#{no}
 </delete>
+
+
 
 </mapper>
