@@ -1,7 +1,9 @@
 package com.dodam.service.members;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +19,12 @@ public interface MemberService {
 
 	MemberVo loginMember(MemberVo mem);
 	
+
+	boolean infoupdate(MemberVo m) throws NamingException, SQLException;
 	
+	boolean passwordupdate(MemberVo m) throws NamingException, SQLException;
 	
+	boolean deleteAccount(MemberVo m) throws NamingException, SQLException;
 	
 	
 	

@@ -2,10 +2,12 @@ package com.dodam.controller.members;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,104 +42,94 @@ public class MemberController {
 
 	@Inject
 	private MemberService service;
-	
-	@RequestMapping(value="/register", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public void registerMember() {
 	}
-	
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void loginMember() {
-		
+
 	}
-	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutMember(HttpServletRequest request) {
-		
+
 		HttpSession ses = request.getSession();
 		ses.removeAttribute("loginSession"); // 로그인세션 갱신
 		System.out.println("ses.toString() : " + ses.toString());
-		
+
 		return "index";
-		
+
 	}
-	
-	@RequestMapping(value="/mypage", method=RequestMethod.GET)
-	public String mypageMember() {
-		
+
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public String mypageMember( HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+
 		return "member/mbInfo";
 	}
-	
-	
-	@RequestMapping(value="/registerMember.do", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/registerMember.do", method = RequestMethod.POST)
 	public String registerMember(MemberVo member, RedirectAttributes rt) {
 		System.out.println(member.toString());
-		
-		if(service.addMember(member)) {
+
+		if (service.addMember(member)) {
 			rt.addFlashAttribute("status", "success");
 			rt.addFlashAttribute("memberInfo", member);
 		} else {
 			rt.addFlashAttribute("status", "fail");
 		}
-		
-		
-		return "redirect:/member/mbInfo";  
+
+		return "redirect:/member/mbInfo";
 	}
-	
-	
-	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String loginMember(MemberVo mem, RedirectAttributes rt, HttpServletRequest request) {
 		System.out.println("입력받은 회원정보 : " + mem.toString());
-		
+
 		MemberVo member = service.loginMember(mem);
 
-		System.out.println("db에서 확인하여 가져온 회원정보 : " + member.toString());	
-		
-		
-		if(member != null) {
+		System.out.println("db에서 확인하여 가져온 회원정보 : " + member.toString());
+
+		if (member != null) {
 			rt.addFlashAttribute("status", "logingsuccess");
 			rt.addFlashAttribute("memberInfo", member);
-			
+
 			HttpSession ses = request.getSession();
 			ses.removeAttribute("loginSession"); // 로그인세션 갱신
+			ses.setAttribute("loginid", member.getUserid());
 			ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
-			
+
 			System.out.println("ses : " + ses.toString());
 			System.out.println("loginSession : " + ses.getAttribute("loginSession"));
-			
-			
+
 		} else {
 			rt.addFlashAttribute("status", "logingfail");
 		}
-		
-		
-		return "index";  
+
+		return "index";
 	}
-	
-	
-	
-	@RequestMapping(value="/mbInfo", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/mbInfo", method = RequestMethod.GET)
 	public void mbInfo() {
-		
+
 	}
-	
-	@RequestMapping(value="/sendMail.do", method=RequestMethod.GET)
-	public ResponseEntity<String> sendMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	@RequestMapping(value = "/sendMail.do", method = RequestMethod.GET)
+	public ResponseEntity<String> sendMail(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		ResponseEntity<String> result = null;
-		
-		
-		if(service.sendMail(request, response)) {
-			
+
+		if (service.sendMail(request, response)) {
+
 			result = new ResponseEntity<String>("success", HttpStatus.OK);
 		} else {
 			result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 		}
-		
+
 		return result;
 	}
-	
-	
-	
-	
+
 //	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
 //    public void sendMailTest() throws Exception{
 //        
@@ -177,42 +169,29 @@ public class MemberController {
 //        
 //    }
 
-
-
-	
 	@Autowired
 	private JavaMailSender mailSender2;
-	
-	@RequestMapping(value="/mailCheck.do", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/mailCheck.do", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<String> getMailCheckCode(String email, HttpServletRequest request) throws Exception{
+	public ResponseEntity<String> getMailCheckCode(String email, HttpServletRequest request) throws Exception {
 		System.out.println("유저에게 받은 이메일 주소 : " + email);
-		
+
 		ResponseEntity<String> result = null;
-		
-		
+
 		Random random = new Random();
 		int checkNum = random.nextInt(888888) + 111111;
 		System.out.println("인증번호 : " + checkNum);
-		
+
 		/* 이메일 보내기 */
 		String setFrom = "dodamServer@gmail.com";
 		String toMail = email;
 		String title = "도담 회원가입 인증 이메일 입니다.";
-		String content = "도담 홈페이지를 방문해주셔서 감사합니다." +
-						" <br><br>" +
-						"인증 번호는 " + checkNum +" 입니다." +
-						"<br>" + 
-						"해당 인증번호를 인증 번호 확인란에 기입하여 주세요." +
-						"<br><br>" + 
-						"Thank you for visitng Dodam. " +
-						"<br>" +
-						"certification code is " +checkNum +
-						"<br>" +
-						"Please write this in Dodam's register email checkbox." + 
-						"<br><br>" +
-						"<img src=\"cid:dodam.jpg\">";    
-		
+		String content = "도담 홈페이지를 방문해주셔서 감사합니다." + " <br><br>" + "인증 번호는 " + checkNum + " 입니다." + "<br>"
+				+ "해당 인증번호를 인증 번호 확인란에 기입하여 주세요." + "<br><br>" + "Thank you for visitng Dodam. " + "<br>"
+				+ "certification code is " + checkNum + "<br>" + "Please write this in Dodam's register email checkbox."
+				+ "<br><br>" + "<img src=\"cid:dodam.jpg\">";
+
 		try {
 			MimeMessage message = mailSender2.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
@@ -220,37 +199,32 @@ public class MemberController {
 			helper.setTo(toMail);
 			helper.setSubject(title);
 			helper.setText(content, true);
-			
+
 			// 이메일 내용에 파일 업로드할 때
-			FileSystemResource file = new FileSystemResource(new File("C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
+			FileSystemResource file = new FileSystemResource(new File(
+					"C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
 			helper.addInline("dodam.jpg", file);
-			
-			
-			
-			
+
 			mailSender2.send(message);
 			result = new ResponseEntity<String>("success", HttpStatus.OK);
-			
+
 			HttpSession ses = request.getSession();
 			ses.removeAttribute("confirmCode"); // 아래에서 갱신함
 			ses.setAttribute("confirmCode", checkNum); // session에 checkNum 이메일인증 번호 confirmCode로 할당함.
-		
+
 			System.out.println("ses : " + ses.toString());
 			System.out.println("confirmCode : " + ses.getAttribute("confirmCode"));
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 		}
-		
+
 //		String checkNumString = Integer.toString(checkNum);
-		
-		
+
 		return result;
 	}
-	
-	
-	
+
 //	/* 이메일 인증 */
 //    @RequestMapping(value="/mailCheck", method=RequestMethod.GET)
 //    @ResponseBody
@@ -262,28 +236,28 @@ public class MemberController {
 //                
 //        
 //    }
-	
-	@RequestMapping(value="/getConfirmCode.do", method=RequestMethod.GET)
-	public ResponseEntity<String> getConfirmCode(String userCode, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	@RequestMapping(value = "/getConfirmCode.do", method = RequestMethod.GET)
+	public ResponseEntity<String> getConfirmCode(String userCode, HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 //		String userCode = request.getParameter("userCode");
 		System.out.println("유저에게 입력받은 이메일 확인코드 : " + userCode);
 		ResponseEntity<String> result = null;
-		
+
 		HttpSession ses = request.getSession();
 		String sessionCode = ses.getAttribute("confirmCode").toString();
-		
+
 		System.out.println("sessionCode : " + sessionCode);
-		
-		if (userCode.equals(sessionCode)) {  // 세션에 저장했던 코드와 유저가 입력한 코드가 일치하는지 비교
+
+		if (userCode.equals(sessionCode)) { // 세션에 저장했던 코드와 유저가 입력한 코드가 일치하는지 비교
 			result = new ResponseEntity<String>(sessionCode, HttpStatus.OK);
 		} else {
 			result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 		}
-		
+
 		return result;
 	}
-	
-	
+
 //	@RequestMapping(value = "/testLogin")
 //	public String isComplete(HttpSession session) {
 //		return "/naver/naverlogin";
@@ -295,8 +269,78 @@ public class MemberController {
 //		return "naver/callback";
 //	}	
 
-	
-	
-	
-	
+	@RequestMapping(value = "/infoupdate", method = RequestMethod.GET)
+	public String infoupdate() {
+
+		return "member/infoupdate";
+	}
+
+	@RequestMapping(value = "/passwordupdate", method = RequestMethod.GET)
+	public String passwordupdate() {
+
+		return "member/passwordupdate";
+	}
+
+	@RequestMapping(value = "/emailupdate", method = RequestMethod.GET)
+	public String emailupdate() {
+
+		return "member/emailupdate";
+	}
+
+	@RequestMapping(value = "/deleteAccount", method = RequestMethod.GET)
+	public String deleteAccount() {
+
+		return "member/deleteAccount";
+	}
+
+	@RequestMapping(value = "/infoupdatecomp", method = RequestMethod.POST)
+	public String infoupdatecomp(MemberVo member, RedirectAttributes rttr, HttpServletRequest request) throws NamingException, SQLException {
+
+		System.out.println("유저에게 입력받은 : " + member.toString());
+		
+		if (service.infoupdate(member)) {
+			rttr.addFlashAttribute("result", "success");
+			HttpSession ses = request.getSession();
+			ses.removeAttribute("loginSession"); // 로그인세션 갱신
+			ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함		
+			
+		} else {
+			rttr.addFlashAttribute("result", "fail");
+		}
+		return "redirect:/member/mbInfo";
+	}
+
+	@RequestMapping(value = "/passwordupdatecomp", method = RequestMethod.POST)
+	public String passwordupdatecomp(MemberVo member, RedirectAttributes rttr, HttpServletRequest request) throws NamingException, SQLException {
+		
+		System.out.println("유저에게 입력  : " + member.toString());
+		
+		if (service.passwordupdate(member)) {
+			rttr.addFlashAttribute("result", "success");	
+
+			HttpSession ses = request.getSession();
+			ses.removeAttribute("loginSession"); // 로그인세션 갱신
+		} else {
+			rttr.addFlashAttribute("result", "fail");
+		}
+		
+		return "index";
+	}
+
+	@RequestMapping(value = "/deleteAccountcomp", method = RequestMethod.POST)
+	public String deleteAccountcomp(MemberVo member, RedirectAttributes rttr, HttpServletRequest request) throws NamingException, SQLException {
+
+		System.out.println("유저에게 입력받 : " +  member.toString());
+		
+		if (service.deleteAccount(member)) {
+			rttr.addFlashAttribute("result", "success");
+			HttpSession ses = request.getSession();
+			ses.removeAttribute("loginSession"); // 로그인세션 갱신
+		} else {
+			rttr.addFlashAttribute("result", "fail");
+		}
+		
+		return "index";
+	}
+
 }

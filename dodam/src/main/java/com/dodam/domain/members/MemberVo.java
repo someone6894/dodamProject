@@ -1,5 +1,7 @@
 package com.dodam.domain.members;
 
+import java.sql.Timestamp;
+
 public class MemberVo {
 	private String userid;
 	private String password;
@@ -7,12 +9,15 @@ public class MemberVo {
 	private String nickname;
 	private String email;
 	private String phone;
+	private Timestamp regdate;
 	
 	public MemberVo() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	public MemberVo(String userid, String password, String name, String nickname, String email, String phone) {
+
+	public MemberVo(String userid, String password, String name, String nickname, String email, String phone,
+			Timestamp regdate) {
 		super();
 		this.userid = userid;
 		this.password = password;
@@ -20,6 +25,7 @@ public class MemberVo {
 		this.nickname = nickname;
 		this.email = email;
 		this.phone = phone;
+		this.regdate = regdate;
 	}
 
 	public String getUserid() {
@@ -46,14 +52,14 @@ public class MemberVo {
 		this.name = name;
 	}
 
-	public String getNickName() {
+	public String getNickname() {
 		return nickname;
 	}
 
-	public void setNickName(String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -70,10 +76,21 @@ public class MemberVo {
 		this.phone = phone;
 	}
 
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+
 	@Override
 	public String toString() {
-		return "MemberVo [userid=" + userid + ", password=" + password + ", name=" + name + ", nickname=" + nickname + ", email=" + email
-				+ ", phone=" + phone + "]";
+		return "MemberVo [userid=" + userid + ", password=" + password + ", name=" + name + ", nickname=" + nickname
+				+ ", email=" + email + ", phone=" + phone + ", regdate=" + regdate + "]";
 	}
+	
+	
+	
 	
 }

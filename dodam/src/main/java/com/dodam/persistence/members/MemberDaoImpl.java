@@ -99,7 +99,27 @@ public class MemberDaoImpl implements MemberDao {
 		return member;
 	}
 
-	
+
+	@Override
+	public int infoupdate(MemberVo mem) throws NamingException, SQLException {
+		
+		return ses.update(namespace + ".infoupdate", mem);
+	}
+
+
+	@Override
+	public int passwordupdate(MemberVo mem) throws NamingException, SQLException {
+		
+		return ses.update(namespace + ".passwordupdate", mem);
+	}
+
+
+	@Override
+	public int deleteAccount(MemberVo mem) throws NamingException, SQLException {
+		return ses.delete(namespace + ".deleteAccount", mem);
+	}
+
+
 	
 	
 }
