@@ -56,33 +56,29 @@
 
 	function showPublicAdopt() {
 
-		$
-				.ajax({
+		$.ajax({
 					url : "public.do", // 데이터가 송수신 될 서버의 주소
 					type : "GET", // 통신 방식(get, post)
 					dataType : "xml", // 수신받을 데이터의 타입
 					success : function(data) { // 통신이 성공하면 수행될 문장들...
 						console.log("ajax data 통신성공 : " + data);
 						if (data != null) {
-							console
-									.log(data.getElementsByTagName("items")[0].children[0]);
-							console.log(data.getElementsByTagName("items"));
-							console.log(data);
-							console
-									.log(data
-											.getElementsByTagName("totalCount"));
-							console
-									.log(data
-											.getElementsByTagName("totalCount")[0].innerHTML);
-							console
-									.log(data.getElementsByTagName("items")[0].children[0].childNodes.length);
-
-							var dataLength = data
-									.getElementsByTagName("totalCount")[0].innerHTML;
+							
+							// item 한 리스트에 들어가있는 속성, 태그 갯수
+							console.log("item 한 리스트에 들어가있는 속성, 태그 갯수 : " + data.getElementsByTagName("items")[0].children[0].childNodes.length);
+							
+							// 한 페이지에 출력되는 게시글 수
+							var pageDataLength = data.getElementsByTagName("numOfRows")[0].innerHTML;
+							console.log("한 페이지에 출력되는 게시글 수 pageDataLength : " + pageDataLength);
+								
+							// 총 게시글 수 totalDataLength
+							var totalDataLength = data.getElementsByTagName("totalCount")[0].innerHTML;
+							console.log("총 게시글 수 totalDataLength : " + totalDataLength);
+							
 							var output = '';
 							output += "<div class='container row' >";
 
-							for (i = 0; i < 100; i++) {
+							for (i = 0; i < pageDataLength; i++) {
 								if (data.getElementsByTagName("age")[i] != null) {
 									var age = data.getElementsByTagName("age")[i].innerHTML;
 								}
@@ -172,9 +168,10 @@
 								}
 
 							output += "<div class='col-md-4'>";
-								output += " <div class='thumbnail'>";
+								output += " <div class='thumbnail' onclick='viewInfo("+desertionNo+")'>";
 									output += "<b>" + processState + "</b>";
 									output += "<div> 공고번호 : " + noticeNo + "</div>";
+									output += "<div> 유기번호 : " + desertionNo + "</div>";
 									output += "<div class='photo'><img src='" + popfile + "' class='img-rounded' width= '300px' height= '300px' /></div>";
 									output += "<div class='text'>";
 										output += "<div> 품종: " + kindCd + "</div>";
@@ -197,8 +194,14 @@
 						// 		        		$("#publicList").html() = output;
 					} // success function 끝 
 				});
-
+	} //showPublicAdopt 끝
+	
+	function viewInfo(no){
+		console.log("공고 상세페이지 no : " + no);
+		location.href="/board/adopt/publicInfo?no=" + no;
 	}
+	
+	
 </script>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>

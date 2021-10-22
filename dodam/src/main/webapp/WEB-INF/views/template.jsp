@@ -13,9 +13,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!--   <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" /> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script> -->
-
 <!-- <script type="text/javascript"> $.noConflict(); </script> -->
 
+<style>
+</style>
 
 <script>
 $(function(){
@@ -57,6 +58,8 @@ function ActiveBar(){
 
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap');
 
 /* .active{ */
 /*    background-color: red; */
@@ -96,6 +99,9 @@ function ActiveBar(){
    position: relative;
    display: block;
    padding-left: 200px;
+/*    font-family: 'Single Day', cursive; */
+   font-family: 'Gaegu', cursive;
+   font-size: 17px;
 }
 
 .container li:active {
@@ -144,10 +150,15 @@ function ActiveBar(){
       <span style="margin: 0 auto; padding-left:14%;"> 도담 도담. 아가야 건강하고 행복하게 자라렴 </span>
 
       <ul class="nav navbar-nav navbar-right login">
-         <li>
-            <a href="/member/register">
-               <span class="glyphicon glyphicon-user"></span> 회원가입</a>
-         </li>
+         
+         
+          <c:choose>
+				<c:when test="${loginSession == null }">
+				    <li>
+           		 		<a href="/member/register">  <span class="glyphicon glyphicon-user"></span> 회원가입</a>
+         			</li>
+				</c:when>
+           </c:choose>
         
            <c:choose>
 				<c:when test="${loginSession == null }">
@@ -204,6 +215,6 @@ function ActiveBar(){
       </div>
    </nav>
    
-   
+
 </body>
 </html>
