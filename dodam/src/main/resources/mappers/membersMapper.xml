@@ -15,7 +15,18 @@
 		select * from members where userid = #{userid} and password = md5(#{password})
 	</select>
 
-
+	<update id="infoupdate">
+  		update members set email = #{email} , phone = #{phone} , name = #{name} where userid = #{userid}
+  	</update>
+  	
+  	<update id="passwordupdate">
+  		update members set password = md5(#{password}) where userid = #{userid}
+  	</update>
+  	
+  	<delete id="deleteAccount" >
+	 	delete from members where userid = #{userid}
+	 </delete>
+	 
 </mapper>
 
 
