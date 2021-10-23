@@ -18,7 +18,6 @@ import com.dodam.domain.missing.PagingInfoDTO;
 import com.dodam.domain.missing.ReadCntVo;
 import com.dodam.etc.missing.IPChecking;
 import com.dodam.persistence.board.missing.MissingBoardDAO;
-import com.mysql.cj.xdevapi.JsonString;
 
 @Service
 public class MissingBoardServiceImpl implements MissingBoardService{
@@ -105,6 +104,14 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 
 		return mbv;
 	}
+	
+	@Override
+	public MissingBoardVo getMissingBoard(int no) throws Exception {
+		
+		MissingBoardVo mbv = dao.getMissingBoard(no);
+		
+		return mbv;
+	}
 
 	@Override
 	public boolean deleteBoard(int no) throws Exception {
@@ -126,6 +133,76 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		return result;
 	}
 	
+
+	@Override
+	public boolean updateCategory(int no, String category) {
+		boolean result = false;
+		Map<String, Object> categoryInfo = new HashMap<String, Object>();
+		categoryInfo.put("no", no);
+		categoryInfo.put("category", category);
+		
+		if (dao.updateCategory(categoryInfo) == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean updateBookmark(int no, String userid) {
+		System.out.println(no + ", " + userid);
+		boolean result = false;
+		int countUp = dao.updateBookmark(no);
+		
+		Map<String, Object> bookMap = new HashMap<String, Object>();
+		bookMap.put("userid", userid);
+		bookMap.put("no", no);
+		
+		int addHistory = dao.insertBookmarkHistory(bookMap);
+		
+		if (countUp == 1 || addHistory == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean updateUnbookmark(int no, String userid) {
+		System.out.println(no + ", " + userid);
+		boolean result = false;
+		int countUp = dao.updateUnbookmark(no);
+		
+		Map<String, Object> bookMap = new HashMap<String, Object>();
+		bookMap.put("userid", userid);
+		bookMap.put("no", no);
+		
+		int addHistory = dao.deleteBookmarkHistory(bookMap);
+		
+		if (countUp == 1 || addHistory == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int selectBookmarkCount(int no) {
+		return dao.selectBookmarkCount(no);
+	}
+
+	@Override
+	public boolean selectBookmark(int no, String userid) {
+		boolean result = false;
+		Map<String, Object> bookMap = new HashMap<String, Object>();
+		bookMap.put("no", no);
+		bookMap.put("userid", userid);
+		if (dao.selectBookmark(bookMap) != null) {
+			result = true;
+		}
+		return result;
+	}
+
 	
 	// 페이징을 위한 처리 작업 전담 메서드
 	private PagingInfoDTO pagingProcess(ListParamDTO lpd) throws Exception {
@@ -148,74 +225,4 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		
 		return pi;
 	}
-
-	@Override
-	public boolean updateCategory(int no, String category) {
-		boolean result = false;
-		Map<String, Object> categoryInfo = new HashMap<String, Object>();
-		categoryInfo.put("no", no);
-		categoryInfo.put("category", category);
-		
-		if (dao.updateCategory(categoryInfo) == 1) {
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public boolean updateLike(int no, String userid) {
-		System.out.println(no + ", " + userid);
-		boolean result = false;
-		int countUp = dao.updateLike(no);
-		
-		Map<String, Object> likeMap = new HashMap<String, Object>();
-		likeMap.put("userid", userid);
-		likeMap.put("no", no);
-		
-		int addHistory = dao.insertLikeHistory(likeMap);
-		
-		if (countUp == 1 || addHistory == 1) {
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public boolean updateDislike(int no, String userid) {
-		System.out.println(no + ", " + userid);
-		boolean result = false;
-		int countUp = dao.updateDislike(no);
-		
-		Map<String, Object> likeMap = new HashMap<String, Object>();
-		likeMap.put("userid", userid);
-		likeMap.put("no", no);
-		
-		int addHistory = dao.deleteLikeHistory(likeMap);
-		
-		if (countUp == 1 || addHistory == 1) {
-			result = true;
-		}
-		
-		return result;
-	}
-
-	@Override
-	public int selectLikecount(int no) {
-		return dao.selectLikecount(no);
-	}
-
-	@Override
-	public boolean selectLikeHistory(int no, String userid) {
-		boolean result = false;
-		Map<String, Object> likeMap = new HashMap<String, Object>();
-		likeMap.put("no", no);
-		likeMap.put("userid", userid);
-		if (dao.selectLikeHistory(likeMap) != null) {
-			result = true;
-		}
-		return result;
-	}
-
 }

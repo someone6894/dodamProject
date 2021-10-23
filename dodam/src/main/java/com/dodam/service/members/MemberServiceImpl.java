@@ -82,6 +82,46 @@ public class MemberServiceImpl implements MemberService {
 		
 		return member;
 	}
+
+	@Override
+	public boolean infoupdate(MemberVo m) throws NamingException, SQLException {
+		boolean infoupdate2 = false;
+		
+		int result = dao.infoupdate(m);
+		
+		if (result == 1) {
+			infoupdate2 = true;
+		}
+		
+		return infoupdate2;
+	}
+
+	@Override
+	public boolean passwordupdate(MemberVo m) throws NamingException, SQLException {
+		boolean passwordupdate2 = false;
+		
+		int result = dao.passwordupdate(m);
+		
+		if (result == 1) {
+			passwordupdate2 = true;
+		}
+		
+		return passwordupdate2;
+	}
+
+	@Override
+	public boolean deleteAccount(MemberVo m) throws NamingException, SQLException {
+		boolean deleteAccount2 = false;
+		
+		int result = dao.deleteAccount(m);
+		
+		if (result == 1) {
+			deleteAccount2 = true;
+		}
+		
+		return deleteAccount2;
+	}
+
 	
 	
 }

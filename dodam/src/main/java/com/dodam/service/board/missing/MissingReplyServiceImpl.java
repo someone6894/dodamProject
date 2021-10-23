@@ -1,5 +1,6 @@
 package com.dodam.service.board.missing;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,6 +38,19 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 	public boolean deleteReply(int no) {
 		boolean result = false;
 		if (dao.deleteReply(no) == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean updateReply(MissingReplyVo mrv) {
+		boolean result = false;
+		
+		mrv.setLastmodifieddate(new Timestamp(System.currentTimeMillis()));
+		System.out.println(mrv.getLastmodifieddate());
+		if (dao.updateReply(mrv) == 1) {
 			result = true;
 		}
 		

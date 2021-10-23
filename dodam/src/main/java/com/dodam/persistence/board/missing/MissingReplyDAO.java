@@ -12,4 +12,6 @@ public interface MissingReplyDAO {
 
 	int deleteReply(int no);
 
+	int updateReply(MissingReplyVo mrv);
+
 }

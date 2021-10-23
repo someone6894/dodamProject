@@ -25,7 +25,7 @@ public class QnaBoardDAOImpl implements QnaBoardDAO {
 	@Override
 	public List<QnaVo> selectAllBoard(int pageNo, PagingQna pi) throws NamingException, SQLException {
 		List<QnaVo> lst = null;
-		lst = ses.selectList(namespace + ".selectAllBoard");
+		lst = ses.selectList(namespace + ".selectAllBoard", pi);
 
 		return lst;
 	}

@@ -2,14 +2,13 @@ package com.dodam.controller.board.missing;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +19,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dodam.domain.members.MemberVo;
 import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
@@ -172,11 +171,10 @@ public class MissingBoardController {
 	
 	@RequestMapping(value="/modify")
 	public String modfiyMissing(@RequestParam("no") int no,
-								@RequestParam("userid") String userid,
 								Model model) {
 		MissingBoardVo mb = null;
 		try {
-			mb = service.getMissingBoard(no, userid);
+			mb = service.getMissingBoard(no);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,7 +186,7 @@ public class MissingBoardController {
 	}
 	
 	@RequestMapping(value="/update")
-	public String updateBoard(MissingWriteDTO mw, RedirectAttributes rttr) {
+	public String updateBoard(MissingWriteDTO mw, HttpServletRequest request, RedirectAttributes rttr) {
 		mw.setContents(mw.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
 		try {
 			if(service.updateBoard(mw)) {
@@ -201,7 +199,12 @@ public class MissingBoardController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/missing/detail?no=" + mw.getNo();
+		// 세션에서 로그인한 유저 아이디를 가져옴
+		HttpSession ses = request.getSession();
+		MemberVo mem = (MemberVo)ses.getAttribute("loginSession");
+		
+		
+		return "redirect:/missing/detail?no=" + mw.getNo() + "&userid=" + mem.getUserid();
 	}
 	
 	@RequestMapping(value="/changeCategory", method=RequestMethod.POST)
@@ -216,14 +219,14 @@ public class MissingBoardController {
 		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 	}
 	
-	@RequestMapping(value="/like", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Integer>> updateLike(@RequestParam("no") int no,
+	@RequestMapping(value="/bookmark", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Integer>> updateBookmark(@RequestParam("no") int no,
 											@RequestParam("userid") String userid) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		if (service.updateLike(no, userid)) {
-			int likecount = service.selectLikecount(no);
+		if (service.updateBookmark(no, userid)) {
+			int bookmarkCount = service.selectBookmarkCount(no);
 			result.put("result", 1);
-			result.put("likecount", likecount);
+			result.put("bookmarkCount", bookmarkCount);
 			return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
 		}
 		
@@ -231,14 +234,14 @@ public class MissingBoardController {
 		return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.BAD_REQUEST);
 	}
 	
-	@RequestMapping(value="/dislike", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Integer>> updateDislike(@RequestParam("no") int no,
-											@RequestParam("userid") String userid) {
+	@RequestMapping(value="/unbookmark", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Integer>> updateUnbookmark(@RequestParam("no") int no,
+															@RequestParam("userid") String userid) {
 		Map<String, Integer> result = new HashMap<String, Integer>();
-		if (service.updateDislike(no, userid)) {
-			int likecount = service.selectLikecount(no);
+		if (service.updateUnbookmark(no, userid)) {
+			int bookmarkCount = service.selectBookmarkCount(no);
 			result.put("result", 1);
-			result.put("likecount", likecount);
+			result.put("bookmarkCount", bookmarkCount);
 			return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.OK);
 		}
 		
@@ -246,13 +249,13 @@ public class MissingBoardController {
 		return new ResponseEntity<Map<String, Integer>>(result, HttpStatus.BAD_REQUEST);
 	}
 	
-	@RequestMapping(value="likeHistory", method=RequestMethod.GET)
-	public ResponseEntity<String> selectLikeHistory(@RequestParam("no") int no,
-													@RequestParam("userid") String userid) {
-		if (service.selectLikeHistory(no, userid)) {
+	@RequestMapping(value="/bookmarkHistory", method=RequestMethod.POST)
+	public ResponseEntity<String> selectBookmard(@RequestParam("no") int no,
+												@RequestParam("userid") String userid) {
+		if (service.selectBookmark(no, userid)) {
 			return new ResponseEntity<String>("exist", HttpStatus.OK);
 		}
-		return new ResponseEntity<String>("none", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("none", HttpStatus.OK);
 	}
 	
 }
