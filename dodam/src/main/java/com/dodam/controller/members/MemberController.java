@@ -3,6 +3,8 @@ package com.dodam.controller.members;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -20,12 +22,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dodam.domain.members.MemberVo;
+import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.ProudVo;
 import com.dodam.service.members.MemberService;
 
 //import javax.mail.internet.MimeMessage;
@@ -64,11 +69,72 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public String mypageMember( HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+	public String mypageMember(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
 
+		HttpSession ses = request.getSession();				
+		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
+		
+		int sumpoint = service.sumpoint(userid);
+		model.addAttribute("sumpoint", sumpoint); // 포인트 총합
+		
+		int countboard = service.countboard(userid);
+		model.addAttribute("countboard", countboard); // 게시판 작성 개수
+		
+		int countreplyer = service.countreplyer(userid);
+		model.addAttribute("countreplyer", countreplyer); // 댓글 작성 개수
+		
+		
 		return "member/mbInfo";
 	}
 
+	@RequestMapping(value = "/pointlist", method = RequestMethod.GET)
+	public String pointlist(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+
+		HttpSession ses = request.getSession();			
+		String userid = (String)ses.getAttribute("userid");
+		
+		
+		Map<String, Object> map = service.pointlist(userid);
+		List<MypointVo> lst = (List<MypointVo>)map.get("pointlist2");
+		model.addAttribute("pointlist", lst); // 게시판 글 데이터
+
+		
+		
+		return "member/pointlist";
+	}
+	
+	@RequestMapping(value = "/boardhistory", method = RequestMethod.GET)
+	public String boardhistory(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+
+		HttpSession ses = request.getSession();			
+		String userid = (String)ses.getAttribute("userid");
+		
+		
+		Map<String, Object> map = service.boardhistory(userid);
+		List<MypointVo> lst = (List<MypointVo>)map.get("boardhistory2");
+		model.addAttribute("boardhistory", lst); // 게시판 글 데이터
+
+		
+		
+		return "member/boardhistory";
+	}
+	
+	@RequestMapping(value = "/replyerhistory", method = RequestMethod.GET)
+	public String replyerhistory(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+
+		HttpSession ses = request.getSession();			
+		String userid = (String)ses.getAttribute("userid");
+		
+		
+		Map<String, Object> map = service.replyerhistory(userid);
+		List<MypointVo> lst = (List<MypointVo>)map.get("replyerhistory2");
+		model.addAttribute("replyerhistory", lst); // 게시판 글 데이터
+
+		
+		
+		return "member/replyhistory";
+	}
+	
 	@RequestMapping(value = "/registerMember.do", method = RequestMethod.POST)
 	public String registerMember(MemberVo member, RedirectAttributes rt) {
 		System.out.println(member.toString());
@@ -97,7 +163,7 @@ public class MemberController {
 
 			HttpSession ses = request.getSession();
 			ses.removeAttribute("loginSession"); // 로그인세션 갱신
-			ses.setAttribute("loginid", member.getUserid());
+			ses.setAttribute("userid", mem.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
 			ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
 
 			System.out.println("ses : " + ses.toString());

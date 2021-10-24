@@ -1,12 +1,15 @@
 package com.dodam.persistence.reply.proud;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.naming.NamingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.ReplyVo;
 
 @Repository
@@ -40,6 +43,11 @@ public class ReplyDAOimpl implements ReplyDAO {
 	@Override
 	public int append(ReplyVo vo) throws Exception {
 		return ses.insert(ns + ".append", vo);
+	}
+	
+	@Override
+	public int addpoint(MypointVo vo) throws NamingException, SQLException {
+		return ses.insert(ns + ".addpoint", vo);
 	}
 
 }

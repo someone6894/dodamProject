@@ -9,6 +9,18 @@
   		select * from proudboard order by no desc limit #{startNum},#{postPerPage}
   	</select>
   	
+  	<select id="selectTitleBoard" resultType="com.dodam.domain.proud.ProudVo" parameterType="map">
+		SELECT * FROM proudboard where title like CONCAT('%', #{word} ,'%') or content like CONCAT('%', #{word} ,'%') order by no desc limit #{pi.startNum},#{pi.postPerPage}
+  	</select>
+  	
+  	<select id="selectWriterBoard" resultType="com.dodam.domain.proud.ProudVo" parameterType="map">
+		SELECT * FROM proudboard where writer like CONCAT('%', #{word} ,'%') order by no desc limit #{pi.startNum},#{pi.postPerPage}
+  	</select>
+  	
+  	<select id="selectReplyBoard" resultType="com.dodam.domain.proud.ProudVo" parameterType="map" >
+		select a.* from proudboard a inner join proudreply b on a.no = b.bno where b.contents like CONCAT('%', #{word} ,'%') order by no desc limit #{pi.startNum},#{pi.postPerPage}		
+  	</select>
+  	
   	<select id="getTotalPostCnt" resultType="int">
 			select count(*) from proudboard
   	</select>
@@ -17,7 +29,7 @@
 			select * from proudboard where no = #{no}
   	</select>
   	
-  		<insert id="createBoardWithImage">
+  	<insert id="createBoardWithImage">
   		insert into proudboard(title, writer, content, image, thumbimage)
   		 values(#{title}, #{writer}, #{content}, #{image}, #{thumbimage} )
   	</insert>
@@ -28,12 +40,16 @@
   	</insert>
   	
   	<insert id="createBoard">
-  		insert into proudboard(title, writer, content)
-  		 values(#{title}, #{writer}, #{content})
+  		insert into proudboard(title, writer, content, image)
+  		 values(#{title}, #{writer}, #{content}, #{image})
   	</insert>
   	
+	<insert id="addpoint">
+		insert into mypoint(userid, howmuch, why) values (#{userid}, #{howmuch}, #{why})
+	</insert>
+  	
   	<update id="updateBoard">
-  		update proudboard set title = #{title}, content = #{content} where no = #{no}
+  		update proudboard set title = #{title}, content = #{content}, image = #{image} where no = #{no}
   	</update>
   	
   	<delete id="deleteboard">

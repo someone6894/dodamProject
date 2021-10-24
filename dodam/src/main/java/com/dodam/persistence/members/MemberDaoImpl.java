@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.members.MemberVo;
+import com.dodam.domain.members.MypointVo;
 
 
 @Repository
@@ -31,8 +32,6 @@ public class MemberDaoImpl implements MemberDao {
 	
 	private static String namespace = "com.dodam.mapper.MemberMapper";
 	
-	
-	
 	// 회원가입
 	public int insertMember(MemberVo mem) {
 		String query = namespace + ".insertMember";
@@ -40,7 +39,6 @@ public class MemberDaoImpl implements MemberDao {
 		return row;
 	}
 
-	
 	// 이메일 확인 코드 보내기
 	public boolean send(String emailAddr, String confirmCode) throws MessagingException, AddressException {
 		// GMail의 SMTP(Send Mail Transfer Protocol)를 이용하여 메일 발송
@@ -118,6 +116,45 @@ public class MemberDaoImpl implements MemberDao {
 	public int deleteAccount(MemberVo mem) throws NamingException, SQLException {
 		return ses.delete(namespace + ".deleteAccount", mem);
 	}
+
+	@Override
+	public int sumpoint(String userid) throws NamingException, SQLException {
+		 
+		return ses.selectOne(namespace + ".sumpoint", userid);
+	}
+
+	@Override
+	public List<MypointVo> pointlist(String userid) throws NamingException, SQLException {
+
+		   return ses.selectList(namespace + ".pointlist", userid);
+	}
+
+	@Override
+	public int countboard(String userid) throws NamingException, SQLException {
+		
+		return ses.selectOne(namespace + ".countboard", userid);
+	}
+
+	@Override
+	public int countreplyer(String userid) throws NamingException, SQLException {
+		
+		return ses.selectOne(namespace + ".countreplyer", userid);
+	}
+
+	@Override
+	public List<MypointVo> boardhistory(String userid) throws NamingException, SQLException {
+		   
+		return ses.selectList(namespace + ".boardhistory", userid);
+	}
+
+	@Override
+	public List<MypointVo> replyerhistory(String userid) throws NamingException, SQLException {
+		   
+		return ses.selectList(namespace + ".replyerhistory", userid);
+	}
+
+
+
 
 
 	

@@ -7,8 +7,10 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.naming.NamingException;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Service;
 
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 import com.dodam.persistence.board.proud.ProudDAO;
@@ -19,11 +21,28 @@ public class ProudServiceimpl implements ProudService {
 	private ProudDAO dao;
 	
 	@Override
-	public Map<String, Object> readAllBoard(int pageNo) throws NamingException, SQLException {
+	public Map<String, Object> readAllBoard(int pageNo, String type, String word) throws NamingException, SQLException {
 		PagingProud pi = pagingProcess(pageNo);
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("boardList", dao.selectAllBoard(pageNo, pi));
-		map.put("pagingInfo", pi);
+
+		System.out.println(type);
+		
+		if(type.equals("title")) {
+			System.out.println("제목 + 내용");
+			map.put("boardList", dao.selectTitleBoard(pageNo, pi, word));
+			map.put("pagingInfo", pi);
+		}
+		else if(type.equals("writer")) {
+			System.out.println("작성자");
+			map.put("boardList", dao.selectWriterBoard(pageNo, pi, word));
+			map.put("pagingInfo", pi);			
+		}
+		else if(type.equals("reply")) {
+			System.out.println("댓글");
+			map.put("boardList", dao.selectReplyBoard(pageNo, pi, word));
+			map.put("pagingInfo", pi);
+		}
+		
 		return map;
 	}
 
@@ -101,6 +120,19 @@ public class ProudServiceimpl implements ProudService {
 		}
 		
 		return deleteBoard;
+	}
+
+	@Override
+	public boolean addpoint(MypointVo vo) throws NamingException, SQLException {
+
+		boolean result = false;
+
+		if (dao.addpoint(vo) == 1) {
+			result = true;
+		}
+
+		return result;
+
 	}
 
 

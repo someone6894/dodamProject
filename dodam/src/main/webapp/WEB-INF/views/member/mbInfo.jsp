@@ -269,36 +269,44 @@ div {
 			</div>
 			
 			<div class="shippingStatusContainer">
-				<div class="title">작성글 / 댓글조회</div>
-				<div class="status">
+				<div class="title"> 작성글  /  댓글조회 </div>
+				<div class="status" style="margin-left : 15px;  margin-right : 15px;">
 
 					<div class="item">
 						<div>
-							<div class="green number">6</div>
+							<div class="green number">${countboard}</div>
 							<div class="text">작성글</div>
 						</div>
+					<a href="/member/boardhistory" class="item">
 						<div class="icon">></div>
+					</a>
 					</div>
 					<div class="item">
 						<div>
-							<div class="green number">3</div>
+							<div class="green number">${countreplyer}</div>
 							<div class="text">내 댓글</div>
 						</div>
+					<a href="/member/replyerhistory" class="item">
 						<div class="icon">></div>
+					</a>
 					</div>
 					<div class="item">
 						<div>
 							<div class="green number">GOLD</div>
 							<div class="text">회원 등급</div>
 						</div>
+					<a href="#" class="item">
 						<div class="icon">></div>
+						</a>
 					</div>
 					<div class="item">
 						<div>
 							<div class="green number">1</div>
 							<div class="text">신고 목록</div>
 						</div>
+					<a href="#" class="item">
 						<div class="icon">></div>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -312,9 +320,9 @@ div {
 						</span>
 					</div>
 					<div class="right">
-						<span class="blct">170</span> >
+						<span class="blct">${sumpoint} POINT</span> >
 					</div>
-				</a> <a href="#" class="item">
+				</a> <a href="/member/pointlist" class="item">
 					<div class="icon">ii</div>
 					<div class="text">포인트 내역</div>
 					<div class="right">></div>

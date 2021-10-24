@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.naming.NamingException;
 
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.ProudVo;
 
 public interface ProudService {
@@ -13,10 +14,13 @@ public interface ProudService {
 	// 게시판에 글 저장하기
 	boolean addBoard(ProudVo bo) throws NamingException, SQLException;
 	
+	// 포인트 적립
+	boolean addpoint(MypointVo vo) throws NamingException, SQLException;
+
 	
 	//  READ
 	// 게시판 전체글 조회 (페이징)
-	Map<String, Object> readAllBoard(int pageNo) throws NamingException, SQLException;
+	Map<String, Object> readAllBoard(int pageNo, String type, String word) throws NamingException, SQLException;
 
 	// 상세 페이지 조회
 	ProudVo readBoard(int no) throws NamingException, SQLException;
@@ -30,5 +34,7 @@ public interface ProudService {
 	//  DELETE
 	// 게시판 글 삭제하기
 	boolean deleteBoard(int no) throws NamingException, SQLException;
+	
+	
 	
 }
