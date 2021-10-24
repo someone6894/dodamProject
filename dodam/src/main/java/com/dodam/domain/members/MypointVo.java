@@ -1,4 +1,4 @@
-package com.dodam.domain.mypage;
+package com.dodam.domain.members;
 
 import java.sql.Timestamp;
 

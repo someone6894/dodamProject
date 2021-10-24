@@ -13,6 +13,11 @@ public class EventBoardVO {
 	private String contents;
 	private String img;
 	private String area;
+	private String hostdate;
+	private String hostplace;
+	private String huge;
+	private String company;
+	private String mallLocation;
 	
 	public EventBoardVO() {
 		super();
@@ -20,7 +25,8 @@ public class EventBoardVO {
 	}
 
 	public EventBoardVO(int no, String title, String admin, String thumbimg, String year, int readcnt, int likecount,
-			String contents, String img, String area) {
+			String contents, String img, String area, String hostdate, String hostplace, String huge, String company,
+			String mallLocation) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -32,6 +38,11 @@ public class EventBoardVO {
 		this.contents = contents;
 		this.img = img;
 		this.area = area;
+		this.hostdate = hostdate;
+		this.hostplace = hostplace;
+		this.huge = huge;
+		this.company = company;
+		this.mallLocation = mallLocation;
 	}
 
 	public int getNo() {
@@ -114,11 +125,52 @@ public class EventBoardVO {
 		this.area = area;
 	}
 
+	public String getHostdate() {
+		return hostdate;
+	}
+
+	public void setHostdate(String hostdate) {
+		this.hostdate = hostdate;
+	}
+
+	public String getHostplace() {
+		return hostplace;
+	}
+
+	public void setHostplace(String hostplace) {
+		this.hostplace = hostplace;
+	}
+
+	public String getHuge() {
+		return huge;
+	}
+
+	public void setHuge(String huge) {
+		this.huge = huge;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getMallLocation() {
+		return mallLocation;
+	}
+
+	public void setMallLocation(String mallLocation) {
+		this.mallLocation = mallLocation;
+	}
+
 	@Override
 	public String toString() {
 		return "EventBoardVO [no=" + no + ", title=" + title + ", admin=" + admin + ", thumbimg=" + thumbimg + ", year="
 				+ year + ", readcnt=" + readcnt + ", likecount=" + likecount + ", contents=" + contents + ", img=" + img
-				+ ", area=" + area + "]";
+				+ ", area=" + area + ", hostdate=" + hostdate + ", hostplace=" + hostplace + ", huge=" + huge
+				+ ", company=" + company + ", mallLocation=" + mallLocation + "]";
 	}
 	
 	

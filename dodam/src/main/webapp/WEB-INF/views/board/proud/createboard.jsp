@@ -11,12 +11,25 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
  <script>
   	$(function() {
-  		$(".fileDrop").on("dropenter dragover", function(evt) {
-  			evt.preventDefault();
+  		$("#description").summernote({
+			height : 300,
+			width : 800
+		});
+
+		});
+//  		$(".fileDrop").on("dropenter dragover", function(evt) {
+//  			evt.preventDefault();
   			
-  		});
 
   		$(".fileDrop").on("drop", function(evt) {
   			evt.preventDefault(); // 이벤트 전파를 막음 (drop된 파일이 열리는 것을 방지)

@@ -16,15 +16,15 @@
 
 	<div class="container"> <br/>
 	
-		<h2>전시회 목록</h2><br/>
+		<h2 style="margin-bottom: 20px; margin-top: 30px;">전시회 목록</h2><br/>
 		<!-- 카테고리 컬럼명 검색 -->
 	  <div class="w3-row-padding w3-padding-16 w3-center" id="event">
 	<c:forEach items = "${list }" var ="list">
-	<div class="w3-quarter" style="margin-bottom:35px">
+	<div class="w3-quarter" style="margin-bottom:35px;">
 	<a href="/board/event/view?no=${list.no}">
       <img src="${list.thumbimg }" style="height:350px">
       <h3>${list.title }</h3>
-      <p>${list.contents }</p>
+     <!--   <p>${list.contents }</p> -->
       </a>
     </div>
 	</c:forEach>
@@ -33,7 +33,9 @@
 
 </div>
 <div>
-		<a href="/board/event/write" class="btn btn-primary pull-right">게시물 작성</a>
+<c:choose>
+		<c:when test="${loginSession.userid!= admin123}"><a href="/board/event/write" class="btn btn-primary pull-right">게시물 작성</a>
+		</c:when></c:choose>
 	</div>
 
 

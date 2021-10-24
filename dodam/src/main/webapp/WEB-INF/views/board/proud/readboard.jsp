@@ -40,14 +40,15 @@
 
 		    			$.each(data, function(i, element) {
 		    				viewoutput ='<li id= "reply' + element.no + '"class="list-group-item">';							
-	    					viewoutput += '<div>작성자 : <span id="spanreplyer' + element.no +'">' + element.replyer + '</sapn></div>';
-	    					viewoutput += '<div id="orcontent' + element.no + '">내용 : ' + element.contents + '</div>';
-	    					if (element.registerdate == element.modifydate) {
-	    					viewoutput += '<div id="regdate' + element.no + '">작성 날짜 : ' + new Date(element.registerdate).toLocaleString() + '</div>';
+	    					viewoutput += '<div><span style="font-size : 14pt" id="spanreplyer' + element.no +'" >' + element.replyer + '</span>';
+	    					if (element.registerdate != element.modifydate) {
+		    					viewoutput += '<span style = "margin-left : 30px">' + new Date(element.registerdate).toLocaleString() + '</span>';
 	    					}
 	    					else{
-		    					viewoutput += '<div id="regdate' + element.no + '">수정 날짜 : ' + new Date(element.modifydate).toLocaleString() + '</div>';
+		    					viewoutput += '<span style = "margin-left : 30px">' +new Date(element.modifydate).toLocaleString() + '</span>';
 		    				}		    					
+	    					viewoutput += '</div></br>';
+	    					viewoutput += '<div id="orcontent' + element.no + '" style = "margin-left : 5px; margin-top : 10px;">' + element.contents + '</div>';
 	    					viewoutput += '<div id="regreg' + element.no + '"></div>';
 	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" class = "far" onclick="UpReply(' + element.no + ')";><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" /> 수정</a>';
 	    					viewoutput += '<a href="javascript:;" class = "far" onclick="DeReply(' + element.no + ')";><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
@@ -123,9 +124,11 @@
   		         success : function(data) { // 통신 성공시 수행될 콜백 함수
 					if(data == "success") {
 						alert("댓글 등록 완료!");
-						
+
+						$("#replyer").val("");
+						$("#replyContents").val("");
+						HideReply();
 						viewAllReplies();
-						$("#writer").val("");
 					} else if (data =="fail") {
 						alert('댓글 등록 실패! \r\n 문제가 지속되면 상현이한테 연락하세요!');
 					}
@@ -165,9 +168,11 @@
   		         success : function(data) { // 통신 성공시 수행될 콜백 함수
 					if(data == "success") {
 						alert("댓글 등록 완료!");
-						
+
+						$("#rereplyer").val("");
+						$("#rereplyContents").val("");
+						HideReReply(no);
 						viewAllReplies();
-						$("#writer").val("");
 					} else if (data =="fail") {
 						alert('댓글 등록 실패! \r\n 문제가 지속되면 상현이한테 연락하세요!');
 					}
@@ -373,12 +378,6 @@
         <label for="content">내용 :</label>
         <div>${board.content }</div>	  
 	  </div>
-	  
-   		<c:choose>
-			<c:when test="${board.image != null}">
-				<img id ="image" src="../../resources/${board.image }" />
-			</c:when> 
-		</c:choose>
      	
      	<div></div>
     
@@ -412,6 +411,8 @@
 	</div>
 	
 	      <button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>	  
+	      
+	      <br/><br/><br/>
 
     <div id="replyDiv" style="clear : both;">
       		<div class="form-group">
@@ -433,6 +434,7 @@
         <div id="replyLst">
      </div>
      
+     <div style="margin-bottom : 100px"></div>
 </div>
 </body>
 </html>

@@ -24,7 +24,7 @@
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
 		<h2>글 쓰기 페이지</h2>
-		<form action="/board/createBoard" method="post" >
+		<form action="/board/notice/createview" method="post" >
 			<div class="form-group">
 				<label for="title">제목:</label> <input type="text"
 					class="form-control" id="title" name="title">
@@ -32,19 +32,19 @@
 
 			<div class="form-group">
 				<label for="writer">작성자 :</label> <input type="text"
-					class="form-control" id="writer" name="writer" value="${member.userid }" readonly><span
+					class="form-control" id="writer" name="writer" value="${loginSession.userid }" readonly><span
 					id="writerError" class="error"></span>
 			</div>
 
 			<div class="form-group">
-				<label for="content">내용 :</label>
-				<textarea rows="20" cols="150" id="content" name="content"></textarea>
+				<label for="contents">내용 :</label>
+				<textarea rows="20" cols="150" id="contents" name="contents"></textarea>
 
 			</div>
 		
 	
 			<button type="submit" class="btn btn-success">저장</button>
-			<button type="reset" class="btn btn-warning">취소</button>
+			<button type="reset" class="btn btn-warning"><a href="/board/notice/listAll">취소</a></button>
 		</form>
 		
 	</div>

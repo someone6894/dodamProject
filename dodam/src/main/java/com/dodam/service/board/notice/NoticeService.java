@@ -12,8 +12,8 @@ public interface NoticeService {
 
 	//C 
 		//공지사항 게시판에 글쓰기
-		boolean insertNotice(NoticeVo nvo) throws NamingException, SQLException;
-
+		void insertNotice(NoticeVo nvo) throws NamingException, SQLException;
+		boolean createview(NoticeVo vo) throws NamingException, SQLException;
 	//R 
 		//공지사항 리스트 전체 가져오기
 		
@@ -25,10 +25,14 @@ public interface NoticeService {
 	//U
 		//공지사항 수정하기
 		void updatenotice(NoticeVo vo) throws NamingException, SQLException;
-			
+		boolean update(NoticeVo vo) throws NamingException, SQLException;
 	//D
 		//공지사항 삭제하기
 		void delnotice(int no) throws NamingException, SQLException;
+		boolean delete(int no) throws NamingException, SQLException;;
+		
+
+		
 
 	
 

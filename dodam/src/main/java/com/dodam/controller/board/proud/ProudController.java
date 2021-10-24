@@ -2,14 +2,19 @@ package com.dodam.controller.board.proud;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,14 +24,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 import com.dodam.etc.proud.UploadFileProcess;
 import com.dodam.etc.proud.UploadFiles;
 import com.dodam.service.board.proud.ProudService;
+import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("/board/proud/*")
@@ -38,15 +46,17 @@ public class ProudController {
 	private static final Logger logger = LoggerFactory.getLogger(ProudController.class);
 
 	@RequestMapping(value ="/listAll", method=RequestMethod.GET)
-	public void listAll(Model model, @RequestParam(value="pageNo", required=false, defaultValue="1") String tmp) throws Exception { 
+	public void listAll(Model model, @RequestParam(value="pageNo", required=false, defaultValue="1") String tmp,
+			@RequestParam(value ="searchBy", required = false, defaultValue="title") String type,
+			@RequestParam(value ="searchWord", required = false, defaultValue="") String word) throws Exception { 
 		int pageNo = 1;
 		if(!tmp.equals("") || tmp != null) {
 			pageNo = Integer.parseInt(tmp);
 		} 
-
-		logger.info(pageNo + "페이지 게시물 출력...");
 		
-		Map<String, Object> map = service.readAllBoard(pageNo);
+		System.out.println("검색 타입 : " + type + ", 검색 단어 : " + word);		
+		
+		Map<String, Object> map = service.readAllBoard(pageNo, type, word);
 
 		List<ProudVo> lst = (List<ProudVo>)map.get("boardList");
 		PagingProud pi = (PagingProud)map.get("pagingInfo");
@@ -76,10 +86,14 @@ public class ProudController {
 		
 	}
 	
+	
+	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String registerBoard() {
-		return "/board/proud/createboard";
+		return "/board/proud/registerboard";
 	}
+	
+	
 	
 	@RequestMapping(value="/uploadFile", method=RequestMethod.POST, produces="text/plain; charset=utf-8")
 	public ResponseEntity<String> upFile(MultipartFile upFile, HttpServletRequest request)  { //MultipartFile ��ü�� �������� jsp���ϳ��� ajax���� ÷���ϴ� name�� ���ƾ� �Ѵ�.
@@ -97,14 +111,14 @@ public class ProudController {
 		try {
 			files = new UploadFileProcess().uploadFile(upPath, upFile.getOriginalFilename(), upFile.getBytes());
 			String returnVal = null;
-			if (files.getThumbNailImgFileName() != null) {
+//			if (files.getThumbNailImgFileName() != null) {
 				// 이미지 파일이므로 썸네일 이미지 경로 반환
-				returnVal = files.getThumbNailImgFileName();
-			}
-			else if ( files.getNotImgFileName() != null) {
+//				returnVal = files.getThumbNailImgFileName();
+//			}
+//			else if ( files.getNotImgFileName() != null) {
 				// 이미지 파일이 아니므로 경로 반환
-				returnVal = files.getNotImgFileName();
-			}
+				returnVal = files.getOriginImgFileName();
+//			}
 			return new ResponseEntity<String>(returnVal, HttpStatus.OK);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -156,11 +170,15 @@ public class ProudController {
 	}
 	
 	@RequestMapping(value="/createBoard", method=RequestMethod.POST)
-	public String createBoard(ProudVo vo, RedirectAttributes rttr) throws NamingException, SQLException {
+	public String createBoard(ProudVo vo, RedirectAttributes rttr, HttpServletRequest request) throws NamingException, SQLException {
 		System.out.println(vo.toString());
+
+		HttpSession ses = request.getSession();				
+		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
 		
 		if (service.addBoard(vo)) {
-			rttr.addFlashAttribute("result", "success");			
+			rttr.addFlashAttribute("result", "success");
+			service.addpoint(new MypointVo(userid, null, 5, "게시판 작성"));
 		} else {
 			rttr.addFlashAttribute("result", "fail");
 		}
@@ -192,4 +210,9 @@ public class ProudController {
 		return "redirect:/board/proud/listAll?pageNo=1";
 	}
 	
+	@RequestMapping(value = "/writetest", method=RequestMethod.GET)
+	public String writetest() throws NamingException, SQLException {
+		
+		return "product_write";
+	}
 }

@@ -7,7 +7,7 @@
 
 <!-- 새 공지글 작성 -->
 <insert id = "insertNotice">
-	insert into notice(title, writer, img, contents) values(#{title},#{writer}, #{img},#{contents})
+	insert into notice(title, writer, contents) values(#{title},#{writer},#{contents})
 </insert>
 
 	<select id="getTotalPostCnt" resultType="string">
@@ -16,7 +16,7 @@
 
 <!--  공지사항 전체글 가져오기 -->
 <select id= "selectnoticeall" resultType ="com.dodam.domain.notice.NoticeVo">
-	select * from notice order by no desc
+	select * from notice order by no desc limit #{startNum}, #{postPerPage}
 </select>
 
 <!--  공지사항 글 자세히 가져오기 -->
@@ -26,7 +26,7 @@
 
 <!--  공지사항 글 수정하기 -->
 <update id="updatenotice">
-	update notice set title= #{title}, writer = #{writer}, img= #{img}, contents = #{contents}
+		update notice set title=  #{title}, writer = #{writer}, contents = #{contents} where no= #{no}
 </update>
 
 <!--  공지사항 글 삭제 -->

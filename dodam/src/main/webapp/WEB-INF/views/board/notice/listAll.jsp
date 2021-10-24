@@ -12,7 +12,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-	function readnotice(no) {
+	function readBoard(no) {
 		location.href='/board/notice/readBoard?no=' + no;
 	}
 </script>
@@ -34,7 +34,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="notice" items="${listBoard }">
-							<tr onclick="readnotice(${notice.no});">
+							<tr onclick="readBoard(${notice.no});">
 								<td>${notice.no }</td>
 								<td>${notice.title }</td>								
 								<td>${notice.writer }</td>
@@ -47,9 +47,38 @@
 				</table>
 			</c:when>
 		</c:choose>
-		
+	<c:choose>
+		<c:when test="${loginSession != null }">
 		<div style="float: right">
 			<button type="button" class="btn btn-success" onclick="location.href='/board/notice/createBoard';">글 등록</button>
+		</div>
+		
+		</c:when>
+	
+	</c:choose>	
+		
+		
+		<div style="margin-top: 15px; clear : right;">
+			<ul class="pagination">
+				<c:if test="${param.pageNo > 1 }">
+					<li><a href="/board/notice/listAll?pageNo=1&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;&lt;</a></li>
+				</c:if>
+				<c:if test="${param.pageNo > 1 }">
+					<li>
+					<a href="/board/notice/listAll?pageNo=${param.pageNo - 1}&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;</a>
+				</c:if>
+
+				<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
+					end="${pagingInfo.endPageNoOfBlock }" step="1">
+					<li><a href="/board/notice/listAll?pageNo=${i }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">${i }</a></li>
+				</c:forEach>
+				<c:if test="${param.pageNo < pagingInfo.totalPage }">
+					<li><a href="/board/notice/listAll?pageNo=${param.pageNo + 1 }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;</a></li>
+				</c:if>
+				<c:if test="${param.pageNo < pagingInfo.totalPage }">
+					<li><a href="/board/notice/listAll?pageNo=${pagingInfo.totalPage }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;&gt;</a></li>
+				</c:if>
+			</ul>
 		</div>
 		
 	</div>

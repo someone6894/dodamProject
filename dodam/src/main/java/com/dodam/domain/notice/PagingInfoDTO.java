@@ -1,8 +1,8 @@
 package com.dodam.domain.notice;
 
 public class PagingInfoDTO {
-	private int postPerPage = 3; // 페이지당 글 갯수
-	private int pageCntPerBlock = 2; // 블럭 당 페이지 수
+	private int postPerPage = 10; // 페이지당 글 갯수
+	private int pageCntPerBlock = 5; // 블럭 당 페이지 수
 	
 	private int totalPage; // 전체 페이지 수
 	private int startNum; // 출력 시작할 번호

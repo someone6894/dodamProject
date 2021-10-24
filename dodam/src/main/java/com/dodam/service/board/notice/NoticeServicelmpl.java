@@ -23,18 +23,31 @@ public class NoticeServicelmpl implements NoticeService {
 	
 	//공지 등록
 	@Override
-	public boolean insertNotice(NoticeVo nvo) throws NamingException, SQLException {
-		boolean insertNotice = false;
-
-		return insertNotice;
+	public void insertNotice(NoticeVo nvo) throws NamingException, SQLException {
+		dao.insertNotice(nvo);
 	}
+	
+	@Override
+	public boolean createview(NoticeVo vo) throws NamingException, SQLException {
+		boolean result = false;
+		
+		int result2 = dao.insertNotice(vo);
+		if(result2 == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	
 	
 	// 공지 전체 띄우기
 	@Override
 	public 	Map<String, Object> selectnoticeall(int pageNo) throws NamingException, SQLException {
 		PagingInfoDTO pi = pagingProcess(pageNo);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("boardList", dao.selectnoticeall());
+		map.put("boardList", dao.selectnoticeall(pageNo,pi));
 		map.put("pagingInfo", pi);
 		return map;
 	} 
@@ -63,8 +76,10 @@ public class NoticeServicelmpl implements NoticeService {
 	// 공지 자세히 보기
 	@Override
 	public NoticeVo selectnotice(int no) throws NamingException, SQLException {
-		// TODO Auto-generated method stub
-		return dao.selectnotice(no);
+		
+		NoticeVo vo= dao.selectnotice(no);
+		
+		return vo;
 	}
 	
 	//공지 업데이트
@@ -81,6 +96,32 @@ public class NoticeServicelmpl implements NoticeService {
 		dao.delnotice(no);
 	}
 
+	@Override
+	public boolean update(NoticeVo vo) throws NamingException, SQLException {
+		boolean result = false;
+		
+		int result2 = dao.updatenotice(vo);
+		if(result2 == 1) {
+			result = true;
+		}
+		
+		return result;
+		
+	}
+
+	@Override
+	public boolean delete(int no) throws NamingException, SQLException {
+boolean result = false;
+		
+		int result2 = dao.delnotice(no);
+		if(result2 == 1) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	
 	
 
 }
