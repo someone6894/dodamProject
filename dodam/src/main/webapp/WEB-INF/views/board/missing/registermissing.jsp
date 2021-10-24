@@ -12,7 +12,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-	let uploadImgAr = [];
 	$(function() {
 		$(".fileDrop").on("dropenter dragover", function(e) {
 			e.preventDefault();
@@ -27,20 +26,16 @@
 			$("#uploadError").empty();			
 			let files = e.originalEvent.dataTransfer.files; // 드래그 된 파일을 얻어옴
 			console.log(files);
-			for(let i in files) {
-				uploadImgAr[i] = files[i];
-			}
-			console.log(uploadImgAr);
 			
-			if (uploadImgAr.length > 3) {
+			if (files.length > 3) {
 				$("#uploadError").append("사진은 3개까지만 업로드 가능합니다!");
-			} else if (notImgCheck(uploadImgAr)) {
+			} else if (notImgCheck(files)) {
 				$("#uploadError").append("이미지 파일만 업로드 가능합니다!");
 			} else {
 				// 게시글 등록 전 이미지 파일 먼저 업로드
 				let formData = new FormData(); // form 객체 생성
-				for(let i = 0; i < uploadImgAr.length; i++) { // form 객체에 파일 첨부
-					formData.append("uploadImg", uploadImgAr[i]);
+				for(let i = 0; i < files.length; i++) { // form 객체에 파일 첨부
+					formData.append("uploadImg", files[i]);
 				}
 				
 				let url = '/board/missing/uploadImgs';
