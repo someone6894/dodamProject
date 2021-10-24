@@ -13,7 +13,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!--   <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" /> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script> -->
-<!-- <script type="text/javascript"> $.noConflict(); </script> -->
+<script type="text/javascript"> $.noConflict(); </script>
 
 <style>
 </style>
@@ -196,21 +196,20 @@ function ActiveBar(){
    <nav class="menu">
       <div class="container">
          <ul class="nav navbar-nav">
-            <li id="main" class="active"><a href="/">
-               <img src="../../resources/images/main/paw.png" width="24px;" style="padding: 0 6px 3px 0;"/>메인</a></li>
-                      <li id="adoptBoard"><a href="/board/notice/listAll"><img src="../../resources/images/main/notice.png" width="24px;" style="padding: 0 6px 3px 0;"/>공지사항</a></li>
-            <li id="adoptBoard"><a href="/missing/list"><img src="../../resources/images/main/missing.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾아요</a></li>
-            <li id="adoptBoard"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>분양해요</a></li>
-		    <li><a href="/board/adopt/publicAdoptList"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a>
-            <li class="dropdown"><a href="/"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a>
-               <ul class="dropdown-content" style="padding-left: 0;">
-                  <li><a href="#">공공기관 찾기</a></li>
-                  <li><a href="#">동물병원 찾기</a></li>
-               </ul>
+            <li id="main" class="active"><a href="/"><img src="../../resources/images/main/paw.png" width="24px;" style="padding: 0 6px 3px 0;"/>메인</a></li>
+            <li id="notice"><a href="/board/notice/listAll"><img src="../../resources/images/main/notice.png" width="24px;" style="padding: 0 6px 3px 0;"/>공지사항</a></li>
+            <li id="missing"><a href="/board/missing/list"><img src="../../resources/images/main/missing.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾아요</a></li>
+            <li id="adopt"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>분양해요</a></li>
+		    <li id='publicAdopt'><a href="/board/adopt/publicAdoptList"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a>
+            <li class="hospital dropdown"><a href="/"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a>
+<!--                <ul class="dropdown-content" style="padding-left: 0;"> -->
+<!--                   <li><a href="#">공공기관 찾기</a></li> -->
+<!--                   <li><a href="#">동물병원 찾기</a></li> -->
+<!--                </ul> -->
             </li>
-            <li id="adoptBoard"><a href="/board/proud/listAll"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
-            <li class="dropdown"><a href="/board/event/listPage"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 전시회</a></li>
-            <li><a href="/board/qna/listAll"><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
+            <li id="proud"><a href="/board/proud/listAll"><img src="../../resources/images/main/proud.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려견자랑</a></li>
+            <li class="event"><a href="/board/event/listPage"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>반려동물 전시회</a></li>
+            <li id='qna'><a href="/board/qna/listAll"><img src="../../resources/images/main/paw.png" width="30px;" style="padding: 0 6px 3px 0;"/>Q&A</a></li>
             
          </ul>
       </div>
