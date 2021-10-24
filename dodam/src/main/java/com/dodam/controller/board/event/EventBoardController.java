@@ -42,7 +42,7 @@ import com.dodam.service.board.event.EventBoardService;
 		 public String postWrite(EventBoardVO vo) throws Exception {
 			 service.write(vo);
 			 
-			 return"redirect:/board/event/list";
+			 return"redirect:/board/event/listPage";
 		 }
 		 
 		 //게시물 조회
@@ -50,6 +50,7 @@ import com.dodam.service.board.event.EventBoardService;
 		 public void getView(@RequestParam("no")int no, Model model) throws Exception{
 			 EventBoardVO vo = service.view(no);
 			 
+			 System.out.println(vo.toString());
 			 model.addAttribute("view", vo);
 		 }
 		//게시물 수정
@@ -77,7 +78,7 @@ import com.dodam.service.board.event.EventBoardService;
 		   
 		  service.delete(no);  
 
-		  return "redirect:/board/event/list";
+		  return"redirect:/board/event/listPage";
 		 }
 		 
 		 //게시물 목록 , 페이징 추가
