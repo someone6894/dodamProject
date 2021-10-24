@@ -23,7 +23,7 @@ public class QnaReplyController {
 	@Inject
 	private QnaReplyService service;
 	
-	@RequestMapping(value="", method=RequestMethod.POST)
+	@RequestMapping(value="create", method=RequestMethod.POST)
 	public ResponseEntity<String> addReply(@RequestBody QnaReplyVo vo) {
 		System.out.println("Replies... POST... 글등록 시작");
 		ResponseEntity<String> result = null;
