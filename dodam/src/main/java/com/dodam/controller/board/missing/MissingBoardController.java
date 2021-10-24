@@ -33,7 +33,7 @@ import com.dodam.etc.missing.MissingUploadImgs;
 import com.dodam.service.board.missing.MissingBoardService;
 
 @Controller
-@RequestMapping("/missing/*")
+@RequestMapping("/board/missing/*")
 public class MissingBoardController {
 	
 	private static Logger logger = LoggerFactory.getLogger(MissingBoardController.class);
@@ -151,7 +151,7 @@ public class MissingBoardController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/missing/list";
+		return "redirect:/board/missing/list";
 	}
 	
 	@RequestMapping(value="/remove", method=RequestMethod.POST)
@@ -204,7 +204,7 @@ public class MissingBoardController {
 		MemberVo mem = (MemberVo)ses.getAttribute("loginSession");
 		
 		
-		return "redirect:/missing/detail?no=" + mw.getNo() + "&userid=" + mem.getUserid();
+		return "redirect:/board/missing/detail?no=" + mw.getNo() + "&userid=" + mem.getUserid();
 	}
 	
 	@RequestMapping(value="/changeCategory", method=RequestMethod.POST)

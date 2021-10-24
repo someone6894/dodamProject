@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.dodam.domain.missing.LikeHistoryVo;
+import com.dodam.domain.missing.BookmarkVo;
 import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
@@ -102,7 +102,7 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	}
 
 	@Override
-	public LikeHistoryVo selectBookmark(Map<String, Object> bookMap) {
+	public BookmarkVo selectBookmark(Map<String, Object> bookMap) {
 		return ses.selectOne(ns + ".selectBookmarkHistory", bookMap);
 	}
 }

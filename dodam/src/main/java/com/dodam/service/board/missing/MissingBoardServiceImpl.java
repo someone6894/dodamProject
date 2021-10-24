@@ -87,16 +87,18 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		
 		if (ts == null) { // (ip, readno)의 조회 정보가 없으면
 			// 조회정보를 새롭게 입력
-			dao.insertReadHistory(ri);
-			dao.updateReadCount(no);
+			if(dao.insertReadHistory(ri)==1) {
+				dao.updateReadCount(no);
+			}
 		} else { // 조회 정보가 있으면
 			long readTime = ts.getTime();
 			long currentTime = System.currentTimeMillis();
 			long timeDiff = currentTime - readTime;
 			
 			if (timeDiff > 24 * 60 * 60 * 1000) { // 마지막 조회 이후 24시간 초과했다면
-				dao.updateReadCount(no); // 조회수 증가
-				dao.insertReadHistory(ri); // 조회정보 새롭게 입력
+				if (dao.insertReadHistory(ri)==1) { // 조회정보 새롭게 입력
+					dao.updateReadCount(no); // 조회수 증가
+				}
 			}
 		}
 		

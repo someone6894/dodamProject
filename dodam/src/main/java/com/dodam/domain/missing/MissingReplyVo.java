@@ -8,22 +8,17 @@ public class MissingReplyVo {
 	private String contents;
 	private String replyer;
 	private Timestamp lastmodifieddate;
-	private String issecret;
-	private int ref;
-	private int step;
+	private char issecret;
+	private char ismodified;
+	private int pid;
+	private int depth;
 	private int reforder;
+	private int output;
 	public MissingReplyVo() {
 		super();
 	}
-	public MissingReplyVo(int pno, String contents, String replyer, String issecret) {
-		super();
-		this.pno = pno;
-		this.contents = contents;
-		this.replyer = replyer;
-		this.issecret = issecret;
-	}
-	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, String issecret,
-			int ref, int step, int reforder) {
+	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, char issecret,
+			char ismodified, int pid, int depth, int reforder) {
 		super();
 		this.no = no;
 		this.pno = pno;
@@ -31,8 +26,9 @@ public class MissingReplyVo {
 		this.replyer = replyer;
 		this.lastmodifieddate = lastmodifieddate;
 		this.issecret = issecret;
-		this.ref = ref;
-		this.step = step;
+		this.ismodified = ismodified;
+		this.pid = pid;
+		this.depth = depth;
 		this.reforder = reforder;
 	}
 	public int getNo() {
@@ -65,23 +61,29 @@ public class MissingReplyVo {
 	public void setLastmodifieddate(Timestamp lastmodifieddate) {
 		this.lastmodifieddate = lastmodifieddate;
 	}
-	public String getIssecret() {
+	public char getIssecret() {
 		return issecret;
 	}
-	public void setIssecret(String issecret) {
+	public void setIssecret(char issecret) {
 		this.issecret = issecret;
 	}
-	public int getRef() {
-		return ref;
+	public char getIsmodified() {
+		return ismodified;
 	}
-	public void setRef(int ref) {
-		this.ref = ref;
+	public void setIsmodified(char ismodified) {
+		this.ismodified = ismodified;
 	}
-	public int getStep() {
-		return step;
+	public int getPid() {
+		return pid;
 	}
-	public void setStep(int step) {
-		this.step = step;
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 	public int getReforder() {
 		return reforder;
@@ -89,12 +91,17 @@ public class MissingReplyVo {
 	public void setReforder(int reforder) {
 		this.reforder = reforder;
 	}
+	public int getOutput() {
+		return output;
+	}
+	public void setOutput(int output) {
+		this.output = output;
+	}
 	@Override
 	public String toString() {
 		return "MissingReplyVo [no=" + no + ", pno=" + pno + ", contents=" + contents + ", replyer=" + replyer
-				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ref=" + ref + ", step="
-				+ step + ", reforder=" + reforder + "]";
+				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ismodified=" + ismodified
+				+ ", pid=" + pid + ", depth=" + depth + ", reforder=" + reforder + "]";
 	}
-	
-	
+
 }

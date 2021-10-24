@@ -27,7 +27,7 @@
 					if (imgAr[i].split(":")[0] == "http") {
 						output += "<img src='" + imgAr[i] + "' width='30%'/>";
 					} else {
-						output += "<img src='../resources/uploads/kmj/missing" + imgAr[i] + "' width='30%'/>";
+						output += "<img src='../../resources/uploads/kmj/missing" + imgAr[i] + "' width='30%'/>";
 					}
 					imgCnt++;
 				}
@@ -76,7 +76,7 @@
 			
 			// 로그인 한 유저의 경우 좋아요 기록 가져와서 하트 채우기---------------------------------------------------------
 			if ("${loginSession.userid}" != "") {
-				let url = '/missing/bookmarkHistory';
+				let url = '/board/missing/bookmarkHistory';
 				
 				$.ajax({
 					url : url, // ajax와 통신 할 곳
@@ -144,7 +144,7 @@
 			let userid = "${loginSession.userid}";
 			let no = "${MissingBoard.no}";
 			
-			let url = "/missing/unbookmark";
+			let url = "/board/missing/unbookmark";
 			
 			$.ajax({
 				url : url, // ajax와 통신 할 곳
@@ -167,7 +167,7 @@
 			let userid = "${loginSession.userid}";
 			let no = "${MissingBoard.no}";
 			
-			let url = "/missing/bookmark";
+			let url = "/board/missing/bookmark";
 			
 			$.ajax({
 				url : url, // ajax와 통신 할 곳
@@ -213,7 +213,7 @@
 		
 		// 게시물 삭제하는 메서드----------------------------------------------------------------------------------
 		function deleteBoard() {
-			let url = '/missing/remove';
+			let url = '/board/missing/remove';
 			let no = "${MissingBoard.no }";
 			
 			$.ajax({
@@ -225,7 +225,7 @@
 					console.log(data);
 					if(data == "success") {
 						alert("게시물을 삭제하였습니다!");
-						location.href="/missing/list";
+						location.href="/board/missing/list";
 					} else {
 						alert("게시물을 삭제하는데에 실패하였습니다!");
 					}
@@ -251,7 +251,7 @@
 				category = "missing";
 			}
 			
-			let url = '/missing/changeCategory';
+			let url = '/board/missing/changeCategory';
 			
 			$.ajax({
 				url : url, // ajax와 통신 할 곳
@@ -278,7 +278,6 @@
 		
 		// 댓글 등록하는 메서드----------------------------------------------------------------------------------
 		function addReply() {
-			
 			if ("${loginSession.userid}" != "") {
 				let pno = "${param.no }";
 				pno = parseInt(pno);
@@ -288,7 +287,7 @@
 				if (document.getElementById("isSecret").checked) {
 					isSecret = 'Y';
 				}
-				let url = '/missing/reply';
+				let url = '/board/missing/reply';
 				
 				let sendData = JSON.stringify({pno : pno, replyer : writer, contents : content, issecret : isSecret});
 				
@@ -298,6 +297,7 @@
 		            url : url, // ajax와 통신 할 곳
 		            data : sendData, // 서블릿에 보낼 데이터
 		            dataType : "text", // 수신될 데이터의 타입
+		            contentType: "application/json;charset=UTF-8;",
 		            type : "POST", // 통신 방식
 		            success : function(data) { // 통신 성공시 수행될 콜백 함수
 		            	console.log(data);
@@ -318,11 +318,56 @@
 			}
 		}
 		
+		// 대댓글 등록하기
+		function addreReply() {
+			if ("${loginSession.userid}" != "") {
+				let pno = "${param.no }";
+				pno = parseInt(pno);
+				let writer = "${loginSession.userid }";
+				let content = $("#reReplyContents").val();
+				let isSecret = 'N';
+				if (document.getElementById("reIsSecret").checked) {
+					isSecret = 'Y';
+				}
+				let pid = $("#pid").val();
+				
+				let url = '/board/missing/reply';
+				
+				let sendData = JSON.stringify({pno : pno, replyer : writer, contents : content, issecret : isSecret, pid : pid});
+				
+				console.log(sendData);
+
+				$.ajax({
+		            url : url, // ajax와 통신 할 곳
+		            data : sendData, // 서블릿에 보낼 데이터
+		            dataType : "text", // 수신될 데이터의 타입
+		            contentType: "application/json;charset=UTF-8;",
+		            type : "POST", // 통신 방식
+		            success : function(data) { // 통신 성공시 수행될 콜백 함수
+		            	console.log(data);
+						if (data == "success") {
+							alert("댓글이 등록되었습니다!");
+							$("#reReplyDiv").hide();
+							$("#reReplyDiv").insertAfter($("#replyModify"));
+							viewAllReplies();
+						} else if (data == "fail") {
+							alert("댓글 등록 실패!\r\n 다시 시도해주세요!\r\n 계속 실패 시 고객응대 이메일로 문의해주세요.");
+						}
+		            },
+		            error : function() { // 통신 실패시 수행될 콜백 함수
+	
+		            }
+		        });
+			} else {
+				alert("세션이 만료되어 댓글 수정에 실패했습니다. \r\n 로그인 후 다시 시도해주세요.");
+			}
+		}
+		
 		// 댓글 목록 가져오기----------------------------------------------------------------------------------
 		function viewAllReplies() {
 			let pno = "${param.no}";
 			
-			let url = "/missing/reply/viewAll/" + pno;
+			let url = "/board/missing/reply/viewAll/" + pno;
 			$.ajax({
 	            url : url, // ajax와 통신 할 곳
 	            dataType : "json", // 수신될 데이터의 타입
@@ -350,18 +395,31 @@
 	        		let replyer = element.replyer;
 	        		
 					// -------------- 비밀글 템플릿 ---------------------------
-	    			secoutput += '<div id="reply' + element.no + '" class="list-group-item">';
+					secoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
+					if (element.depth != 0) {
+						secoutput += '<div class="replyImg" style="margin-left: ' + 20*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
+					}
+	    			secoutput += '<td><div class="list-group-item">';
 	    			secoutput += '<div><img src="../../resources/images/kmj/missing/lock.png" width="15px" />';
-	    			secoutput += ' 댓글 작성자가 비밀글로 처리한 글입니다. </div>';
-	    			secoutput += '</div>';
+	    			secoutput += ' 댓글 작성자가 비밀글로 처리한 글입니다. </div>'
+	    			secoutput += '<div id="secretDiv' + element.no + '" style="display: none;">' + element.issecret + '</div>';
+	    			secoutput += '</div></td></tr></table>';
 
 	    			// ------------비밀글이 아닌 댓글 템플릿 -----------------
-	    			viewoutput += '<div id="reply' + element.no + '" class="list-group-item">';
-	        		if (loginUser != "") {
-	        			viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
-	        		}
+	    			viewoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
+	    			if (element.depth != 0) {
+		    			viewoutput += '<div  class="replyImg" style="margin-left: ' + 20*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
+					}
+	    			viewoutput += '<td><div class="list-group-item">';
+	        		viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
 					viewoutput += '<div>작성자 : <span id="replyer'+ element.no +'">' + element.replyer + '</span></div>';
-	        		viewoutput += '<div>내용 : <div  id="orcontent' + element.no + '">' + element.contents + '</div></div>';
+	        		viewoutput += '<div>내용';
+	        		if (element.ismodified == 'Y') {
+	        			viewoutput += '(수정됨)'
+	        		}
+	        		
+	        		viewoutput += ' : <div  id="orcontent' + element.no + '">' + element.contents + '</div></div>';
+	    			viewoutput += '<div id="secretDiv' + element.no + '" style="display: none;">' + element.issecret + '</div>';
 	        		
 	        		regdate = calcReply(element.lastmodifieddate);
 	        		
@@ -373,6 +431,7 @@
 	        		if (element.issecret == 'Y') { // 비밀글이다
 						if (loginUser == bwriter || loginUser ==  replyer) { // 보이는 조건에 해당
 								viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
+								viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
 							if(loginUser == replyer) { // 댓글 작성자인 경우
 					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
 					       		viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
@@ -380,32 +439,34 @@
 							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
 					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
 					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
-					       		viewoutput += '<li class="target">신고하기</li>';
-					       		viewoutput += '<li class="target">차단하기</li></ul></div>';
+					       		viewoutput += '<li class="target">신고하기</li></ul></div>';
 							}
-							viewoutput += '</div>';
+							viewoutput += '</div></td></tr></table>';
 							output += viewoutput;
 							
 						} else { // 로그인을 했지만 보이는 조건에 맞지 않는 경우 or 비밀글인데 로그인을 하지 않은 경우
 							output += secoutput;
 						}
 	        		} else {
-	        			if(loginUser == replyer) { // 댓글 작성자인 경우
-					       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-					       	viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
-					       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
-						} else if (loginUser == bwriter) { // 부모글 작성자인 경우
-					       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-					       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
-					       	viewoutput += '<li class="target">신고하기</li>';
-					       	viewoutput += '<li class="target">차단하기</li></ul></div>';
-						} else { // 비밀글이 아닌데 로그인을 한 경우 or 로그인을 하지 않은 경우
-			        		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-			        		viewoutput += '<li class="target replydel">신고하기</li>';
-			        		viewoutput += '<li class="target">차단하기</li></ul></div>';
-						}
-	        			
-	        			viewoutput += '</div>';
+	        			if (loginUser != "") {
+		        			if(loginUser == replyer) { // 댓글 작성자인 경우
+						       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+						       	viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
+						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
+						       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
+						       	viewoutput += '<li class="target">신고하기</li></ul></div>';
+							} else { // 비밀글이 아닌데 로그인을 한 경우 or 로그인을 하지 않은 경우
+				        		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+				        		viewoutput += '<li class="target replydel">신고하기</li></ul></div>';
+							}
+		        			viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
+	        			}
+	        			viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+		        		viewoutput += '<li class="target replydel">신고하기</li></ul></div>';
+	        			viewoutput += '</div></td></tr></table>';
+	
 	        			output += viewoutput;
 	        		}
 	    		}); // 반복문 끝
@@ -481,7 +542,7 @@
 		
 		// 댓글 삭제하기----------------------------------------------------------------------------------
 		function deleteReply(no) {
-			let url = "/missing/reply/" + no;
+			let url = "/board/missing/reply/" + no;
 			$.ajax({
 	            url : url, // ajax와 통신 할 곳
 	            dataType : "text", // 수신될 데이터의 타입
@@ -505,24 +566,39 @@
 	        });
 		}
 		
+		// 대댓글 다는 창 보이기
+		function showReReply(no) {
+			$("#reReplyDiv").insertAfter($("#reply" + no));
+			$("#reReplyDiv").show(500);
+			
+			// 모달의 값 초기화
+	        $("#reReplyContents").val("");
+			$("#reIsSecret").prop("checked", false);
+			
+			// 부모 댓글의 번호 넣기
+	        $("#pid").val(no);
+		}
+		
 		// 댓글 수정하는 창 보이기----------------------------------------------------------------------------------
 		function showModifyReply(no) {
+			// 댓글 수정하는 모달을 동적으로 수정할 댓글 아래에 넣어줌
 			$("#replyModify").insertAfter($("#reply" + no));
-			$("#replyModify").show(500);
-			// 수정할 댓글의 pk를 ReplyModify에 동적으로 넣어줌
-			
-			let newHidden = document.createElement("input");
-			newHidden.setAttribute("type", "hidden");
-			newHidden.setAttribute("id", "no");
-			
-	        document.getElementById("replyModify").appendChild(newHidden); // 동적으로 태그 객체 삽입
+
 	        
 	        let replyContents = $("#orcontent" + no).html();
 	        
 	        replyContents = replyContents.replaceAll("<br>", "\n");
 	        
+			// 수정할 댓글의 pk를 ReplyModify에 동적으로 넣어줌
 	        $("#no").val(no);
 	        $("#replyContentsModify").val(replyContents);
+	        if ($("#secretDiv" + no).html() == 'Y') {
+	        	$("#isSecretModify").prop("checked", true);
+	        } else if($("#secretDiv" + no).html() == 'N') {
+	        	$("#isSecretModify").prop("checked", false);
+	        }
+	        
+			$("#replyModify").show(500);
 		}
 		
 		// 댓글 수정하기----------------------------------------------------------------------------------
@@ -536,7 +612,7 @@
 					isSecretModify = 'Y';
 				}
 				
-				let url = '/missing/reply/' + no;
+				let url = '/board/missing/reply/' + no;
 				let sendData = JSON.stringify({
 					no : no, replyer : replyer, contents : contents, issecret : isSecretModify
 				});
@@ -547,6 +623,7 @@
 		            url : url, // ajax와 통신 할 곳
 		            data : sendData, // 서블릿에 보낼 데이터
 		            dataType : "text", // 수신될 데이터의 타입
+		            contentType: "application/json;charset=UTF-8;",
 		            type : "PUT", // 통신 방식
 		            headers : {
 		            	"content-type" : "application/json",
@@ -556,6 +633,8 @@
 						if (data == "success") {
 							alert("댓글이 수정되었습니다!");
 							viewAllReplies();
+							$("#replyModify").hide();
+							$("#replyModify").insertAfter($("#replyDiv"));
 						} else if (data == "fail") {
 							alert("댓글 수정 실패!\r\n 잠시 후 다시 시도해주세요. \r\n 문제가 지속되면 고객응대 이메일로 문의해주세요.");
 						}
@@ -567,6 +646,18 @@
 			} else {
 				alert("세션이 만료되어 댓글 수정에 실패했습니다. \r\n 로그인 후 다시 시도해주세요.");
 			}
+		}
+		
+		function closeModify() {
+			$("#replyModify").hide(500);
+		}
+		
+		function closeReply() {
+			$("#replyDiv").hide(500);
+		}
+		
+		function closeReReply() {
+			$("#reReplyDiv").hide(500);
 		}
 	</script>
 	<style>
@@ -602,7 +693,9 @@
 			border-top: 1px solid #d5d5d5;
 		}
 		
-		#replyDiv, #replyModify {
+		#replyDiv, 
+		#replyModify,
+		#reReplyDiv {
 			display : none;
 			padding: 10px;
 		}
@@ -728,6 +821,10 @@
 			width:300px; 
 			height:300px; 
 		}
+		
+		.replyImg {
+			 display: inline-block;
+		}
 	</style>
 </head>
 <body>
@@ -798,7 +895,6 @@
 									<td>연락처</td>
 									<c:if test=""></c:if>
 									<td id="contact"></td>
-									<!-- ####### 로그인한 회원에게만 연락처 노출될 수 있도록 함 ###### -->
 									<!-- 가짜연락처임 내가 임의로 만든 거임!!! 기억해... -->
 								</tr>
 							</tbody>
@@ -808,12 +904,12 @@
 				</tr>
 			</table>
 			<div id="board_btn">
-				<button type="button" class="btn btn-success" id="list_btn" onclick="location.href='/missing/list'">목록</button>
+				<button type="button" class="btn btn-success" id="list_btn" onclick="location.href='/board/missing/list'">목록</button>
 				<c:if test="${loginSession.userid != null }">
 					<div>
-						<button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>
+						<button type="button" class="btn" onclick="showReply();">댓글달기</button>
 						<c:if test="${loginSession.userid == MissingBoard.writer }">
-							<button type="button" class="btn btn-danger" onclick="location.href='/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
+							<button type="button" class="btn" onclick="location.href='/board/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
 							<button type="button" class="btn btn-danger" onclick="remove(this, ${MissingBoard.no});">삭제</button>
 						</c:if>
 					</div>
@@ -821,6 +917,7 @@
 			</div>
 			
 			<div id="replyDiv">
+				<div>댓글 입력</div>
 				<div class="form-group">
 					<div class="checkbox">
 	  					<label><input type="checkbox" id="isSecret">비밀글로 등록</label>
@@ -829,6 +926,7 @@
 	            	<div><textarea rows="8" id="replyContents" style="width: 100%;"></textarea></div>
 	         	</div>
 	         	<button type="button" class="btn btn-danger" onclick="addReply();">댓글등록</button>
+	         	<button type="button" class="btn" onclick="closeReply();">닫기</button>
 			</div>
 			
 			<div id="replyLst" style="display: none;"></div>
@@ -842,8 +940,24 @@
 					</div>
 	            	<label for="replyContents">댓글 내용:</label>
 	            	<div><textarea rows="6" id="replyContentsModify" style="width: 100%;"></textarea></div>
+	            	<input type="hidden" id="no" />
 	         	</div>
 	         	<button type="button" class="btn btn-danger" onclick="modifyReply();">댓글수정</button>
+	         	<button type="button" class="btn" onclick="closeModify();">닫기</button>
+			</div>
+			
+			<div id="reReplyDiv" style="display: none;">
+				<div>댓글 입력</div>
+				<div class="form-group">
+					<div class="checkbox">
+	  					<label><input type="checkbox" id="reIsSecret">비밀글로 등록</label>
+					</div>
+	            	<label for="replyContents">댓글 내용: </label>
+	            	<div><textarea rows="8" id="reReplyContents" style="width: 100%;"></textarea></div>
+	            	<input type="hidden" id="pid" />
+	         	</div>
+	         	<button type="button" class="btn btn-danger" onclick="addreReply();">댓글등록</button>
+	         	<button type="button" class="btn" onclick="closeReReply();">닫기</button>
 			</div>
 		</div>
 	</div>

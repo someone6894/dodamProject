@@ -37,4 +37,25 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 		return ses.update(ns + ".updateReply", mrv);
 	}
 
+	@Override
+	public int selectNo() {
+		return ses.selectOne(ns + ".selectNo");
+	}
+
+	@Override
+	public MissingReplyVo selectReply(int pid) {
+		return ses.selectOne(ns + ".selectReply", pid);
+	}
+
+	@Override
+	public int updateRef(MissingReplyVo mrv) {
+		return ses.update(ns + ".updateRef", mrv);
+	}
+
+	@Override
+	public int insertReReply(MissingReplyVo mrv) {
+		return ses.insert(ns + ".insertReReply", mrv);
+	}
+
+
 }

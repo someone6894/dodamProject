@@ -6,11 +6,11 @@
   <mapper namespace="com.dodam.mappers.MissingReplyMapper">
   
   <insert id="insertReply">
-  	insert into missingboardreply(pno, replyer, contents, issecret) values (#{pno}, #{replyer}, #{contents}, #{issecret})
+  	insert into missingboardreply(pno, replyer, contents, issecret, pid) values (#{pno}, #{replyer}, #{contents}, #{issecret}, #{pid})
   </insert>
   
   <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
-  	select * from missingboardreply where pno = #{pno}
+  	select * from missingboardreply where pno = #{pno} order by pid desc, reforder asc
   </select>
   
   <delete id="deleteReply">
@@ -18,6 +18,23 @@
   </delete>
   
   <update id="updateReply">
-  	update missingboardreply set contents = #{contents}, issecret = #{issecret}, lastmodifieddate = #{ where no = #{no}
+  	update missingboardreply set contents = #{contents}, issecret = #{issecret}, lastmodifieddate = #{lastmodifieddate}, ismodified = 'Y' where no = #{no}
   </update>
+    
+  <select id="selectReply" resultType="com.dodam.domain.missing.MissingReplyVo">
+    select * from missingboardreply where no = #{pid}
+  </select>
+   
+  <select id="selectNo" resultType="int">
+    SELECT ifnull(max(no)+1, 1) FROM missingboardreply;
+  </select>
+  
+  <update id="updateRef">
+  	update missingboardreply set reforder = reforder + 1 where pid = #{pid} and reforder > #{reforder};
+  </update>
+  
+  <insert id="insertReReply">
+  	insert into missingboardreply(pno, replyer, contents, pid, depth, reforder, issecret) 
+	values(#{pno}, #{replyer}, #{contents}, #{pid}, #{depth} + 1, #{reforder} + 1, #{issecret});
+  </insert>
   </mapper>

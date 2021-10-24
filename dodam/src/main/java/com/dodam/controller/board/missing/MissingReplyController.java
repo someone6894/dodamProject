@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ import com.dodam.domain.missing.MissingReplyVo;
 import com.dodam.service.board.missing.MissingReplyService;
 
 @RestController
-@RequestMapping("/missing/reply")
+@RequestMapping("/board/missing/reply")
 public class MissingReplyController {
 	
 	@Inject
@@ -29,8 +30,7 @@ public class MissingReplyController {
 		if (service.insertReply(mrv)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
 	}
 	
 	@ResponseBody
@@ -49,8 +49,7 @@ public class MissingReplyController {
 		if (service.deleteReply(no)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		}
-		
-		return new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/{no}", method=RequestMethod.PUT)
