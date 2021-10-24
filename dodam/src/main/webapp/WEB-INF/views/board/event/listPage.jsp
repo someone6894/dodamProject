@@ -33,7 +33,9 @@
 
 </div>
 <div>
-		<a href="/board/event/write" class="btn btn-primary pull-right">게시물 작성</a>
+<c:choose>
+		<c:when test="${loginSession.userid!= admin123}"><a href="/board/event/write" class="btn btn-primary pull-right">게시물 작성</a>
+		</c:when></c:choose>
 	</div>
 
 
