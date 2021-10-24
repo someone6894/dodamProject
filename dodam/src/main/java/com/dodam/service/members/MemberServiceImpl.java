@@ -2,6 +2,8 @@ package com.dodam.service.members;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.members.MemberVo;
+import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.PagingProud;
 import com.dodam.persistence.members.MemberDaoImpl;
 
 @Service
@@ -122,6 +126,51 @@ public class MemberServiceImpl implements MemberService {
 		return deleteAccount2;
 	}
 
+
+	@Override
+	public int sumpoint(String userid) throws NamingException, SQLException {
+
+		int result = dao.sumpoint(userid);
+		
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> pointlist(String userid) throws NamingException, SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pointlist2", dao.pointlist(userid));
+		return map;
+	}
+
+	@Override
+	public int countboard(String userid) throws NamingException, SQLException {
+		int result = dao.countboard(userid);
+		
+		return result;
+	}
+
+	@Override
+	public int countreplyer(String userid) throws NamingException, SQLException {
+			int result = dao.countreplyer(userid);
+		
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> boardhistory(String userid) throws NamingException, SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("boardhistory2", dao.boardhistory(userid));
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> replyerhistory(String userid) throws NamingException, SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("replyerhistory2", dao.replyerhistory(userid));
+		return map;
+	}
+
+	
 	
 	
 }

@@ -18,6 +18,10 @@
 	 	insert into proudreply(bno, contents, replyer) 
 	 	value(#{bno}, #{contents}, #{replyer})
 	 </insert>
+	 
+	 <insert id="addpoint">
+		insert into mypoint(userid, howmuch, why) values (#{userid}, #{howmuch}, #{why})
+	</insert>
 	 	 
   	 <update id="update">
   		update proudreply set contents = #{contents}, modifydate = CURRENT_TIMESTAMP where no = #{no}

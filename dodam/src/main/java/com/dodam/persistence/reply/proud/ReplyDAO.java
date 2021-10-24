@@ -1,12 +1,19 @@
 package com.dodam.persistence.reply.proud;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.naming.NamingException;
+
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.ReplyVo;
 
 public interface ReplyDAO {
 	// 전체 댓글 읽어오기
 		public List<ReplyVo> read(int bno) throws Exception;
+
+	// 포인트 적립
+		int addpoint(MypointVo vo) throws NamingException, SQLException;
 		
 	// 댓글 달기
 		public int create(ReplyVo vo) throws Exception;

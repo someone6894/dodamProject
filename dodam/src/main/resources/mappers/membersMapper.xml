@@ -14,8 +14,12 @@
 	<select id="loginMember" resultType="com.dodam.domain.members.MemberVo">
 		select * from members where userid = #{userid} and password = md5(#{password})
 	</select>
+	
+	<select id="sumpoint" resultType="int">
+		select sum(howmuch) from mypoint where userid = #{userid}
+	</select>
 
-	<update id="infoupdate">
+    <update id="infoupdate">
   		update members set email = #{email} , phone = #{phone} , name = #{name} where userid = #{userid}
   	</update>
   	
@@ -27,6 +31,42 @@
 	 	delete from members where userid = #{userid}
 	 </delete>
 	 
+	 <select id="pointlist" resultType="com.dodam.domain.members.MypointVo">
+  		select * from mypoint where userid = #{userid}
+  	</select>
+  	
+	<select id="countboard" resultType="int">
+		select ( 
+			(select count(*) from proudboard where writer = #{userid}) +
+			(select count(*) from qna where writer = #{userid} ) +
+			(SELECT count(*) FROM missingboard where writer = #{userid})
+			);
+	</select>
+	
+	<select id="countreplyer" resultType="int">
+		select (
+			(select count(*) from proudreply where replyer = #{userid}) +
+			(SELECT count(*) FROM missingboardreply where replyer = #{userid}) 
+			);
+	</select>
+	
+	 <select id="boardhistory" resultType="com.dodam.domain.proud.ProudVo">
+		SELECT title, writer, content, postdate FROM proudboard WHERE writer = #{userid}
+		UNION 
+		SELECT title, writer, contents, regdate FROM qna WHERE writer = #{userid} 
+		UNION 
+		SELECT title, writer, contents, registerdate FROM missingboard WHERE writer = #{userid}
+		order by postdate desc
+		
+  	</select>
+  	
+  	 <select id="replyerhistory" resultType="com.dodam.domain.proud.ReplyVo">
+  		SELECT replyer, contents, registerdate FROM proudreply WHERE replyer = #{userid}
+		UNION 
+		SELECT replyer, contents, lastmodifieddate FROM missingboardreply WHERE replyer = #{userid} 
+		order by registerdate desc
+
+  	</select>
 </mapper>
 
 

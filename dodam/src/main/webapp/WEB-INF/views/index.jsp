@@ -23,6 +23,7 @@
 
 	<jsp:include page="template.jsp"></jsp:include>	
 	
+	<a href="/board/proud/writetest">서머노트 테스트</a>
 
 </body>
 </html>

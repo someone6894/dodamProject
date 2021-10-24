@@ -27,6 +27,7 @@ $(function(){
       if(listBoard){
          $("#adoptBoard").addClass("active");
       }
+      
    });
    
 //    $("#main").click(function(){

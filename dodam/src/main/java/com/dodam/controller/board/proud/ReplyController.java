@@ -3,6 +3,8 @@ package com.dodam.controller.board.proud;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.ReplyVo;
 import com.dodam.service.reply.proud.ReplyService;
 
@@ -25,12 +28,16 @@ public class ReplyController {
 	   private ReplyService service;
 	   
 	   @RequestMapping(value="/create", method=RequestMethod.POST)
-	   public ResponseEntity<String> addReply(@RequestBody ReplyVo vo) { // responseentity는 모델 개념 , 응답하는 데이터
-	      System.out.println("Replies... POST... 글등록 시작");
-	      System.out.println(vo.toString());
+	   public ResponseEntity<String> addReply(@RequestBody ReplyVo vo, HttpServletRequest request) { // responseentity는 모델 개념 , 응답하는 데이터
+
+		  HttpSession ses = request.getSession();				
+		  String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
+	      
+		  System.out.println(vo.toString());
 	      ResponseEntity<String> result = null;
 	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
 	         service.addReply(vo);
+			 service.addpoint(new MypointVo(userid, null, 2, "댓글 작성"));
 	         result = new ResponseEntity<String>("success", HttpStatus.OK);
 	      } catch (Exception e) {
 	         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
@@ -40,11 +47,16 @@ public class ReplyController {
 	   }
 	   
 	   @RequestMapping(value="/replies", method=RequestMethod.POST)
-	   public ResponseEntity<String> reReply(@RequestBody ReplyVo vo) { // responseentity는 모델 개념 , 응답하는 데이터
+	   public ResponseEntity<String> reReply(@RequestBody ReplyVo vo, HttpServletRequest request) { // responseentity는 모델 개념 , 응답하는 데이터
 	      System.out.println(vo.toString());
+
+		  HttpSession ses = request.getSession();				
+		  String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
+			
 	      ResponseEntity<String> result = null;
 	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
 	         service.reReply(vo);
+				service.addpoint(new MypointVo(userid, null, 2, "댓글 작성"));
 	         result = new ResponseEntity<String>("success", HttpStatus.OK);
 	      } catch (Exception e) {
 	         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);

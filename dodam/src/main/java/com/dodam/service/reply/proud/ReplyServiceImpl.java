@@ -1,11 +1,14 @@
 package com.dodam.service.reply.proud;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.naming.NamingException;
 
 import org.springframework.stereotype.Service;
 
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.ReplyVo;
 import com.dodam.persistence.reply.proud.ReplyDAO;
 
@@ -65,6 +68,19 @@ public class ReplyServiceImpl implements ReplyService {
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public boolean addpoint(MypointVo vo) throws NamingException, SQLException {
+
+		boolean result = false;
+
+		if (dao.addpoint(vo) == 1) {
+			result = true;
+		}
+
+		return result;
+
 	}
 
 }
