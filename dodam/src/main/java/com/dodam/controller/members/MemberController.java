@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -15,10 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -42,7 +45,7 @@ import com.dodam.service.members.MemberService;
 //import java.io.File;
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/member/*")
 public class MemberController {
 
 	@Inject
@@ -56,7 +59,7 @@ public class MemberController {
 	public void loginMember() {
 
 	}
-
+	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutMember(HttpServletRequest request) {
 
@@ -153,27 +156,38 @@ public class MemberController {
 	public String loginMember(MemberVo mem, RedirectAttributes rt, HttpServletRequest request) {
 		System.out.println("입력받은 회원정보 : " + mem.toString());
 
-		MemberVo member = service.loginMember(mem);
+		MemberVo member = null;
+		
+		try {
+			member = service.loginMember(mem);
+			
+			System.out.println("db에서 확인하여 가져온 회원정보 : " + member.toString());
 
-		System.out.println("db에서 확인하여 가져온 회원정보 : " + member.toString());
+			if (member != null) {
+				rt.addFlashAttribute("status", "logingsuccess");
+				rt.addFlashAttribute("memberInfo", member);
 
-		if (member != null) {
-			rt.addFlashAttribute("status", "logingsuccess");
-			rt.addFlashAttribute("memberInfo", member);
+				HttpSession ses = request.getSession();
+				ses.removeAttribute("loginSession"); // 로그인세션 갱신
+				ses.setAttribute("userid", mem.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
+				ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
 
-			HttpSession ses = request.getSession();
-			ses.removeAttribute("loginSession"); // 로그인세션 갱신
-			ses.setAttribute("userid", mem.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
-			ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
-
-			System.out.println("ses : " + ses.toString());
-			System.out.println("loginSession : " + ses.getAttribute("loginSession"));
-
-		} else {
-			rt.addFlashAttribute("status", "logingfail");
+				System.out.println("ses : " + ses.toString());
+				System.out.println("loginSession : " + ses.getAttribute("loginSession"));
+			} 
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			if(member == null ) {
+				rt.addFlashAttribute("status", "logingfail");
+				return "redirect:/member/login";
+			}
+			
 		}
 
-		return "index";
+
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/mbInfo", method = RequestMethod.GET)
@@ -181,20 +195,22 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/sendMail.do", method = RequestMethod.GET)
-	public ResponseEntity<String> sendMail(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		ResponseEntity<String> result = null;
+	
 
-		if (service.sendMail(request, response)) {
-
-			result = new ResponseEntity<String>("success", HttpStatus.OK);
-		} else {
-			result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
-		}
-
-		return result;
-	}
+//	@RequestMapping(value = "/sendMail.do", method = RequestMethod.GET)
+//	public ResponseEntity<String> sendMail(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		ResponseEntity<String> result = null;
+//
+//		if (service.sendMail(request, response)) {
+//
+//			result = new ResponseEntity<String>("success", HttpStatus.OK);
+//		} else {
+//			result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+//		}
+//
+//		return result;
+//	}
 
 //	@RequestMapping(value = "/sendMail", method = RequestMethod.GET)
 //    public void sendMailTest() throws Exception{
@@ -375,6 +391,7 @@ public class MemberController {
 		}
 		return "redirect:/member/mbInfo";
 	}
+	
 
 	@RequestMapping(value = "/passwordupdatecomp", method = RequestMethod.POST)
 	public String passwordupdatecomp(MemberVo member, RedirectAttributes rttr, HttpServletRequest request) throws NamingException, SQLException {
@@ -409,4 +426,95 @@ public class MemberController {
 		return "index";
 	}
 
+	
+	// 유저 아이디 비밀번호 찾기 페이지 열기
+	@RequestMapping(value = "/scanMember", method = RequestMethod.GET)
+	public void scanMember() {
+	}
+	
+	
+	// 유저 아이디 비밀번호 찾기. 이메일로 회원정보 발송
+	@RequestMapping(value = "/findAccount.do", method = RequestMethod.POST)
+	public String findAccount(RedirectAttributes rt, HttpServletRequest request, HttpServletResponse response) {
+		
+		// 1. 유저가 입력한 이메일 정보로 가입된 이메일 주소 확인
+		// 2. 해당 이메일로 회원정보 보냄
+		
+		String email = request.getParameter("email");
+		System.out.println("유저에게 받은 이메일 주소 : " + email);
+		
+		MemberVo mem = null;
+		ResponseEntity<String> result = null;
+		
+		
+				mem = service.findMember(email);
+				
+				if(mem != null) {
+					// 입력한 이메일로된 회원정보가 있을때 뷰단에 findSuccess 바인딩, 성공 메세지 띄우기
+					rt.addFlashAttribute("status", "findSuccess");
+					System.out.println("유저에게 받은 이메일의 회원 정보 : " + mem.toString());
+					
+					Random random = new Random();
+					int changedPwd = random.nextInt(888888) + 111111;
+					String StringifiedchangedPwd = String.valueOf(changedPwd);
+					System.out.println("생성된 임시 비밀번호 : " + StringifiedchangedPwd);
+					
+					MemberVo changedMem = new MemberVo(mem.getUserid(), StringifiedchangedPwd, mem.getName(), mem.getNickname(), 
+							email, mem.getPhone(), mem.getRegdate());
+
+							// 생성된 임시 비밀번호로 회원 정보 변경
+					service.updateTmpPwd(changedMem);
+
+					/* 이메일 보내기 */
+					String setFrom = "dodamServer@gmail.com";
+					String toMail = email;
+					String title = "도담 회원 아이디 비밀번호 정보 입니다.";
+					String content = "요청하신 계정 정보는 아래와 같습니다." + " <br><br>" 
+							+ "<hr noshade='noshade'><br>"
+							+ "사이트 : <a href='http://someone09.cafe24.com/'>http://someone09.cafe24.com/</a>" + "<br>"
+							+ "아이디 : "+ mem.getUserid() + "<br>"
+							+ "이메일 주소 : "+ mem.getEmail() +"<br>"
+							+ "닉네임 : "+ mem.getNickname() +"<br>"
+							+ "새로 생성된 임시 비밀번호 : "+ StringifiedchangedPwd +"<br>"
+							+ "<br><hr noshade='noshade'>"
+							+ "(회원 정보 보호를 위하여 비밀번호는 암호화되어 저장됩니다.)<br><br>"
+					
+							+ "로그인 후 다른 비밀번호로 변경해 주시기 바랍니다.<br>"
+							
+							+ "<br>" + "<img src=\"cid:dodam.jpg\">";
+
+					
+							try {
+								MimeMessage message = mailSender2.createMimeMessage();
+								MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+								helper.setFrom(setFrom);
+								helper.setTo(toMail);
+								helper.setSubject(title);
+								helper.setText(content, true);
+
+								// 이메일 내용에 파일 업로드할 때
+								FileSystemResource file = new FileSystemResource(new File(
+										"C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
+								helper.addInline("dodam.jpg", file);
+
+								mailSender2.send(message);
+								result = new ResponseEntity<String>("success", HttpStatus.OK);
+								
+							} catch (MailException | MessagingException e) {
+								e.printStackTrace();
+								result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+							}
+						
+
+				} // if(mem != null) 끝
+				
+				else if ( mem == null ){
+					// 입력한 이메일로된 회원정보가 없을때 뷰단에 findFail 바인딩, 실패 메세지 띄우기
+					rt.addFlashAttribute("status", "findFail");
+				}
+				
+			return "redirect:/member/scanMember";
+		
+		} // findAccount 끝
+	
 }

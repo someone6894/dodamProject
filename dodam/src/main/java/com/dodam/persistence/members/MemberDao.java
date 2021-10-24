@@ -13,12 +13,18 @@ import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 
 public interface MemberDao {
-
+	
+	// 회원 등록
 	public int insertMember(MemberVo mem);
 	
-	public boolean send(String emailAddr, String confirmCode) throws MessagingException, AddressException;
+	// 회원 이메일 확인 코드 보내기
+//	public boolean send(String emailAddr, String confirmCode) throws MessagingException, AddressException;
 
+	// 회원 로그인 아이디/비밀번호 검사
 	MemberVo loginMember(MemberVo mem);
+	
+	// 회원 아이디/비밀번호 찾기
+	MemberVo findMember(String email);
 	
 	// 회원 정보 수정
 	int infoupdate(MemberVo mem) throws NamingException, SQLException;
@@ -46,5 +52,11 @@ public interface MemberDao {
 
 	// 댓글 작성 개수
 	int countreplyer(String userid) throws NamingException, SQLException;
+
+	// 비밀번호 찾기, 새로운 임시비밀번호로 회원 정보 변경 
+	int updateTmpPwd(MemberVo mem);
+
+
+	
 	
 }

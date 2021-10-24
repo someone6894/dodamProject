@@ -15,6 +15,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="http://localhost:8081/favicon.ico" />
 <title>dodam dodam</title>
 </head>
+
 <body>
 <%
 	response.setHeader("Pragma", "no-cache");

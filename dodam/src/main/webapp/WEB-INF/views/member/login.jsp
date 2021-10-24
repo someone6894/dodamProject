@@ -30,15 +30,34 @@
 
 
 </style>
+<script>
+
+	window.onload = function() {
+		let status = "${status}";
+	
+		if (status == "logingfail") {
+			alert("로그인에 실패하셨습니다. \n아이디와 비밀번호를 다시 입력해주세요.");
+		}
+		
+	};
+
+	function scanMember(){
+	
+	location.href='scanMember';
+	
+	}
+
+</script>
+
 <body>
 
 	<jsp:include page="../template.jsp"></jsp:include>
 
 	<div class="container" id='login' style="width: 500px;">
-		<h3>로그인</h3>
+		<h3>아이디 / 비밀번호 찾기</h3>
 		<form action="login.do" method="POST">
 			<div class="form-group">
-				<label for="userid">아이디:</label> <input type="text"
+				<label for="userid">아이디 찾기:</label> <input type="text"
 					class="form-control" id="userid" placeholder="Enter ID"
 					name="userid"> <span id="iderror" class="error"></span>
 			</div>
@@ -51,6 +70,9 @@
 
 			<button type="submit" class="btn btn-primary btn-block">로그인</button>
 		</form>
+		
+		</br>
+			<button class="btn" onclick='scanMember()' style='float:left'> 아이디/비밀번호 찾기 </button>
 	</div>
 	<br>
 
