@@ -22,11 +22,11 @@
 			$("#animal").val("${param.animal}");
 		}
 		if ("${param.category}" == "" || "${param.category}" == "missing") {
-			$("#missing").css("background-color", "#3C6E9F");
-			$("#missing").css("color", "white");
+			$("#missingCtg").css("background-color", "#3C6E9F");
+			$("#missingCtg").css("color", "white");
 		} else if ("${param.category}" == "found") {
-			$("#found").css("background-color", "#3C6E9F");
-			$("#found").css("color", "white");
+			$("#foundCtg").css("background-color", "#3C6E9F");
+			$("#foundCtg").css("color", "white");
 		}
 		if ("${param.searchWord}" != "") {
 			$("#searchWord").val("${param.searchWord}");
@@ -69,16 +69,17 @@
 	
 	function setCategory(obj) {
 		categoryVal = $(obj).attr("id");
+		categoryVal = categoryVal.substring(0, categoryVal.indexOf("C"));
 		if (categoryVal == "missing") {
-			$("#missing").css("background-color", "#3C6E9F");
-			$("#missing").css("color", "white");
-			$("#found").css("background-color", "#d5d5d5");
-			$("#found").css("color", "black");
+			$("#missingCtg").css("background-color", "#3C6E9F");
+			$("#missingCtg").css("color", "white");
+			$("#foundCtg").css("background-color", "#d5d5d5");
+			$("#foundCtg").css("color", "black");
 		} else if (categoryVal == "found") {
-			$("#missing").css("background-color", "#d5d5d5");
-			$("#missing").css("color", "black");
-			$("#found").css("background-color", "#3C6E9F");
-			$("#found").css("color", "white");
+			$("#missingCtg").css("background-color", "#d5d5d5");
+			$("#missingCtg").css("color", "black");
+			$("#foundCtg").css("background-color", "#3C6E9F");
+			$("#foundCtg").css("color", "white");
 		}
 		
 		window.location.href = '/board/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
@@ -199,8 +200,8 @@
 			</div>
 		</div>
 		<div class="above_category" style="clear: right">
-			<span class="categoryBtn" id="missing" onclick="setCategory(this);">찾습니다</span>
-			<span class="categoryBtn" id="found" onclick="setCategory(this);">찾았어요</span>
+			<span class="categoryBtn" id="missingCtg" onclick="setCategory(this);">찾습니다</span>
+			<span class="categoryBtn" id="foundCtg" onclick="setCategory(this);">찾았어요</span>
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">

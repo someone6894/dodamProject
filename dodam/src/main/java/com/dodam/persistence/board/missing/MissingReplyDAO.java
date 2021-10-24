@@ -22,5 +22,7 @@ public interface MissingReplyDAO {
 
 	int insertReReply(MissingReplyVo mrv);
 
+	int updateRollbackRef(MissingReplyVo mrv);
+
 
 }
