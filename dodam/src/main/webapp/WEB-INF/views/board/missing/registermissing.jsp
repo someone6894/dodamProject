@@ -43,7 +43,7 @@
 					formData.append("uploadImg", uploadImgAr[i]);
 				}
 				
-				let url = '/missing/uploadImgs';
+				let url = '/board/missing/uploadImgs';
 				$.ajax({
 					url : url, // ajax와 통신 할 곳
 					data : formData, // 서블릿에 보낼 데이터
@@ -75,7 +75,7 @@
 		});
 		
 		$("#cancelBtn").click(function() {
-			location.href='/missing/list';
+			location.href='/board/missing/list';
 		});
 		
 		$("#title").keyup(function() {
@@ -89,8 +89,30 @@
 		$("#contact").keyup(function() {
 			contactChk();
 		});
+		
+		$("#missingdate").change(function() {
+			dateChk();
+		});
 
 	});
+	
+	function dateChk() {
+		let chkDate = false;
+		let missingDate = new Date($("#missingdate").val());
+		console.log(missingDate.setHours(0));
+		let today = new Date();
+		
+		let diff = today - missingDate;
+		if (diff > 0) {
+			chkDate = true;
+			$("#missingdate_notice").html("");
+		} else {
+			$("#missingdate_notice").html("실종날짜는 현재날짜 이전만 입력가능합니다.");
+			$("#missingdate").focus();
+		}
+		
+		return chkDate;
+	}
 	
 	function delImg(obj) {
 		let id = obj.parentElement.getAttribute("id");
@@ -102,7 +124,7 @@
 		
 		console.log(thumb, origin);
 		
-		let url = '/missing/delImg';
+		let url = '/board/missing/delImg';
 		$.ajax({
 			url : url, // ajax와 통신 할 곳
 			data : {origin : origin, thumb : thumb}, // 서블릿에 보낼 데이터
@@ -149,7 +171,7 @@
 	function validate() {
 		let chkResult = false;
 		
-		if (titleChk() && missingdateChk() && contactChk() && contentsChk() && sessionChk()) {
+		if (titleChk() && missingdateChk() && contactChk() && contentsChk() && sessionChk() && dateChk()) {
 			chkResult = true;
 		}
 		
@@ -284,7 +306,7 @@
 	<div class="container">
 		  <h1>글 등록</h1>
 		  <div class="form-container">
-			  <form class="form-horizontal" action="/missing/register" method="POST">
+			  <form class="form-horizontal" action="/board/missing/register" method="POST">
 			    <div class="form-group">
 			    	<label class="control-label col-sm-2" for="title">제목</label>
 			      	<div class="col-sm-10">
@@ -295,7 +317,7 @@
 			    <div class="form-group">
 			      <label class="control-label col-sm-2" for="writer">작성자</label>
 			      <div class="col-sm-10">          
-			        <input type="text" class="form-control" id="writer" name="writer">
+			        <input type="text" class="form-control" id="writer" name="writer" value="${loginSession.userid }" readonly>
 			      </div>
 			    </div>
 			    <fieldset>
@@ -369,12 +391,12 @@
 				    </div>
 				        <div class="form-group">
 				      	<label class="control-label col-sm-2" for="missingdate">실종일자</label>
-				      	<div class="col-sm-3">          
+				      	<div class="col-sm-4">          
 				        	<input type="date" class="form-control" id="missingdate" name="missingdate">
 				        	<span id="missingdate_notice" class="notice"></span>
 				      	</div>
 				      	<label class="control-label col-sm-2" for="contact">연락처</label>
-				      	<div class="col-sm-5">          
+				      	<div class="col-sm-4">          
 				        	<input type="text" class="form-control" id="contact" name="contact">
 				        	<span id="contact_notice">※ 010-0000-0000의 형식으로 입력해주세요</span>
 				      	</div>

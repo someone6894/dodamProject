@@ -74,7 +74,7 @@
     select likecount from missingboard where no = #{no}
   </select>
   
-  <select id="selectBookmarkHistory" resultType="com.dodam.domain.missing.LikeHistoryVo">
+  <select id="selectBookmarkHistory" resultType="com.dodam.domain.missing.BookmarkVo">
   	select * from missingboardbookmark where no = #{no} and userid = #{userid}
   </select>
   </mapper>

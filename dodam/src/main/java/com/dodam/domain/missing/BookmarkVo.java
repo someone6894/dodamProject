@@ -1,12 +1,12 @@
 package com.dodam.domain.missing;
 
-public class LikeHistoryVo {
+public class BookmarkVo {
 	private String userid;
 	private int no;
-	public LikeHistoryVo() {
+	public BookmarkVo() {
 		super();
 	}
-	public LikeHistoryVo(String userid, int no) {
+	public BookmarkVo(String userid, int no) {
 		super();
 		this.userid = userid;
 		this.no = no;
@@ -25,7 +25,7 @@ public class LikeHistoryVo {
 	}
 	@Override
 	public String toString() {
-		return "LikeHistoryVo [userid=" + userid + ", no=" + no + "]";
+		return "BookmarkVo [userid=" + userid + ", no=" + no + "]";
 	}
 	
 }

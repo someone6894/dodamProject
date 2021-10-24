@@ -10,21 +10,15 @@ public class MissingReplyVo {
 	private Timestamp lastmodifieddate;
 	private char issecret;
 	private char ismodified;
-	private int ref;
-	private int step;
+	private int pid;
+	private int depth;
 	private int reforder;
+	private int output;
 	public MissingReplyVo() {
 		super();
 	}
-	public MissingReplyVo(int pno, String contents, String replyer, char issecret) {
-		super();
-		this.pno = pno;
-		this.contents = contents;
-		this.replyer = replyer;
-		this.issecret = issecret;
-	}
 	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, char issecret,
-			char ismodified, int ref, int step, int reforder) {
+			char ismodified, int pid, int depth, int reforder) {
 		super();
 		this.no = no;
 		this.pno = pno;
@@ -33,8 +27,8 @@ public class MissingReplyVo {
 		this.lastmodifieddate = lastmodifieddate;
 		this.issecret = issecret;
 		this.ismodified = ismodified;
-		this.ref = ref;
-		this.step = step;
+		this.pid = pid;
+		this.depth = depth;
 		this.reforder = reforder;
 	}
 	public int getNo() {
@@ -79,17 +73,17 @@ public class MissingReplyVo {
 	public void setIsmodified(char ismodified) {
 		this.ismodified = ismodified;
 	}
-	public int getRef() {
-		return ref;
+	public int getPid() {
+		return pid;
 	}
-	public void setRef(int ref) {
-		this.ref = ref;
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
-	public int getStep() {
-		return step;
+	public int getDepth() {
+		return depth;
 	}
-	public void setStep(int step) {
-		this.step = step;
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 	public int getReforder() {
 		return reforder;
@@ -97,12 +91,17 @@ public class MissingReplyVo {
 	public void setReforder(int reforder) {
 		this.reforder = reforder;
 	}
+	public int getOutput() {
+		return output;
+	}
+	public void setOutput(int output) {
+		this.output = output;
+	}
 	@Override
 	public String toString() {
 		return "MissingReplyVo [no=" + no + ", pno=" + pno + ", contents=" + contents + ", replyer=" + replyer
 				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ismodified=" + ismodified
-				+ ", ref=" + ref + ", step=" + step + ", reforder=" + reforder + "]";
+				+ ", pid=" + pid + ", depth=" + depth + ", reforder=" + reforder + "]";
 	}
-	
-	
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.missing.MissingReplyVo;
@@ -20,11 +21,30 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 	public boolean insertReply(MissingReplyVo mrv) {
 		boolean result = false;
 		
+		System.out.println(mrv.toString());
+		
 		// 줄바꿈 -> 태그로 전환해서 저장(DB에는 개행문자 저장 안됨)
 		mrv.setContents(mrv.getContents().replaceAll("(\r\n|\r|\n|\n\r)", "<br />"));
-		if (dao.insertReply(mrv) == 1) {
-			result = true;
+		
+		if (mrv.getPid() == 0) { // 부모댓글의 번호가 0 즉, 부모 댓글이 없는 경우
+			mrv.setPid(dao.selectNo());
+			System.out.println("pid : " + mrv.getPid());
+			if (dao.insertReply(mrv) == 1) {
+				return true;
+			}
+		} else { // 부모댓글의 번호가 존재하는 경우(대댓글의 경우)
+			MissingReplyVo p_mrv = dao.selectReply(mrv.getPid());
+			mrv.setPid(p_mrv.getPid());
+			mrv.setDepth(p_mrv.getDepth());
+			mrv.setReforder(p_mrv.getReforder());
+			
+			if (dao.updateRef(mrv) >= 0) {
+				if (dao.insertReReply(mrv) == 1) {
+					return true;
+				}
+			}
 		}
+
 		
 		return result;
 	}

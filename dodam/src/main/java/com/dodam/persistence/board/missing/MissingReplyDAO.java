@@ -14,4 +14,13 @@ public interface MissingReplyDAO {
 
 	int updateReply(MissingReplyVo mrv);
 
+	int selectNo();
+
+	MissingReplyVo selectReply(int pid);
+
+	int updateRef(MissingReplyVo mrv);
+
+	int insertReReply(MissingReplyVo mrv);
+
+
 }

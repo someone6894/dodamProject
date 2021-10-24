@@ -14,6 +14,7 @@
 <script>
 	let categoryVal = 'missing';
 	$(function(){
+		// 검색해서 넘어온 경우 검색한 내용이 검색파트에 그대로 적용되어 있도록 함.
 		if ("${param.location}" != "") {
 			$("#location").val("${param.location}");
 		}
@@ -27,6 +28,11 @@
 			$("#found").css("background-color", "#3C6E9F");
 			$("#found").css("color", "white");
 		}
+		if ("${param.searchWord}" != "") {
+			$("#searchWord").val("${param.searchWord}");
+		}
+		
+		
 		
 		for(let i="${pagingInfo.startPageNoOfBlock}"; i <= "${pagingInfo.endPageNoOfBlock}"; i++) {
 			console.log(i);
@@ -43,7 +49,7 @@
 	});
 	
 	function deleteBoard(no) {
-		let url = '/missing/remove';
+		let url = '/board/missing/remove';
 		
 		$.ajax({
 			url : url, // ajax와 통신 할 곳
@@ -75,15 +81,15 @@
 			$("#found").css("color", "white");
 		}
 		
-		window.location.href = '/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
+		window.location.href = '/board/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
 	}
 	
 	function search() {
-		let searchWord = $("#keyword").val();
+		let searchWord = $("#searchWord").val();
 		let location = $("#location").val();
 		let animal = $("#animal").val();
 		
-		window.location.href = '/missing/list?pageNo=1&searchWord=' + searchWord + '&location=' + location + '&animal=' + animal + '&category=' + categoryVal;
+		window.location.href = '/board/missing/list?pageNo=1&searchWord=' + searchWord + '&location=' + location + '&animal=' + animal + '&category=' + categoryVal;
 		
 	}
 </script>
@@ -159,7 +165,7 @@
 		<h1>신고 목록</h1>
 		<div class="above_search">
 			<div style="float: right;">
-				<button type="button" class="btn btn-primary" onclick="location.href='/missing/write'">글등록</button>
+				<button type="button" class="btn btn-primary" onclick="location.href='/board/missing/write'">글등록</button>
 			</div>
 			<div style="clear: right;">
 				<select id="location">
@@ -188,7 +194,7 @@
 					<option value="cat">고양이</option>
 					<option value="other">다른 동물</option>
 				</select>
-				<input type="text" id="keyword" />
+				<input type="text" id="searchWord" />
 				<div class="btn btn-default" id="searchBtn" onclick="search();">검색</div>
 			</div>
 		</div>
@@ -198,7 +204,7 @@
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">
-				<a href="/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
+				<a href="/board/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
 					<div class="col-sm-3">
 						<div class="img_container" style="padding: 20px 10px;">
 							<c:choose>
@@ -242,21 +248,21 @@
 	<div style="text-align: center;">
 		<ul class="pagination">
 			<c:if test="${param.pageNo > 1 }">
-				<li><a href="/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }
+				<li><a href="/board/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }
 				&animal=${param.animal }&category=${category }">&lt;&lt;</a></li>
-				<li><a href="/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=${param.location }
+				<li><a href="/board/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=${param.location }
 				&animal=${param.animal }&category=${category }">&lt;</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
-				<li id="li${i }"><a href="/missing/list?&pageNo=${i }&searchWord=${param.searchWord }&location=${param.location }
+				<li id="li${i }"><a href="/board/missing/list?&pageNo=${i }&searchWord=${param.searchWord }&location=${param.location }
 				&animal=${param.animal }&category=${category }">${i }</a></li>
 			</c:forEach>
 			<c:if
 				test="${param.pageNo == null or param.pageNo < pagingInfo.totalPage }">
-				<li><a href="/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=${param.location }
+				<li><a href="/board/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=${param.location }
 				&animal=${param.animal }&category=${category }">&gt;</a></li>
-				<li><a href="/missing/list?&pageNo=${pagingInfo.totalPage }&searchWord=${param.searchWord }&location=${param.location }
+				<li><a href="/board/missing/list?&pageNo=${pagingInfo.totalPage }&searchWord=${param.searchWord }&location=${param.location }
 				&animal=${param.animal }&category=${category }">&gt;&gt;</a></li>
 			</c:if>
 		</ul>

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-import com.dodam.domain.missing.LikeHistoryVo;
+import com.dodam.domain.missing.BookmarkVo;
 import com.dodam.domain.missing.ListParamDTO;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
@@ -57,7 +57,7 @@ public interface MissingBoardDAO {
 
 	int selectBookmarkCount(int no);
 
-	LikeHistoryVo selectBookmark(Map<String, Object> likeMap);
+	BookmarkVo selectBookmark(Map<String, Object> likeMap);
 
 
 
