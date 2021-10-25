@@ -12,7 +12,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-	let categoryVal = 'missing';
+	let categoryVal = "${param.category}";
+	if (categoryVal == "") {
+		categoryVal = "missing";
+	}
+	
 	$(function(){
 		// 검색해서 넘어온 경우 검색한 내용이 검색파트에 그대로 적용되어 있도록 함.
 		if ("${param.location}" != "") {
@@ -71,7 +75,8 @@
 		let searchWord = $("#searchWord").val();
 		let location = $("#location").val();
 		let animal = $("#animal").val();
-		categoryVal = '${param.category }';
+		
+		console.log(categoryVal);
 		
 		let url = '/board/missing/search';
 		
@@ -94,23 +99,24 @@
 	function parsePaging(pagingInfo) {
 		let location = $("#location").val();
 		let animal = $("#animal").val();
+		let itemsPerPage = $("#itemsPerPage").val();
 		console.log(pagingInfo);
 		let output = '';
-		if ("${param.pageNo} > 1") {
-			output += '<li><a href="/board/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }'
-				+ '&animal=${param.animal }&category=${param.category }&itemsPerPage=' + pagingInfo.postPerPage + '">&lt;&lt;</a></li>';
+		if ("${param.pageNo}" > 1) {
+			output += '<li><a href="/board/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=' + location
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&lt;&lt;</a></li>';
 			output += '<li><a href="/board/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=' + location
-				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + pagingInfo.postPerPage + '">&lt;</a></li>';
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&lt;</a></li>';
 		}
 		for (let i=pagingInfo.startPageNoOfBlock; i<= pagingInfo.endPageNoOfBlock; i++) {
 			output += '<li id="li' + i + '"><a href="/board/missing/list?&pageNo=' + i + '&searchWord=${param.searchWord }&location=' + location
-				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + pagingInfo.postPerPage + '">' + i + '</a></li>';
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">' + i + '</a></li>';
 		}
-		if ("${param.pageNo == null}" || "${param.pageNo}" < pagingInfo.totalPage ) {
+		if ("${param.pageNo}" == "" || "${param.pageNo}" < pagingInfo.totalPage ) {
 			output += '<li><a href="/board/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=' + location
-				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + pagingInfo.postPerPage + '">&gt;</a></li>';
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&gt;</a></li>';
 			output += '<li><a href="/board/missing/list?&pageNo=' + pagingInfo.totalPage + '&searchWord=${param.searchWord }&location=' + location
-				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + pagingInfo.postPerPage + '">&gt;&gt;</a></li>';
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&gt;&gt;</a></li>';
 		}
 		console.log(output);
 		$(".pagination").html(output);
@@ -161,6 +167,7 @@
 	
 	function setCategory(obj) {
 		let itemsPerPage = $("#itemsPerPage").val();
+		let searchWord = $("#searchWord").val();
 		let location = $("#location").val();
 		let animal = $("#animal").val();
 		categoryVal = $(obj).attr("id");
@@ -358,21 +365,21 @@
 		<ul class="pagination">
 			<c:if test="${param.pageNo > 1 }">
 				<li><a href="/board/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&lt;&lt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&lt;&lt;</a></li>
 				<li><a href="/board/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&lt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&lt;</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
 				<li id="li${i }"><a href="/board/missing/list?&pageNo=${i }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">${i }</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">${i }</a></li>
 			</c:forEach>
 			<c:if
 				test="${param.pageNo == null or param.pageNo < pagingInfo.totalPage }">
 				<li><a href="/board/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&gt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&gt;</a></li>
 				<li><a href="/board/missing/list?&pageNo=${pagingInfo.totalPage }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&gt;&gt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&gt;&gt;</a></li>
 			</c:if>
 		</ul>
 	</div>

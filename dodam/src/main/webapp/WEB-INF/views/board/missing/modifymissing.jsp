@@ -32,7 +32,7 @@ let numOfImgs=0;
 		if ("${MissingBoard.dpchknum}" == "") {
 			let thumbAr = "${MissingBoard.thumbimg }".split(", ");
 			console.log(thumbAr);
-			
+
 			for(let i in thumbAr) {
 				if (thumbAr[i] != '') {
 					i = parseInt(i);
@@ -47,24 +47,33 @@ let numOfImgs=0;
 					let origin = splitName[0] + splitName[1];
 					
 					$("#upImgNameOrigin" + (i+1)).val(origin);
-
+					numOfImgs++;
 				}
 			}
 		} else {
 			let imgAr = "${MissingBoard.img }".split(", ");
 			console.log(imgAr);
+
+			console.log(numOfImgs);
 			for (let i in imgAr) {
 				i = parseInt(i);
 				if (imgAr[i] != '') {
 					// $(".fileContent").show();
-					output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="' + imgAr[i] + '" style="margin-right: 5px;" width="200px;" />' +
-					'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delUrlImg(this);" /></span>';
-					
+					if (imgAr[i].split(":")[0] != "http") {
+						output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + imgAr[i] + '" style="margin-right: 5px;" width="200px;" />' +
+						'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
+					} else {
+						output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="' + imgAr[i] + '" style="margin-right: 5px;" width="200px;" />' +
+						'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delUrlImg(this);" /></span>';
+					}
+				
 					$("#upImgNameOrigin" + (i+1)).val(imgAr[i]);
+					numOfImgs++;
 				}
 			}
 		}
 		
+		console.log(numOfImgs);
 	
 		// 미리보기 div에 썸네일 사진 띄우기
 		$(".fDropList").html(output);
@@ -133,10 +142,6 @@ let numOfImgs=0;
 		});
 		
 		$("#cancelBtn").click(function() {
-			for (let i=1; i<=numOfImgs; i++) {
-				delImg($("#imgPreview" + i).children()[1]);
-			}
-			
 			location.href='/board/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}';
 		});
 		
@@ -190,6 +195,22 @@ let numOfImgs=0;
 		
 		console.log(thumb, origin);
 		
+		$("#"+id).remove();
+		if(num != "3") {
+			for(let i=num; i<3; i++) {
+				console.log($("#upImgNameThumb"+(i+1)).val());
+				$("#upImgNameThumb" + i).val($("#upImgNameThumb"+(i+1)).val());
+				$("#upImgNameOrigin" + i).val($("#upImgNameOrigin"+(i+1)).val());
+				$("#imgPreview"+(i+1)).attr("id", "imgPreview"+i);
+			}
+		}
+		$("#upImgNameThumb3").val("");
+		$("#upImgNameOrigin3").val("");
+		numOfImgs--;
+		console.log(numOfImgs);
+		
+		// 수정할 때 지우면 취소시 못 되돌림! 그냥 놔두자
+		/*
 		let url = '/board/missing/delImg';
 		$.ajax({
 			url : url, // ajax와 통신 할 곳
@@ -216,6 +237,7 @@ let numOfImgs=0;
 				}
 			}
 		});
+		*/
 	}
 	
 	function delUrlImg(obj) {
@@ -232,6 +254,8 @@ let numOfImgs=0;
 		}
 		$("#upImgNameThumb3").val("");
 		$("#upImgNameOrigin3").val("");
+		numOfImgs--;
+		console.log(numOfImgs);
 	}
 	
 	// 이미지 파일이 아닌 파일이 있으면 true, 모두 이미지 파일이면 false
