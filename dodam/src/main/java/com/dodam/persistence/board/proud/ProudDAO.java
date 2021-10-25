@@ -26,9 +26,6 @@ public interface ProudDAO {
 	// 상세페이지 조회
 	ProudVo selectBoard(int no) throws NamingException, SQLException;
 
-	// 전체글수 얻어오기
-	int selectCntPost() throws NamingException, SQLException;
-	
 	
 	//  UPDATE
 	// 게시판 수정하기
@@ -59,4 +56,13 @@ public interface ProudDAO {
 	void likeup(LikeHistory vo) throws NamingException, SQLException;
 
 	void likedown(LikeHistory vo) throws NamingException, SQLException;
+
+	// 검색 제목+내용 전체글 수 얻어오기
+	int selectCntPostTitle(String word) throws NamingException, SQLException;
+
+	// 검색 작성자 전체글 수 얻어오기
+	int selectCntPostWriter(String word) throws NamingException, SQLException;
+
+	// 검색 댓글 내용 전체글 수 얻어오기
+	int selectCntPostReply(String word) throws NamingException, SQLException;
 }
