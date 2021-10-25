@@ -170,6 +170,13 @@ public class MemberServiceImpl implements MemberService {
 		return map;
 	}
 
+	@Override
+	public int countpoint(String userid) throws NamingException, SQLException {
+			int result = dao.countpoint(userid);
+		
+		return result;
+	}
+
 	
 	
 	

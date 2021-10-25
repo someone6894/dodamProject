@@ -44,6 +44,8 @@ public interface MemberService {
 
 	public Map<String, Object> replyerhistory(String userid) throws NamingException, SQLException;
 
+	public int countpoint(String userid) throws NamingException, SQLException;
+
 	
 	
 	

@@ -52,7 +52,32 @@
   		update proudboard set title = #{title}, content = #{content}, image = #{image} where no = #{no}
   	</update>
   	
+  	<update id="readcount">
+  		update proudboard set readcount = readcount + 1 where no = #{no}
+  	</update>
+  	
   	<delete id="deleteboard">
 	 	delete from proudboard where no = #{no}
 	 </delete>
+	 
+	 <insert id="like">
+		insert into proudlikehistory values (#{userid}, #{no})
+	</insert>
+	
+  	<delete id="dislike">
+		delete from proudlikehistory where userid = #{userid} and no = #{no} 
+	 </delete>
+	 
+	 <select id="likehistory" resultType="int" >
+		select count(*) from proudlikehistory where userid = #{userid} and no = #{no};
+	</select>
+	
+	<update id="likeup">
+		update proudboard set likecount = likecount + 1 where no = #{no};
+  	</update>
+  	
+  	<update id="likedown">
+		update proudboard set likecount = likecount - 1 where no = #{no};
+  	</update>
+	
   </mapper>

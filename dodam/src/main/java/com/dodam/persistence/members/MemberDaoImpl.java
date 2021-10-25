@@ -153,6 +153,11 @@ public class MemberDaoImpl implements MemberDao {
 		return ses.selectList(namespace + ".replyerhistory", userid);
 	}
 
+	public int countpoint(String userid) throws NamingException, SQLException  {
+		
+		return ses.selectOne(namespace + ".countpoint", userid);
+	}
+
 
 
 

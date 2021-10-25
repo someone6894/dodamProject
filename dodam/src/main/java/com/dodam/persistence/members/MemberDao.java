@@ -47,4 +47,6 @@ public interface MemberDao {
 	// 댓글 작성 개수
 	int countreplyer(String userid) throws NamingException, SQLException;
 	
+	// 포인트 적립 초기화
+	public int countpoint(String userid) throws NamingException, SQLException;
 }
