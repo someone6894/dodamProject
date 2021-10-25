@@ -31,3 +31,5 @@ public interface EventBoardDAO {
 		public List listPage(int displayPost, int postNum) throws NamingException, SQLException;
 	}
 
+
+

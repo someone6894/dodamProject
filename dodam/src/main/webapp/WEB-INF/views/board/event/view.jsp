@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>전시회 상세페이지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -33,11 +36,13 @@
 <style>
 
 .event_view{
+	font-family: 'Single Day', cursive;
+	
 	position: relative;
 	
-	padding: 0 0 0 395px;
+	padding: 0 0 0 400px;
 	
-	width:1000px;
+	width:1050px;
 	
 	box-sizing: border-box;
 }
@@ -135,7 +140,9 @@
 			<div class="img">
 			<img src= "${view.img}"  style="position: absolute; left:0; 
 									 top:0;width: 368px; height: 500px; 
-									 border:1px solid #e8e8e8;" 
+									 border:1px solid #e8e8e8;
+									 -webkit-box-shadow: 20px 20px 24px rgba(0,0,0,0.3);
+									 box-shadow: 20px 20px 24px rgba(0,0,0,0.3);" 
 									 onclick="location.href='${view.img}'">
 			</div>
 		
@@ -148,17 +155,14 @@
 				onclick="return button_event();">게시물 삭제</a>
 				</c:when></c:choose>
 				<a href="/board/event/listPage" class="btn3">글 목록</a>
-				<span class="button gray medium"><a href="#" onclick="clip(); return false;" >링크공유하기</a></span>
+				<span class="button gray medium"><a href="#" onclick="clip(); return false;" >
+				<img src="https://cdn-icons.flaticon.com/png/512/2990/premium/2990295.png?token=exp=1635133206~hmac=f7d1162a99aec4e36596eddbd27dabca" style="width:40px;">
+				공유</a></span>
 			</div>
 		</div>	
 	<div class="container">
 		<h3 style="font-weight: bold; 
 		color: #222; 
-개최 일자	2021년 10월 01일(금) ~ 10월 03일(일), 3일간
-개최 장소	송도 컨벤시아 3,4홀
-전시 규모	8,605㎡
-참가 기업	134개사 193부스
-
 		border-bottom : 2px solid #333; 
 		padding: 0 0 0 20px;
 		line-height: 50px; 
