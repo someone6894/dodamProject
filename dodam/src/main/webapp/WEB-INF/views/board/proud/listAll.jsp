@@ -43,6 +43,7 @@
 	float : right;
 }
 
+
 #keyword {
 	font-size: 16px;
 	width: 235px;
@@ -100,8 +101,13 @@
 		<div class="form-group row justify-content-center">
 			<div class="w100" style="padding-right: 10px"></div>
 			
-				<button type="button" class="btn btn-success" id = "write2"
-					onclick="location.href='/board/proud/register';">글 등록</button>
+			<c:choose>
+				<c:when test="${userid != null}">
+					<button type="button" class="btn btn-success" id = "write2"
+						onclick="location.href='/board/proud/register';">글 등록</button>	
+				</c:when>
+			</c:choose>
+					
 			<div class="w300">
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">

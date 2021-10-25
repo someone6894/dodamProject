@@ -6,6 +6,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.LikeHistory;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 
@@ -45,5 +46,17 @@ public interface ProudDAO {
 	List<ProudVo> selectWriterBoard(int pageNo, PagingProud pi, String word) throws NamingException, SQLException;
 
 	// 댓글 검색
-	List<ProudVo> selectReplyBoard(int pageNo, PagingProud pi, String word)  throws NamingException, SQLException;
+	List<ProudVo> selectReplyBoard(int pageNo, PagingProud pi, String word) throws NamingException, SQLException;
+
+	int readcount(int no) throws NamingException, SQLException;
+
+	int like(LikeHistory vo) throws NamingException, SQLException;
+
+	int dislike(LikeHistory vo) throws NamingException, SQLException;
+
+	int likehistory(LikeHistory vo) throws NamingException, SQLException;
+
+	void likeup(LikeHistory vo) throws NamingException, SQLException;
+
+	void likedown(LikeHistory vo) throws NamingException, SQLException;
 }

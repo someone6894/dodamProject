@@ -53,8 +53,7 @@ public interface MemberService {
 	public boolean updateTmpPwd(MemberVo mem);
 
 	
-	
-	
+	public int countpoint(String userid) throws NamingException, SQLException;
 
 	
 	

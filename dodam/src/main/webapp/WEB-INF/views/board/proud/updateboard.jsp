@@ -98,36 +98,65 @@ $(function(){
 
 	
 	</script>
+<style>
+		
+.container{
+	margin-bottom : 150px;
+}
+
+#title2 {
+	text-align: center;
+	margin-top : 45px;
+	margin-bottom : 40 px;
+	font-size : 40px;
+}
+	
+#title3 {
+	margin-top : 40px;
+}
+
+#save2 {
+	margin-left : 1px;
+	float : left;
+	width : 90px;
+	height : 50px;
+	font-size : 20px;
+	font-style : bold;
+}
+
+#save {
+	float : right;
+	width : 90px;
+	height : 50px;
+	font-size : 20px;
+	font-style : bold;
+}
+
+</style>
 </head>
 
 <body>
 
    <jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
-      <h2>게시판 상세 페이지</h2>
+		<p id="title2">게시글 수정<p>
       <form action="/board/proud/update" method="post" >
 
       <div class="form-group">
-         <label for="title">글번호:</label> <input type="text"
+        <input type="hidden"
             class="form-control" id="no" name="no"
             value="${board.no }" readonly>
-         <div>
-            <span id='readcount'>조회수 : <span class="badge">${board.readcount }</span></span>
-
-            <span id='likeDislike'> 좋아요 :
-               <span id='isLikeSpan'></span> <span id="likeCount" class="badge">${board.likecount }</span>
-            </span>
-         </div>
-
+       
       </div>
       <div class="form-group">
+      <div id="title3">
          <label for="title">제목:</label> <input type="text"
             class="form-control" id="title" name="title"
             value="${board.title }" >
       </div>
+      </div>
 
-      <div class="form-group">
-         <label for="writer">작성자 :</label> <input type="text"
+      <div class="form-group"> <input type="hidden"
             class="form-control" id="writer" name="writer"
             value="${board.writer}" readonly>
       </div>
@@ -140,11 +169,10 @@ $(function(){
    	  
 			<input type ="hidden" name="image" id="upfileNameOrigin" />
    	  
-      <button type="submit" class="btn btn-success">수정완료</button>
-      <button type="reset" class= "btn btn-warning" onclick ="location.href='/board/proud/readboard?no=${board.no}';">취소</button>
+      <button id = "save" type="submit" class="btn btn-success">수정</button>
+      <button id = "save2" type="reset" class= "btn btn-info" onclick ="location.href='/board/proud/readboard?no=${board.no}';">취소</button>
       </form>
      
    </div>
-	<script type = "text/javascript">$.noConflict();</script>
 </body>
 </html>

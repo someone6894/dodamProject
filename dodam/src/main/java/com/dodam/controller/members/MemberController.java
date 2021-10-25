@@ -65,6 +65,7 @@ public class MemberController {
 
 		HttpSession ses = request.getSession();
 		ses.removeAttribute("loginSession"); // 로그인세션 갱신
+		ses.removeAttribute("userid"); // 로그인한 아이디 갱신
 		System.out.println("ses.toString() : " + ses.toString());
 
 		return "index";
@@ -77,8 +78,12 @@ public class MemberController {
 		HttpSession ses = request.getSession();				
 		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
 		
-		int sumpoint = service.sumpoint(userid);
-		model.addAttribute("sumpoint", sumpoint); // 포인트 총합
+		int sumpoint = 0;
+		if (service.countpoint(userid) != 0) {
+			sumpoint = service.sumpoint(userid);
+		}
+		model.addAttribute("sumpoint", sumpoint); // 포인트 총합			
+		
 		
 		int countboard = service.countboard(userid);
 		model.addAttribute("countboard", countboard); // 게시판 작성 개수

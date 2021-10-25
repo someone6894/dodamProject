@@ -11,6 +11,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.LikeHistory;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 import com.dodam.persistence.board.proud.ProudDAO;
@@ -133,6 +134,67 @@ public class ProudServiceimpl implements ProudService {
 
 		return result;
 
+	}
+
+	@Override
+	public boolean readcount(int no) throws NamingException, SQLException {
+
+		boolean result = false;
+		
+		if (dao.readcount(no) == 1) {
+			result = true;
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean like(LikeHistory vo, String userid) throws NamingException, SQLException {
+		boolean addlike = false;
+		
+		LikeHistory so = new LikeHistory(userid, vo.getNo());
+		
+		int result = dao.like(so);
+		
+		if (result == 1) {
+			addlike = true;
+		}
+		return addlike;
+	}
+
+	@Override
+	public boolean dislike(LikeHistory vo, String userid) throws NamingException, SQLException {
+		boolean deletelike = false;
+
+		LikeHistory so = new LikeHistory(userid, vo.getNo());
+		
+		int result = dao.dislike(so);
+		
+		if (result == 1) {
+			deletelike = true;
+		}
+		
+		return deletelike;
+	}
+
+	@Override
+	public int likehistory(int no, String userid) throws NamingException, SQLException {
+		
+		LikeHistory so = new LikeHistory(userid, no);
+		
+		return dao.likehistory(so);
+	}
+
+	@Override
+	public void likeup(LikeHistory vo) throws NamingException, SQLException {
+		dao.likeup(vo);
+		
+	}
+
+	@Override
+	public void likedown(LikeHistory vo) throws NamingException, SQLException {
+		dao.likedown(vo);
+		
 	}
 
 

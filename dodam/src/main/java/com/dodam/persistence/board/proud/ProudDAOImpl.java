@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.LikeHistory;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 
@@ -114,5 +115,43 @@ public class ProudDAOImpl implements ProudDAO {
 		System.out.println(map);
 
 		return ses.selectList(namespace + ".selectReplyBoard", map);
+	}
+
+	@Override
+	public int readcount(int no) throws NamingException, SQLException {
+
+		return ses.update(namespace + ".readcount", no);
+		
+	}
+
+	@Override
+	public int like(LikeHistory vo) throws NamingException, SQLException {
+
+		return ses.insert(namespace + ".like" , vo);
+	}
+
+	@Override
+	public int dislike(LikeHistory vo) throws NamingException, SQLException {
+		
+		return ses.delete(namespace + ".dislike", vo);
+	}
+
+	@Override
+	public int likehistory(LikeHistory vo) throws NamingException, SQLException {
+		
+		return ses.selectOne(namespace + ".likehistory", vo);
+	}
+
+	@Override
+	public void likeup(LikeHistory vo) throws NamingException, SQLException {
+		
+		ses.delete(namespace + ".likeup", vo);
+		
+	}
+
+	@Override
+	public void likedown(LikeHistory vo) throws NamingException, SQLException {
+
+		ses.selectOne(namespace + ".likedown", vo);		
 	}
 }

@@ -59,4 +59,6 @@ public interface MemberDao {
 
 	
 	
+	// 포인트 적립 초기화
+	public int countpoint(String userid) throws NamingException, SQLException;
 }

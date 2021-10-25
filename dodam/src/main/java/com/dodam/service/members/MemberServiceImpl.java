@@ -192,5 +192,11 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	public int countpoint(String userid) throws NamingException, SQLException {
+			int result = dao.countpoint(userid);
+		
+		return result;
+	}
+
 	
 }

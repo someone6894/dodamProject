@@ -170,6 +170,12 @@ public class MemberDaoImpl implements MemberDao {
 		return ses.update(namespace + ".updateTmpPwd", mem);
 	}
 
+	public int countpoint(String userid) throws NamingException, SQLException  {
+		
+		return ses.selectOne(namespace + ".countpoint", userid);
+
+	}
+
 
 
 
