@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -47,14 +48,16 @@ public class MissingBoardController {
 								@RequestParam(value="location", defaultValue = "") String location,
 								@RequestParam(value="animal", defaultValue = "") String animal,
 								@RequestParam(value="category", defaultValue = "missing") String category,
+								@RequestParam(value="itemsPerPage", defaultValue = "20") int itemsPerPage,
 								Model model) {
+		
 		ListParamDTO lpd = new ListParamDTO(pageNo, location, animal, category, searchWord);
 		
 		Map<String, Object> map = null;
 		
 		// #### 예외처리 페이지 만들기!!!!! ####
 		try {
-			map = service.selectMissingBoardList(lpd);
+			map = service.selectMissingBoardList(lpd, itemsPerPage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -256,6 +259,23 @@ public class MissingBoardController {
 			return new ResponseEntity<String>("exist", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("none", HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/search", method=RequestMethod.POST)
+	public Map<String, Object> searchList(ListParamDTO lpd, @RequestParam(value="itemsPerPage", defaultValue="20") int itemsPerPage) {
+		Map<String, Object> map = null;
+		System.out.println(lpd);
+		try {
+			map = service.selectMissingBoardList(lpd, itemsPerPage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(map.get("pagingInfo"));
+		
+		return map;
 	}
 	
 }

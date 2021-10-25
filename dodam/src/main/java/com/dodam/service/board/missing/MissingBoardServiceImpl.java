@@ -26,8 +26,8 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	private MissingBoardDAO dao;
 
 	@Override
-	public Map<String, Object> selectMissingBoardList(ListParamDTO lpd) throws Exception {
-		 PagingInfoDTO pi = pagingProcess(lpd);
+	public Map<String, Object> selectMissingBoardList(ListParamDTO lpd, int itemsPerPage) throws Exception {
+		 PagingInfoDTO pi = pagingProcess(lpd, itemsPerPage);
 		 
 		 lpd.setStartNum(pi.getStartNum());
 		 lpd.setPostPerPage(pi.getPostPerPage());
@@ -207,10 +207,10 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 
 	
 	// 페이징을 위한 처리 작업 전담 메서드
-	private PagingInfoDTO pagingProcess(ListParamDTO lpd) throws Exception {
+	private PagingInfoDTO pagingProcess(ListParamDTO lpd, int itemsPerPage) throws Exception {
 		PagingInfoDTO pi = new PagingInfoDTO();
 		
-		pi.setPostPerPage(20);
+		pi.setPostPerPage(itemsPerPage);
 		pi.setPageCntPerBlock(10);
 		
 		pi.setStartNum(lpd.getPageNo()); // 출력 시작할 번호
