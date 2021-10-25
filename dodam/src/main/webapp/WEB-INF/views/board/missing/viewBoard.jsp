@@ -70,11 +70,11 @@
 			}
 			
 			// 글 작성자에게만 찾았어요, 찾습니다 버튼 나타나도록 설정---------------------------------------------------------
-			if("${loginSession.userid}" == "${MissingBoard.writer}") {
+			if("${loginSession.userid}" == "${MissingBoard.writer}" || "${loginSession.userid}" == "admin123") {
 				$("#category").show();
 			}
 			
-			// 로그인 한 유저의 경우 좋아요 기록 가져와서 하트 채우기---------------------------------------------------------
+			// 로그인 한 유저의 경우 좋아요 기록 가져와서 북마크 채우기---------------------------------------------------------
 			if ("${loginSession.userid}" != "") {
 				let url = '/board/missing/bookmarkHistory';
 				
@@ -429,10 +429,10 @@
 	        		// -------------------------------------------------------
 	        		
 	        		if (element.issecret == 'Y') { // 비밀글이다
-						if (loginUser == bwriter || loginUser ==  replyer) { // 보이는 조건에 해당
+						if (loginUser == bwriter || loginUser ==  replyer || loginUser == "admin123") { // 보이는 조건에 해당
 								viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
 								viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
-							if(loginUser == replyer) { // 댓글 작성자인 경우
+							if(loginUser == replyer || loginUser == "admin123" ) { // 댓글 작성자인 경우
 					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
 					       		viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
 					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
@@ -711,7 +711,7 @@
 		}
 		
 		#bookmark, #unbookmark {
-			width: 20px;
+			width: 25px;
 			margin-bottom: 2px;
 			cursor: pointer;
 		}
@@ -914,7 +914,7 @@
 				<c:if test="${loginSession.userid != null }">
 					<div>
 						<button type="button" class="btn" onclick="showReply();">댓글달기</button>
-						<c:if test="${loginSession.userid == MissingBoard.writer }">
+						<c:if test="${loginSession.userid == MissingBoard.writer or loginSession.userid == admin123}">
 							<button type="button" class="btn" onclick="location.href='/board/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
 							<button type="button" class="btn btn-danger" onclick="remove(this, ${MissingBoard.no});">삭제</button>
 						</c:if>
