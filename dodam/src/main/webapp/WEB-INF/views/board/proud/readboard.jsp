@@ -9,12 +9,16 @@
 <meta http-equiv="Pragma" content="No-cache">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <script>
 	$(function() {
@@ -58,18 +62,20 @@
 	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" class = "far" onclick="UpReply(' + element.no + ')";><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" /> 수정</a>';
 	    					viewoutput += '<a href="javascript:;" class = "far" onclick="DeReply(' + element.no + ')";><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
 	    					viewoutput += '<a href="javascript:;" class = "far" onclick="ReReply(' + element.no + ')";><img class="fa fa-talk" src="../../resources/images/lcj/replyreply.png" /> 댓글</a></div>';
+	    					}else if( element.replyer != $("#replyer").val() && $("#replyer").val() != null){
+	    						viewoutput += '<div class ="fdb_nav">';
+		    					viewoutput += '<a href="javascript:;" class = "far" onclick="ReReply(' + element.no + ')";><img class="fa fa-talk" src="../../resources/images/lcj/replyreply.png" /> 댓글</a></div>';	    						
 	    					}
-	    					
 	    					viewoutput += '</li>'
+	    					
 	    					
 		    				viewoutput += '<div id="replyUpdate' + element.no + '" class="replyUpdate" style="clear : both;">';
 	    					viewoutput += '<div class="form-group">';
-	    					viewoutput += '<label for="replyer">작성자 : </label>';
 	    					
 	    					viewoutput += '<a href="javascript:;" class = "right" style = "color : black" onclick ="Hide(' + element.no + ')";><img class="fa far2" src ="../../resources/images/lcj/close.png"/>닫기</a>';
 
-	    					viewoutput += '<input type="text" class="form-control" id="replyer' + element.no +'" name = "replyerupdate" value ="' + element.replyer + '">';
-	    					viewoutput += '<label for ="replyContents">댓글 수정:</label>'
+	    					viewoutput += '<input type="hidden" class="form-control" id="replyer' + element.no +'" name = "replyerupdate" value ="${userid}">';
+	    					viewoutput += '<label for ="replyContents"><h4>${userid}</h4></label>'
 	    					viewoutput += '<textarea id="replyContents' + element.no + '" rows="6" cols="158">' + element.contents + '</textarea>'
 	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="updateReply(' + element.no + ');">등록</button>';
 	    					viewoutput += '</div></div>';
@@ -81,10 +87,9 @@
 	    					
 	    					viewoutput += '<a href="javascript:;" class = "right" style = "color : black" onclick ="HideReReply(' + element.no + ')";>';
 	    					viewoutput += '<img class="fa far2" src ="../../resources/images/lcj/close.png"/>닫기</a>';
-	    					viewoutput += '<label for="rereplyer">작성자 : </label>';
 	    					
-	    					viewoutput += '<input type="text" class="form-control" id="rereplyer' + element.no + '" name = "rereplyer' + element.no + '" >';
-	    					viewoutput += '<label for ="replyContents">대댓글 달기:</label>'; 
+	    					viewoutput += '<input type="hidden" class="form-control" id="rereplyer' + element.no + '" name = "rereplyer' + element.no + '" value="${userid}">';
+	    					viewoutput += '<label for ="replyContents"><h4>${userid}</h4></label>';
 	    					viewoutput += '<textarea id="rereplyContents' + element.no + '" rows="6" cols="158"></textarea>';
 	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="addreReply(' + element.no + ');">등록</button>';
 	    					viewoutput += '</div></div>';
@@ -156,7 +161,7 @@
 		let url = '/replies/replies';
 		
 		let sendData = JSON.stringify({ // json 타입의 객체로 보이는 문자열 생성
-			bno : bno, replyer : replyer, contents : contents 
+			bno : bno, replyer : replyer, contents : contents , no : no
 		});
 		
 		console.log(sendData);
@@ -229,8 +234,6 @@
 
 	function UpReply(no) {
 		$("#replyUpdate" + no).show(500);
-		$("#replyDiv").hide(300);
-		$("#reReply" + no).hide(300);
 	}
 	
 	function Hide(no) {
@@ -239,7 +242,6 @@
 	
 
 	function showReply() {
-		$("#replyDiv").show(500);
 		$("#replyUpdate" + no).hide(300);
 		$("#reReply" + no).hide(300);
 	}
@@ -249,7 +251,6 @@
 	function ReReply(no) {
 		$("#reReply" + no).show(500);
 		$("#replyUpdate" + no).hide(300);
-		$("#replyDiv").hide(300);
 	}
 
 	function HideReReply(no) {
@@ -418,7 +419,7 @@
 }
 
 .far2 {
-	width : 10px;
+	width: 10px;
 	margin-right: 8px;
 }
 
@@ -455,35 +456,42 @@
 }
 
 .container {
-	margin-left : 70px;
+	margin-left: 70px;
 }
+
 .label {
-	margin-left : 3px;
-	margin-right : 20px;
+	margin-left: 3px;
+	margin-right: 20px;
 }
 
 .btn-sm {
-	float : right;
+	float: right;
 }
 
 #mokrock {
-	float : left;
+	float: left;
 }
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container">
-	  <br/>
-      <h4><small>반려견 자랑 | 자랑하기 게시판</small></h4>
-      <hr>
-      <h2>${board.title }</h2>
-      <span class="glyphicon glyphicon-time"></span> Post by ${board.writer},  ${board.postdate }
-      <hr>
-      <h4> 조회 수  : <span class="label label-danger">${board.readcount }</span> 추천 수  : <span class="label label-primary">${board.likecount }</span></h4>
-      <hr>
-      <br/>
-      <p>${board.content }</p>
-      <br>
+		<br />
+		<h4>
+			<small>반려견 자랑 | 자랑하기 게시판</small>
+		</h4>
+		<hr>
+		<h2>${board.title }</h2>
+		<span class="glyphicon glyphicon-time"></span> Post by
+		${board.writer}, ${board.postdate }
+		<hr>
+		<h4>
+			조회 수 : <span class="label label-danger">${board.readcount }</span> 추천
+			수 : <span class="label label-primary">${board.likecount }</span>
+		</h4>
+		<hr>
+		<br />
+		<p>${board.content }</p>
+		<br>
 
 
 		<c:choose>
@@ -495,7 +503,8 @@
 							<div id="chang">
 								<button class="feeling_a" onclick="show(${board.no });">
 									<i class="fa fa-heart-o"> Like</i> </a>
-								</button>&nbsp;&nbsp;<span class="badge">${board.likecount }</span>
+								</button>
+								&nbsp;&nbsp;<span class="badge">${board.likecount }</span>
 							</div>
 						</c:if>
 
@@ -503,8 +512,8 @@
 							<div id="mo">
 								<button class="feeling_b" onclick="hide(${board.no });">
 									<i class="fa fa-heart"> Like</i>
-								</button>&nbsp;&nbsp;<span class="badge">${board.likecount }</span>
-								</a>
+								</button>
+								&nbsp;&nbsp;<span class="badge">${board.likecount }</span> </a>
 							</div>
 						</c:if>
 
@@ -512,46 +521,54 @@
 				</div>
 			</c:when>
 		</c:choose>
-		
-		<br /> <br />
-		
-		<c:choose>
-				<c:when test="${userid != null}">
-              <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
-                <span class="glyphicon glyphicon-trash"></span> 삭제
-              </button>  
-              
-              <button type="button" class="btn btn-default btn-sm" onclick="location.href='/board/proud/updateboard?no=${board.no }'" >
-                <span class="glyphicon glyphicon-pencil"></span> 수정
-              </button>
-                   
-				</c:when>
-			</c:choose>
-              
-              <button type="button" class="btn btn-default btn-sm" onclick ="location.href='#top'">
-                <span class="glyphicon glyphicon-arrow-up"></span> 
-              </button>     
 
-              <button type="button" id = "mokrock" class="btn btn-default btn-sm" onclick="location.href='/board/proud/listAll'">
-                <span class="glyphicon glyphicon-th-list"></span> 목록
-              </button>     
-                 
-              <br/><br /><hr> <br/>
+		<br /> <br />
+
+		<c:choose>
+			<c:when test="${userid == board.writer}">
+				<button type="button" class="btn btn-default btn-sm"
+					data-toggle="modal" data-target="#myModal">
+					<span class="glyphicon glyphicon-trash"></span> 삭제
+				</button>
+
+				<button type="button" class="btn btn-default btn-sm"
+					onclick="location.href='/board/proud/updateboard?no=${board.no }'">
+					<span class="glyphicon glyphicon-pencil"></span> 수정
+				</button>
+			</c:when>
+		</c:choose>
+
+		<button type="button" class="btn btn-default btn-sm"
+			onclick="location.href='#top'">
+			<span class="glyphicon glyphicon-arrow-up"></span>
+		</button>
+
+		<button type="button" id="mokrock" class="btn btn-default btn-sm"
+			onclick="location.href='/board/proud/listAll'">
+			<span class="glyphicon glyphicon-th-list"></span> 목록
+		</button>
+
+		<br />
+		<br />
+		<hr>
+		<br />
 
 		<div id="replyLst"></div>
 		<br />
-		
-      <form role="form">
-		<div id="replyDiv" style="clear: both;">
-			<div class="form-group">
-			<input type="hidden" class="form-control" id="replyer" name="replyer" value = "${userid }">
-					<label for="replyContents"><h4>${userid } :</h4></label>
-				<textarea id="replyContents" rows="5" cols="158" placeholder="댓글 내용을 입력해주세요"></textarea>
-			</div>
+
+		<form role="form">
+			<div id="replyDiv" style="clear: both;">
+				<div class="form-group">
+					<input type="hidden" class="form-control" id="replyer"
+						name="replyer" value="${userid }"> <label
+						for="replyContents"><h4>${userid }:</h4></label>
+					<textarea id="replyContents" rows="5" cols="158"
+						placeholder="댓글 내용을 입력해주세요"></textarea>
+				</div>
 				<button type="button" class="btn btn-success" onclick="addReply();">댓글등록</button>
-		</div>
-      </form>
-      
+			</div>
+		</form>
+
 		<br /> <br />
 
 		<div id="myModal" class="modal fade" role="dialog">
@@ -576,7 +593,7 @@
 
 		<br /> <br /> <br />
 
-		
+
 		<div style="margin-bottom: 100px"></div>
 	</div>
 </body>

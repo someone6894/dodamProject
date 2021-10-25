@@ -26,4 +26,6 @@ public interface ReplyDAO {
 
 	// 댓글 삭제
 		public int delete(ReplyVo vo) throws Exception;
+
+		public int replycount(ReplyVo vo) throws Exception;
 }

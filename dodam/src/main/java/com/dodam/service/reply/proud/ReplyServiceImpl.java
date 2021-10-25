@@ -59,15 +59,17 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public boolean reReply(ReplyVo vo) throws Exception {
+	public boolean reReply(ReplyVo vo, int result2) throws Exception {
 		boolean result = false;
 
+		vo.setReforder(result2);
+		System.out.println(vo.toString());
 		int row = dao.append(vo);
 		if (row == 1) {
 			result = true;
 		}
 		
-		return true;
+		return result;
 	}
 	
 	@Override
@@ -81,6 +83,12 @@ public class ReplyServiceImpl implements ReplyService {
 
 		return result;
 
+	}
+
+	@Override
+	public int replycount(ReplyVo vo) throws Exception {
+
+		return dao.replycount(vo);
 	}
 
 }
