@@ -16,22 +16,6 @@
 <title>dodam dodam</title>
 </head>
 <script>
-	window.onload = function(){
-		
-		
-		miniMissing();
-		miniProud();
-	}
-	
-	function miniMissing(){
-		//아작스 -> 본인 컨트롤러의 listAll? 메소드? 호출
-				
-				//뿌려야겠죠
-	}
-	
-	function miniProud(){
-		
-	}
 </script>
 <body>
 <%
@@ -40,6 +24,7 @@
 %>
 
 	<jsp:include page="template.jsp"></jsp:include>	
-
+	<jsp:include page="board/adopt/adoptboardmini.jsp"></jsp:include>	
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

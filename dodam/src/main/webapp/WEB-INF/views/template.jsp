@@ -79,7 +79,7 @@ function ActiveBar(){
 }
 
 .banner {
-   height: 350px;
+   height: 280px;
    background-color: #3C6E9F;
    /* test2와 같은 색상 */
 }
@@ -188,8 +188,8 @@ function ActiveBar(){
       </ul>
    </div>
 
-   <div class="banner" style="padding-top: 30px;">
-      <a href="/"><img id='bannerimg' src='../../resources/images/main/banner.jpg' width="auto" height="300px;"/></a>
+   <div class="banner" style="padding-top: 10px;">
+      <a href="/"><img id='bannerimg' src='../../resources/images/main/banner.jpg' width="auto" height="270px;"/></a>
    </div>
 
    <!-- class = navbar navbar-inverse -->

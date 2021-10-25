@@ -388,7 +388,25 @@ public class AdoptBoardController {
 	}
 	// readBody 끝
 
+//	boardmini
 	
-	
+	// adoptboardmini 최상단 3개 게시글 출력용
+	@RequestMapping(value = "/adoptboardmini", method = RequestMethod.GET)
+	public String boardminiList(Model model, @RequestParam(value="pageNo", required=false, defaultValue="1") String tmp ) throws Exception {
+
+		System.err.println("boardmini 컨트롤단 출력");
+		int pageNo = 1;
+		if (!tmp.equals("") || tmp != null) {
+			pageNo = Integer.parseInt(tmp);
+		}
+		
+		logger.info("boardmini 게시물 출력...페이지넘버 : " + pageNo);
+
+		Map<String, Object> map = service.readAllAdopt(pageNo);
+		List<AdoptVo> lst = (List<AdoptVo>) map.get("boardList");
+		model.addAttribute("boardminiList", lst); // 게시판 글 데이터
+		
+		return "board/adopt/adoptboardmini";
+	}
 	
 } // controller 끝
