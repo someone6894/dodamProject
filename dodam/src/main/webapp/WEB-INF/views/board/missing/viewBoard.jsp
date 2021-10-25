@@ -914,7 +914,7 @@
 				<c:if test="${loginSession.userid != null }">
 					<div>
 						<button type="button" class="btn" onclick="showReply();">댓글달기</button>
-						<c:if test="${loginSession.userid == MissingBoard.writer or loginSession.userid == admin123}">
+						<c:if test="${loginSession.userid == MissingBoard.writer or loginSession.userid == 'admin123'}">
 							<button type="button" class="btn" onclick="location.href='/board/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
 							<button type="button" class="btn btn-danger" onclick="remove(this, ${MissingBoard.no});">삭제</button>
 						</c:if>

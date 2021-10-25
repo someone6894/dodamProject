@@ -47,7 +47,7 @@ let numOfImgs=0;
 					let origin = splitName[0] + splitName[1];
 					
 					$("#upImgNameOrigin" + (i+1)).val(origin);
-
+					numOfImgs++;
 				}
 			}
 		} else {
