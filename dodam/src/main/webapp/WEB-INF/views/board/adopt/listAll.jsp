@@ -17,25 +17,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- <script type="text/javascript"> $.noConflict(); </script> -->
 <script>
-window.onload = function(){
-// 	location.href='/board/adopt/adoptboardmini';
-// 		miniAdopt();
-}
-
-function miniMissing(){
-//아작스 -> 본인 컨트롤러의 listAll? 메소드? 호출
-		
-		//뿌려야겠죠
-}
-
-function miniProud(){
-
-}
-
-function miniAdopt(){
-location.href='boardmini';
-}
-
 
 // 상세페이지
 function readBoard(no) {
@@ -122,11 +103,6 @@ function readBoard(no) {
 				</table>
 			</c:when>
 		</c:choose>
-
-		<!-- 		<div style="float: right"> -->
-		<!-- 			<button type="button" class="btn btn-success" -->
-		<!-- 				onclick="location.href='/board/register';">글 등록</button> -->
-		<!-- 		</div> -->
 	
 	<div>
 			<button type="button" class="btn btn-info btn-block" data-toggle="modal"
@@ -181,7 +157,7 @@ function readBoard(no) {
 
 		</div>
 	</div>
-  
+  <jsp:include page="../../footer.jsp"></jsp:include>
   
 </body>
 </html>

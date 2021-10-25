@@ -20,14 +20,23 @@
 
 #login {
 	width: 300px;
-/* 	margin-top: 10px; */
-/* 	margin-left: 500px; */
 	margin : 0 auto;
-	margin-top: 10px;
-	padding: 20px;
-	border: 3px solid gray;
+	margin-top: 50px;
+	margin-bottom: 100px;
+	padding: 30px;
+ 	border: 2px solid gray; 
 }
 
+/* #login { */
+/* 	width: 300px; */
+/* /* 	margin-top: 10px; */ */
+/* /* 	margin-left: 500px; */ */
+/* 	margin : 0 auto; */
+/* 	margin-top: 100px; */
+/* 	padding: 30px; */
+/* 	margin-bottom: 100px; */
+/*  	border: 2px solid gray; */
+/* } */
 
 </style>
 <script>
@@ -53,21 +62,17 @@ window.onload = function() {
 	<jsp:include page="../template.jsp"></jsp:include>
 	<br>
 	<br>
-	<div class='container' style='width: 40%; margin: 0 auto; padding-left: 200px;'>
+	<div class="container" id='login' style="width: 500px;">
 	<h1>이메일 주소로 계정 찾기</h1>
 	<p>회원정보에 등록된 메일 주소로 아이디/비밀번호를 알려드립니다. <br>메일 주소를 입력하고 "ID/PW 찾기" 버튼을 클릭해 주세요.<br /></p>
 		<form action="findAccount.do" method="post" >
 		<div>
 			<input type="email" name="email" required placeholder="이메일 주소" title="이메일 주소" /><br /><br />
-			<input type="submit" class="btn" value="ID/PW 찾기" />
+			<input type="submit" class="btn btn-default" value="ID/PW 찾기" />
 		</div>
 		</form>
 	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
 	
-	
-<!-- 	<button class="btn" onclick='scanId' style='float:left'> 아이디 찾기 </button> -->
-<!-- 	<button class="btn" onclick='scanPwd' style='float:left; margin-left:10px;'> 비밀번호 찾기 </button> -->
-<!-- 	<br> -->
-
 </body>
 </html>

@@ -388,8 +388,6 @@ public class AdoptBoardController {
 	}
 	// readBody 끝
 
-//	boardmini
-	
 	// adoptboardmini 최상단 3개 게시글 출력용
 	@RequestMapping(value = "/adoptboardmini", method = RequestMethod.GET)
 	public String boardminiList(Model model, @RequestParam(value="pageNo", required=false, defaultValue="1") String tmp ) throws Exception {

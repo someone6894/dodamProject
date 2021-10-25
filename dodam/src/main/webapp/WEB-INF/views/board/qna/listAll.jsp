@@ -103,5 +103,7 @@
 <!-- 주석처리 페이징 끝 -->
 
 	</div>
+	
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

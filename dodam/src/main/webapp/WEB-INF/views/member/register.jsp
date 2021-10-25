@@ -16,22 +16,50 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script>
 
-
-
 $(function() {
 	
 	$("#email").keyup( function(){
 		let email = $(this).val();
 		emailCheck(email);
 		});
-		
+	
+	// 아이디 중복 확인 검사 예외처리
 	let status = "${status}";
 	if (status == "dupliacted") {
 		alert("이미 가입된 아이디 입니다. \n다시 입력해주세요.");
 	} else if (status == "canUsed"){
-		alert("사용가능한 아이디 입니다.");
+		//alert("사용가능한 아이디 입니다.");
+		document.getElementById("iderror").innerHTML = "사용가능한 아이디 입니다.";
+		$("#userid").focus();
+		
+		//$("#userid").val(${userid});
+		//var userid = $("#userid").val();
+		
+		// 보류 : 중복확인시 페이지 이동이 있어서 값입력이 안됨. 
+		// setCookie(변수이름, 변수값, 기간);
+		//setCookie("userid", userid, 1);
+		
+		// getCookie(변수이름)
+		//var useridCookie = getCookie("userid");
+		//console.log("쿠키 useridCookie 변수에 저장된 값: "+useridCookie);
+		//$("#userid").val(useridCookie);
 	}
 	
+	
+	
+	// 유저가 입력한 아이디 중복검사후 아이디칸에 유저가 입련한 아이디값 자동입력을 위한 쿠키
+		var setCookie = function(name, value, exp) {
+		var date = new Date();
+		date.setTime(date.getTime() + exp*24*60*60*1000);
+		document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+		};
+		
+	// 쿠키 가져오기 
+		var getCookie = function(name) {
+			var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+			return value? value[2] : null;
+			};
+		
 	$("#userid").keyup( function(){
 		let userid = $(this).val();
 		idCheck(userid);
@@ -56,6 +84,7 @@ $(function() {
 	
 });
 
+// 아이디 중복확인 검사
 function checkDuplicatedId(){
 	let userid = document.getElementById("userid").value.toLowerCase();
 	console.log(userid);
@@ -310,13 +339,16 @@ function validate() {
 </script>
 <style>
 #register {
-	width: 300px;
+	width: 500px;
 /* 	margin-top: 10px; */
 /* 	margin-left: 500px; */
 	margin : 0 auto;
-	margin-top: 20px;
-	padding: 20px;
-	border: 3px solid gray;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	padding: 30px;
+	padding-top: 10px;
+ 	border: 2px solid gray;
+/* 	background-color:silver; */
 }
 
 .error {
@@ -332,7 +364,7 @@ function validate() {
 	<jsp:include page="../template.jsp"></jsp:include>
 
 	<div class="container" id='register' style="width: 500px;">
-		<h3>회 원 가 입</h3>
+		<h3 style='text-align:center;'>회 원 가 입</h3> <hr/>
 		<h6 style="color: red">* 필수항목</h6>
 		<form action="registerMember.do" method="POST">
 			<div class="form-group">
@@ -401,5 +433,6 @@ function validate() {
 	</div>
 	<br>
 
+	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

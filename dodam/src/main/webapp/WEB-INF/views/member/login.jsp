@@ -23,9 +23,10 @@
 /* 	margin-top: 10px; */
 /* 	margin-left: 500px; */
 	margin : 0 auto;
-	margin-top: 10px;
-	padding: 20px;
-	border: 3px solid gray;
+	margin-top: 100px;
+	padding: 30px;
+	margin-bottom: 100px;
+ 	border: 2px solid gray;
 }
 
 
@@ -54,10 +55,10 @@
 	<jsp:include page="../template.jsp"></jsp:include>
 
 	<div class="container" id='login' style="width: 500px;">
-		<h3>아이디 / 비밀번호 찾기</h3>
+<!-- 		<h3>로그인</h3> -->
 		<form action="login.do" method="POST">
 			<div class="form-group">
-				<label for="userid">아이디 찾기:</label> <input type="text"
+				<label for="userid">아이디:</label> <input type="text"
 					class="form-control" id="userid" placeholder="Enter ID"
 					name="userid"> <span id="iderror" class="error"></span>
 			</div>
@@ -72,9 +73,11 @@
 		</form>
 		
 		</br>
-			<button class="btn" onclick='scanMember()' style='float:left'> 아이디/비밀번호 찾기 </button>
+			<button class="btn btn-default btn-block" onclick='scanMember()' > 아이디 / 비밀번호 찾기 </button>
 	</div>
 	<br>
-
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
+	
 </body>
 </html>

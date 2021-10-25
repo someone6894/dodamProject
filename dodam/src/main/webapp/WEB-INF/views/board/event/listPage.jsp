@@ -72,6 +72,8 @@
 		<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
 		
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
+	
 </div>
 </body>
 </html>
