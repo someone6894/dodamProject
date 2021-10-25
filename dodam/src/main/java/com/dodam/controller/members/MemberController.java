@@ -372,6 +372,14 @@ public class MemberController {
 	@RequestMapping(value = "/emailupdate", method = RequestMethod.GET)
 	public String emailupdate() {
 
+		
+		
+		
+		
+		
+		
+		
+		
 		return "member/emailupdate";
 	}
 
