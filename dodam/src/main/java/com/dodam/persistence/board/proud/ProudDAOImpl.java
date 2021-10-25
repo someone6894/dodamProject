@@ -61,10 +61,6 @@ public class ProudDAOImpl implements ProudDAO {
 		return ses.delete(namespace + ".deleteboard", no);
 	}
 
-	@Override
-	public int selectCntPost() throws NamingException, SQLException {
-		return ses.selectOne(namespace + ".getTotalPostCnt");
-	}
 
 	@Override
 	public int addpoint(MypointVo vo) throws NamingException, SQLException {
@@ -153,5 +149,20 @@ public class ProudDAOImpl implements ProudDAO {
 	public void likedown(LikeHistory vo) throws NamingException, SQLException {
 
 		ses.selectOne(namespace + ".likedown", vo);		
+	}
+
+	@Override
+	public int selectCntPostTitle(String word) throws NamingException, SQLException {
+		return ses.selectOne(namespace + ".getTotalPostCntTitle", word);
+	}
+
+	@Override
+	public int selectCntPostWriter(String word) throws NamingException, SQLException {
+		return ses.selectOne(namespace + ".getTotalPostCntWriter", word);
+	}
+
+	@Override
+	public int selectCntPostReply(String word) throws NamingException, SQLException {
+		return ses.selectOne(namespace + ".getTotalPostCntReply", word);
 	}
 }

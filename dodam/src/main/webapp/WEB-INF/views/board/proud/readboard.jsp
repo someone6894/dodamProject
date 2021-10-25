@@ -52,12 +52,14 @@
 		    				}		    					
 	    					viewoutput += '</div></br>';
 	    					
-	    					
 	    					viewoutput += '<div id="orcontent' + element.no + '" style = "margin-left : 5px; margin-top : 10px;">' + element.contents + '</div>';
 	    					viewoutput += '<div id="regreg' + element.no + '"></div>';
+	    					if(element.replyer == $("#replyer").val()) {
 	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" class = "far" onclick="UpReply(' + element.no + ')";><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" /> 수정</a>';
 	    					viewoutput += '<a href="javascript:;" class = "far" onclick="DeReply(' + element.no + ')";><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
 	    					viewoutput += '<a href="javascript:;" class = "far" onclick="ReReply(' + element.no + ')";><img class="fa fa-talk" src="../../resources/images/lcj/replyreply.png" /> 댓글</a></div>';
+	    					}
+	    					
 	    					viewoutput += '</li>'
 	    					
 		    				viewoutput += '<div id="replyUpdate' + element.no + '" class="replyUpdate" style="clear : both;">';
@@ -459,6 +461,14 @@
 	margin-left : 3px;
 	margin-right : 20px;
 }
+
+.btn-sm {
+	float : right;
+}
+
+#mokrock {
+	float : left;
+}
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
@@ -502,8 +512,31 @@
 				</div>
 			</c:when>
 		</c:choose>
+		
+		<br /> <br />
+		
+		<c:choose>
+				<c:when test="${userid != null}">
+              <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-trash"></span> 삭제
+              </button>  
+              
+              <button type="button" class="btn btn-default btn-sm" onclick="location.href='/board/proud/updateboard?no=${board.no }'" >
+                <span class="glyphicon glyphicon-pencil"></span> 수정
+              </button>
+                   
+				</c:when>
+			</c:choose>
+              
+              <button type="button" class="btn btn-default btn-sm" onclick ="location.href='#top'">
+                <span class="glyphicon glyphicon-arrow-up"></span> 
+              </button>     
 
-		<br /> <br /><hr> <br/>
+              <button type="button" id = "mokrock" class="btn btn-default btn-sm" onclick="location.href='/board/proud/listAll'">
+                <span class="glyphicon glyphicon-th-list"></span> 목록
+              </button>     
+                 
+              <br/><br /><hr> <br/>
 
 		<div id="replyLst"></div>
 		<br />
@@ -520,17 +553,6 @@
       </form>
       
 		<br /> <br />
-
-
-		<button type="button" class="btn btn-success"
-			onclick="location.href='/board/proud/updateboard?no=${board.no }'">글
-			수정</button>
-
-		<button type="button" class="btn btn-info"
-			onclick="location.href='/board/proud/listAll'">목록으로</button>
-
-		<button type="button" class="btn btn-danger" data-toggle="modal"
-			data-target="#myModal">글 삭제하기</button>
 
 		<div id="myModal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
@@ -552,16 +574,10 @@
 			</div>
 		</div>
 
-		<button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>
-
 		<br /> <br /> <br />
 
 		
-
-		<div id="replyLst"></div>
-
 		<div style="margin-bottom: 100px"></div>
-	</div>
 	</div>
 </body>
 </html>

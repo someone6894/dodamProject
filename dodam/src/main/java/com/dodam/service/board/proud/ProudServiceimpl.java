@@ -23,7 +23,7 @@ public class ProudServiceimpl implements ProudService {
 	
 	@Override
 	public Map<String, Object> readAllBoard(int pageNo, String type, String word) throws NamingException, SQLException {
-		PagingProud pi = pagingProcess(pageNo);
+		PagingProud pi = pagingProcess(pageNo, type, word);
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		System.out.println(type);
@@ -47,13 +47,21 @@ public class ProudServiceimpl implements ProudService {
 		return map;
 	}
 
-	 private PagingProud pagingProcess(int pageNo) throws NamingException, SQLException {
+	 private PagingProud pagingProcess(int pageNo, String type, String word) throws NamingException, SQLException {
 		 PagingProud pi = new PagingProud();
 	      
 	      pi.setStartNum(pageNo);  // 출력 시작할 번호
 	      int totalPost = 0;
 	     
-	      totalPost = dao.selectCntPost();
+	      if(type.equals("title")) {
+		      totalPost = dao.selectCntPostTitle(word);
+	      }
+	      else if(type.equals("writer")) {
+		      totalPost = dao.selectCntPostWriter(word);
+	      }
+		  else if(type.equals("reply")) {
+		      totalPost = dao.selectCntPostReply(word);
+		  }
 	         pi.setTotalPage(totalPost); // 전체 페이지 수
 	         pi.setCurrentPagingBlock(pageNo); // 현재 페이지블록
 
