@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+
 <title>전시회 목록</title>
 </head>
 <body>
@@ -18,6 +19,25 @@
 	
 		<h2 style="margin-bottom: 20px; margin-top: 30px;">전시회 목록</h2><br/>
 		<!-- 카테고리 컬럼명 검색 -->
+		<!-- <div role="menubar">
+			<ul class="fusion-fiters" role="menu" aria-label="filters" style="display: block;">
+				<li role="menuitem" class="fusion-filter fusion-filter-all fusion active">
+					<a href="#" data-filters= "*">전부</a>
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2018</a>	
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2019</a>	
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2020</a>	
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2021</a>	
+				</li>
+			</ul>
+		</div>		-->
 	  <div class="w3-row-padding w3-padding-16 w3-center" id="event">
 	<c:forEach items = "${list }" var ="list">
 	<div class="w3-quarter" style="margin-bottom:35px;">
