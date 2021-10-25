@@ -12,6 +12,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+	// 삭제버튼 컨펌
 	function button_event(){
 		if(confirm("정말 삭제하시겠습니까?")==true){
 			document.form.submit();
@@ -19,6 +20,7 @@
 			return false;
 		}
 	}
+	//url복사 버튼
 	function clip(){
 
 		var url = '';
@@ -143,19 +145,19 @@
 									 border:1px solid #e8e8e8;
 									 -webkit-box-shadow: 20px 20px 24px rgba(0,0,0,0.3);
 									 box-shadow: 20px 20px 24px rgba(0,0,0,0.3);" 
-									 onclick="location.href='${view.img}'">
+									 onclick="location.href='${view.img}'"> <!-- 이미지를 누르면 커지는/  -->
 			</div>
 		
 			
 			<div class="btns">
-			<c:choose>
+			<c:choose> 
 				<c:when test="${loginSession.userid!= admin123}">
-				<a href="/board/event/modify?no=${view.no}" class="btn1">게시물 수정</a>, 
+				<a href="/board/event/modify?no=${view.no}" class="btn1">게시물 수정</a> 
 				<a href="/board/event/delete?no=${view.no}" class="btn2" 
 				onclick="return button_event();">게시물 삭제</a>
-				</c:when></c:choose>
+				</c:when></c:choose> 
 				<a href="/board/event/listPage" class="btn3">글 목록</a>
-				<span class="button gray medium"><a href="#" onclick="clip(); return false;" >
+				<span class="button gray medium"><a href="#" onclick="clip(); return false;" > <!-- 공유하기 버튼 -->
 				<img src="https://cdn-icons.flaticon.com/png/512/2990/premium/2990295.png?token=exp=1635133206~hmac=f7d1162a99aec4e36596eddbd27dabca" style="width:40px;">
 				공유</a></span>
 			</div>
@@ -166,7 +168,9 @@
 		border-bottom : 2px solid #333; 
 		padding: 0 0 0 20px;
 		line-height: 50px; 
-		margin-bottom: 30px">부스 배치도 & 참가 기업 리스트</h3>
+		margin-bottom: 30px;
+		font-size:45px;
+		font-family: 'Single Day', cursive;">부스 배치도 & 참가 기업 리스트</h3>
 		<div class="img">
 		<img src = "${view.mallLocation}" style="width:1140px; 
 		height: 700px; margin-bottom:50px;" 
