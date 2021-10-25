@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -522,4 +523,35 @@ public class MemberController {
 		
 		} // findAccount 끝
 	
+	
+	@RequestMapping(value = "/checkDuplicatedId", method = RequestMethod.GET)
+	public String checkDuplicatedId(@RequestParam("userid") String userid, HttpServletRequest request, RedirectAttributes rt) {
+		
+//		String userid = request.getParameter("userid");
+		System.out.println("유저에게 입력받은 userid : " + userid);
+		MemberVo mem = null;
+		try {
+			
+		    mem = service.checkId(userid);
+			System.out.println("입력받은 userid의 회원정보 : " + mem.toString());
+			
+			// 유저가 입력한 아이디가 기존 회원 아이디와 동일한지 체크
+			
+			if( mem != null ) { // 유저가 입력한 userid로 회원정보가 있음 -> 아이디 중복
+				rt.addFlashAttribute("status", "dupliacted");
+			} 
+			
+			} 
+		
+		catch (Exception e) {
+				e.printStackTrace();
+				if( mem == null ) { // 유저가 입력한 userid로 회원정보가 없음 -> 아이디 사용가능
+					rt.addFlashAttribute("status", "canUsed");
+					rt.addFlashAttribute("userid", userid);
+				}
+			}
+		
+		return "redirect:/member/register";
+		
+	}
 }

@@ -25,10 +25,51 @@ $(function() {
 		emailCheck(email);
 		});
 		
+	let status = "${status}";
+	if (status == "dupliacted") {
+		alert("이미 가입된 아이디 입니다. \n다시 입력해주세요.");
+	} else if (status == "canUsed"){
+		alert("사용가능한 아이디 입니다.");
+	}
+	
+	$("#userid").keyup( function(){
+		let userid = $(this).val();
+		idCheck(userid);
+	});
+	
+	$("#password").keyup( function(){
+		let password = $(this).val();
+		let password2 = $("#password2").val();
+		pwdCheck(password, password2);
+	});
+	
+	$("#phone").keyup( function(){
+		let phone = $(this).val();
+		phoneCheck(phone);
+	});
+	
+	$("#email").keyup( function(){
+		let email = $(this).val();
+		emailCheck(email);
+	});
+	
 	
 });
 
-
+function checkDuplicatedId(){
+	let userid = document.getElementById("userid").value.toLowerCase();
+	console.log(userid);
+	
+	if ( idCheck(userid) == true ){
+		location.href='checkDuplicatedId?userid=' + userid;
+	} else if (idCheck(userid) == false ){
+		alert("아이디는 6자 이상 12자 이하로 입력해주세요.");
+	}
+	
+	console.log(${userid});
+	$("#userid").val(${userid});
+	
+}
 
 
 
@@ -109,12 +150,12 @@ function phoneCheck(phone) {
             result = true;
             document.getElementById("phoneerror").innerHTML = "";
         } else if (phone.match(regExp) == null){
-            document.getElementById("phoneerror").innerHTML = "휴대폰 번호 형식이 아닙니다2.";
+            document.getElementById("phoneerror").innerHTML = "휴대폰 번호 형식이 아닙니다. 010-0000-0000";
             document.getElementById("phone").focus();
         }
 	console.log("phone.match(regExp) : " + phone.match(regExp));
     } else {
-    	document.getElementById("phoneerror").innerHTML = "휴대폰 번호를 입력해주세요2.";
+    	document.getElementById("phoneerror").innerHTML = "휴대폰 번호를 입력해주세요.";
     }
     
     
@@ -295,10 +336,13 @@ function validate() {
 		<h6 style="color: red">* 필수항목</h6>
 		<form action="registerMember.do" method="POST">
 			<div class="form-group">
-				<label for="userid">*아이디:</label> <input type="text"
+				<label for="userid">*아이디:</label> <button type="button" class="btn" style='width:30%; float:right'
+				onclick="checkDuplicatedId();">아이디 중복확인</button>
+				<input type="text"
 					class="form-control" id="userid" placeholder="Enter ID"
-					name="userid"> <span id="iderror" class="error"></span>
-			</div>
+					name="userid"  style='width:60%;'> <span id="iderror" class="error"></span> 
+					
+			</div> 
 
 			<div class="form-group">
 				<label for="password">*비밀번호 :</label> <input type="password"

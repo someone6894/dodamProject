@@ -15,7 +15,24 @@
 <link rel="shortcut icon" type="image/x-icon" href="http://localhost:8081/favicon.ico" />
 <title>dodam dodam</title>
 </head>
-
+<script>
+	window.onload = function(){
+		
+		
+		miniMissing();
+		miniProud();
+	}
+	
+	function miniMissing(){
+		//아작스 -> 본인 컨트롤러의 listAll? 메소드? 호출
+				
+				//뿌려야겠죠
+	}
+	
+	function miniProud(){
+		
+	}
+</script>
 <body>
 <%
 	response.setHeader("Pragma", "no-cache");

@@ -46,18 +46,6 @@ window.onload = function() {
 	
 };
 
-
-	function scanId(){
-		
-		location.href='board/member/scanId';
-		
-	}
-	
-	function scanPwd(){
-		
-		location.href='board/member/scanPwd';
-		
-	}
 </script>
 
 <body>

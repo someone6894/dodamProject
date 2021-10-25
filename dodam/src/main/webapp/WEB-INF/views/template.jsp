@@ -201,7 +201,7 @@ function ActiveBar(){
             <li id="missing"><a href="/board/missing/list"><img src="../../resources/images/main/missing.png" width="30px;" style="padding: 0 6px 3px 0;"/>찾아요</a></li>
             <li id="adopt"><a href="/board/adopt/listAll?pageNo=1"><img src="../../resources/images/main/pet.png" width="30px;" style="padding: 0 6px 3px 0;"/>분양해요</a></li>
 		    <li id='publicAdopt'><a href="/board/adopt/publicAdoptList"><img src="../../resources/images/main/publicpet.png" width="30px;" style="padding: 0 6px 3px 0;"/>유기동물 공고</a>
-            <li class="hospital dropdown"><a href="/"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a>
+<!--             <li class="hospital dropdown"><a href="/"><img src="../../resources/images/main/perhospital.png" width="30px;" style="padding: 0 6px 3px 0;"/>동물보호소 찾기</a> -->
 <!--                <ul class="dropdown-content" style="padding-left: 0;"> -->
 <!--                   <li><a href="#">공공기관 찾기</a></li> -->
 <!--                   <li><a href="#">동물병원 찾기</a></li> -->

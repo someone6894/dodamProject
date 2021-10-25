@@ -61,4 +61,7 @@ public interface MemberDao {
 	
 	// 포인트 적립 초기화
 	public int countpoint(String userid) throws NamingException, SQLException;
+
+	// 회원가입시 중복 아이디 확인
+	MemberVo checkDupliactedId(String userid);
 }

@@ -79,6 +79,10 @@
   		update members set password = md5(#{password}) where userid = #{userid}
   	</update>
   	
+  	<select id="checkDupliactedId" resultType="com.dodam.domain.members.MemberVo">
+		select * from members where userid = #{userid}
+	</select>
+	
 </mapper>
 
 

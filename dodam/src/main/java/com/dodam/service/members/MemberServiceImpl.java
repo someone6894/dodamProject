@@ -199,4 +199,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
+	// 회원가입시 중복 아이디 확인
+	@Override
+	public MemberVo checkId(String userid) {
+		
+		MemberVo member = dao.checkDupliactedId(userid);
+		
+		return member;
+	}
+	
+	
 }
