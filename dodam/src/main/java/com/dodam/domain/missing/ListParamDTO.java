@@ -1,7 +1,7 @@
 package com.dodam.domain.missing;
 
 public class ListParamDTO {
-	private int pageNo;
+	private int pageNo = 1;
 	private String location;
 	private String animal;
 	private String category;

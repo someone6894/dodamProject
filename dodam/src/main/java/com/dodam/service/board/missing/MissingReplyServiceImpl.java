@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.missing.MissingReplyVo;
@@ -38,9 +37,13 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 			mrv.setDepth(p_mrv.getDepth());
 			mrv.setReforder(p_mrv.getReforder());
 			
+			// 업데이트가 잘 이루어 질 경우
 			if (dao.updateRef(mrv) >= 0) {
 				if (dao.insertReReply(mrv) == 1) {
 					return true;
+				} else {
+					// insert가 잘 이루어지지 않았으면, update도 되돌려야 함(rollback 기능)
+					dao.updateRollbackRef(mrv);
 				}
 			}
 		}

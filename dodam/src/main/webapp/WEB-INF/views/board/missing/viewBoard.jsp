@@ -664,6 +664,12 @@
 		h1 {
 			font-size: 48px;
 		}
+		
+		.wrap {
+			margin-top: 140px;
+			margin-bottom: 50px;
+		}
+	
 	
 		.img_container {
 			display : block;
@@ -680,9 +686,9 @@
 			font-size: 16px;
 		}
 		
-		.wrap {
+		.wrapper {
 			width: 90%;
-			margin: 100px auto;
+			margin: auto;
 		}
 		
 		.add_border {
@@ -829,8 +835,8 @@
 </head>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
-	<div class="container">
-		<div class="wrap">
+	<div class="container wrap">
+		<div class="wrapper">
 			<table>
 				<tr>
 					<td colspan="2"><h1 style="color: #ff7f00;"><span id="found_span"></span>※ ${MissingBoard.title } ※</h1>

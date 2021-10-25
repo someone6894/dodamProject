@@ -57,5 +57,10 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 		return ses.insert(ns + ".insertReReply", mrv);
 	}
 
+	@Override
+	public int updateRollbackRef(MissingReplyVo mrv) {
+		return ses.update(ns + ".updateRollbakcRef", mrv);
+	}
+
 
 }

@@ -13,7 +13,7 @@ public interface MissingBoardService {
 	
 	
 	// READ
-	Map<String, Object> selectMissingBoardList(ListParamDTO lpd) throws Exception;
+	Map<String, Object> selectMissingBoardList(ListParamDTO lpd, int itemsPerPage) throws Exception;
 
 	MissingBoardVo getMissingBoard(int no, String userid) throws Exception;
 

@@ -12,8 +12,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-	let uploadImgAr = [];
+let numOfImgs=0;
 	$(function() {
+		let output = '';
 		$(".fileDrop").on("dropenter dragover", function(e) {
 			e.preventDefault();
 		});
@@ -21,60 +22,66 @@
 		$(".fileDrop").on("drop", function(e) {
 			e.preventDefault(); // drop된 파일이 chrome브라우저에서 열리는 이벤트 전파를 막음
 			
-			
-			// ### 고칠점 : 새로 드래그 앤 드롭하면 원래 업로드 된 파일을 삭제하고 새로 업로드 해야함!! ###
-			// insert구현하기
 			$("#uploadError").empty();			
 			let files = e.originalEvent.dataTransfer.files; // 드래그 된 파일을 얻어옴
 			console.log(files);
-			for(let i in files) {
-				uploadImgAr[i] = files[i];
-			}
-			console.log(uploadImgAr);
 			
-			if (uploadImgAr.length > 3) {
+			if (files.length > 3) {
 				$("#uploadError").append("사진은 3개까지만 업로드 가능합니다!");
-			} else if (notImgCheck(uploadImgAr)) {
+			} else if (notImgCheck(files)) {
 				$("#uploadError").append("이미지 파일만 업로드 가능합니다!");
 			} else {
 				// 게시글 등록 전 이미지 파일 먼저 업로드
 				let formData = new FormData(); // form 객체 생성
-				for(let i = 0; i < uploadImgAr.length; i++) { // form 객체에 파일 첨부
-					formData.append("uploadImg", uploadImgAr[i]);
+				for(let i = 0; i < files.length; i++) { // form 객체에 파일 첨부
+					formData.append("uploadImg", files[i]);
+					numOfImgs++;
 				}
 				
-				let url = '/board/missing/uploadImgs';
-				$.ajax({
-					url : url, // ajax와 통신 할 곳
-					data : formData, // 서블릿에 보낼 데이터
-					dataType : "text", // 수신될 데이터의 타입
-					type : "post", // 통신 방식
-					processData : false, // 전송하는 데이터를 쿼리 스트링 형태로 반환하는지를 결정(파일은 길이가 길기 때문에 url길이 초과됨)
-					contentType : false, // encType의 기본값 (application/x-www-form-urlencoded) multipart/form-data 쓸거니까 false
-					success : function(data) { // 통신 성공시 수행될 콜백 함수
-						let thumbImgs = data.split(", ");
-						console.log(thumbImgs);
-						let output = "";
-						for(let i = 0; i < thumbImgs.length-1; i++) {
-							output += '<span id="imgPreview' + (i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbImgs[i] + '" style="margin-right: 5px;" />' +
-							'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
-							
-							// 썸네일과 원래이미지를 input hidden에 저장
-							$("#upImgNameThumb" + (i+1)).val(thumbImgs[i]);
-							let splitName = thumbImgs[i].split("thumb_");
-							let origin = splitName[0] + splitName[1];
-							
-							$("#upImgNameOrigin" + (i+1)).val(origin);
-							
-							// 미리보기 div에 썸네일 사진 띄우기
-							$(".fDropList").html(output);
+				if (numOfImgs < 4) {
+					$("#uploadError").html("");
+					let url = '/board/missing/uploadImgs';
+					$.ajax({
+						url : url, // ajax와 통신 할 곳
+						data : formData, // 서블릿에 보낼 데이터
+						dataType : "text", // 수신될 데이터의 타입
+						type : "post", // 통신 방식
+						processData : false, // 전송하는 데이터를 쿼리 스트링 형태로 반환하는지를 결정(파일은 길이가 길기 때문에 url길이 초과됨)
+						contentType : false, // encType의 기본값 (application/x-www-form-urlencoded) multipart/form-data 쓸거니까 false
+						success : function(data) { // 통신 성공시 수행될 콜백 함수
+							let thumbImgs = data.split(", ");
+							console.log(thumbImgs);
+							console.log(numOfImgs-files.length);
+							for(let i = 0; i < thumbImgs.length-1; i++) {
+								output += '<span id="imgPreview' + ((numOfImgs-files.length)+i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbImgs[i] + '" style="margin-right: 5px;" />' +
+								'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
+								
+								// 썸네일과 원래이미지를 input hidden에 저장
+								$("#upImgNameThumb" + ((numOfImgs-files.length)+i+1)).val(thumbImgs[i]);
+								let splitName = thumbImgs[i].split("thumb_");
+								let origin = splitName[0] + splitName[1];
+								
+								$("#upImgNameOrigin" + ((numOfImgs-files.length)+i+1)).val(origin);
+								
+								// 미리보기 div에 썸네일 사진 띄우기
+								console.log(output);
+								$(".fDropList").append(output);
+								output = '';
+							}
 						}
-					}
-				});	
+					});	
+				} else {
+					$("#uploadError").append("사진은 3개까지만 업로드 가능합니다!");
+					numOfImgs -= files.length;
+				}
 			}
 		});
 		
 		$("#cancelBtn").click(function() {
+			for (let i=1; i<=numOfImgs; i++) {
+				delImg($("#imgPreview" + i).children()[1]);
+			}
+			
 			location.href='/board/missing/list';
 		});
 		
@@ -133,8 +140,9 @@
 			success : function(data) { // 통신 성공시 수행될 콜백 함수
 				console.log(data);
 				if (data == "success") {
+					console.log(id, num);
 					$("#"+id).remove();
-					if(num != "3") {
+					if(num != 3) {
 						for(let i=num; i<3; i++) {
 							console.log(i+1);
 							console.log($("#upImgNameThumb"+(i+1)).val());
@@ -145,6 +153,8 @@
 					}
 					$("#upImgNameThumb3").val("");
 					$("#upImgNameOrigin3").val("");
+					numOfImgs -= 1;
+					console.log(numOfImgs);
 				}
 			}
 		});
@@ -264,6 +274,11 @@
 	}
 </script>
 <style>
+	.wrap {
+		margin-top: 140px;
+		margin-bottom: 50px;
+	}
+	
 	.fileContent {
 		border : 1px dashed #3C6E9F;
 		background-color:#ededed;
@@ -303,7 +318,7 @@
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
-	<div class="container">
+	<div class="container wrap">
 		  <h1>글 등록</h1>
 		  <div class="form-container">
 			  <form class="form-horizontal" action="/board/missing/register" method="POST">
