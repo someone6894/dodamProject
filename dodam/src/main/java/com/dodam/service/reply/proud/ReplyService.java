@@ -19,12 +19,14 @@ public interface ReplyService {
 			public boolean addReply(ReplyVo vo) throws Exception;
 
 	// 대댓글 달기
-			public boolean reReply(ReplyVo vo) throws Exception;
+			public boolean reReply(ReplyVo vo, int result2) throws Exception;
 
 	// 댓글 수정 
 			public boolean updateReply(ReplyVo vo) throws Exception;
 			
 	// 댓글 삭제
 			public boolean deleteReply(ReplyVo vo) throws Exception;
+
+			public int replycount(ReplyVo vo) throws Exception;
 			
 }
