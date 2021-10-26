@@ -107,10 +107,11 @@
 
 	    					
 	    					viewoutput += '<input type="hidden" class="form-control" id="rereplyer' + element.no + '" name = "rereplyer' + element.no + '" value="${userid}">';
+	    					viewoutput += '<input type="hidden" id="reforder' + element.no + '" value = "' + element.reforder + '">';
 
 	    					viewoutput += '<label for ="replyContents"><h4>${userid}</h4></label>';
 	    					viewoutput += '<textarea id="rereplyContents' + element.no + '" rows="6" cols="158"></textarea>';
-	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="addreReply(' + element.no + ' , ' + element.step + ',' + element.reforder +');">등록</button>';
+	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="addreReply(' + element.no + ' , ' + element.step + ');">등록</button>';
 	    					viewoutput += '</div></div>';
 	    					
 	    					output += viewoutput;
@@ -171,11 +172,14 @@
 		
 	}
 	
-	function addreReply(no,step,reforder) {
+	function addreReply(no,step) {
 		let bno = '${param.no}';
 		bno = parseInt(bno);
 		let replyer = $("#rereplyer" + no).val();
 		let contents = $("#rereplyContents" + no).val();
+		let reforder = $("#reforder" + no).val();
+		
+		console.log(reforder);
 		
 		let url = '/replies/replies';
 		
