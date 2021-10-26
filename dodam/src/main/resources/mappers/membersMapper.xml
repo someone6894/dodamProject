@@ -16,7 +16,8 @@
 	</select>
 	
 	<select id="sumpoint" resultType="int">
-		select sum(howmuch) from mypoint where userid = #{userid}
+		<!-- sum값이 null일때 예외발생해서 ifnull처리 해두었습니다 -->
+		select ifnull(sum(howmuch), 0) from mypoint where userid = #{userid}
 	</select>
 
     <update id="infoupdate">
