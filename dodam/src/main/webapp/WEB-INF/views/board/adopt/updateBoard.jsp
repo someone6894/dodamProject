@@ -119,13 +119,19 @@
 	
 	
 	function validate(){
-		var writer = $("#writer").val();
-		if ( writer == "${loginSession.userid}" || ${loginSession.isadmin == 'Y'} ){ 
-			// 글쓴이 == 로그인 아이디 -> 삭제기능 활성
-			// isadmin == Y -> 관리자 삭제기능 권한 부여
-//	 		console.log("true");
-			return true;
-		} else if( writer != "${loginSession.userid}" ){
+		let writer = $("#writer").val();
+		
+		if ( writer != ''){
+			if ( writer == "${loginSession.userid}" || ${loginSession.isadmin == 'Y'} ){ 
+				// 글쓴이 == 로그인 아이디 -> 삭제기능 활성
+				// isadmin == Y -> 관리자 삭제기능 권한 부여
+	//	 		console.log("true");
+				return true;
+			} else if( writer != "${loginSession.userid}"){
+				alert("게시글을 수정할 권한이 없습니다.");
+				return false;
+			}
+		} else if (writer == ''){ //작성자이름이 없을떄, -> 비회원 게시글 작성 -> admin권한만 수정가능
 			alert("게시글을 수정할 권한이 없습니다.");
 			return false;
 		}
