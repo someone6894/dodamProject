@@ -34,6 +34,13 @@
 delete  from notice where no=#{no}
 </delete>
 
+<!--  공지사항 10개 조회 쿼리문 -->
 
+<select id="getBoardList" resultType="com.dodam.domain.notice.NoticeVo">
 
+	select * FROM notice 
+		order by no desc
+			limit 0, 10
+	
+</select>
 </mapper>

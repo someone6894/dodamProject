@@ -385,9 +385,9 @@ public class MemberController {
 					
 					if(mem != null) {
 						// 입력한 이메일로된 회원정보가 있을때 뷰단에 findSuccess 바인딩, 성공 메세지 띄우기
-						rt.addFlashAttribute("status", "findSuccess");
+//						rt.addFlashAttribute("status", "findSuccess");
 						System.out.println("유저에게 받은 이메일의 회원 정보 : " + mem.toString());
-						
+					}
 						
 		
 		
