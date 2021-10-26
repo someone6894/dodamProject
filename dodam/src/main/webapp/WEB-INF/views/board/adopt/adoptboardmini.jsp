@@ -69,7 +69,15 @@ function readBoard(no) {
  <div class='grid-container '>
 	<c:forEach var="board" items="${listBoard }" begin="0" end="3">
 							<div onclick="readBoard(${board.no});">
-							<div style='color:#2982FF;'>"${board.adoptarea }"</div>
+							<c:choose>
+								<c:when test = "${board.adoptarea != null}">
+									<div style='color:#2982FF;'>"${board.adoptarea }"</div>
+								</c:when>
+								<c:otherwise>
+										<div class='img-rounded'><img src='../../resources/images/main/noimg.jpg' width= '290px' height= '270px' /></div>
+								</c:otherwise>
+							</c:choose>
+							
 <!-- 							<div>  -->
 <%-- 								<c:choose> --%>
 <%-- 									<c:when test ="${board.state eq 'protected'}"> --%>

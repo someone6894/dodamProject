@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.adopt.PagingInfoDTO;
+import com.dodam.domain.event.EventBoardVO;
 import com.dodam.service.board.adopt.AdoptBoardService;
+import com.dodam.service.board.event.EventBoardService;
 
 /**
  * Handles requests for the application home page.
@@ -28,7 +30,7 @@ import com.dodam.service.board.adopt.AdoptBoardService;
 public class HomeController {
 	
 	@Inject
-	private AdoptBoardService service;  
+	private AdoptBoardService adoptService;  
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -49,13 +51,14 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		int pageNo = 1;
-		Map<String, Object> map = service.readAllAdopt(pageNo);
+		Map<String, Object> map = adoptService.readAllAdopt(pageNo);
 		List<AdoptVo> lst = (List<AdoptVo>) map.get("boardList");
 		model.addAttribute("listBoard", lst); // 게시판 글 데이터
 		
 		PagingInfoDTO pi = (PagingInfoDTO)map.get("pagingInfo");
 		model.addAttribute("pagingInfo", pi); // 페이징 정보
 		
+		// 다른 게시판들들도 service 객체 주입하고 controller 가져와서 boardmini.jsp 파싱제대로 하면 메인에 게시판 출력가능.
 		
 		return "index";
 		

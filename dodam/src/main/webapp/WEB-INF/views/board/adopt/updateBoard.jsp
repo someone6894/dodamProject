@@ -116,6 +116,20 @@
 	function closeArea() {
 		$(".fileDrop").hide(200);
 	}
+	
+	
+	function validate(){
+		var writer = $("#writer").val();
+		if ( writer == "${loginSession.userid}" || ${loginSession.isadmin == 'Y'} ){ 
+			// 글쓴이 == 로그인 아이디 -> 삭제기능 활성
+			// isadmin == Y -> 관리자 삭제기능 권한 부여
+//	 		console.log("true");
+			return true;
+		} else if( writer != "${loginSession.userid}" ){
+			alert("게시글을 수정할 권한이 없습니다.");
+			return false;
+		}
+	}
 </script>
 </head>
 <style>
@@ -299,7 +313,7 @@
 			<input type="hidden" name="image" id="upfileNameOrigin" /> 
 			<input type="hidden" name="notimage" id="upfileName" />
 
-			<button type="submit" style="float:right;" class="btn btn-success">저장</button>
+			<button type="submit" style="float:right;" class="btn btn-success" onclick="return validate()">저장</button>
 		</form>
 
 	</div>

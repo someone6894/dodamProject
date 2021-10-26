@@ -474,7 +474,7 @@ public class MemberController {
 					System.out.println("생성된 임시 비밀번호 : " + StringifiedchangedPwd);
 					
 					MemberVo changedMem = new MemberVo(mem.getUserid(), StringifiedchangedPwd, mem.getName(), mem.getNickname(), 
-							email, mem.getPhone(), mem.getRegdate());
+							email, mem.getPhone(), mem.getRegdate(), mem.getModifydate(), mem.getSessionid(), mem.getSessionage(), mem.getIsadmin());
 
 							// 생성된 임시 비밀번호로 회원 정보 변경
 					service.updateTmpPwd(changedMem);
