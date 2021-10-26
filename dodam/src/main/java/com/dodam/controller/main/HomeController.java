@@ -43,8 +43,6 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		HttpSession ses = request.getSession();
-		ses.removeAttribute("userid"); // 로그인한 아이디 갱신
 		
 		model.addAttribute("serverTime", formattedDate );
 		

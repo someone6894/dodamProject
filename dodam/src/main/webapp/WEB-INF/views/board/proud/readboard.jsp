@@ -46,8 +46,17 @@
 						let output = '<ul class="list-group">';
 
 		    			$.each(data, function(i, element) {
-		    				viewoutput ='<li id= "reply' + element.no + '"class="list-group-item">';							
-	    					viewoutput += '<div><span style="font-size : 14pt" id="spanreplyer' + element.no +'" >' + element.replyer + '</span>';
+		    				viewoutput ='<li id= "reply' + element.no + '"class="list-group-item"><div>';
+
+	    					if (element.step > 0) {
+	    						console.log (element.step);
+	    						for (i=0; i < element.step; i++){
+	    							viewoutput += '<span style = "padding-left:25px;"></span>';
+	    						}
+	    						viewoutput += '<img style = "padding-right:5px;" class = "reimage" src="/resources/images/lcj/rereply.png">';
+	    					} 
+	    					
+	    					viewoutput += '<span style="font-size : 14pt" id="spanreplyer' + element.no +'" >' + element.replyer + '</span>';
 	    					if (element.registerdate != element.modifydate) {
 		    					viewoutput += '<span style = "margin-left : 30px">' + new Date(element.registerdate).toLocaleString() + '</span>';
 	    					}
@@ -55,8 +64,16 @@
 		    					viewoutput += '<span style = "margin-left : 30px">' +new Date(element.modifydate).toLocaleString() + '</span>';
 		    				}		    					
 	    					viewoutput += '</div></br>';
+
+	    					viewoutput += '<div id="orcontent' + element.no + '" style = "margin-left : 5px; margin-top : 10px;">';
+	    					if (element.step > 0) {
+	    						console.log (element.step);
+	    						for (i=0; i < element.step; i++){
+	    							viewoutput += '<span style = "padding-left:30px"></span>'
+	    						}
+	    					} 
+	    					viewoutput += element.contents + '</div>';
 	    					
-	    					viewoutput += '<div id="orcontent' + element.no + '" style = "margin-left : 5px; margin-top : 10px;">' + element.contents + '</div>';
 	    					viewoutput += '<div id="regreg' + element.no + '"></div>';
 	    					if(element.replyer == $("#replyer").val()) {
 	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" class = "far" onclick="UpReply(' + element.no + ')";><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" /> 수정</a>';
@@ -75,23 +92,25 @@
 	    					viewoutput += '<a href="javascript:;" class = "right" style = "color : black" onclick ="Hide(' + element.no + ')";><img class="fa far2" src ="../../resources/images/lcj/close.png"/>닫기</a>';
 
 	    					viewoutput += '<input type="hidden" class="form-control" id="replyer' + element.no +'" name = "replyerupdate" value ="${userid}">';
+	    					
 	    					viewoutput += '<label for ="replyContents"><h4>${userid}</h4></label>'
 	    					viewoutput += '<textarea id="replyContents' + element.no + '" rows="6" cols="158">' + element.contents + '</textarea>'
 	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="updateReply(' + element.no + ');">등록</button>';
 	    					viewoutput += '</div></div>';
 
-	    					
+
 	    					
 	    					viewoutput += '<div id="reReply' + element.no + '" class="reReply" style="clear : both;">';
 	    					viewoutput += '<div class="form-group">';
-	    					
 	    					viewoutput += '<a href="javascript:;" class = "right" style = "color : black" onclick ="HideReReply(' + element.no + ')";>';
 	    					viewoutput += '<img class="fa far2" src ="../../resources/images/lcj/close.png"/>닫기</a>';
+
 	    					
 	    					viewoutput += '<input type="hidden" class="form-control" id="rereplyer' + element.no + '" name = "rereplyer' + element.no + '" value="${userid}">';
+
 	    					viewoutput += '<label for ="replyContents"><h4>${userid}</h4></label>';
 	    					viewoutput += '<textarea id="rereplyContents' + element.no + '" rows="6" cols="158"></textarea>';
-	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="addreReply(' + element.no + ');">등록</button>';
+	    					viewoutput += '<button type="button" class = "btn btn-danger" onclick ="addreReply(' + element.no + ' , ' + element.step + ',' + element.reforder +');">등록</button>';
 	    					viewoutput += '</div></div>';
 	    					
 	    					output += viewoutput;
@@ -152,7 +171,7 @@
 		
 	}
 	
-	function addreReply(no) {
+	function addreReply(no,step,reforder) {
 		let bno = '${param.no}';
 		bno = parseInt(bno);
 		let replyer = $("#rereplyer" + no).val();
@@ -161,7 +180,7 @@
 		let url = '/replies/replies';
 		
 		let sendData = JSON.stringify({ // json 타입의 객체로 보이는 문자열 생성
-			bno : bno, replyer : replyer, contents : contents , no : no
+			bno : bno, replyer : replyer, contents : contents , no : no, step : step, reforder : reforder
 		});
 		
 		console.log(sendData);
@@ -471,6 +490,11 @@
 #mokrock {
 	float: left;
 }
+
+.reimage {
+	width : 30px;
+	height : 30px;
+}
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
@@ -560,8 +584,8 @@
 			<div id="replyDiv" style="clear: both;">
 				<div class="form-group">
 					<input type="hidden" class="form-control" id="replyer"
-						name="replyer" value="${userid }"> <label
-						for="replyContents"><h4>${userid }:</h4></label>
+						name="replyer" value="${userid}"> <label
+						for="replyContents"><h4>${userid}:</h4></label>
 					<textarea id="replyContents" rows="5" cols="158"
 						placeholder="댓글 내용을 입력해주세요"></textarea>
 				</div>

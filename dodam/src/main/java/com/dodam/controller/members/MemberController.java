@@ -175,11 +175,12 @@ public class MemberController {
 
 				HttpSession ses = request.getSession();
 				ses.removeAttribute("loginSession"); // 로그인세션 갱신
-				ses.setAttribute("userid", mem.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
+				ses.setAttribute("userid", member.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
 				ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
 
 				System.out.println("ses : " + ses.toString());
 				System.out.println("loginSession : " + ses.getAttribute("loginSession"));
+				System.out.println("유저아이디 : " + ses.getAttribute("userid"));
 			} 
 			
 		} catch (Exception e) {
@@ -191,7 +192,6 @@ public class MemberController {
 			}
 			
 		}
-
 
 		return "redirect:/";
 	}

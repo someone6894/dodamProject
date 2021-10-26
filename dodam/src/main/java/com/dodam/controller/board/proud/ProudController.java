@@ -83,11 +83,11 @@ public class ProudController {
 
 		HttpSession ses = request.getSession();				
 		String userid = (String)ses.getAttribute("userid");
-		System.out.println(ses.getAttribute("userid"));
-		
+		System.out.println("접속한 유저 아이디 : " + ses.getAttribute("userid"));
+
 		int result2 = service.likehistory(no, userid);
 		model.addAttribute("likehistory", result2);	
-		
+
 		boolean result3 = true;
 		boolean result4 = true;
 

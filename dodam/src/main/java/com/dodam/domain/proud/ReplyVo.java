@@ -13,7 +13,7 @@ public class ReplyVo {
 	private int likecnt;
 	private int ref;
 	private int step;
-	private int reforder;
+	private String reforder;
 	
 	public ReplyVo() {
 		super();
@@ -21,7 +21,7 @@ public class ReplyVo {
 	}
 
 	public ReplyVo(int no, int bno, String contents, String replyer, Timestamp registerdate, Timestamp modifydate,
-			int likecnt, int ref, int step, int reforder) {
+			int likecnt, int ref, int step, String reforder) {
 		super();
 		this.no = no;
 		this.bno = bno;
@@ -107,11 +107,11 @@ public class ReplyVo {
 		this.step = step;
 	}
 
-	public int getReforder() {
+	public String getReforder() {
 		return reforder;
 	}
 
-	public void setReforder(int reforder) {
+	public void setReforder(String reforder) {
 		this.reforder = reforder;
 	}
 
@@ -121,6 +121,8 @@ public class ReplyVo {
 				+ ", registerdate=" + registerdate + ", modifydate=" + modifydate + ", likecnt=" + likecnt + ", ref="
 				+ ref + ", step=" + step + ", reforder=" + reforder + "]";
 	}
+	
+	
 	
 	
 	
