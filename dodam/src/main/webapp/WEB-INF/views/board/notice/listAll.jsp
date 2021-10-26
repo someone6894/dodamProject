@@ -48,7 +48,7 @@
 			</c:when>
 		</c:choose>
 	<c:choose>
-		<c:when test="${loginSession != null }">
+		<c:when test="${loginSession != admin123 }">
 		<div style="float: right">
 			<button type="button" class="btn btn-success" onclick="location.href='/board/notice/createBoard';">글 등록</button>
 		</div>
@@ -80,7 +80,7 @@
 				</c:if>
 			</ul>
 		</div>
-		
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

@@ -8,22 +8,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <title>전시회 목록</title>
+
 </head>
 <body>
 
 <jsp:include page="../../template.jsp"></jsp:include>
 
 	<div class="container"> <br/>
-	
-		<h2 style="margin-bottom: 20px; margin-top: 30px;">전시회 목록</h2><br/>
+		<h1 style="margin-bottom: 20px; margin-top: 30px; font-family: 'Jua', sans-serif;">전시회 목록</h1><br/>
 		<!-- 카테고리 컬럼명 검색 -->
+		<!-- <div role="menubar">
+			<ul class="fusion-fiters" role="menu" aria-label="filters" style="display: block;">
+				<li role="menuitem" class="fusion-filter fusion-filter-all fusion active">
+					<a href="#" data-filters= "*">전부</a>
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2018</a>	
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2019</a>	
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2020</a>	
+				</li>
+				<li role="menuitem" class="fusion-filter">
+					<a href="#" data-filters="">2021</a>	
+				</li>
+			</ul>
+		</div>		-->
 	  <div class="w3-row-padding w3-padding-16 w3-center" id="event">
 	<c:forEach items = "${list }" var ="list">
 	<div class="w3-quarter" style="margin-bottom:35px;">
 	<a href="/board/event/view?no=${list.no}">
       <img src="${list.thumbimg }" style="height:350px">
-      <h3>${list.title }</h3>
+      <h3 style="font-family: 'Jua', sans-serif;">${list.title }</h3>
      <!--   <p>${list.contents }</p> -->
       </a>
     </div>
@@ -50,6 +72,8 @@
 		<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
 		
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
+	
 </div>
 </body>
 </html>

@@ -97,7 +97,6 @@ public class AdoptBoardDAOImpl implements AdoptBoardDAO {
 		return result;
 	}
 	
-	
 
 //	@Override
 //	public int selectCntPost() throws NamingException, SQLException {

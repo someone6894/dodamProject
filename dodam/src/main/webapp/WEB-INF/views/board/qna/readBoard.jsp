@@ -17,6 +17,12 @@
 <title>Insert title here</title>
 </head>
 <script>
+// 함수호출
+ window.onload = function(){
+	viewAllReplies();
+	console.log('문자열');
+}
+
 
 //게시판 삭제
 	function deleteBoard(no) {
@@ -24,27 +30,21 @@
 		
 	}
 	
-	$(function(){
-		// 현재글에 달려있는 모든 댓글을 읽어와서 출력
-		viewAllReplies();
-		
-// 		$("#writer").mouseover(function(){
-// 			$("#writeInfo").show(300);
-// 		});
-	});
+	function calcDate(regdate) {
+		let diff = new Date() - regdate // 댓글 단 시간과 현재시간의 차
+		let diffSecond = diff / 1000; // 초단위
+		if (diffSecond < 60 * 5) return '방금 전';
+	 	let diffMinutes = diffSecond / 60; // 분단위
+	 	if (diffMinutes < 60) return Math.floor(diffMinutes) + '분전';
+	 	return new Date(regdate).toLocaleString();
+	}
 	
-// 	function calcDate(regdate) {
-// 		let diff = new Date() - regdate // 댓글 단 시간과 현재시간의 차
-// 		let diffSecond = diff / 1000; // 초단위
-// 		if (diffSecond < 60 * 5) return '방금 전';
-// 	 	let diffMinutes = diffSecond / 60; // 분단위
-// 	 	if (diffMinutes < 60) return Math.floor(diffMinutes) + '분전';
-// 	 	return new Date(regdate).toLocaleString();
-// 	}
-	
+
 	function viewAllReplies() {
-		let bno = ${param.no};
-		let url = '/replies/all/' + bno
+		let bno = '${param.no}';
+		let url = '/qna/replies/all/' + bno
+		
+		
 		$.ajax({
 			url : url, // ajax와 통신 할 곳
 			dataType : "json", // 수신될 데이터의 타입
@@ -52,28 +52,25 @@
 			success : function(data) { // 통신 성공시 수행될 콜백 함수
 				if (data != null) {
 					console.log(data);
-					$("#replyLst").empty();
+					$("#replyLst").empty(); 
 					let output = '<ul class="list-group">'; // 보이는 댓글
 					let secoutput = '';
 					$.each(data, function(i, e) {
 						// ----------------------- 비밀글 템플릿 ---------------------------
 						secoutput += '<li id="reply' + e.no + '" class="list-group-item">';
-						secoutput += "<div><img src='../resources/images/lock.PNG' width='15px' />" +   
+						secoutput += "<div><img src='../../resources/images/main/lock.PNG' width='15px' />" +   
 						" 댓글 작성자가 비밀글로 처리한 글입니다 </div>";
 						secoutput += "</li>";
 						// -------------------------비밀글이 아닌 댓글 템플릿--------------------------------
 						let viewoutput = '<li id="reply' + e.no + '" class="list-group-item">';
 						viewoutput += "<div style='float: right; margin-right:10px;'>" + 
-							"<img src='../resources/images/gear.png' width='25px' onclick='showReplyModify(" + e.no +");' />";
-						viewoutput += "<img src='../resources/images/trash.png' width='25px' onclick='showReplyDel(" + e.no + ")'/></div></div>";
+							"<img src='../../resources/images/main/gear.png' width='25px' onclick='showReplyModify(" + e.no +");' />";
+						viewoutput += "<img src='../../resources/images/main/trash.png' width='25px' onclick='showReplyDel(" + e.no + ")'/></div></div>";
 						viewoutput += '<div>작성자 : <span id="replyer' + e.no + '">' + e.replyer + '</span></div>';
 						viewoutput += '<div id="orcontent' + e.no  + '">내용 : ' + e.contents + '</div>';
 						
-						if (e.modifydate == null) {  // 수정한 댓글이 아니 라면
-							regdate = calcDate(e.registerdate);
-						} else {
-							regdate = calcDate(e.modifydate); 
-						}
+						let regdate = calcDate(e.regdate);
+											
 						viewoutput += "<div>작성일 : " + regdate + "</div>";
 						
 						// ------------------------------------------------------------------
@@ -158,13 +155,14 @@
 	function addReply() {
 		let bno = '${param.no}';
 		bno = parseInt(bno);
-		let writer = '${loginMember.userid}';
+// 		let writer = '${loginMember.userid}';
+		let writer = '';
 		let content = $("#replyContents").val();
 		let isSecret = 'N';
 		if (document.getElementById("isSecret").checked) {
 			isSecret = 'Y';
 		}
-		let url = '/replies';
+		let url = '/qna/replies/create';
 		
 		let sendData = JSON.stringify({  // json타입의 객체로 보이는 문자열 생성
 			bno : bno, replyer : writer, contents : content, issecret : isSecret
@@ -222,7 +220,7 @@
 			isSecretModify = 'Y';
 		}
 		
-		let url = '/replies/' + no;
+		let url = '/replies/modify' + no;
 		
 		let sendData = JSON.stringify({
 			no : no, replyer : replyer, contents : contents, issecret : isSecretModify
@@ -270,7 +268,7 @@
 			return;
 		}
 		
-		let url = '/replies/' + no;
+		let url = '/replies/remove' + no;
 		$.ajax({
 			url : url, // ajax와 통신 할 곳
 			dataType : "text", // 수신될 데이터의 타입

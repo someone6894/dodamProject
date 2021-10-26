@@ -15,15 +15,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-
+<!-- <script type="text/javascript"> $.noConflict(); </script> -->
 <script>
 
-	// 상세페이지
-	function readBoard(no) {
-		console.log("상세페이지 보기 : " + no);
-		location.href = '/board/adopt/readBoard?no=' + no;
-	}
+// 상세페이지
+function readBoard(no) {
+	console.log("상세페이지 보기 : " + no);
+	location.href = '/board/adopt/readBoard?no=' + no;
+}
 
 
 
@@ -36,7 +35,6 @@
 .slider img{margin:0 auto;}
 </style>
 <body>
-	
 	<%
 	response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "private, no-store, must-revalidate");
@@ -46,15 +44,13 @@
   	
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<jsp:include page="adoptboardmini.jsp"></jsp:include>
-<%-- 	<jsp:include page="../../adoptboardmini.jsp"></jsp:include> --%>
 	
 	<div class="container">
 <!-- 		<h2 style="text-align: center;">분양 게시판</h2> -->
 		<br>
-		<div style="float: right">
-			<button type="button" class="btn btn-default" data-toggle="modal"
-				data-target="#myModal2">글 작성</button>
-		</div>
+		
+<!-- 		style="float: right" -->
+		
 		<c:choose>
 			<c:when test="${listBoard != null }">
 				<table class="table table-hover">
@@ -107,14 +103,18 @@
 				</table>
 			</c:when>
 		</c:choose>
-
-		<!-- 		<div style="float: right"> -->
-		<!-- 			<button type="button" class="btn btn-success" -->
-		<!-- 				onclick="location.href='/board/register';">글 등록</button> -->
-		<!-- 		</div> -->
+	
+	<div>
+			<button type="button" class="btn btn-info btn-block" data-toggle="modal"
+				data-target="#myModal2">글 작성</button>
+	</div>
+	
 		
 	</div>
 	
+	
+		
+		
 	<div style="text-align: center;">
 			<ul class="pagination">
 				<c:if test="${param.pageNo > 1 }">
@@ -157,7 +157,7 @@
 
 		</div>
 	</div>
-  
+  <jsp:include page="../../footer.jsp"></jsp:include>
   
 </body>
 </html>

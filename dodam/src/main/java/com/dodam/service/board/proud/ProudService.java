@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.naming.NamingException;
 
 import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.LikeHistory;
 import com.dodam.domain.proud.ProudVo;
 
 public interface ProudService {
@@ -34,6 +35,18 @@ public interface ProudService {
 	//  DELETE
 	// 게시판 글 삭제하기
 	boolean deleteBoard(int no) throws NamingException, SQLException;
+
+	boolean readcount(int no) throws NamingException, SQLException;
+
+	boolean like(LikeHistory vo, String userid) throws NamingException, SQLException;
+
+	boolean dislike(LikeHistory vo, String userid) throws NamingException, SQLException;
+
+	int likehistory(int no, String userid) throws NamingException, SQLException;
+
+	void likeup(LikeHistory vo) throws NamingException, SQLException;
+
+	void likedown(LikeHistory vo) throws NamingException, SQLException;
 	
 	
 	

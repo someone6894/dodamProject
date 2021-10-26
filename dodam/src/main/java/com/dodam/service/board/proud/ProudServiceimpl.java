@@ -11,6 +11,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.LikeHistory;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
 import com.dodam.persistence.board.proud.ProudDAO;
@@ -22,7 +23,7 @@ public class ProudServiceimpl implements ProudService {
 	
 	@Override
 	public Map<String, Object> readAllBoard(int pageNo, String type, String word) throws NamingException, SQLException {
-		PagingProud pi = pagingProcess(pageNo);
+		PagingProud pi = pagingProcess(pageNo, type, word);
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		System.out.println(type);
@@ -46,13 +47,21 @@ public class ProudServiceimpl implements ProudService {
 		return map;
 	}
 
-	 private PagingProud pagingProcess(int pageNo) throws NamingException, SQLException {
+	 private PagingProud pagingProcess(int pageNo, String type, String word) throws NamingException, SQLException {
 		 PagingProud pi = new PagingProud();
 	      
 	      pi.setStartNum(pageNo);  // 출력 시작할 번호
 	      int totalPost = 0;
 	     
-	      totalPost = dao.selectCntPost();
+	      if(type.equals("title")) {
+		      totalPost = dao.selectCntPostTitle(word);
+	      }
+	      else if(type.equals("writer")) {
+		      totalPost = dao.selectCntPostWriter(word);
+	      }
+		  else if(type.equals("reply")) {
+		      totalPost = dao.selectCntPostReply(word);
+		  }
 	         pi.setTotalPage(totalPost); // 전체 페이지 수
 	         pi.setCurrentPagingBlock(pageNo); // 현재 페이지블록
 
@@ -133,6 +142,67 @@ public class ProudServiceimpl implements ProudService {
 
 		return result;
 
+	}
+
+	@Override
+	public boolean readcount(int no) throws NamingException, SQLException {
+
+		boolean result = false;
+		
+		if (dao.readcount(no) == 1) {
+			result = true;
+		}
+
+		return result;
+	}
+
+	@Override
+	public boolean like(LikeHistory vo, String userid) throws NamingException, SQLException {
+		boolean addlike = false;
+		
+		LikeHistory so = new LikeHistory(userid, vo.getNo());
+		
+		int result = dao.like(so);
+		
+		if (result == 1) {
+			addlike = true;
+		}
+		return addlike;
+	}
+
+	@Override
+	public boolean dislike(LikeHistory vo, String userid) throws NamingException, SQLException {
+		boolean deletelike = false;
+
+		LikeHistory so = new LikeHistory(userid, vo.getNo());
+		
+		int result = dao.dislike(so);
+		
+		if (result == 1) {
+			deletelike = true;
+		}
+		
+		return deletelike;
+	}
+
+	@Override
+	public int likehistory(int no, String userid) throws NamingException, SQLException {
+		
+		LikeHistory so = new LikeHistory(userid, no);
+		
+		return dao.likehistory(so);
+	}
+
+	@Override
+	public void likeup(LikeHistory vo) throws NamingException, SQLException {
+		dao.likeup(vo);
+		
+	}
+
+	@Override
+	public void likedown(LikeHistory vo) throws NamingException, SQLException {
+		dao.likedown(vo);
+		
 	}
 
 

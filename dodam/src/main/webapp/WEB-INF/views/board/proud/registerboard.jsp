@@ -9,23 +9,21 @@
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"	rel="stylesheet">
 <script	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+
 <script>
 
 $(function(){
 		$("#content").summernote(
 							{
 								height : 700,
-								width : 1200,
+								width : 1140,
 								minHeight : null, // 최소 높이
 								maxHeight : null, // 최대 높이
 								focus : true, // 에디터 로딩후 포커스를 맞출지 여부
@@ -99,38 +97,75 @@ $(function(){
 
 	
 	</script>
+<style>
+
+.container{
+	margin-bottom : 150px;
+}
+
+#title2 {
+	text-align: center;
+	margin-top : 45px;
+	margin-bottom : 40 px;
+	font-size : 40px;
+}
+
+#title3 {
+	margin-top : 40px;
+}
+
+#save2 {
+	margin-left : 1px;
+	float : left;
+	width : 90px;
+	height : 50px;
+	font-size : 20px;
+	font-style : bold;
+}
+
+#save {
+	margin-right : 1px;
+	float : right;
+	width : 90px;
+	height : 50px;
+	font-size : 20px;
+	font-style : bold;
+}
+
+</style>
 </head>
 <body>
 	
    <jsp:include page="../../template.jsp"></jsp:include>
 
+
 	<div class="container">
-		<h2>글 쓰기 페이지</h2>
+	
+		<p id="title2">게시글 작성<p>
+		
 		<form action="/board/proud/createBoard" method="post">
 
 			<div class="form-group">
-				<label for="title">제목:</label> <input type="text"
-					class="form-control" id="title" name="title"> <span
-					id="titleError" class="error"></span>
+				<div id="title3"></div>
+				<label for="title">제목:</label>
+				<input type="text" class="form-control" id="title" name="title">
+			</div>
+
+			<div class="form-group"> <input type="hidden"
+					class="form-control" id="writer" name="writer" value = ${userid }>
 			</div>
 
 			<div class="form-group">
-				<label for="writer">작성자 :</label> <input type="text"
-					class="form-control" id="writer" name="writer"><span
-					id="writerError" class="error"></span>
-			</div>
-
-			<div class="form-group">
-				<label for="content">내용 :</label>
+            <label for="content">내용 :</label>
 				<textarea rows="20" cols="150" id="content" name="content"></textarea>
 			</div>
 			
 			<input type ="hidden" name="image" id="upfileNameOrigin" />
-
-			<button type="submit" class="btn btn-success">저장</button>
-      		<button type="reset" class= "btn btn-warning" onclick ="location.href='/board/proud/listAll';">취소</button>
-		</form>
+	
+			<button type="reset"  id = "save2" class= "btn btn-info" onclick ="location.href='/board/proud/listAll';">취소</button>		
+			<button type="submit" id = "save" class="btn btn-success">저장</button>
+      	</form>
 	</div>
-	<script type = "text/javascript">$.noConflict();</script>
+	
 </body>
 </html>

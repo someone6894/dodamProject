@@ -21,8 +21,16 @@
 		select a.* from proudboard a inner join proudreply b on a.no = b.bno where b.contents like CONCAT('%', #{word} ,'%') order by no desc limit #{pi.startNum},#{pi.postPerPage}		
   	</select>
   	
-  	<select id="getTotalPostCnt" resultType="int">
-			select count(*) from proudboard
+  	<select id="getTotalPostCntTitle" resultType="int">
+		SELECT count(*) FROM proudboard where title like CONCAT('%', #{word} ,'%') or content like CONCAT('%', #{word} ,'%') 
+  	</select>
+  	
+  	<select id="getTotalPostCntWriter" resultType="int">
+		SELECT count(*) FROM proudboard where writer like CONCAT('%', #{word} ,'%') 
+  	</select>
+  	
+  	<select id="getTotalPostCntReply" resultType="int">
+		select count(*) from proudboard a inner join proudreply b on a.no = b.bno where b.contents like CONCAT('%', #{word} ,'%')
   	</select>
   	
   	<select id="selectBoard" resultType="com.dodam.domain.proud.ProudVo">
@@ -52,7 +60,32 @@
   		update proudboard set title = #{title}, content = #{content}, image = #{image} where no = #{no}
   	</update>
   	
+  	<update id="readcount">
+  		update proudboard set readcount = readcount + 1 where no = #{no}
+  	</update>
+  	
   	<delete id="deleteboard">
 	 	delete from proudboard where no = #{no}
 	 </delete>
+	 
+	 <insert id="like">
+		insert into proudlikehistory values (#{userid}, #{no})
+	</insert>
+	
+  	<delete id="dislike">
+		delete from proudlikehistory where userid = #{userid} and no = #{no} 
+	 </delete>
+	 
+	 <select id="likehistory" resultType="int" >
+		select count(*) from proudlikehistory where userid = #{userid} and no = #{no};
+	</select>
+	
+	<update id="likeup">
+		update proudboard set likecount = likecount + 1 where no = #{no};
+  	</update>
+  	
+  	<update id="likedown">
+		update proudboard set likecount = likecount - 1 where no = #{no};
+  	</update>
+	
   </mapper>

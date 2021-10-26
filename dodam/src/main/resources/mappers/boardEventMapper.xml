@@ -80,4 +80,25 @@
 	  limit #{displayPost}, #{postNum}
 	</select> 
 	
+	
+	<!-- 연도별 검색 + 페이징 -->
+	<select id="yearSearch" parameterType="hashmap" resultType="com.dodam.domain.event.EventBoardVO">
+	select
+		* from eventboard 
+		
+	<if test='searchType.equals(".2018")'>
+		where year LIKE ('2018%')
+	</if>
+	<if test='searchType.equals(".2019")'>
+		where year LIKE ('2019%')
+	</if>
+	<if test='searchType.equals(".2020")'>
+		where year LIKE ('2020%')
+	</if>
+	<if test='searchType.equals(".2021")'>
+		where year LIKE ('2021%')
+	</if>
+		order by year desc
+	 limit #{displayPost}, #{postNum}
+	</select>
   </mapper>

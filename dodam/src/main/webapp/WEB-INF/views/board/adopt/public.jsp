@@ -242,18 +242,7 @@
                 
 	</div>
 	<br />
-
-	<div id='publicList' class="container"></div>
-
-
-	<!-- 	공고 게시판 리스트 뷰 참고 adoptboardmini.jsp -->
-	<!-- 	 <div class=' grid-container'> -->
-	<%-- 							<div onclick="readBoard(${board.no});"> --%>
-	<!-- 								<div><img src= ../../resources/${board.image} width= '200px' height= '200px' /></div> -->
-	<%-- 								<div>${board.title }</div> --%>
-	<%-- 								<div>${board.regdate }</div> --%>
-	<!-- 							</div> -->
-	<!-- 	</div>  -->
-
+	<jsp:include page="../../footer.jsp"></jsp:include>
+	
 </body>
 </html>
