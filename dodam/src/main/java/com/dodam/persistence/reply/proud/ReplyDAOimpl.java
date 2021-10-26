@@ -56,4 +56,9 @@ public class ReplyDAOimpl implements ReplyDAO {
 		return ses.selectOne(ns + ".replycount", vo);
 	}
 
+	@Override
+	public int maxreplyno() throws Exception {
+		return ses.selectOne(ns + ".maxreplyno");
+	}
+
 }
