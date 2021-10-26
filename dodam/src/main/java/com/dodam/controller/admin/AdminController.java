@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.dodam.domain.admin.PagingInfoDTO;
 import com.dodam.domain.members.MemberVo;
 import com.dodam.service.admin.AdminService;
-import com.dodam.service.members.MemberService;
 
 @Controller
 @RequestMapping("/admin")
@@ -53,9 +52,10 @@ public class AdminController {
 	
 	@RequestMapping("/userinfo")
 	public void userinfo(@RequestParam(value="userid") String userid,
-						@RequestParam(value="PageNo", defaultValue = "1") int PageNo,
+						@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
 						@RequestParam(value="boardName") String boardName,
 						Model model) {
 		service.getUserInfo(userid);
+		
 	}
 }

@@ -1,6 +1,7 @@
 package com.dodam.persistence.admin;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -34,15 +35,4 @@ public class AdminDAOImpl implements AdminDAO {
 	public MemberVo selectUserInfo(String userid) {
 		return ses.selectOne(ns + ".selectUserInfo", userid);
 	}
-
-	@Override
-	public List<MissingBoardVo> selectMissingBoard(String userid) {
-		return ses.selectList(ns + ".selectMissingBoard", userid);
-	}
-
-	@Override
-	public List<AdoptVo> selectAdoptBoard(String userid) {
-		return ses.selectList(ns + ".selectAdoptBoard", userid);
-	}
-
 }

@@ -10,7 +10,7 @@
   </insert>
   
   <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
-  	select * from missingboardreply where pno = #{pno} order by pid desc, reforder asc
+  	select * from missingboardreply where pno = #{pno} order by pid asc, reforder asc
   </select>
   
   <delete id="deleteReply">

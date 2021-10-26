@@ -24,4 +24,8 @@
   	<select id="selectAdoptBoard" resultType="com.dodam.domain.adopt.AdoptVo">
   		select * from adoptboarduser where writer=#{userid} limit #{startNum}, #{postPerPage}
   	</select>
+  	
+  	<select id="selectList" resultType="java.util.List">
+  		select * from #{boardName} where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	</select>
   </mapper>
