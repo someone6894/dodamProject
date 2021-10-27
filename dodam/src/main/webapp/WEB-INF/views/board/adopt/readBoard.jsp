@@ -26,7 +26,7 @@ function removeBoard(no) {
 		// isadmin == Y -> 관리자 삭제기능 권한 부여
 // 		console.log("true");
 		location.href = '/board/adopt/remove?no=' + ${adoptBoardDetail.no};
-	} else if( writer != "${loginSession.userid}" ){
+	} else if( writer != "${loginSession.userid}" || ${loginSession.userid == ''} ){
 		alert("게시글을 삭제할 권한이 없습니다.");
 		console.log("false");
 	}
