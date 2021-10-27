@@ -9,16 +9,16 @@
   	</select>
   	
   	<insert id="create">
-  		insert into reply(bno, contents, replyer) 
+  		insert into qnareply(bno, contents, replyer) 
   			values(#{bno}, #{contents}, #{replyer})
   	</insert>
   	
   	<update id="modify">
-  		update reply set contents = #{contents}, modifydate = now()} 
+  		update qnareply set contents = #{contents}, modifydate = now()} 
   			where no = #{no}
   	</update>
   	
   	<delete id="remove">
-  		delete from reply where no = #{no}
+  		delete from qnareply where no = #{no}
   	</delete>
   </mapper>

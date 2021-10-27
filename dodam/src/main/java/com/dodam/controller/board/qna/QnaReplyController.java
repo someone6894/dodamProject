@@ -18,20 +18,22 @@ import com.dodam.service.board.qna.QnaReplyService;
 
 
 @RestController  // 현재 클래스가 REST 방식의 컨트롤러임을 명시
-@RequestMapping("qna/replies")
+@RequestMapping("/qna/replies")
 public class QnaReplyController {
 	@Inject
 	private QnaReplyService service;
 	
-	@RequestMapping(value="create", method=RequestMethod.POST)
+	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public ResponseEntity<String> addReply(@RequestBody QnaReplyVo vo) {
 		System.out.println("Replies... POST... 글등록 시작");
 		ResponseEntity<String> result = null;
 		try {
 			service.addReply(vo);
 			result = new ResponseEntity<String>("success", HttpStatus.OK);
+			System.out.println("글등록 성공");
 		} catch (Exception e) {
 			result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			System.out.println("글등록 실패");
 		}
 		
 		return result;
