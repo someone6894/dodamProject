@@ -8,11 +8,11 @@
 <title>실종 : ${MissingBoard.title }</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Favicon -->
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 
-  integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 	<script>
 		$(function() {
 			
@@ -70,11 +70,11 @@
 			}
 			
 			// 글 작성자에게만 찾았어요, 찾습니다 버튼 나타나도록 설정---------------------------------------------------------
-			if("${loginSession.userid}" == "${MissingBoard.writer}") {
+			if("${loginSession.userid}" == "${MissingBoard.writer}" || "${loginSession.userid}" == "admin123") {
 				$("#category").show();
 			}
 			
-			// 로그인 한 유저의 경우 좋아요 기록 가져와서 하트 채우기---------------------------------------------------------
+			// 로그인 한 유저의 경우 좋아요 기록 가져와서 북마크 채우기---------------------------------------------------------
 			if ("${loginSession.userid}" != "") {
 				let url = '/board/missing/bookmarkHistory';
 				
@@ -429,10 +429,10 @@
 	        		// -------------------------------------------------------
 	        		
 	        		if (element.issecret == 'Y') { // 비밀글이다
-						if (loginUser == bwriter || loginUser ==  replyer) { // 보이는 조건에 해당
+						if (loginUser == bwriter || loginUser ==  replyer || loginUser == "admin123") { // 보이는 조건에 해당
 								viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
 								viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
-							if(loginUser == replyer) { // 댓글 작성자인 경우
+							if(loginUser == replyer || loginUser == "admin123" ) { // 댓글 작성자인 경우
 					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
 					       		viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
 					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
@@ -664,6 +664,12 @@
 		h1 {
 			font-size: 48px;
 		}
+		
+		.wrap {
+			margin-top: 140px;
+			margin-bottom: 50px;
+		}
+	
 	
 		.img_container {
 			display : block;
@@ -680,9 +686,9 @@
 			font-size: 16px;
 		}
 		
-		.wrap {
+		.wrapper {
 			width: 90%;
-			margin: 100px auto;
+			margin: auto;
 		}
 		
 		.add_border {
@@ -705,7 +711,7 @@
 		}
 		
 		#bookmark, #unbookmark {
-			width: 20px;
+			width: 25px;
 			margin-bottom: 2px;
 			cursor: pointer;
 		}
@@ -829,8 +835,8 @@
 </head>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
-	<div class="container">
-		<div class="wrap">
+	<div class="container wrap">
+		<div class="wrapper">
 			<table>
 				<tr>
 					<td colspan="2"><h1 style="color: #ff7f00;"><span id="found_span"></span>※ ${MissingBoard.title } ※</h1>
@@ -908,7 +914,7 @@
 				<c:if test="${loginSession.userid != null }">
 					<div>
 						<button type="button" class="btn" onclick="showReply();">댓글달기</button>
-						<c:if test="${loginSession.userid == MissingBoard.writer }">
+						<c:if test="${loginSession.userid == MissingBoard.writer or loginSession.userid == 'admin123'}">
 							<button type="button" class="btn" onclick="location.href='/board/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
 							<button type="button" class="btn btn-danger" onclick="remove(this, ${MissingBoard.no});">삭제</button>
 						</c:if>

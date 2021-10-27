@@ -302,6 +302,7 @@
 	display: none;
 	padding: 5px;
 }
+
 </style>
 <body>
 	<%
@@ -429,5 +430,7 @@
 		</div>
 		
 	</div>
+	
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

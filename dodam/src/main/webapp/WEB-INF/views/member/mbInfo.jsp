@@ -320,7 +320,14 @@ div {
 						</span>
 					</div>
 					<div class="right">
-						<span class="blct">${sumpoint} POINT</span> >
+					<c:choose>
+						<c:when test="${sumpoint != null}">
+							<span class="blct">${sumpoint} POINT</span> >						
+						</c:when>
+						<c:otherwise>
+							<span class="blct">0 POINT</span> >													
+						</c:otherwise>
+					</c:choose>
 					</div>
 				</a> <a href="/member/pointlist" class="item">
 					<div class="icon">ii</div>

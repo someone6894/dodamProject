@@ -42,12 +42,23 @@ public class ReplyDAOimpl implements ReplyDAO {
 
 	@Override
 	public int append(ReplyVo vo) throws Exception {
+		System.out.println("다오단 확인 " + vo.toString());
 		return ses.insert(ns + ".append", vo);
 	}
 	
 	@Override
 	public int addpoint(MypointVo vo) throws NamingException, SQLException {
 		return ses.insert(ns + ".addpoint", vo);
+	}
+
+	@Override
+	public int replycount(ReplyVo vo) throws Exception {
+		return ses.selectOne(ns + ".replycount", vo);
+	}
+
+	@Override
+	public int maxreplyno() throws Exception {
+		return ses.selectOne(ns + ".maxreplyno");
 	}
 
 }

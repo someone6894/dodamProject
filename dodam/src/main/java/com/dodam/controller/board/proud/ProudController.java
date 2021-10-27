@@ -10,17 +10,23 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.naming.NamingException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,8 +35,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dodam.domain.members.MypointVo;
+import com.dodam.domain.proud.LikeHistory;
 import com.dodam.domain.proud.PagingProud;
 import com.dodam.domain.proud.ProudVo;
+import com.dodam.domain.proud.ReplyVo;
 import com.dodam.etc.proud.UploadFileProcess;
 import com.dodam.etc.proud.UploadFiles;
 import com.dodam.service.board.proud.ProudService;
@@ -67,14 +75,67 @@ public class ProudController {
 	}
 	
 	@RequestMapping(value = "/readboard", method=RequestMethod.GET)
-	public void readBoard(@RequestParam("no") String tmp, Model model) throws NamingException, SQLException {
-		int no = Integer.parseInt(tmp);
+	public String readBoard(@RequestParam("no") String tmp, Model model, HttpServletRequest request,
+			HttpServletResponse response, RedirectAttributes rttr) throws NamingException, SQLException {
+		int no = Integer.parseInt(tmp);		
+
+		Cookie[] cookies = request.getCookies();
+
+		HttpSession ses = request.getSession();				
+		String userid = (String)ses.getAttribute("userid");
+		System.out.println("접속한 유저 아이디 : " + ses.getAttribute("userid"));
+
+		int result2 = service.likehistory(no, userid);
+		model.addAttribute("likehistory", result2);	
+
+		boolean result3 = true;
+		boolean result4 = true;
+
+			if (ses.getAttribute("userid") == null) {
+			for (int i = 0; i < cookies.length; i++) {		// 쿠키 반복문 돌려서
+				if(!cookies[i].getName().equals("cookie" + no)) {	// 쿠키+id+번호 가 있을 경우
+					System.out.println("방문한 유저 쿠키 없음");					
+				}
+				else {
+					System.out.println(cookies[i].getName());
+					System.out.println("방문한 유저의 조회기록이 이미 있습니다 -> 조회수 유지");
+					result3 = false;
+				}
+			}
+				if(result3) {	// 방문자가 첫 조회 할 경우
+					service.readcount(no);		// 조회수 1 증가
+					Cookie newCookie = new Cookie("cookie"+no, "|" + no + "|");
+					newCookie.setMaxAge(60*60*24);
+					response.addCookie(newCookie);		// 쿠키 생성
+				}
+			}			
+			else if(ses.getAttribute("userid") != null) {
+				for (int i = 0; i < cookies.length; i++) {		// 쿠키 반복문 돌려서
+					if(!cookies[i].getName().equals("cookie" + userid + no)) {
+						System.out.println("로그인 유저 쿠키 없음");
+					}
+					else {
+						System.out.println(cookies[i].getName());
+						System.out.println("로그인 유저 쿠키 있음");
+						result4 = false;
+					}
+				}
+
+				if(result4) {
+					service.readcount(no);		// 조회수 1 증가
+					Cookie newCookie = new Cookie("cookie" + userid + no, "|" + no + "|");
+					newCookie.setMaxAge(60*60*24);
+					response.addCookie(newCookie);		// 쿠키 생성
+				}
+			}
+		
+		
 		
 		ProudVo vo = service.readBoard(no);
+		model.addAttribute("board", vo);	
 		
-		model.addAttribute("board", vo);
-		
-	}
+		return "board/proud/readboard";
+		}
 	
 	@RequestMapping(value = "/updateboard", method=RequestMethod.GET)
 	public void updateBoard(@RequestParam("no") String tmp, Model model) throws NamingException, SQLException {
@@ -183,6 +244,50 @@ public class ProudController {
 			rttr.addFlashAttribute("result", "fail");
 		}
 		return "redirect:/board/proud/listAll?pageNo=1";
+	}
+	
+	@RequestMapping(value="/like", method=RequestMethod.POST)
+	public ResponseEntity<String> like(@RequestBody LikeHistory vo, HttpServletRequest request) throws NamingException, SQLException {
+
+		System.out.println("no");
+		
+		HttpSession ses = request.getSession();				
+		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
+		
+		ResponseEntity<String> result = null;
+		
+		if(ses.getAttribute("userid") != null) {
+			try {
+				 service.like(vo, userid);
+		         service.likeup(vo);
+		         result = new ResponseEntity<String>("success", HttpStatus.OK);
+			} catch (Exception e) {
+		         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+		}
+		return result;
+	}
+	
+	@RequestMapping(value="/dislike", method=RequestMethod.POST)
+	public ResponseEntity<String> dislike(@RequestBody LikeHistory vo, HttpServletRequest request) throws NamingException, SQLException {
+
+		System.out.println("no");
+		
+		HttpSession ses = request.getSession();				
+		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
+		
+		ResponseEntity<String> result = null;
+		
+		if(ses.getAttribute("userid") != null) {
+			try {
+				 service.dislike(vo, userid);
+		         service.likedown(vo);
+		         result = new ResponseEntity<String>("success", HttpStatus.OK);
+			} catch (Exception e) {
+		         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
+			}
+		}
+		return result;
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)

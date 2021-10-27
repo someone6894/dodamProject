@@ -15,7 +15,8 @@
 <link rel="shortcut icon" type="image/x-icon" href="http://localhost:8081/favicon.ico" />
 <title>dodam dodam</title>
 </head>
-
+<script>
+</script>
 <body>
 <%
 	response.setHeader("Pragma", "no-cache");
@@ -23,6 +24,8 @@
 %>
 
 	<jsp:include page="template.jsp"></jsp:include>	
-
+	<jsp:include page="board/adopt/adoptboardmini.jsp"></jsp:include>	
+	<jsp:include page="noticeBoardmini.jsp"></jsp:include>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

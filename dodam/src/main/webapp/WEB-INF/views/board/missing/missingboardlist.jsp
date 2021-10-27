@@ -7,12 +7,18 @@
 <title>실종 반려 동물 : 찾습니다</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon -->
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-	let categoryVal = 'missing';
+	let categoryVal = "${param.category}";
+	if (categoryVal == "") {
+		categoryVal = "missing";
+	}
+	
 	$(function(){
 		// 검색해서 넘어온 경우 검색한 내용이 검색파트에 그대로 적용되어 있도록 함.
 		if ("${param.location}" != "") {
@@ -22,14 +28,19 @@
 			$("#animal").val("${param.animal}");
 		}
 		if ("${param.category}" == "" || "${param.category}" == "missing") {
-			$("#missing").css("background-color", "#3C6E9F");
-			$("#missing").css("color", "white");
+			$("#missingCtg").css("background-color", "#3C6E9F");
+			$("#missingCtg").css("color", "white");
 		} else if ("${param.category}" == "found") {
-			$("#found").css("background-color", "#3C6E9F");
-			$("#found").css("color", "white");
+			$("#foundCtg").css("background-color", "#3C6E9F");
+			$("#foundCtg").css("color", "white");
 		}
 		if ("${param.searchWord}" != "") {
 			$("#searchWord").val("${param.searchWord}");
+		}
+		if ("${param.itemsPerPage}" == "") {
+			$("#itemsPerPage").val(20);
+		} else {
+			$("#itemsPerPage").val("${param.itemsPerPage}");
 		}
 		
 		
@@ -42,11 +53,100 @@
 				break;
 			} else if (i == "${param.pageNo}") {
 				$("#li"+i).children("a").css("color", "#ff7f00");
-				$("#li1").children("a").css("font-weight", "bold");
+				$("#li"+i).children("a").css("font-weight", "bold");
 				break;
 			}
 		}
+		
+		$("#itemsPerPage").change(function() {
+			callAjax();
+		});
+		
+		$("#location").change(function() {
+			callAjax();
+		});
+		
+		$("#animal").change(function() {
+			callAjax();
+		});
 	});
+	
+	function callAjax() {
+		let pageNo = 1;
+		let itemsPerPage = $("#itemsPerPage").val();
+		let searchWord = $("#searchWord").val();
+		let location = $("#location").val();
+		let animal = $("#animal").val();
+		
+		console.log(categoryVal);
+		
+		let url = '/board/missing/search';
+		
+		$.ajax({
+			url : url, // ajax와 통신 할 곳
+			data : {searchWord : searchWord, location : location, animal : animal, category : categoryVal, itemsPerPage : itemsPerPage}, // 서블릿에 보낼 데이터
+			dataType : "json", // 수신될 데이터의 타입
+			type : "POST", // 통신 방식
+			success : function(data) { // 통신 성공시 수행될 콜백 함수
+				console.log(data);
+				parseResult(data.listMissingBoard);
+				parsePaging(data.pagingInfo);
+				
+				$("#li1").children("a").css("color", "#ff7f00");
+				$("#li1").children("a").css("font-weight", "bold");
+			}
+		});
+	}
+	
+	function parsePaging(pagingInfo) {
+		let location = $("#location").val();
+		let animal = $("#animal").val();
+		let itemsPerPage = $("#itemsPerPage").val();
+		console.log(pagingInfo);
+		let output = '';
+		if ("${param.pageNo}" > 1) {
+			output += '<li><a href="/board/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=' + location
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&lt;&lt;</a></li>';
+			output += '<li><a href="/board/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=' + location
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&lt;</a></li>';
+		}
+		for (let i=pagingInfo.startPageNoOfBlock; i<= pagingInfo.endPageNoOfBlock; i++) {
+			output += '<li id="li' + i + '"><a href="/board/missing/list?&pageNo=' + i + '&searchWord=${param.searchWord }&location=' + location
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">' + i + '</a></li>';
+		}
+		if ("${param.pageNo}" == "" || "${param.pageNo}" < pagingInfo.totalPage ) {
+			output += '<li><a href="/board/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=' + location
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&gt;</a></li>';
+			output += '<li><a href="/board/missing/list?&pageNo=' + pagingInfo.totalPage + '&searchWord=${param.searchWord }&location=' + location
+				+ '&animal=' + animal + '&category=${param.category }&itemsPerPage=' + itemsPerPage + '">&gt;&gt;</a></li>';
+		}
+		console.log(output);
+		$(".pagination").html(output);
+		
+	}
+	
+	function parseResult(MissingBoard) {
+		let output = '';
+		for (let i in MissingBoard) {
+			output += '<a href="/board/missing/detail?no=' + MissingBoard[i].no + '&userid=${loginSession.userid}" class="detailAnchor"><div class="col-sm-3">';
+			output += '<div class="img_container" style="padding: 20px 10px;">';
+			if (MissingBoard[i].img != '') {
+				if (MissingBoard[i].dpchknum == null) {
+					output += '<img src="../../resources/uploads/kmj/missing' + MissingBoard[i].img + '" width="100%"/>';
+				} else {
+					output += '<img src="' + MissingBoard[i].img + '" width="100%" onerror="deleteBoard(${MissingBoard.no });"/>';  
+				}
+			} else {
+				output += '<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>';
+			}
+			output += '</div><div class="contents_container"><table><tr><td><strong>' + MissingBoard[i].title + '</strong></td></tr><tr>';
+			output += '<td>' + MissingBoard[i].name + ' / ' + MissingBoard[i].breed + ' / ' + MissingBoard[i].gender + ' / ' + MissingBoard[i].age + '</td></tr><tr>';
+			output += '<td>' + MissingBoard[i].location + '</td></tr><tr>';
+			output += '<td>' + MissingBoard[i].missingdateWithoutTime + '</td></tr></table></div></div></a>';
+		}
+		
+		$(".container_list").html(output);
+	}
 	
 	function deleteBoard(no) {
 		let url = '/board/missing/remove';
@@ -68,28 +168,37 @@
 	}
 	
 	function setCategory(obj) {
+		let itemsPerPage = $("#itemsPerPage").val();
+		let searchWord = $("#searchWord").val();
+		let location = $("#location").val();
+		let animal = $("#animal").val();
 		categoryVal = $(obj).attr("id");
+		categoryVal = categoryVal.substring(0, categoryVal.indexOf("C"));
+		
 		if (categoryVal == "missing") {
-			$("#missing").css("background-color", "#3C6E9F");
-			$("#missing").css("color", "white");
-			$("#found").css("background-color", "#d5d5d5");
-			$("#found").css("color", "black");
+			$("#missingCtg").css("background-color", "#3C6E9F");
+			$("#missingCtg").css("color", "white");
+			$("#foundCtg").css("background-color", "#d5d5d5");
+			$("#foundCtg").css("color", "black");
 		} else if (categoryVal == "found") {
-			$("#missing").css("background-color", "#d5d5d5");
-			$("#missing").css("color", "black");
-			$("#found").css("background-color", "#3C6E9F");
-			$("#found").css("color", "white");
+			$("#missingCtg").css("background-color", "#d5d5d5");
+			$("#missingCtg").css("color", "black");
+			$("#foundCtg").css("background-color", "#3C6E9F");
+			$("#foundCtg").css("color", "white");
 		}
 		
-		window.location.href = '/board/missing/list?pageNo=1&searchWord=${param.searchWord}&location=${param.location}&animal=${param.animal}&category=' + categoryVal;
+		window.location.href = '/board/missing/list?pageNo=1&searchWord=${param.searchWord}&location=' + location + '&animal=' + animal 
+								+ '&category=' + categoryVal + '&itemsPerPage=' + itemsPerPage;
 	}
 	
 	function search() {
+		let itemsPerPage = $("#itemsPerPage").val();
 		let searchWord = $("#searchWord").val();
 		let location = $("#location").val();
 		let animal = $("#animal").val();
 		
-		window.location.href = '/board/missing/list?pageNo=1&searchWord=' + searchWord + '&location=' + location + '&animal=' + animal + '&category=' + categoryVal;
+		window.location.href = '/board/missing/list?pageNo=1&searchWord=' + searchWord + '&location=' + location + '&animal=' + animal
+								+ '&category=' + categoryVal + "&itemsPerPage=" + itemsPerPage;
 		
 	}
 </script>
@@ -128,6 +237,7 @@
 	
 	.container_list {
 		clear: both;
+		margin-top: 60px;
 	}
 	
 	input:focus {
@@ -199,8 +309,16 @@
 			</div>
 		</div>
 		<div class="above_category" style="clear: right">
-			<span class="categoryBtn" id="missing" onclick="setCategory(this);">찾습니다</span>
-			<span class="categoryBtn" id="found" onclick="setCategory(this);">찾았어요</span>
+			<span class="categoryBtn" id="missingCtg" onclick="setCategory(this);">찾습니다</span>
+			<span class="categoryBtn" id="foundCtg" onclick="setCategory(this);">찾았어요</span>
+		</div>
+		<div style="float: right;">
+			<select id="itemsPerPage">
+					<option value="16">16개씩 보기</option>
+					<option value="20">20개씩 보기</option>
+					<option value="24">24개씩 보기</option>
+					<option value="28">28개씩 보기</option>
+			</select>
 		</div>
 		<div class="container_list">
 			<c:forEach var="MissingBoard" items="${listMissingBoard }">
@@ -249,24 +367,24 @@
 		<ul class="pagination">
 			<c:if test="${param.pageNo > 1 }">
 				<li><a href="/board/missing/list?&pageNo=1&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&lt;&lt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&lt;&lt;</a></li>
 				<li><a href="/board/missing/list?&pageNo=${param.pageNo - 1 }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&lt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&lt;</a></li>
 			</c:if>
 			<c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
 				<li id="li${i }"><a href="/board/missing/list?&pageNo=${i }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">${i }</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">${i }</a></li>
 			</c:forEach>
 			<c:if
 				test="${param.pageNo == null or param.pageNo < pagingInfo.totalPage }">
 				<li><a href="/board/missing/list?&pageNo=${param.pageNo + 1 }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&gt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&gt;</a></li>
 				<li><a href="/board/missing/list?&pageNo=${pagingInfo.totalPage }&searchWord=${param.searchWord }&location=${param.location }
-				&animal=${param.animal }&category=${category }">&gt;&gt;</a></li>
+				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&gt;&gt;</a></li>
 			</c:if>
 		</ul>
 	</div>
-
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

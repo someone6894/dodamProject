@@ -7,19 +7,30 @@
 <meta charset="UTF-8">
 <title>dodam dodam</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- <script type="text/javascript"> $.noConflict(); </script> -->
+
 </head>
+<script>
+
+//상세페이지
+function readBoard(no) {
+	console.log("상세페이지 보기 : " + no);
+	location.href = '/board/adopt/readBoard?no=' + no;
+}
+
+// 슬라이더 테스트
+
+
+
+</script>
 <style>
 
 .grid-container {
   display: grid;
   height: 400px;
-  width : 1200px;
+  width : 1170px;
   align-content: center;
   grid-template-columns: auto auto auto auto;
 /*    background-color: #2196F3;  */
@@ -30,54 +41,74 @@
 .grid-container > div {
 /*   background-color: rgba(255, 255, 255, 0.8); */
   text-align: center;
-  font-size: 30px;
+  width:280px;
+  font-size: 27px;
   font-family: 'Nanum Pen Script', cursive;
 /*   border: 1px solid; */
 }
 
+ .img-rounded { 
+ 	width: 280px;
+ 	height: 275px;
+ 	 background: silver; 
+   } 
+    
+/*   .titleCss:hover {  */
+/*     background: yellow;  */
+     
+/*   }  */
+  
+   .img-rounded:hover { 
+    background: yellow; 
+     
+  } 
+  
 </style>
-
-<script>
-$(function(){
-	  $('.bxslider').bxSlider({
-		    mode: 'fade',
-		    captions: true,
-		    slideWidth: 600
-		});
-  });
-</script>
-
-
 <body>
 
-
-<!-- <div class="bxslider"> -->
-<!--   <div><img src="../resources/images/paw.png"></div> -->
-<!--   <div><img src="../resources/images/test2.jpg"></div> -->
-<!--   <div><img src="../resources/images/paw.png"></div> -->
-<!-- </div> -->
-
-
-
- <div class=' grid-container'>
+ <div class='grid-container '>
 	<c:forEach var="board" items="${listBoard }" begin="0" end="3">
 							<div onclick="readBoard(${board.no});">
-							<div> 
-								<c:choose>
-									<c:when test ="${board.state eq 'protected'}">
-										보호중
-									</c:when>								
-								</c:choose>
-							</div>
+							<c:choose>
+								<c:when test = "${board.adoptarea != null}">
+									<div style='color:#2982FF;'>"${board.adoptarea }"</div>
+								</c:when>
+								<c:otherwise>
+										<div class='img-rounded'><img src='../../resources/images/main/noimg.jpg' width= '290px' height= '270px' /></div>
+								</c:otherwise>
+							</c:choose>
+							
+<!-- 							<div>  -->
+<%-- 								<c:choose> --%>
+<%-- 									<c:when test ="${board.state eq 'protected'}"> --%>
+<!-- 										보호중 -->
+<%-- 									</c:when>								 --%>
+<%-- 								</c:choose> --%>
+<!-- 							</div> -->
 <!-- 								<div>${board.no }</div> -->
 <!-- 								<div>${board.adoptarea }</div> -->
-								<div><img src= ../../resources/${board.image} width= '200px' height= '200px' /></div>
-								<div>${board.title }</div>
+								<div class='titleCss'>
+								<c:choose>
+									<c:when test ="${board.image != null}">
+										<div class='img-rounded'><img src= ../../resources/${board.image} width= '270px' height= '270px' /></div>
+									</c:when>
+									<c:otherwise>
+										<div class='img-rounded'><img src='../../resources/images/main/noimg.jpg' width= '290px' height= '270px' /></div>
+									</c:otherwise>
+								</c:choose>
+								<div ><${board.title }></div>
+								</div>
 <!-- 								<div>${board.contents }</div> -->
-								<div>${board.regdate }</div>
+								<div style='font-size:20px;'>${board.regdate }</div>
 							</div>
 	</c:forEach>
 	</div> 
+	
+	
+	
+	
+<!-- 	listBoard -->
+<!-- 	boardminiList -->
 	
 </body>
 </html>

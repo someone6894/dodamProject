@@ -28,6 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -65,6 +66,7 @@ public class MemberController {
 
 		HttpSession ses = request.getSession();
 		ses.removeAttribute("loginSession"); // 로그인세션 갱신
+		ses.removeAttribute("userid"); // 로그인한 아이디 갱신
 		System.out.println("ses.toString() : " + ses.toString());
 
 		return "index";
@@ -77,8 +79,12 @@ public class MemberController {
 		HttpSession ses = request.getSession();				
 		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
 		
-		int sumpoint = service.sumpoint(userid);
-		model.addAttribute("sumpoint", sumpoint); // 포인트 총합
+		int sumpoint = 0;
+		if (service.countpoint(userid) != 0) {
+			sumpoint = service.sumpoint(userid);
+		}
+		model.addAttribute("sumpoint", sumpoint); // 포인트 총합			
+		
 		
 		int countboard = service.countboard(userid);
 		model.addAttribute("countboard", countboard); // 게시판 작성 개수
@@ -169,11 +175,12 @@ public class MemberController {
 
 				HttpSession ses = request.getSession();
 				ses.removeAttribute("loginSession"); // 로그인세션 갱신
-				ses.setAttribute("userid", mem.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
+				ses.setAttribute("userid", member.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
 				ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
 
 				System.out.println("ses : " + ses.toString());
 				System.out.println("loginSession : " + ses.getAttribute("loginSession"));
+				System.out.println("유저아이디 : " + ses.getAttribute("userid"));
 			} 
 			
 		} catch (Exception e) {
@@ -185,7 +192,6 @@ public class MemberController {
 			}
 			
 		}
-
 
 		return "redirect:/";
 	}
@@ -364,8 +370,27 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/emailupdate", method = RequestMethod.GET)
-	public String emailupdate() {
+	public String emailupdate(HttpServletRequest request) {
 
+		
+		
+		// 1. 유저가 입력한 이메일 정보로 가입된 회원정보 확인
+			String email = request.getParameter("email");
+			System.out.println("유저에게 받은 이메일 주소 : " + email);
+			
+			MemberVo mem = null;
+			ResponseEntity<String> result = null;
+			
+			mem = service.findMember(email);
+					
+					if(mem != null) {
+						// 입력한 이메일로된 회원정보가 있을때 뷰단에 findSuccess 바인딩, 성공 메세지 띄우기
+//						rt.addFlashAttribute("status", "findSuccess");
+						System.out.println("유저에게 받은 이메일의 회원 정보 : " + mem.toString());
+					}
+						
+		
+		
 		return "member/emailupdate";
 	}
 
@@ -460,7 +485,7 @@ public class MemberController {
 					System.out.println("생성된 임시 비밀번호 : " + StringifiedchangedPwd);
 					
 					MemberVo changedMem = new MemberVo(mem.getUserid(), StringifiedchangedPwd, mem.getName(), mem.getNickname(), 
-							email, mem.getPhone(), mem.getRegdate());
+							email, mem.getPhone(), mem.getRegdate(), mem.getModifydate(), mem.getSessionid(), mem.getSessionage(), mem.getIsadmin());
 
 							// 생성된 임시 비밀번호로 회원 정보 변경
 					service.updateTmpPwd(changedMem);
@@ -517,4 +542,35 @@ public class MemberController {
 		
 		} // findAccount 끝
 	
+	
+	@RequestMapping(value = "/checkDuplicatedId", method = RequestMethod.GET)
+	public String checkDuplicatedId(@RequestParam("userid") String userid, HttpServletRequest request, RedirectAttributes rt) {
+		
+//		String userid = request.getParameter("userid");
+		System.out.println("유저에게 입력받은 userid : " + userid);
+		MemberVo mem = null;
+		try {
+			
+		    mem = service.checkId(userid);
+			System.out.println("입력받은 userid의 회원정보 : " + mem.toString());
+			
+			// 유저가 입력한 아이디가 기존 회원 아이디와 동일한지 체크
+			
+			if( mem != null ) { // 유저가 입력한 userid로 회원정보가 있음 -> 아이디 중복
+				rt.addFlashAttribute("status", "dupliacted");
+			} 
+			
+			} 
+		
+		catch (Exception e) {
+				e.printStackTrace();
+				if( mem == null ) { // 유저가 입력한 userid로 회원정보가 없음 -> 아이디 사용가능
+					rt.addFlashAttribute("status", "canUsed");
+					rt.addFlashAttribute("userid", userid);
+				}
+			}
+		
+		return "redirect:/member/register";
+		
+	}
 }

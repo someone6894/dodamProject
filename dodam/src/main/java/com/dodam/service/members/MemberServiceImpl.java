@@ -192,5 +192,21 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	public int countpoint(String userid) throws NamingException, SQLException {
+			int result = dao.countpoint(userid);
+		
+		return result;
+	}
+
+	
+	// 회원가입시 중복 아이디 확인
+	@Override
+	public MemberVo checkId(String userid) {
+		
+		MemberVo member = dao.checkDupliactedId(userid);
+		
+		return member;
+	}
+	
 	
 }

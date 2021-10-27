@@ -10,7 +10,7 @@
   </insert>
   
   <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
-  	select * from missingboardreply where pno = #{pno} order by pid desc, reforder asc
+  	select * from missingboardreply where pno = #{pno} order by pid asc, reforder asc
   </select>
   
   <delete id="deleteReply">
@@ -37,4 +37,8 @@
   	insert into missingboardreply(pno, replyer, contents, pid, depth, reforder, issecret) 
 	values(#{pno}, #{replyer}, #{contents}, #{pid}, #{depth} + 1, #{reforder} + 1, #{issecret});
   </insert>
+  
+  <update id="updateRollbackRef">
+  	update missingboardreply set reforder = reforder - 1 where pid = #{pid} and reforder > #{reforder};
+  </update>
   </mapper>
