@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>실종 : 수정페이지</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
@@ -376,7 +376,7 @@ let numOfImgs=0;
 </script>
 <style>
 	.wrap {
-		margin-top: 140px;
+		margin-top: 80px;
 		margin-bottom: 50px;
 	}
 	
@@ -549,7 +549,7 @@ let numOfImgs=0;
 				        <input type="hidden" name="image" id="upImgNameOrigin3" />
 				    </div>
 			    </fieldset>
-			    <div class="form-group">        
+			    <div class="form-group" style="margin-top: 30px;">        
 			      <div class="col-sm-offset-2 col-sm-10">
 			        <button type="submit" class="btn btn-primary" onclick="return validate();">수정</button>
 			        <button type="button" class="btn btn-default" id="cancelBtn">취소</button>
@@ -557,6 +557,7 @@ let numOfImgs=0;
 			    </div>
 		 </form>
 		 </div>
+		 <br/><br/><br/>
 	</div>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>

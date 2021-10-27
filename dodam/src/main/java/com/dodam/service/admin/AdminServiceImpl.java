@@ -13,15 +13,27 @@ import com.dodam.domain.members.MemberVo;
 import com.dodam.domain.admin.PagingInfoDTO;
 import com.dodam.persistence.admin.AdminDAO;
 import com.dodam.persistence.board.adopt.AdoptBoardDAO;
+import com.dodam.persistence.board.event.EventBoardDAO;
 import com.dodam.persistence.board.missing.MissingBoardDAO;
+import com.dodam.persistence.board.missing.MissingReplyDAO;
+import com.dodam.persistence.board.notice.NoticeDAO;
 import com.dodam.persistence.board.proud.ProudDAO;
 import com.dodam.persistence.board.qna.QnaBoardDAO;
+import com.dodam.persistence.board.qna.QnaReplyDAO;
+import com.dodam.persistence.members.MemberDao;
+import com.dodam.persistence.reply.proud.ReplyDAO;
 
 @Service
 public class AdminServiceImpl implements AdminService {
 
 	@Inject
 	private AdminDAO dao;
+	
+	@Inject
+	private MemberDao memberdao;
+	
+	@Inject
+	private NoticeDAO noticedao;
 	
 	@Inject
 	private MissingBoardDAO missingdao;
@@ -33,7 +45,19 @@ public class AdminServiceImpl implements AdminService {
 	private ProudDAO prouddao;
 	
 	@Inject
+	private EventBoardDAO eventdao;
+	
+	@Inject
 	private QnaBoardDAO qnadao;
+	
+	@Inject
+	private MissingReplyDAO missingreplydao;
+	
+	@Inject
+	private ReplyDAO proudreplydao;
+	
+	@Inject
+	private QnaReplyDAO qnareplydao;
 	
 	@Override
 	public Map<String, Object> selectAllMembers(int pageNo) throws Exception {

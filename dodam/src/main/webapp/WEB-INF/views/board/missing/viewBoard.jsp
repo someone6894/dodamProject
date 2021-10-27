@@ -383,7 +383,9 @@
 		
 		// 댓글 파싱하기----------------------------------------------------------------------------------
 		function parseReply(data) {
-			if (data != null) {
+			if (data == null) {
+				
+			} else if (data != null) {
 				console.log(data);
 				$("#replyLst").empty();
 				let output = '<div class="list-group">'; // 보이는 댓글
@@ -438,8 +440,7 @@
 					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
 							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
 					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
-					       		viewoutput += '<li class="target">신고하기</li></ul></div>';
+					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
 							}
 							viewoutput += '</div></td></tr></table>';
 							output += viewoutput;
@@ -455,16 +456,11 @@
 						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
 							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
 						       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li>';
-						       	viewoutput += '<li class="target">신고하기</li></ul></div>';
-							} else { // 비밀글이 아닌데 로그인을 한 경우 or 로그인을 하지 않은 경우
-				        		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-				        		viewoutput += '<li class="target replydel">신고하기</li></ul></div>';
+						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
 							}
 		        			viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
 	        			}
-	        			viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-		        		viewoutput += '<li class="target replydel">신고하기</li></ul></div>';
+	        			viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu"></ul></div>';
 	        			viewoutput += '</div></td></tr></table>';
 	
 	        			output += viewoutput;
@@ -666,7 +662,7 @@
 		}
 		
 		.wrap {
-			margin-top: 140px;
+			margin-top: 80px;
 		}
 	
 	
@@ -908,7 +904,7 @@
 					<!-- <td></td> -->
 				</tr>
 			</table>
-			<div id="board_btn">
+			<div id="board_btn" style="margin-bottom: 200px;">
 				<button type="button" class="btn btn-success" id="list_btn" onclick="location.href='/board/missing/list'">목록</button>
 				<c:if test="${loginSession.userid != null }">
 					<div>
