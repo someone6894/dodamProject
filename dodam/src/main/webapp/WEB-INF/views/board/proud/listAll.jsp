@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>자랑하기 게시판</title>
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

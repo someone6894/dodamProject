@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.naming.NamingException;
 
+import com.dodam.domain.members.MemberGradeVo;
 import com.dodam.domain.members.MemberVo;
 import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.proud.PagingProud;
@@ -52,12 +53,21 @@ public interface MemberDao {
 
 	// 댓글 작성 개수
 	int countreplyer(String userid) throws NamingException, SQLException;
+	
+	// 북마크 작성 개수
+	int bookmarkcount(String userid) throws NamingException, SQLException;
 
 	// 비밀번호 찾기, 새로운 임시비밀번호로 회원 정보 변경 
 	int updateTmpPwd(MemberVo mem);
 
+	// 북마크 기록
+	List<MemberGradeVo> bookmark(String userid) throws NamingException, SQLException;
 
+	// 댓글 작성 내역
+	List<MemberGradeVo> membergrade() throws NamingException, SQLException;
 	
+	// 등급 가져오기
+	public String grade(int sumpoint) throws NamingException, SQLException;
 	
 	// 포인트 적립 초기화
 	public int countpoint(String userid) throws NamingException, SQLException;

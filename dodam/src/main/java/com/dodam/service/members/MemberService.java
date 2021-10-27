@@ -58,6 +58,14 @@ public interface MemberService {
 	// 회원가입시 중복 아이디 확인
 	MemberVo checkId(String userid);
 
+	public Map<String, Object> membergrade() throws NamingException, SQLException;
+
+	public String grade(int sumpoint) throws NamingException, SQLException;
+
+	public Map<String, Object> bookmark(String userid) throws NamingException, SQLException;
+
+	public int bookmarkcount(String userid) throws NamingException, SQLException;
+
 	
 	
 	

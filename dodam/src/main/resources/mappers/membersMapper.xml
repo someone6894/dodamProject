@@ -26,6 +26,13 @@
 		<!-- sum값이 null일때 예외발생해서 ifnull처리 해두었습니다 -->
 		select ifnull(sum(howmuch), 0) from mypoint where userid = #{userid}
 	</select>
+	
+	
+	<select id="bookmarkcount" resultType="int">
+		<!-- sum값이 null일때 예외발생해서 ifnull처리 해두었습니다 -->
+		select count(*) from missingboardbookmark where userid=#{userid};
+	</select>
+	
 
     <update id="infoupdate">
   		update members set email = #{email} , phone = #{phone} , name = #{name} where userid = #{userid}
@@ -39,12 +46,25 @@
 	 	delete from members where userid = #{userid}
 	 </delete>
 	 
-	 <select id="pointlist" resultType="com.dodam.domain.members.MypointVo">
+	<select id="pointlist" resultType="com.dodam.domain.members.MypointVo">
   		select * from mypoint where userid = #{userid}
   	</select>
   	
+  	<select id="bookmark" resultType="com.dodam.domain.missing.MissingBoardVo">
+  		SELECT * FROM missingboard a inner join missingboardbookmark b on a.no = b.no
+		where b.userid = #{userid};
+  	</select>
+
+  	<select id="membergrade" resultType="com.dodam.domain.members.MemberGradeVo">
+  		select * from membergrade
+  	</select>
+  	
+  	<select id="grade" resultType="String">
+  		select grade from membergrade where memberpoint = TRUNCATE(#{sumpoint}, -2)
+  	</select>
+  	
 	<select id="countboard" resultType="int">
-		select ( 
+		select (
 			(select count(*) from proudboard where writer = #{userid}) +
 			(select count(*) from qna where writer = #{userid} ) +
 			(SELECT count(*) FROM missingboard where writer = #{userid})

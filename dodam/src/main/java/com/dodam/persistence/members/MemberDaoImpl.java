@@ -20,6 +20,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.dodam.domain.adopt.AdoptVo;
+import com.dodam.domain.members.MemberGradeVo;
 import com.dodam.domain.members.MemberVo;
 import com.dodam.domain.members.MypointVo;
 
@@ -184,6 +185,31 @@ public class MemberDaoImpl implements MemberDao {
 		MemberVo member = ses.selectOne(namespace + ".checkDupliactedId", userid);
 		return member;
 	}
+
+	@Override
+	public List<MemberGradeVo> membergrade() throws NamingException, SQLException {
+
+		   return ses.selectList(namespace + ".membergrade");
+	}
+
+	@Override
+	public String grade(int sumpoint) throws NamingException, SQLException {
+		
+		return ses.selectOne(namespace + ".grade", sumpoint);
+	}
+
+	@Override
+	public List<MemberGradeVo> bookmark(String userid) throws NamingException, SQLException {
+		
+		   return ses.selectList(namespace + ".bookmark",userid);
+	}
+
+	@Override
+	public int bookmarkcount(String userid) throws NamingException, SQLException {
+
+		return ses.selectOne(namespace + ".bookmarkcount", userid);
+	}
+
 	
 	
 	

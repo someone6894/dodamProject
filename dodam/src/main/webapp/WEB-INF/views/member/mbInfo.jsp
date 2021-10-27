@@ -67,6 +67,7 @@ div {
 }
 /* 녹색배경 */
 .greenContainer {
+	margin-top : 30px;
 	height: 132px;
 	background-color: #24855b;
 	display: flex;
@@ -242,7 +243,7 @@ div {
 		<div class="wrap">
 			<div class="greenContainer">
 				<div>
-					<div class="grade">GOLD</div>
+					<div class="grade">${grade} </div>
 					<div class="name">${loginSession.userid }</div>
 				</div>
 				<div class="modify">i</div>
@@ -292,19 +293,19 @@ div {
 					</div>
 					<div class="item">
 						<div>
-							<div class="green number">GOLD</div>
+							<div class="green number">${grade }</div>
 							<div class="text">회원 등급</div>
 						</div>
-					<a href="#" class="item">
+					<a href="/member/membergrade" class="item">
 						<div class="icon">></div>
 						</a>
 					</div>
 					<div class="item">
 						<div>
-							<div class="green number">1</div>
-							<div class="text">신고 목록</div>
+							<div class="green number">${ bookmarkcount}</div>
+							<div class="text">북마크</div>
 						</div>
-					<a href="#" class="item">
+					<a href="/member/bookmark" class="item">
 						<div class="icon">></div>
 						</a>
 					</div>
