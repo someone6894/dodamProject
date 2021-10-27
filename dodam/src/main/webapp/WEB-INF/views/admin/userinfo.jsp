@@ -38,6 +38,24 @@
 	
 	function parseMissingBoard() {
 		// 테이블 jstl써서 파싱
+		let output = '<table class="table align-items-center table-flush"><thead class="thead-light">';
+        output += '<tr><th scope="col" class="sort" data-sort="userid">아이디</th>';
+        output += '<th scope="col" class="sort" data-sort="name">이름</th>';
+        output += '<th scope="col" class="sort" data-sort="email">이메일</th>';
+        output += '<th scope="col" class="sort" data-sort="phone">전화번호</th>';
+        output += '<th scope="col" class="sort" data-sort="registerdate">가입일</th></tr></thead>';
+        output += '<tbody class="list"><c:forEach var="member" items="${memberList }">';
+        		//<tr>
+            		//<th scope="row"><a href="/admin/userinfo?userid=${member.userid }">${member.userid }</a></th>
+            		//<td class="name">${member.name }</td>
+            		//<td class="email">${member.email }</td>
+            		//<td class="phone">${member.phone }</td>
+            		//<td class="regdate">${member.regdate }</td>
+          		//</tr>
+        	//</c:forEach>
+        //</tbody>
+      //</table>
+		
 	}
 </script>
 <body>
@@ -46,7 +64,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
+        <a class="navbar-brand" href="/">
           <h1><strong>Dodam Dodam</strong></h1>
         </a>
       </div>

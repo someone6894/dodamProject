@@ -208,7 +208,7 @@
 	}
 	
 	.wrap {
-		margin-top: 140px;
+		margin-top: 80px;
 		margin-bottom: 50px;
 	}
 	
@@ -384,6 +384,7 @@
 				&animal=${param.animal }&category=${param.category }&itemsPerPage=${param.itemsPerPage}">&gt;&gt;</a></li>
 			</c:if>
 		</ul>
+		<br/><br/><br/>
 	</div>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>

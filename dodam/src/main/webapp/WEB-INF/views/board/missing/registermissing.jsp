@@ -277,7 +277,7 @@ let numOfImgs=0;
 </script>
 <style>
 	.wrap {
-		margin-top: 140px;
+		margin-top: 80px;
 		margin-bottom: 50px;
 	}
 	
@@ -321,7 +321,7 @@ let numOfImgs=0;
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container wrap">
-		  <h1>글 등록</h1>
+		  <h1>실종글 등록</h1><br/><br/>
 		  <div class="form-container">
 			  <form class="form-horizontal" action="/board/missing/register" method="POST">
 			    <div class="form-group">
@@ -456,6 +456,7 @@ let numOfImgs=0;
 			    </div>
 		 </form>
 		 </div>
+		 <br/><br/><br/>
 	</div>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>

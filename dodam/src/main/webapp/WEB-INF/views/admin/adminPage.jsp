@@ -20,7 +20,6 @@
   <!-- Argon CSS -->
   <link rel="stylesheet" href="../resources/assets/missing/assets/css/argon.css?v=1.2.0" type="text/css">
 </head>
-
 <body>
 <!-- Sidenav -->
 <!-- Sidenav -->
@@ -28,7 +27,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
+        <a class="navbar-brand" href="/">
           <h1><strong>Dodam Dodam</strong></h1>
         </a>
       </div>
