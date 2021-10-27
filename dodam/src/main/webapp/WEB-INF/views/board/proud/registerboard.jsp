@@ -99,7 +99,7 @@ $(function(){
 	</script>
 <style>
 
-.container{
+#contan{
 	margin-bottom : 150px;
 }
 
@@ -166,6 +166,8 @@ $(function(){
 			<button type="submit" id = "save" class="btn btn-success">저장</button>
       	</form>
 	</div>
-	
+	<div id = "contan">
+	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
