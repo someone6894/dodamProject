@@ -207,6 +207,35 @@ public class MemberServiceImpl implements MemberService {
 		
 		return member;
 	}
+
+	@Override
+	public Map<String, Object> membergrade() throws NamingException, SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("membergrade2", dao.membergrade());
+		return map;
+	}
+
+	@Override
+	public String grade(int sumpoint) throws NamingException, SQLException {
+		
+		return dao.grade(sumpoint);
+	}
+
+	// bookmark 리스트
+	@Override
+	public Map<String, Object> bookmark(String userid) throws NamingException, SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bookmark2", dao.bookmark(userid));
+		return map;
+	}
+
+	// bookmark 갯수
+	@Override
+	public int bookmarkcount(String userid) throws NamingException, SQLException {
+		int result = dao.bookmarkcount(userid);
+		
+	return result;
+	}
 	
 	
 }

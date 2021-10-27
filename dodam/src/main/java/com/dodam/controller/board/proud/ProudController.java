@@ -94,7 +94,7 @@ public class ProudController {
 			if (ses.getAttribute("userid") == null) {
 			for (int i = 0; i < cookies.length; i++) {		// 쿠키 반복문 돌려서
 				if(!cookies[i].getName().equals("cookie" + no)) {	// 쿠키+id+번호 가 있을 경우
-					System.out.println("방문한 유저 쿠키 없음");					
+					System.out.println("방문한 유저 쿠키 없음");
 				}
 				else {
 					System.out.println(cookies[i].getName());
@@ -102,13 +102,15 @@ public class ProudController {
 					result3 = false;
 				}
 			}
-				if(result3) {	// 방문자가 첫 조회 할 경우
+
+			if(result3) {	// 방문자가 첫 조회 할 경우
 					service.readcount(no);		// 조회수 1 증가
 					Cookie newCookie = new Cookie("cookie"+no, "|" + no + "|");
 					newCookie.setMaxAge(60*60*24);
 					response.addCookie(newCookie);		// 쿠키 생성
 				}
-			}			
+			}
+
 			else if(ses.getAttribute("userid") != null) {
 				for (int i = 0; i < cookies.length; i++) {		// 쿠키 반복문 돌려서
 					if(!cookies[i].getName().equals("cookie" + userid + no)) {
@@ -128,8 +130,6 @@ public class ProudController {
 					response.addCookie(newCookie);		// 쿠키 생성
 				}
 			}
-		
-		
 		
 		ProudVo vo = service.readBoard(no);
 		model.addAttribute("board", vo);	

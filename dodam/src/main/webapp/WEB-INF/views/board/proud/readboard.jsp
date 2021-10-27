@@ -7,7 +7,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="No-cache">
 <meta http-equiv="Pragma" content="No-cache">
-<title>Insert title here</title>
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
+<title>자랑하기 게시판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

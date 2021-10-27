@@ -79,12 +79,18 @@ public class MemberController {
 		HttpSession ses = request.getSession();				
 		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
 		
+		String grade = null;
 		int sumpoint = 0;
 		if (service.countpoint(userid) != 0) {
 			sumpoint = service.sumpoint(userid);
+
+			grade = service.grade(sumpoint);
+			model.addAttribute("grade", grade);
 		}
 		model.addAttribute("sumpoint", sumpoint); // 포인트 총합			
 		
+		int bookmarkcount = service.bookmarkcount(userid); // 북마크 개수
+		model.addAttribute("bookmarkcount", bookmarkcount);
 		
 		int countboard = service.countboard(userid);
 		model.addAttribute("countboard", countboard); // 게시판 작성 개수
@@ -96,6 +102,33 @@ public class MemberController {
 		return "member/mbInfo";
 	}
 
+	@RequestMapping(value = "/bookmark", method = RequestMethod.GET)
+	public String bookmark(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+
+		HttpSession ses = request.getSession();				
+		String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
+	
+		Map<String, Object> map = service.bookmark(userid);
+		List<MypointVo> lst = (List<MypointVo>)map.get("bookmark2");
+		model.addAttribute("bookmark", lst); // 게시판 글 데이터
+		System.out.println(lst);
+
+		return "member/bookmark";
+	}
+
+	
+	@RequestMapping(value = "/membergrade", method = RequestMethod.GET)
+	public String membergrade(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
+
+	
+		Map<String, Object> map = service.membergrade();
+		List<MypointVo> lst = (List<MypointVo>)map.get("membergrade2");
+		model.addAttribute("membergrade", lst); // 게시판 글 데이터
+		System.out.println(lst);
+
+		return "member/membergrade";
+	}
+	
 	@RequestMapping(value = "/pointlist", method = RequestMethod.GET)
 	public String pointlist(Model model, HttpServletRequest request, RedirectAttributes rt) throws NamingException, SQLException {
 
