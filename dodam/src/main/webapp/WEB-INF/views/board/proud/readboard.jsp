@@ -624,5 +624,6 @@
 
 		<div style="margin-bottom: 100px"></div>
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

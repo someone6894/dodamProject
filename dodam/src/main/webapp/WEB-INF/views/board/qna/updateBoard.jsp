@@ -160,8 +160,8 @@
 
 			<div class="form-group">
 				<label for="title">제목:</label> <input type="text"
-					class="form-control" id="title" name="title"> <span
-					id="titleError" class="error"></span>
+					class="form-control" id="title" name="title" value="${QnaVo.contents }" readonly> <span
+					id="titleError" class="error" ></span>
 			</div>
 
 
@@ -200,6 +200,6 @@
 		</form>
 
 	</div>
-
+<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

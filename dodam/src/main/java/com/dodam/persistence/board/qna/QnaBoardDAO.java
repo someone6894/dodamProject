@@ -29,17 +29,17 @@ public interface QnaBoardDAO {
 
 		
 		
-	// Update
-		// 게시판 조회수 증가
-//		void updateReadCnt(int no) throws NamingException, SQLException;
+
 		
 		// 게시판 수정
 		int updateBoard(QnaVo vo) throws NamingException, SQLException;
 		
 		
-	// delete
-	int deleteBoard(int no) throws NamingException, SQLException;
+		// delete
+		int deleteBoard(int no) throws NamingException, SQLException;
 
+		// 조회수증가
+		void updateReadCnt(int no) throws NamingException, SQLException;
 
 	
 }

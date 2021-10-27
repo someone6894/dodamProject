@@ -181,7 +181,7 @@ public class AdoptBoardController {
 		System.out.println("상세페이지보기");
 		AdoptVo vo = service.readBoard(no);
 
-		model.addAttribute("board", vo);
+		model.addAttribute("adoptBoardDetail", vo);
 	}
 
 	// adoptboarduser 게시글 수정용 상세페이지 보기

@@ -23,6 +23,7 @@
 #cate {
 	color: gray;
 }
+
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
@@ -37,8 +38,8 @@
 							<th>작성자</th>
 							<th>글내용</th>
 							<th>작성일</th>
-							<th>조회수</th>
-							<th>좋아요</th>
+<!-- 							<th>조회수</th> -->
+<!-- 							<th>좋아요</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -49,8 +50,8 @@
 								<td>${board.writer }</td>
 								<td>${board.contents }</td>
 								<td>${board.regdate }</td>
-								<td>${board.readcount }</td>
-								<td>${board.likecount }</td>
+<%-- 								<td>${board.readcount }</td> --%>
+<%-- 								<td>${board.likecount }</td> --%>
 								
 							</tr>
 						</c:forEach>
@@ -104,6 +105,6 @@
 
 	</div>
 	
-	<jsp:include page="../../footer.jsp"></jsp:include>
+<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

@@ -152,7 +152,7 @@
 	response.setHeader("Cache-Control", "private, no-store, must-revalidate");
 	%>
 
-	<jsp:include page="../../template.jsp"></jsp:include>
+	<jsp:include page="../../template.jsp"></jsp:include><br/>
 	
 	<div class="container">
 		<h2>글 수정 페이지</h2>
@@ -192,7 +192,7 @@
 			<a href="/board/event/modify?no=${view.no}" ><button type="reset" class="btn btn-warning">취소</button></a>
 		</form>
 
-	</div>
-
+	</div><br/>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

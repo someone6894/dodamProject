@@ -35,4 +35,9 @@
 			select count(*) from qna
   	</select>
   	
+<!--   	조회수 -->
+  	<update id="increaseReadCnt">
+  		update qna set readcount = readcount + 1 where no = #{no}
+  	</update>
+  	
   </mapper>

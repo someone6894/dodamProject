@@ -23,9 +23,9 @@
 	response.setHeader("Cache-Control", "private, no-store, must-revalidate");
 %>
 
-	<jsp:include page="template.jsp"></jsp:include>	
-	<jsp:include page="board/adopt/adoptboardmini.jsp"></jsp:include>	
-	<jsp:include page="noticeBoardmini.jsp"></jsp:include>
+	<jsp:include page="template.jsp"></jsp:include><br/><br/><br/>
+	<jsp:include page="board/adopt/adoptboardmini.jsp"></jsp:include><br/><br/>	
+	<jsp:include page="board/notice/noticeBoardmini.jsp"></jsp:include><br/><br/><br/>
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

@@ -170,13 +170,21 @@ function ActiveBar(){
            </c:choose>
   
             <c:choose>
-				<c:when test="${loginSession != null }">
+				<c:when test="${loginSession != null and loginSession.isadmin != 'Y' }">
 				 <li>
 				 	 <a href="/member/mypage"> <span class="glyphicon glyphicon-user"></span> 마이페이지 </a>
          		</li>
 				</c:when>
           	 </c:choose>
           	 
+          	 <c:choose>
+         		<c:when test="${loginSession != null and loginSession.isadmin == 'Y' }">
+				 	<li>
+				 	 	<a href="/admin"> <span class="glyphicon glyphicon-user"></span> 관리자페이지 </a>
+         			</li>
+				</c:when>
+			</c:choose>
+				
              <c:choose>
 				<c:when test="${loginSession != null }">
 				 <li>

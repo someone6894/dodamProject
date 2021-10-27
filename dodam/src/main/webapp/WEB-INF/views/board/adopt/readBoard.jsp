@@ -25,7 +25,7 @@ function removeBoard(no) {
 		// 글쓴이 == 로그인 아이디 -> 삭제기능 활성
 		// isadmin == Y -> 관리자 삭제기능 권한 부여
 // 		console.log("true");
-		location.href = '/board/adopt/remove?no=' + ${board.no};
+		location.href = '/board/adopt/remove?no=' + ${adoptBoardDetail.no};
 	} else if( writer != "${loginSession.userid}" ){
 		alert("게시글을 삭제할 권한이 없습니다.");
 		console.log("false");
@@ -36,7 +36,7 @@ function removeBoard(no) {
 // 상세페이지에서 수정 버튼을 누루면 게시글 등록페이지와 같은 update 모달창 띄우기
 function updateBoard(no) {
 	
-	location.href = '/board/adopt/updateBoard?no=' + ${board.no};
+	location.href = '/board/adopt/updateBoard?no=' + ${adoptBoardDetail.no};
 }
 
 // 댓글처리 -----------------------------------------------------------------
@@ -344,62 +344,62 @@ width: 15%;
 		style="height: 30%; width: 40%; margin-bottom: 100px; padding: 20px"
 		>
 		<div style="text-align:center;">
-		<h3 class='title'style='background-color: #FFFC94;'> ${board.title } </h3>
+		<h3 class='title'style='background-color: #FFFC94;'> ${adoptBoardDetail.title } </h3>
 		</div>
-		<span id='readcount' style='float:right;'>조회수 : <span class="badge">${board.readcnt }</span></span> 	
+		<span id='readcount' style='float:right;'>조회수 : <span class="badge">${adoptBoardDetail.readcnt }</span></span> 	
 		<br><br>
 		
 		<table class='table table-hover' >
 			<tr> 
 				<td class='column'>글번호</td>
-				<td>${board.no }</td>	
+				<td>${adoptBoardDetail.no }</td>	
 			</tr>
 			<tr> 
 				<td class='column'>품종</td>
-				<td>${board.adoptkind }</td>	
+				<td>${adoptBoardDetail.adoptkind }</td>	
 			</tr>
 			<tr> 
 				<td class='column'>성별</td>
-				<td>${board.gender }</td>	
+				<td>${adoptBoardDetail.gender }</td>	
 			</tr>
 			<tr> 
 				<td class='column'>책임비</td>
-				<td>${board.liabilityfee }</td>		
+				<td>${adoptBoardDetail.liabilityfee }</td>		
 			</tr>
 			<tr> 
 				<td class='column'>분양지역</td>
-				<td>${board.adoptarea }</td>	
+				<td>${adoptBoardDetail.adoptarea }</td>	
 			</tr>
 			<tr> 
 				<td class='column'>연락처</td>
-				<td>${board.phone }</td>	
+				<td>${adoptBoardDetail.phone }</td>	
 			</tr>
 			<tr> 
 				<td class='column'>SNS</td>
-				<td>${board.sns }</td>	
+				<td>${adoptBoardDetail.sns }</td>	
 			</tr>	
 			<tr> 
 				<td class='column'>작성자</td>
-				<td>${board.writer }</td>	
+				<td>${adoptBoardDetail.writer }</td>	
 			</tr>	
 			<tr> 
 				<td class='column'>사진</td>
 				<td>
 				<c:choose>
-					<c:when test="${board.image == '' }"></c:when>
-					<c:when test="${board.image != null }">
+					<c:when test="${adoptBoardDetail.image == '' }"></c:when>
+					<c:when test="${adoptBoardDetail.image != null }">
 					<!-- 이미지 누루면 새창으로 원본띄우기 -->
-						<a href='../../resources/${board.image }' target='_blank'><img src="../../resources/${board.image }" width="500px" height="500px" /></a>
+						<a href='../../resources/${adoptBoardDetail.image }' target='_blank'><img src="../../resources/${adoptBoardDetail.image }" width="500px" height="500px" /></a>
 					</c:when>
-					<c:when test="${board.notimage != null }">
-						<a href='../../resources/${board.notimage }'>${board.notimage }</a>
+					<c:when test="${adoptBoardDetail.notimage != null }">
+						<a href='../../resources/${adoptBoardDetail.notimage }'>${adoptBoardDetail.notimage }</a>
 					</c:when>
 				</c:choose>
 				</td>	
 			</tr>	
 			<tr> 
 				<td class='column'>내용</td>
-				<td>${board.contents }</td>	
+				<td>${adoptBoardDetail.contents }</td>	
 			</tr>
 		</table>
 
@@ -407,11 +407,11 @@ width: 15%;
 
 				<!-- 게시글 누구나 수정 삭제 권한 갖음 test용 -->
 <!-- 		<button type="button" class="btn btn-success" -->
-<%-- 			onclick="updateBoard(${board.no});">수정</button> --%>
+<%-- 			onclick="updateBoard(${adoptBoardDetail.no});">수정</button> --%>
 		<button type="button" class="btn btn-success" data-toggle="modal"
 				data-target="#updatePageModal">수정</button>
 		<button type="button" class="btn btn-warning"
-			onclick="removeBoard(${board.no});">삭제</button>
+			onclick="removeBoard(${adoptBoardDetail.no});">삭제</button>
 		<!-- 상세페이지에서 목록으로.. -->
 		<button type="button" class="btn btn-info" style="float: right;"
 			onclick="location.href='/board/adopt/listAll?pageNo=1'">목록으로</button>
@@ -483,6 +483,6 @@ width: 15%;
 		</div>
 	</div>
 	<!-- 댓글처리끝 -->
-
+<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

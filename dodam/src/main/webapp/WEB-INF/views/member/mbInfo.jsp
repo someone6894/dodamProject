@@ -401,5 +401,6 @@ div {
 			<div>login_session_email : ${loginSession.email }</div>
 			<div>login_session_phone : ${loginSession.phone }</div>
 		</div>--%>
+		<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

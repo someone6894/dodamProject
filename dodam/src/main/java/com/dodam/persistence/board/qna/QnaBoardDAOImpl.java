@@ -59,5 +59,10 @@ public class QnaBoardDAOImpl implements QnaBoardDAO {
 		return ses.selectOne(namespace + ".getTotalPostCnt");
 	}
 	
+////	조회수증가
+	@Override
+	public void updateReadCnt(int no) throws NamingException, SQLException {
+		ses.update(namespace + ".increaseReadCnt", no);
+	}
 	
 }
