@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.dodam.mappers.AdminMapper">
+  	
+  	<select id="selectAllMembers" resultType="com.dodam.domain.members.MemberVo">
+  		select * from members order by regdate desc limit #{startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectCnt" resultType="int">
+  		select count(*) from members
+  	</select>
+  	
+  	<select id="selectUserInfo" resultType="com.dodam.domain.members.MemberVo">
+  		select * from members where userid=#{userid}
+  	</select>
+  	
+  	<select id="selectMissingBoard" resultType="com.dodam.domain.missing.MissingBoardVo">
+  		select * from missingboard where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectAdoptBoard" resultType="com.dodam.domain.adopt.AdoptVo">
+  		select * from adoptboarduser where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectList" resultType="java.util.List">
+  		select * from #{boardName} where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	</select>
+  </mapper>

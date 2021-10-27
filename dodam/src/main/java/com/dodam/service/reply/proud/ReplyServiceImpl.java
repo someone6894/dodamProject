@@ -62,7 +62,6 @@ public class ReplyServiceImpl implements ReplyService {
 	public boolean reReply(ReplyVo vo, int result2) throws Exception {
 		boolean result = false;
 
-		vo.setReforder(result2);
 		System.out.println(vo.toString());
 		int row = dao.append(vo);
 		if (row == 1) {
@@ -89,6 +88,13 @@ public class ReplyServiceImpl implements ReplyService {
 	public int replycount(ReplyVo vo) throws Exception {
 
 		return dao.replycount(vo);
+	}
+
+	@Override
+	public int maxreplyno() throws Exception {
+
+		return dao.maxreplyno();
+		
 	}
 
 }

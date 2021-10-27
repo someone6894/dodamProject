@@ -175,11 +175,12 @@ public class MemberController {
 
 				HttpSession ses = request.getSession();
 				ses.removeAttribute("loginSession"); // 로그인세션 갱신
-				ses.setAttribute("userid", mem.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
+				ses.setAttribute("userid", member.getUserid()); // session에 userid 이름으로 userid를 넣음(mypage용)
 				ses.setAttribute("loginSession", member); // session에 member정보 loginSession 이름으로 할당함
 
 				System.out.println("ses : " + ses.toString());
 				System.out.println("loginSession : " + ses.getAttribute("loginSession"));
+				System.out.println("유저아이디 : " + ses.getAttribute("userid"));
 			} 
 			
 		} catch (Exception e) {
@@ -191,7 +192,6 @@ public class MemberController {
 			}
 			
 		}
-
 
 		return "redirect:/";
 	}
@@ -370,14 +370,25 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/emailupdate", method = RequestMethod.GET)
-	public String emailupdate() {
+	public String emailupdate(HttpServletRequest request) {
 
 		
 		
-		
-		
-		
-		
+		// 1. 유저가 입력한 이메일 정보로 가입된 회원정보 확인
+			String email = request.getParameter("email");
+			System.out.println("유저에게 받은 이메일 주소 : " + email);
+			
+			MemberVo mem = null;
+			ResponseEntity<String> result = null;
+			
+			mem = service.findMember(email);
+					
+					if(mem != null) {
+						// 입력한 이메일로된 회원정보가 있을때 뷰단에 findSuccess 바인딩, 성공 메세지 띄우기
+//						rt.addFlashAttribute("status", "findSuccess");
+						System.out.println("유저에게 받은 이메일의 회원 정보 : " + mem.toString());
+					}
+						
 		
 		
 		return "member/emailupdate";
@@ -474,7 +485,7 @@ public class MemberController {
 					System.out.println("생성된 임시 비밀번호 : " + StringifiedchangedPwd);
 					
 					MemberVo changedMem = new MemberVo(mem.getUserid(), StringifiedchangedPwd, mem.getName(), mem.getNickname(), 
-							email, mem.getPhone(), mem.getRegdate());
+							email, mem.getPhone(), mem.getRegdate(), mem.getModifydate(), mem.getSessionid(), mem.getSessionage(), mem.getIsadmin());
 
 							// 생성된 임시 비밀번호로 회원 정보 변경
 					service.updateTmpPwd(changedMem);
