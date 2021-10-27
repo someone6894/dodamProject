@@ -178,7 +178,7 @@
 		onclick="location.href='${view.mallLocation}'" onerror="this.src='../../resources/images/main/dodam.jpg'">
 		</div>
 		
-	</div>
-	
+	</div><br/>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
