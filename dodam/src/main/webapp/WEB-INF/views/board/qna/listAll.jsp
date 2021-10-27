@@ -23,6 +23,7 @@
 #cate {
 	color: gray;
 }
+
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
@@ -104,6 +105,6 @@
 
 	</div>
 	
-	<jsp:include page="../../footer.jsp"></jsp:include>
+<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
