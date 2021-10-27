@@ -22,7 +22,14 @@
   <link rel="stylesheet" href="../resources/assets/missing/assets/css/argon.css?v=1.2.0" type="text/css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
+// 관리자가 아니면 접근할 수 없도록
+// aop로 구현해보자!
+//	if ("${loginSession.isadmin}" != 'Y') {
+//		location.href = "/";
+//	}
+
 	$(function () {
+		
 		let pageNo = 1;
 		if ("${param.pageNo}" != "") {
 			pageNo = "${param.pageNo}";
@@ -43,7 +50,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
+        <a class="navbar-brand" href="/">
           <h1><strong>Dodam Dodam</strong></h1>
         </a>
       </div>

@@ -667,7 +667,6 @@
 		
 		.wrap {
 			margin-top: 140px;
-			margin-bottom: 50px;
 		}
 	
 	
