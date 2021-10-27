@@ -979,6 +979,7 @@
 				<button type="button" class="btn" onclick="closeRemove();">취소</button>
 			</div>
 		</div>
-	</div> 
+	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

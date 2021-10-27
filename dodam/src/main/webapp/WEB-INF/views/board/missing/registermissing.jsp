@@ -457,5 +457,6 @@ let numOfImgs=0;
 		 </form>
 		 </div>
 	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
