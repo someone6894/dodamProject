@@ -100,7 +100,7 @@ $(function(){
 	</script>
 <style>
 		
-.container{
+.contan{
 	margin-bottom : 150px;
 }
 
@@ -174,5 +174,8 @@ $(function(){
       </form>
      
    </div>
+   
+   <div id ="contan"></div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
