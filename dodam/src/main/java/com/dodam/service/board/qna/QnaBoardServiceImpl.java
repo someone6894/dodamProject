@@ -76,6 +76,7 @@ public class QnaBoardServiceImpl implements QnaBoardService {
 
 	@Override
 	public QnaVo readBoard(int no) throws NamingException, SQLException {
+		dao.updateReadCnt(no);
 		QnaVo vo = dao.selectBoard(no);
 		
 		return vo;

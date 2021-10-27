@@ -25,6 +25,7 @@ public class QnaReplyDAOImpl implements QnaReplyDAO {
 
 	@Override
 	public int create(QnaReplyVo vo) throws Exception {
+		System.out.println("왔냐");
 		return ses.insert(ns + ".create", vo);
 	}
 

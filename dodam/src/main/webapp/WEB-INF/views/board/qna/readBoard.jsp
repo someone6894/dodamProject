@@ -52,8 +52,10 @@
 			success : function(data) { // 통신 성공시 수행될 콜백 함수
 				if (data != null) {
 					console.log(data);
+					
 					$("#replyLst").empty(); 
 					let output = '<ul class="list-group">'; // 보이는 댓글
+					
 					let secoutput = '';
 					$.each(data, function(i, e) {
 						// ----------------------- 비밀글 템플릿 ---------------------------
@@ -76,7 +78,7 @@
 						// ------------------------------------------------------------------
 						
 						
-						let loginUser = '${loginMember.userid}'; // 로그인 유저
+						let loginUser = "${loginSession.userid}"; // 로그인 유저
 						let bwriter = '${board.writer}'; // 부모글 작성자
 						let replyer = e.replyer;  // 댓글 작성자
 						
@@ -153,19 +155,15 @@
 	}
 	
 	function addReply() {
-		let bno = '${param.no}';
+		let bno = "${param.no}";
 		bno = parseInt(bno);
-// 		let writer = '${loginMember.userid}';
-		let writer = '';
-		let content = $("#replyContents").val();
-		let isSecret = 'N';
-		if (document.getElementById("isSecret").checked) {
-			isSecret = 'Y';
-		}
-		let url = '/qna/replies/create';
+		let replyer = $("#replyer").val();
+		let contents = $("#replyContents").val();
+
+		let url = "/qna/replies/create";
 		
 		let sendData = JSON.stringify({  // json타입의 객체로 보이는 문자열 생성
-			bno : bno, replyer : writer, contents : content, issecret : isSecret
+			bno : bno, replyer : replyer, contents : contents
 		});
 		
 		console.log(sendData);
@@ -183,6 +181,7 @@
 				if (data == "success") {
 					alert('댓글 등록 완료!');
 					viewAllReplies();
+					$("#replyDiv").hide();
 				} else if (data == "fail") {
 					alert('댓글 등록 실패!\r\n 문제가 지속되면 상현이한테 연락하세요!');
 				}
@@ -202,7 +201,9 @@
 	
 	function modifyReply() {
 		let no = $("#no").val();
-		let loginUser = '${loginMember.userid}'
+		let loginUser = "${loginSession.userid}";
+		
+			
 		if (loginUser == '') {
 			alert("로그인 하셔야 이용 가능합니다!");
 			location.href='../member/login';
@@ -220,7 +221,7 @@
 			isSecretModify = 'Y';
 		}
 		
-		let url = '/replies/modify' + no;
+		let url = '/qna/replies/modify' + no;
 		
 		let sendData = JSON.stringify({
 			no : no, replyer : replyer, contents : contents, issecret : isSecretModify
@@ -258,7 +259,7 @@
 	function removeReply() {
 		let no = $("#rno").val();
 		
-		let loginUser = '${loginMember.userid}'
+		let loginUser = '${loginSession.userid}'
 			
 		let replyer = $("#replyer" + no).html();
 		if (loginUser != replyer) {
@@ -318,13 +319,13 @@
 		<div class="form-group">
 			<label for="title">글번호:</label> <input type="text"
 				class="form-control" id="no" name="no" value="${board.no }" readonly>
-			<div>
-				<span id='readcount'>조회수 : <span class="badge">${board.readcount }</span></span>
+<!-- 			<div> -->
+<%-- 				<span id='readcount'>조회수 : <span class="badge">${board.readcount }</span></span> --%>
 
-				<span id='likeDislike'> 좋아요 : <span id='isLikeSpan'></span> <span
-					id="likeCount" class="badge">${board.likecount }</span>
-				</span>
-			</div>
+<!-- 				<span id='likeDislike'> 좋아요 : <span id='isLikeSpan'></span> <span -->
+<%-- 					id="likeCount" class="badge">${board.likecount }</span> --%>
+<!-- 				</span> -->
+<!-- 			</div> -->
 
 
 		</div>
@@ -362,15 +363,15 @@
 
 		</div>
 
-		<c:if test="${board.writer == loginMember.userid }">
-			<button type="button" class="btn btn-success">수정</button>
-			<button type="button" class="btn btn-warning">삭제</button>
+<%-- 		<c:if test="${board.writer == loginSession.userid }"> --%>
+<!-- 			<button type="button" class="btn btn-success">수정</button> -->
+<!-- 			<button type="button" class="btn btn-warning">삭제</button> -->
 			
-		</c:if>
+<%-- 		</c:if> --%>
 		
 		
 		<button type="button" class="btn btn-danger" onclick="showReply();">댓글달기</button>
-		<c:if test="${loginMember.userid != null }">
+		<c:if test="${loginSession.userid != null }">
 			
 		</c:if>
 		
@@ -385,9 +386,16 @@
          
 		<div id="replyDiv" style="clear : both;">
 			<div class="form-group">
-				<div class="checkbox">
-					<label><input type="checkbox" id="isSecret">비밀글로 등록</label>
-				</div>
+<!-- 				<div class="checkbox"> -->
+<!-- 					<label><input type="checkbox" id="isSecret">비밀글로 등록</label> -->
+<!-- 				</div> -->
+				
+<!-- 				 <label for="replyer">작성자 :</label> <input type="text" -->
+<!--                class="form-control" id="replyer" name="replyer" ><span -->
+<!--                id="writerError" class="error"></span> -->
+				
+				
+				
 				<label for="replyContents">댓글 내용:</label>
 				<textarea id="replyContents" rows="6" cols="150"></textarea>
 				<button type="button" class="btn btn-danger" onclick="addReply();">댓글등록</button>
@@ -401,9 +409,9 @@
 		<div id="replyModify" style="display: none;">
 			<div>댓글 수정</div>
 			<div class="form-group">
-				<div class="checkbox">
-					<label><input type="checkbox" id="isSecretModify">비밀글로 등록</label>
-				</div>
+<!-- 				<div class="checkbox"> -->
+<!-- 					<label><input type="checkbox" id="isSecretModify">비밀글로 등록</label> -->
+<!-- 				</div> -->
 				<label for="replyContents">댓글 내용:</label>
 				<textarea id="replyContentsModify" rows="6" cols="150"></textarea>
 				<button type="button" class="btn btn-danger" onclick="modifyReply();">댓글수정</button>

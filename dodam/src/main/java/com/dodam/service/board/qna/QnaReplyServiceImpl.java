@@ -25,13 +25,14 @@ public class QnaReplyServiceImpl implements QnaReplyService {
 	@Override
 	public boolean addReply(QnaReplyVo vo) throws Exception {
 		boolean result = false;
-		
+		System.out.println("오냐");
 		int row = dao.create(vo);
 		if(row == 1) {
 			result = true;
 		}
 		
 		return result;
+		
 	}
 
 	@Override
