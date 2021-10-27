@@ -247,6 +247,6 @@ function showPublicAdopt() {
 
 <div class='detail' style="height: 30%; width: 50%; margin-top: 50px; margin-bottom: 100px; padding: 20px" ></div>
 
-
+<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

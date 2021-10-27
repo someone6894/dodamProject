@@ -538,6 +538,6 @@ function updateBoard(no) {
 		</div>
 	</div>
 	<!-- 댓글처리끝 -->
-
+<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
