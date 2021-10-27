@@ -35,7 +35,11 @@ public class ReplyController {
 	      
 		  System.out.println(vo.toString());
 	      ResponseEntity<String> result = null;
+	      int maxno = 0;
 	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
+	    	 maxno = service.maxreplyno();
+	    	 vo.setNo(maxno);
+	    	 System.out.println(vo);
 	         service.addReply(vo);
 			 service.addpoint(new MypointVo(userid, null, 2, "댓글 작성"));
 	         result = new ResponseEntity<String>("success", HttpStatus.OK);
@@ -50,14 +54,26 @@ public class ReplyController {
 	   public ResponseEntity<String> reReply(@RequestBody ReplyVo vo, HttpServletRequest request) { // responseentity는 모델 개념 , 응답하는 데이터
 	      System.out.println(vo.toString());
 
+	      int result2 = 0;
+	      
 		  HttpSession ses = request.getSession();				
 		  String userid = (String)ses.getAttribute("userid"); // 접속한 유저아이디
-			
+
+		  int maxno = 0;
 	      ResponseEntity<String> result = null;
 	      try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
-	         service.reReply(vo);
+	    	  	result2 = service.replycount(vo);
+	    	  	System.out.println(result2);
+		    	 maxno = service.maxreplyno();
+		    	 vo.setNo(maxno);
+		    	 System.out.println(vo);
+	    	  	if(service.reReply(vo, result2)) {
 				service.addpoint(new MypointVo(userid, null, 2, "댓글 작성"));
-	         result = new ResponseEntity<String>("success", HttpStatus.OK);
+				result = new ResponseEntity<String>("success", HttpStatus.OK);
+	    	  	}
+	    	  	else {
+	    	  		System.out.println("작성 실패");
+	    	  	}
 	      } catch (Exception e) {
 	         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 	      }

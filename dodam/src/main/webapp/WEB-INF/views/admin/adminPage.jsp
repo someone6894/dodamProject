@@ -3,79 +3,91 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+  <meta name="author" content="Creative Tim">
+  <title>관리자 페이지</title>
+  <!-- Favicon -->
+  <link rel="icon" href="../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="../resources/assets/missing/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="../resources/assets/missing/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="../resources/assets/missing/assets/css/argon.css?v=1.2.0" type="text/css">
+</head>
 
-        <title>Argon Dashboard</title>
-
-        <!-- Favicon -->
-<link href="/assets/img/brand/favicon.png" rel="icon" type="image/png">
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-
-<!-- Icons -->
-<link href="/assets/vendor/nucleo/css/nucleo.min.css" rel="stylesheet">
-<link href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-
-<!-- Argon CSS -->
-<link type="text/css" href="/assets/css/argon.min.css" rel="stylesheet">
-    </head>
-
-    <body>
-     <div style="width: 18rem;">
-  
-
-
-
-<div class="card card-stats">
-    
-
-    
-
-    
-
-    
-
-    
-    <!-- Card body -->
-    <div class="card-body">
-        
-<div class="row">
-    <div class="col">
-        <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-        <span class="h2 font-weight-bold mb-0">2,356</span>
-    </div>
-    <div class="col-auto">
-      <div class="icon icon-shape bg-orange text-white rounded-circle shadow">
-          <i class="ni ni-chart-pie-35"></i>
+<body>
+<!-- Sidenav -->
+<!-- Sidenav -->
+  <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scrollbar-inner">
+      <!-- Brand -->
+      <div class="sidenav-header  align-items-center">
+        <a class="navbar-brand" href="javascript:void(0)">
+          <h1><strong>Dodam Dodam</strong></h1>
+        </a>
+      </div>
+      <div class="navbar-inner">
+        <!-- Collapse -->
+        <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+          <!-- Nav items -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="/admin">
+                <i class="ni ni-tv-2 text-primary"></i>
+                <span class="nav-link-text">관리자 메인</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/members">
+                <i class="ni ni-single-02 text-orange"></i>
+                <span class="nav-link-text">회원 정보 관리</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/board">
+                <i class="ni ni-align-left-2 text-primary"></i>
+                <span class="nav-link-text">게시판 관리</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/repy">
+                <i class="ni ni-chat-round text-yellow"></i>
+                <span class="nav-link-text">댓글 관리</span>
+              </a>
+            </li>
+          </ul>
+          <!-- Divider -->
+          <hr class="my-3">
+          <!-- Navigation -->
+          <ul class="navbar-nav mb-md-3">
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="ni ni-user-run text-dark"></i>
+                <span class="nav-link-text">관리자페이지 나가기</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-</div>
-<p class="mt-3 mb-0 text-sm">
-    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-    <span class="text-nowrap">Since last month</span>
-</p>
-
-    </div>
-
-    
-
-    
-</div>
-
-
-
-
-</div>
-
-        <!-- Core -->
-<script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
-<script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Argon JS -->
-<script src="/assets/js/argon.min.js"></script>
-    </body>
-
+  </nav>
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="../resources/assets/missing/assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../resources/assets/missing/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../resources/assets/missing/assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="../resources/assets/missing/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="../resources/assets/missing/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Optional JS -->
+  <script src="../resources/assets/missing/assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="../resources/assets/missing/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <!-- Argon JS -->
+  <script src="../resources/assets/missing/assets/js/argon.js?v=1.2.0"></script>
+</body>
 </html>

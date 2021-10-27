@@ -120,6 +120,7 @@
 				</c:if>
 			</ul>
 		</div>
+<<<<<<< HEAD
 
 	</div>
 	<style>
@@ -172,5 +173,9 @@ section {
 
 
 	
+=======
+	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
+>>>>>>> 23b06e8fb9f94698ff1ed21b10691efa6424bdb9
 </body>
 </html>

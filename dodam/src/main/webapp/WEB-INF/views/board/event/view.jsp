@@ -33,6 +33,7 @@
 		document.body.removeChild(textarea);
 		alert("URL이 복사되었습니다.")
 	}
+
 </script>
 
 <style>
@@ -174,7 +175,7 @@
 		<div class="img">
 		<img src = "${view.mallLocation}" style="width:1140px; 
 		height: 700px; margin-bottom:50px;" 
-		onclick="location.href='${view.mallLocation}'">
+		onclick="location.href='${view.mallLocation}'" onerror="this.src='../../resources/images/main/dodam.jpg'">
 		</div>
 		
 	</div>

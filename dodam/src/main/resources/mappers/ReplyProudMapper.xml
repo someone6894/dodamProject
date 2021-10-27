@@ -6,18 +6,23 @@
  <mapper namespace ="com.dodam.mapper.proudReplyMapper">
  
 	 <select id ="replyList" resultType = "com.dodam.domain.proud.ReplyVo">
-	 	select * from proudreply where bno = #{bno} order by no asc;
+	 	select * from proudreply where bno = #{bno} order by reforder asc
 	 </select>
 	 
 	 <insert id="create">
-	 	insert into proudreply(bno, contents, replyer) 
-	 	value(#{bno}, #{contents}, #{replyer})
+	 	insert into proudreply(bno, contents, replyer,reforder) 
+	 	value(#{bno}, #{contents}, #{replyer}, #{no} + 1)
 	 </insert>
 	 
+	 <select id="maxreplyno" resultType = "int">
+	 	SELECT MAX(no) FROM proudreply
+	 </select>
+	 
 	 <insert id="append">
-	 	insert into proudreply(bno, contents, replyer) 
-	 	value(#{bno}, #{contents}, #{replyer})
+	 	insert into proudreply(bno, contents, replyer, ref, step, reforder)
+		values (#{bno} , #{contents}, #{replyer}, #{no}, #{step} + 1, concat(#{reforder}, "," , #{no} + 1 ))
 	 </insert>
+	 
 	 
 	 <insert id="addpoint">
 		insert into mypoint(userid, howmuch, why) values (#{userid}, #{howmuch}, #{why})
@@ -30,4 +35,8 @@
   	 <delete id="delete">
 	 	delete from proudreply where no = #{no}
 	 </delete>
+	 
+	 <select id="replycount" resultType="int">
+		select count(*) from proudreply where ref = #{no} and step = #{step} + 1;
+  	</select>
  </mapper>

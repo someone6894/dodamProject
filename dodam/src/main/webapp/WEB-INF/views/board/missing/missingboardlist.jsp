@@ -7,6 +7,8 @@
 <title>실종 반려 동물 : 찾습니다</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon -->
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -383,6 +385,6 @@
 			</c:if>
 		</ul>
 	</div>
-
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
