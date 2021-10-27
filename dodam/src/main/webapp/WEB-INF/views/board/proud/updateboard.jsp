@@ -100,7 +100,7 @@ $(function(){
 	</script>
 <style>
 		
-.contan{
+#contan{
 	margin-bottom : 150px;
 }
 
