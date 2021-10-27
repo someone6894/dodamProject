@@ -45,8 +45,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			 <input type="text"
-				class="form-control" id="title" name="title"
+			<input type="text" class="form-control" id="title" name="title"
 				value="${board.title }" readonly>
 		</div>
 
@@ -64,10 +63,19 @@
 
 
 
-		<button type="button" class="btn btn-success" onclick="location.href='/board/notice/updateBoard?no=${board.no }'">수정</button>
-		<button type="button" class="btn btn-warning" onclick= "location.href='/board/notice/delete?no=${board.no }'">삭제</button>
+		<button type="button" class="btn btn-success"
+			onclick="location.href='/board/notice/updateBoard?no=${board.no }'">수정</button>
+		<button type="button" class="btn btn-warning"
+			onclick="location.href='/board/notice/delete?no=${board.no }'">삭제</button>
 		<button type="button" class="btn btn-info"
 			onclick="location.href='/board/notice/listAll?pageNo=1'">목록으로</button>
 	</div>
+
+		<button type="button" class="btn btn-danger" onclick="">댓글달기</button>
+		
+		
+		
+	<jsp:include page="../../footer.jsp"></jsp:include>
+		
 </body>
 </html>
