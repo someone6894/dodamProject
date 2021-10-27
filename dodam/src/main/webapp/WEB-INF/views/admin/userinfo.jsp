@@ -287,10 +287,10 @@
           <div class="card">
             <div class="card-header">
  	        	<div class="row align-items-center">
-	            	<div class="col-7">
+	            	<div class="col-6">
 	                  <h3 class="mb-0">회원 게시글 </h3>
 	                </div>
-	                <div class="btn-group btn-group-toggle col-5" data-toggle="buttons">
+	                <div class="btn-group btn-group-toggle col-6" data-toggle="buttons">
 		                <label class="btn btn-secondary active">
 		                  <input type="radio" name="options" id="missing" autocomplete="off"> 찾아요
 		                </label>
