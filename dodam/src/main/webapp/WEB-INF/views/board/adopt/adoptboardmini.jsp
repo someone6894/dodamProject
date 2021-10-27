@@ -15,7 +15,7 @@
 <script>
 
 //상세페이지
-function readBoard(no) {
+function adoptReadBoard(no) {
 	console.log("상세페이지 보기 : " + no);
 	location.href = '/board/adopt/readBoard?no=' + no;
 }
@@ -68,7 +68,7 @@ function readBoard(no) {
 
  <div class='grid-container '>
 	<c:forEach var="board" items="${listBoard }" begin="0" end="3">
-							<div onclick="readBoard(${board.no});">
+							<div onclick="adoptReadBoard(${board.no});">
 							<c:choose>
 								<c:when test = "${board.adoptarea != null}">
 									<div style='color:#2982FF;'>"${board.adoptarea }"</div>

@@ -25,7 +25,7 @@
 
 	<jsp:include page="template.jsp"></jsp:include><br/><br/><br/>
 	<jsp:include page="board/adopt/adoptboardmini.jsp"></jsp:include><br/><br/>	
-	<jsp:include page="noticeBoardmini.jsp"></jsp:include><br/><br/><br/>
+	<jsp:include page="board/notice/noticeBoardmini.jsp"></jsp:include><br/><br/><br/>
 	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

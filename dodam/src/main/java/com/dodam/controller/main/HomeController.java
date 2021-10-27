@@ -74,7 +74,7 @@ public class HomeController {
 		List<NoticeVo> noticelst = (List<NoticeVo>)noticemap.get("boardList");
 //		PagingInfoDTO noticepi = (PagingInfoDTO)noticemap.get("pagingInfo");
 	
-		System.out.println(noticelst);
+//		System.out.println(noticelst);
 		
 //		logger.info(pageNo + "페이지 게시물 출력");
 		
