@@ -1,15 +1,18 @@
 package com.dodam.service.admin;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.naming.NamingException;
 
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.members.MemberVo;
+import com.dodam.domain.members.MypointVo;
 import com.dodam.domain.admin.PagingInfoDTO;
 import com.dodam.persistence.admin.AdminDAO;
 import com.dodam.persistence.board.adopt.AdoptBoardDAO;
@@ -103,7 +106,7 @@ public class AdminServiceImpl implements AdminService {
 		PagingInfoDTO pi = new PagingInfoDTO();
 		
 		pi.setPostPerPage(8);
-		pi.setPageCntPerBlock(10);
+		pi.setPageCntPerBlock(8);
 		
 		pi.setStartNum(pageNo); // 출력 시작할 번호
 		// 전체 글 수를 얻어옴
@@ -153,9 +156,30 @@ public class AdminServiceImpl implements AdminService {
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("boardList", lst);
+		returnMap.put("boardsize", lst.size());
 		returnMap.put("pagingInfo", pi);
 		
 		return returnMap;
+	}
+
+	@Override
+	public int getMemberPoint(String userid) throws NamingException, SQLException {
+		return memberdao.sumpoint(userid);
+	}
+
+	@Override
+	public List<MypointVo> pointlist(String userid) throws NamingException, SQLException {
+		return memberdao.pointlist(userid);
+	}
+
+	@Override
+	public int getMemberBoard(String userid) throws NamingException, SQLException {
+		return memberdao.countboard(userid);
+	}
+
+	@Override
+	public int getMemberReply(String userid) throws NamingException, SQLException {
+		return memberdao.countreplyer(userid);
 	}
 
 

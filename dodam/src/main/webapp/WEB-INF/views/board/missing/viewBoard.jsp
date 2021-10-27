@@ -904,7 +904,7 @@
 					<!-- <td></td> -->
 				</tr>
 			</table>
-			<div id="board_btn" style="margin-bottom: 200px;">
+			<div id="board_btn">
 				<button type="button" class="btn btn-success" id="list_btn" onclick="location.href='/board/missing/list'">목록</button>
 				<c:if test="${loginSession.userid != null }">
 					<div>
@@ -916,7 +916,7 @@
 					</div>
 				</c:if>
 			</div>
-			
+	
 			<div id="replyDiv">
 				<div>댓글 입력</div>
 				<div class="form-group">
@@ -975,6 +975,8 @@
 			</div>
 		</div>
 	</div>
+	<jsp:include page="otherlist.jsp"></jsp:include>
+	<br/><br/><br/>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

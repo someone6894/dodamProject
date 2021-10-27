@@ -293,7 +293,7 @@
                 <tbody class="list">
                 	<c:forEach var="member" items="${memberList }">
                 		<tr>
-                    		<th scope="row"><a href="/admin/userinfo?userid=${member.userid }">${member.userid }</a></th>
+                    		<th scope="row"><a href="/admin/userinfo?userid=${member.userid }&pageNo=1&boardName=missingboard">${member.userid }</a></th>
                     		<td class="name">${member.name }</td>
                     		<td class="email">${member.email }</td>
                     		<td class="phone">${member.phone }</td>
@@ -307,24 +307,28 @@
             <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
+                  <c:if test="${param.pageNo != 1 or param.pageNo != ''}">
+                  	<li class="page-item">
+                    	<a class="page-link" href="/admin/members?pageNo=${param.pageNo - 1}">
+                      		<i class="fas fa-angle-left"></i>
+                      	<span class="sr-only">Previous</span>
+                    	</a>
+                  	</li>
+                  </c:if>
                   <c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
                   	<li class="page-item" id="li${i }">
                     	<a class="page-link" id="page${i }" href="/admin/members?pageNo=${i }">${i }</a>
                   	</li>
                   </c:forEach>
+                  <c:if test="${param.pageNo != pagingInfo.totalPage }">
                   <li class="page-item">
-                    <a class="page-link" href="#">
+                    <a class="page-link" href="/admin/members?pageNo=${param.pageNo + 1}">
                       <i class="fas fa-angle-right"></i>
                       <span class="sr-only">Next</span>
                     </a>
                   </li>
+                  </c:if>
                 </ul>
               </nav>
             </div>

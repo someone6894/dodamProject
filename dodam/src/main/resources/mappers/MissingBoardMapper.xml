@@ -77,4 +77,24 @@
   <select id="selectBookmarkHistory" resultType="com.dodam.domain.missing.BookmarkVo">
   	select * from missingboardbookmark where no = #{no} and userid = #{userid}
   </select>
+  
+  <select id="selectRecommAnimal" resultType="com.dodam.domain.missing.RecommendVo">
+  	select animal, max(cnt) numOfRec from (
+		select b.animal, count(b.animal) cnt
+		from missingboard b inner join missingboardbookmark m
+		on b.no = m.no
+		where userid = #{userid}
+		group by animal) ani_cnt;
+  </select>
+  
+  <select id="selectRandom" resultType="com.dodam.domain.missing.MissingBoardListDTO">
+	select no, title, writer, contact, age, breed, location, gender, img, thumbimg, missingdate, name, dpchknum 
+  		from missingboard where category='missing' and no != #{no} order by rand() limit 0, 4;
+  </select>
+  
+  <select id="selectBookAnimal" resultType="com.dodam.domain.missing.MissingBoardListDTO">
+  	select no, title, writer, contact, age, breed, location, gender, img, thumbimg, missingdate, name, dpchknum 
+  		from missingboard where category='missing' and animal=#{animal} and no != #{no} order by rand() limit 0, 4;
+  </select>
+  
   </mapper>
