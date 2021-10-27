@@ -18,9 +18,20 @@
 </head>
 <script>
 
+// 관리자권한, 글쓴이 삭제 권한 주기 -> 21.10.26 정상작동 확인함
 function removeBoard(no) {
-	location.href = '/board/adopt/remove?no=' + ${board.no};
+	var writer = $("#writer").val();
+	if ( writer == "${loginSession.userid}" || ${loginSession.isadmin == 'Y'} ){ 
+		// 글쓴이 == 로그인 아이디 -> 삭제기능 활성
+		// isadmin == Y -> 관리자 삭제기능 권한 부여
+// 		console.log("true");
+		location.href = '/board/adopt/remove?no=' + ${board.no};
+	} else if( writer != "${loginSession.userid}" ){
+		alert("게시글을 삭제할 권한이 없습니다.");
+		console.log("false");
+	}
 }
+
 
 // 상세페이지에서 수정 버튼을 누루면 게시글 등록페이지와 같은 update 모달창 띄우기
 function updateBoard(no) {
@@ -28,6 +39,7 @@ function updateBoard(no) {
 	location.href = '/board/adopt/updateBoard?no=' + ${board.no};
 }
 
+// 댓글처리 -----------------------------------------------------------------
 // 	$(function(){
 // 		// 현재글에 달려있는 모든 댓글을 읽어와서 출력
 // 		viewAllReplies();
@@ -299,12 +311,25 @@ function updateBoard(no) {
 // 		});
 
 // 	}
+// 댓글처리 끝 -----------------------------------------------------------------
 </script>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+
 #replyDiv {
 	boarder: 1px dotted #e1bee7;
 	display: none;
 	padding: 5px;
+}
+
+.title{
+font-family: 'Nanum Pen Script', cursive;
+font-size: 50px;
+
+}
+.column{
+color: #B488FF;
+width: 15%;
 }
 </style>
 <body>
@@ -313,165 +338,88 @@ function updateBoard(no) {
 	response.setHeader("Cache-Control", "private, no-store, must-revalidate");
 	%>
 
-
-
-
 	<jsp:include page="../../template.jsp"></jsp:include>
-	
-						
-						
-	<div class="container"
-		style="height: 30%; width: 50%; border: 2px gray solid; margin-top: 50px; margin-bottom: 100px; padding: 20px">
-		<h2>${board.title }</h2>
 
-		<div class="row">
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="adoptkind">품종 </label> <input type="text"
-						class="form-control" id="adoptkind" name="adoptkind"
-						value="${board.adoptkind }" readonly>
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="gender">성별 </label> <input type="text"
-						class="form-control" id="gender" name="gender"
-						value="${board.gender }" readonly>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="liabilityfee">책임비 </label> <input type="text"
-						class="form-control" id="liabilityfee" name="liabilityfee"
-						value="${board.liabilityfee }" readonly>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="adoptarea">분양 지역 </label> <input type="text"
-						class="form-control" id="adoptarea" name="adoptarea"
-						value="${board.adoptarea }" readonly>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="phone">연락처 </label> <input type="text"
-						class="form-control" id="phone" name="phone"
-						value="${board.phone }" readonly>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="sns">SNS </label> <input type="text"
-						class="form-control" id="sns" name="sns" value="${board.sns }"
-						readonly>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="form-group">
-					<label for="writer">작성자 </label> <input type="text"
-						class="form-control" id="writer" name="writer"
-						value="${board.writer }" readonly><span id="writerError"
-						class="error"></span>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<label for="title">글번호:</label> <input type="text"
-					class="form-control" id="no" name="no" value="${board.no }"
-					readonly> <span id='readcount'>조회수 : <span
-					class="badge">${board.readcnt }</span></span> <span id='likeDislike'>
-					좋아요 : <span id='isLikeSpan'></span> <span id="likeCount"
-					class="badge">${board.bookmark }</span>
-				</span>
-			</div>
-
+		<div class="container"
+		style="height: 30%; width: 40%; margin-bottom: 100px; padding: 20px"
+		>
+		<div style="text-align:center;">
+		<h3 class='title'style='background-color: #FFFC94;'> ${board.title } </h3>
 		</div>
+		<span id='readcount' style='float:right;'>조회수 : <span class="badge">${board.readcnt }</span></span> 	
+		<br><br>
+		
+		<table class='table table-hover' >
+			<tr> 
+				<td class='column'>글번호</td>
+				<td>${board.no }</td>	
+			</tr>
+			<tr> 
+				<td class='column'>품종</td>
+				<td>${board.adoptkind }</td>	
+			</tr>
+			<tr> 
+				<td class='column'>성별</td>
+				<td>${board.gender }</td>	
+			</tr>
+			<tr> 
+				<td class='column'>책임비</td>
+				<td>${board.liabilityfee }</td>		
+			</tr>
+			<tr> 
+				<td class='column'>분양지역</td>
+				<td>${board.adoptarea }</td>	
+			</tr>
+			<tr> 
+				<td class='column'>연락처</td>
+				<td>${board.phone }</td>	
+			</tr>
+			<tr> 
+				<td class='column'>SNS</td>
+				<td>${board.sns }</td>	
+			</tr>	
+			<tr> 
+				<td class='column'>작성자</td>
+				<td>${board.writer }</td>	
+			</tr>	
+			<tr> 
+				<td class='column'>사진</td>
+				<td>
+				<c:choose>
+					<c:when test="${board.image == '' }"></c:when>
+					<c:when test="${board.image != null }">
+					<!-- 이미지 누루면 새창으로 원본띄우기 -->
+						<a href='../../resources/${board.image }' target='_blank'><img src="../../resources/${board.image }" width="500px" height="500px" /></a>
+					</c:when>
+					<c:when test="${board.notimage != null }">
+						<a href='../../resources/${board.notimage }'>${board.notimage }</a>
+					</c:when>
+				</c:choose>
+				</td>	
+			</tr>	
+			<tr> 
+				<td class='column'>내용</td>
+				<td>${board.contents }</td>	
+			</tr>
+		</table>
 
 
-		<!-- 		<div class="form-group"> -->
-		<!-- 			<label for="title">글번호:</label> <input type="text" -->
-		<%-- 				class="form-control" id="no" name="no" value="${board.no }" readonly> --%>
-		<!-- 			<div> -->
-		<%-- 				<span id='readcount'>조회수 : <span class="badge">${board.readcnt }</span></span> --%>
 
-		<!-- 				<span id='likeDislike'> 좋아요 : <span id='isLikeSpan'></span> <span -->
-		<%-- 					id="likeCount" class="badge">${board.bookmark }</span> --%>
-		<!-- 				</span> -->
-		<!-- 			</div> -->
-
-
-		<!-- 		</div> -->
-		<!-- 		<div class="form-group"> -->
-		<!-- 			<label for="title">제목:</label> <input type="text" -->
-		<%-- 				class="form-control" id="title" name="title" value="${board.title }" --%>
-		<!-- 				readonly> -->
-		<!-- 		</div> -->
-
-		<!-- 		<div class="form-group"> -->
-		<!-- 			<label for="writer">작성자 :</label> <input type="text" -->
-		<!-- 				class="form-control" id="writer" name="writer" -->
-		<%-- 				value="${board.writer}" readonly> --%>
-		<!-- 				<div id="writeInfo" style="display: none;"> -->
-		<%-- 					<div><a href="listAll?page=1&searchType=writer&searchWord=${board.writer }">작성자 글보기</a></div> --%>
-		<!-- 					<div>쪽지보내기</div> -->
-		<!-- 				</div> -->
-		<!-- 		</div> -->
-
-		<br>
-		<div class="form-group">
-			<label for="contents">내용 :</label>
-			<div>${board.contents }</div>
-			<br>
-
-			<c:choose>
-				<c:when test="${board.image == '' }">
-				</c:when>
-				<c:when test="${board.image != null }">
-					<img src="../../resources/${board.image }" width="500px"
-						height="500px" />
-				</c:when>
-				<c:when test="${board.notimage != null }">
-					<a href='../../resources/${board.notimage }'>${board.notimage }</a>
-				</c:when>
-
-			</c:choose>
-
-		</div>
-
-		<!-- 게시글 쓴 사람 == 접속한 id 일때 글 수정삭제 권한주기 -->
-		<c:if test="${board.writer == loginMember.userid }">
-			<button type="button" class="btn btn-success">수정</button>
-			<button type="button" class="btn btn-warning"
-				onclick="/board/adopt/remove?no=${board.no}">삭제</button>
-		</c:if>
-
-		<!-- 게시글 누구나 수정 삭제 권한 갖음 test용 -->
-		<button type="button" class="btn btn-success"
-			onclick="updateBoard(${board.no});">수정</button>
+				<!-- 게시글 누구나 수정 삭제 권한 갖음 test용 -->
+<!-- 		<button type="button" class="btn btn-success" -->
+<%-- 			onclick="updateBoard(${board.no});">수정</button> --%>
 		<button type="button" class="btn btn-success" data-toggle="modal"
-				data-target="#myModal2">글 수정테스트</button>
+				data-target="#updatePageModal">수정</button>
 		<button type="button" class="btn btn-warning"
 			onclick="removeBoard(${board.no});">삭제</button>
-
-
-
-
-
 		<!-- 상세페이지에서 목록으로.. -->
 		<button type="button" class="btn btn-info" style="float: right;"
 			onclick="location.href='/board/adopt/listAll?pageNo=1'">목록으로</button>
 
 		<!-- 상세페이지 수정용 업데이트 모달창 -->
 		<!-- Modal -->
-		<div class="modal fade" id="myModal2" role="dialog">
+		<div class="modal fade" id="updatePageModal" role="dialog">
 			<div class="modal-dialog">
-
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-body" style="height: 100%;">
@@ -479,15 +427,12 @@ function updateBoard(no) {
 						<jsp:include page="updateBoard.jsp"></jsp:include>
 					</div>
 				</div>
-
 			</div>
 		</div>
+		
 
-
-
-
-
-
+		</div>
+		<!-- container 끝 -->
 
 
 

@@ -28,4 +28,6 @@ public interface ReplyDAO {
 		public int delete(ReplyVo vo) throws Exception;
 
 		public int replycount(ReplyVo vo) throws Exception;
+
+		public int maxreplyno() throws Exception;
 }

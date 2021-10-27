@@ -28,5 +28,7 @@ public interface ReplyService {
 			public boolean deleteReply(ReplyVo vo) throws Exception;
 
 			public int replycount(ReplyVo vo) throws Exception;
+
+			public int maxreplyno() throws Exception;
 			
 }

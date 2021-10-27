@@ -10,14 +10,18 @@ public class MemberVo {
 	private String email;
 	private String phone;
 	private Timestamp regdate;
+	private Timestamp modifydate;
+	private String sessionid;
+	private String sessionage;
+	private String isadmin;
+	
 	
 	public MemberVo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public MemberVo(String userid, String password, String name, String nickname, String email, String phone,
-			Timestamp regdate) {
+			Timestamp regdate, Timestamp modifydate, String sessionid, String sessionage, String isadmin) {
 		super();
 		this.userid = userid;
 		this.password = password;
@@ -26,6 +30,10 @@ public class MemberVo {
 		this.email = email;
 		this.phone = phone;
 		this.regdate = regdate;
+		this.modifydate = modifydate;
+		this.sessionid = sessionid;
+		this.sessionage = sessionage;
+		this.isadmin = isadmin;
 	}
 
 	public String getUserid() {
@@ -84,13 +92,43 @@ public class MemberVo {
 		this.regdate = regdate;
 	}
 
+	public Timestamp getModifydate() {
+		return modifydate;
+	}
+
+	public void setModifydate(Timestamp modifydate) {
+		this.modifydate = modifydate;
+	}
+
+	public String getSessionid() {
+		return sessionid;
+	}
+
+	public void setSessionid(String sessionid) {
+		this.sessionid = sessionid;
+	}
+
+	public String getSessionage() {
+		return sessionage;
+	}
+
+	public void setSessionage(String sessionage) {
+		this.sessionage = sessionage;
+	}
+
+	public String getIsadmin() {
+		return isadmin;
+	}
+
+	public void setIsadmin(String isadmin) {
+		this.isadmin = isadmin;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVo [userid=" + userid + ", password=" + password + ", name=" + name + ", nickname=" + nickname
-				+ ", email=" + email + ", phone=" + phone + ", regdate=" + regdate + "]";
+				+ ", email=" + email + ", phone=" + phone + ", regdate=" + regdate + ", modifydate=" + modifydate
+				+ ", sessionid=" + sessionid + ", sessionage=" + sessionage + ", isadmin=" + isadmin + "]";
 	}
-	
-	
-	
 	
 }

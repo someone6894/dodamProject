@@ -47,7 +47,18 @@
 	location.href='scanMember';
 	
 	}
-
+</script>
+<script type="text/javascript">
+  function loginWithKakao() {
+    Kakao.Auth.login({
+      success: function(authObj) {
+        alert(JSON.stringify(authObj))
+      },
+      fail: function(err) {
+        alert(JSON.stringify(err))
+      },
+    })
+  }
 </script>
 
 <body>
@@ -76,6 +87,19 @@
 			<button class="btn btn-default btn-block" onclick='scanMember()' > 아이디 / 비밀번호 찾기 </button>
 	</div>
 	<br>
+	
+	
+	
+<!-- 카톡로그인 연동 -->
+<a id="custom-login-btn" href="javascript:loginWithKakao()">
+  <img
+    src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg"
+    width="222"
+  />
+</a>
+
+	
+	
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
 	
