@@ -397,7 +397,7 @@
 					// -------------- 비밀글 템플릿 ---------------------------
 					secoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
 					if (element.depth != 0) {
-						secoutput += '<div class="replyImg" style="margin-left: ' + 20*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
+						secoutput += '<div class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
 					}
 	    			secoutput += '<td><div class="list-group-item">';
 	    			secoutput += '<div><img src="../../resources/images/kmj/missing/lock.png" width="15px" />';
@@ -408,7 +408,7 @@
 	    			// ------------비밀글이 아닌 댓글 템플릿 -----------------
 	    			viewoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
 	    			if (element.depth != 0) {
-		    			viewoutput += '<div  class="replyImg" style="margin-left: ' + 20*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
+		    			viewoutput += '<div  class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
 					}
 	    			viewoutput += '<td><div class="list-group-item">';
 	        		viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
