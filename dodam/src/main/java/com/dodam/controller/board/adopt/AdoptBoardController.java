@@ -255,8 +255,8 @@ public class AdoptBoardController {
 		// String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20140301&endde=20140430&pageNo=1&numOfRows=10&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
 
 		// **경고 numOfRows 너무크게 주면 다운됨 **
-		// endde 없앰 -> 20210101 ~ 최근 자료까지나옴 , pageNo=1 , numOfRows=50 줌
-		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20210101&endde=&pageNo=1&numOfRows=50&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
+		// endde 없앰 -> 20210101 ~ 최근 자료까지나옴 , pageNo=1 , numOfRows=20 줌
+		String apiUrl = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20210101&endde=&pageNo=1&numOfRows=20&ServiceKey=LhtsYqsaFhYYq3GuCIigdN7A5khhuIdcyZsvVTvwBZTmkMJ28dJMaAU78ccZMy1isz6RnT6kiaYvHFjB9pDNSA%3D%3D";
 
 		HttpURLConnection con = connect(apiUrl); // con 디비 접속 객체 = api 연결 준비
 		String adoptApiSource = null;

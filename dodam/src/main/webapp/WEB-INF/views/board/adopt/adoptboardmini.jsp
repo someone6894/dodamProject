@@ -53,11 +53,6 @@ function adoptReadBoard(no) {
  	 background: silver; 
    } 
     
-/*   .titleCss:hover {  */
-/*     background: yellow;  */
-     
-/*   }  */
-  
    .img-rounded:hover { 
     background: yellow; 
      

@@ -44,10 +44,11 @@ function readBoard(no) {
   
   	
 	<jsp:include page="../../template.jsp"></jsp:include>
+	<h2 style="text-align: center; font-family: 'Nanum Pen Script', cursive; background-color: #FFFC94;">분양해요</h2>
+
 	<jsp:include page="adoptboardmini.jsp"></jsp:include>
 	
 	<div class="container">
-<!-- 		<h2 style="text-align: center;">분양 게시판</h2> -->
 		<br>
 		
 <!-- 		style="float: right" -->

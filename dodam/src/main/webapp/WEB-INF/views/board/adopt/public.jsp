@@ -15,16 +15,17 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
 <style>
 .thumbnail {
 	display: block;
 	text-align: center;
 }
 
+
 .row {
 	font-size: 22px;
 	font-family: 'Nanum Pen Script', cursive;
+	margin : 0 auto;
 }
 
 .notice {
@@ -32,19 +33,10 @@
 	padding : 10px;
 }
 
-/*
-.photo {
-	width : 45%;
-	float: left;
-}
-
-.text {
-	width : 45%;
-	float: right;
-	font-size: 15px;
+.focusView:hover { 
+   background: #FFFC94;    
 } 
-*/
-
+  
 </style>
 <script>
 	// CORS (Cross-Origin Resource Sharing) 문제 해결 : https://shinsunyoung.tistory.com/86 or https://ooz.co.kr/232
@@ -68,122 +60,123 @@
 							console.log("item 한 리스트에 들어가있는 속성, 태그 갯수 : " + data.getElementsByTagName("items")[0].children[0].childNodes.length);
 							
 							// 한 페이지에 출력되는 게시글 수
-							var pageDataLength = data.getElementsByTagName("numOfRows")[0].innerHTML;
+							let pageDataLength = data.getElementsByTagName("numOfRows")[0].innerHTML;
 							console.log("한 페이지에 출력되는 게시글 수 pageDataLength : " + pageDataLength);
 								
 							// 총 게시글 수 totalDataLength
-							var totalDataLength = data.getElementsByTagName("totalCount")[0].innerHTML;
+							let totalDataLength = data.getElementsByTagName("totalCount")[0].innerHTML;
 							console.log("총 게시글 수 totalDataLength : " + totalDataLength);
 							
-							var output = '';
-							output += "<div class='container row' >";
+							let output = '';
+							let age = '';
+							let desertionNo = '';
+							let careAddr = '';
+							let careNm = '';
+							let careTel = '';
+							let chargeNm = '';
+							let colorCd = '';
+							let filename = '';
+							let happenDt = '';
+							let happenPlace = '';
+							let kindCd = '';
+							let neuterYn = '';
+							let noticeNo = '';
+							let noticeEdt = '';
+							let officetel = '';
+							let orgNm = '';
+							let popfile = '';
+							let processState = '';
+							let sexCd = '';
+							let specialMark = '';
+							let weight = '';
+							
+							
+							output += "<div class='container row'>";
 
 							for (i = 0; i < pageDataLength; i++) {
+								
 								if (data.getElementsByTagName("age")[i] != null) {
-									var age = data.getElementsByTagName("age")[i].innerHTML;
+									age = data.getElementsByTagName("age")[i].innerHTML;
+								} 	
+								if (data.getElementsByTagName("desertionNo")[i] != null){
+									desertionNo = data.getElementsByTagName("desertionNo")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("careAddr")[i] != null) {
-									var careAddr = data
-											.getElementsByTagName("careAddr")[i].innerHTML;
+									careAddr = data.getElementsByTagName("careAddr")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("careNm")[i] != null) {
-									var careNm = data
-											.getElementsByTagName("careNm")[i].innerHTML;
+									careNm = data.getElementsByTagName("careNm")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("careTel")[i] != null) {
-									var careTel = data
-											.getElementsByTagName("careTel")[i].innerHTML;
+									careTel = data.getElementsByTagName("careTel")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("chargeNm")[i] != null) {
-									var chargeNm = data
-											.getElementsByTagName("chargeNm")[i].innerHTML;
+									chargeNm = data.getElementsByTagName("chargeNm")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("colorCd")[i] != null) {
-									var colorCd = data
-											.getElementsByTagName("colorCd")[i].innerHTML;
-								}
-								if (data.getElementsByTagName("desertionNo")[i] != null) {
-									var desertionNo = data
-											.getElementsByTagName("desertionNo")[i].innerHTML;
+									colorCd = data.getElementsByTagName("colorCd")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("filename")[i] != null) {
-									var filename = data
-											.getElementsByTagName("filename")[i].innerHTML;
+									filename = data.getElementsByTagName("filename")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("happenDt")[i] != null) {
-									var happenDt = data
-											.getElementsByTagName("happenDt")[i].innerHTML;
+									happenDt = data.getElementsByTagName("happenDt")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("happenPlace")[i] != null) {
-									var happenPlace = data
-											.getElementsByTagName("happenPlace")[i].innerHTML;
+									happenPlace = data.getElementsByTagName("happenPlace")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("kindCd")[i] != null) {
-									var kindCd = data
-											.getElementsByTagName("kindCd")[i].innerHTML;
+									kindCd = data.getElementsByTagName("kindCd")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("neuterYn")[i] != null) {
-									var neuterYn = data
-											.getElementsByTagName("neuterYn")[i].innerHTML;
+									neuterYn = data.getElementsByTagName("neuterYn")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("noticeEdt")[i] != null) {
-									var noticeEdt = data
-											.getElementsByTagName("noticeEdt")[i].innerHTML;
+									noticeEdt = data.getElementsByTagName("noticeEdt")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("noticeNo")[i] != null) {
-									var noticeNo = data
-											.getElementsByTagName("noticeNo")[i].innerHTML;
+									noticeNo = data.getElementsByTagName("noticeNo")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("noticeSdt")[i] != null) {
-									var noticeSdt = data
-											.getElementsByTagName("noticeSdt")[i].innerHTML;
+									noticeSdt = data.getElementsByTagName("noticeSdt")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("officetel")[i] != null) {
-									var officetel = data
-											.getElementsByTagName("officetel")[i].innerHTML;
+									officetel = data.getElementsByTagName("officetel")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("orgNm")[i] != null) {
-									var orgNm = data
-											.getElementsByTagName("orgNm")[i].innerHTML;
+									orgNm = data.getElementsByTagName("orgNm")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("popfile")[i] != null) {
-									var popfile = data
-											.getElementsByTagName("popfile")[i].innerHTML;
+									popfile = data.getElementsByTagName("popfile")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("processState")[i] != null) {
-									var processState = data
-											.getElementsByTagName("processState")[i].innerHTML;
+									processState = data.getElementsByTagName("processState")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("sexCd")[i] != null) {
-									var sexCd = data
-											.getElementsByTagName("sexCd")[i].innerHTML;
+									sexCd = data.getElementsByTagName("sexCd")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("specialMark")[i] != null) {
-									var specialMark = data
-											.getElementsByTagName("specialMark")[i].innerHTML;
+									specialMark = data.getElementsByTagName("specialMark")[i].innerHTML;
 								}
 								if (data.getElementsByTagName("weight")[i] != null) {
-									var weight = data
-											.getElementsByTagName("weight")[i].innerHTML;
+									weight = data.getElementsByTagName("weight")[i].innerHTML;
 								}
-
-							output += "<div class='col-md-4'>";
-								output += " <div class='thumbnail' onclick='viewInfo("+desertionNo+")'>";
-									output += "<b>" + processState + "</b>";
+								
+								
+							output += "<div class='col-md-4 '>";
+								output += " <div class='thumbnail focusView ' onclick='viewInfo("+ desertionNo +")'> ";
+									output += "<div>" + processState + "</div>";
 									output += "<div> 공고번호 : " + noticeNo + "</div>";
 									output += "<div> 유기번호 : " + desertionNo + "</div>";
-									output += "<div class='photo'><img src='" + popfile + "' class='img-rounded' width= '300px' height= '300px' /></div>";
-									output += "<div class='text'>";
-										output += "<div> 품종: " + kindCd + "</div>";
-										output += "<div> 발견지역: " + orgNm + "</div>";
-										output += "<div> 나이: " + age + ", 성별 : " + sexCd + "</div>";
-										output += "<div> 특징: " + specialMark + "</div>";
-										output += "<div> 접수일자: " + happenDt + "</div>";
-										output += "<div> 담당자: " + chargeNm + "(" + officetel + ")</div>";
-									output += "</div>";
+									output += "<div><img src='" + popfile + "' class='img-rounded ' width= '300px' height= '300px' /></div>";
+									output += "<div> 품종: " + kindCd + "</div>";
+									output += "<div> 발견지역: " + orgNm + "</div>";
+									output += "<div> 나이: " + age + ", 성별 : " + sexCd + "</div>";
+									output += "<div> 특징: " + specialMark + "</div>";
+									output += "<div> 접수일자: " + happenDt + "</div>";
+									output += "<div> 담당자: " + chargeNm + "(" + officetel + ")</div>";
 								output += "</div>";
 							output += "</div>";
-								// 		        			console.log(output);
 
 							} //for문 끝
 
@@ -191,13 +184,11 @@
 							$("#publicList").html(output);
 
 						} // if(data != null) 끝
-						// 		        		$("#publicList").html() = output;
 					} // success function 끝 
 				});
 	} //showPublicAdopt 끝
 	
 	function viewInfo(no){
-		console.log("공고 상세페이지 no : " + no);
 		location.href="/board/adopt/publicInfo?no=" + no;
 	}
 	
@@ -206,9 +197,11 @@
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<br />
+	<div class='container'>
 	<div class="row" style='text-align: center;'>
 		<div><b>유기동물 보호관리 시스템 공고</b></div> 
 		<a href="https://www.animal.go.kr/front/awtis/public/publicList.do">(https://www.animal.go.kr/front/awtis/public/publicList.do)</a>
+	</div>
 	</div>
 	<br />
 
@@ -238,11 +231,14 @@
                                 ※ 동물보호센터 및 동물병원 <span style="color:red;">근무시간은 09:00 ~ 18:00이므로 문의전화는 근무시간에만 가능</span>합니다.
                         </div>
                    </div>
-                </div>
-                
+               </div>
 	</div>
-	<br />
-	<jsp:include page="../../footer.jsp"></jsp:include>
 	
+	
+	<br />
+	<div class='container'>
+	<div id="publicList" ></div>
+	</div>
+	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>
