@@ -69,6 +69,5 @@
 		<button type="button" class="btn btn-info"
 			onclick="location.href='/board/notice/listAll?pageNo=1'">목록으로</button>
 	</div>
-
 </body>
 </html>
