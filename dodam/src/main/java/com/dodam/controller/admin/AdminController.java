@@ -1,5 +1,6 @@
 package com.dodam.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class AdminController {
 		try {
 			map =service.selectAllMembers(pageNo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// 에러페이지 처리
 			e.printStackTrace();
 		}
 		List<MemberVo> memberList = (List<MemberVo>)map.get("memberList");
@@ -53,9 +54,31 @@ public class AdminController {
 	@RequestMapping("/userinfo")
 	public void userinfo(@RequestParam(value="userid") String userid,
 						@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
-						@RequestParam(value="boardName") String boardName,
+						@RequestParam(value="boardName", defaultValue="missingboard") String boardName,
 						Model model) {
-		service.getUserInfo(userid);
+		
+		// 사용자 정보 조회
+		MemberVo userInfo = service.getUserInfo(userid);
+		
+		// 게시판 별 사용자 작성글 조회
+		Map<String, Object> map = null;
+		try {
+			map = service.getBoardList(userid, pageNo, boardName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		List boardList = new ArrayList();
+		if (map.get("boardList") != null) {
+			boardList = (List)map.get("boardList");
+		}
+
+		PagingInfoDTO pi = (PagingInfoDTO)map.get("pagingInfo");
+		
+		model.addAttribute("userInfo", userInfo);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pagingInfo", pi);
+		model.addAttribute("boardName", boardName);
 		
 	}
 }

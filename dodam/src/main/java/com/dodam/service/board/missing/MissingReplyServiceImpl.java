@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.stereotype.Service;
 
 import com.dodam.domain.missing.MissingReplyVo;
@@ -32,19 +33,16 @@ public class MissingReplyServiceImpl implements MissingReplyService {
 				return true;
 			}
 		} else { // 부모댓글의 번호가 존재하는 경우(대댓글의 경우)
+			// 부모댓글의 정보 가져옴
 			MissingReplyVo p_mrv = dao.selectReply(mrv.getPid());
-			mrv.setPid(p_mrv.getPid());
-			mrv.setDepth(p_mrv.getDepth());
-			mrv.setReforder(p_mrv.getReforder());
 			
-			// 업데이트가 잘 이루어 질 경우
-			if (dao.updateRef(mrv) >= 0) {
-				if (dao.insertReReply(mrv) == 1) {
-					return true;
-				} else {
-					// insert가 잘 이루어지지 않았으면, update도 되돌려야 함(rollback 기능)
-					dao.updateRollbackRef(mrv);
-				}
+			mrv.setPid(p_mrv.getPid());
+			mrv.setDepth(p_mrv.getDepth()+1);
+			mrv.setReforder(p_mrv.getReforder() + "-" + dao.selectNo());
+			
+			// 계층형 댓글 형태 구현
+			if (dao.insertReReply(mrv) == 1) {
+				result = true;
 			}
 		}
 

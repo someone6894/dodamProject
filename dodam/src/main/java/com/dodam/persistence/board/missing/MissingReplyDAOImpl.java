@@ -29,7 +29,7 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 
 	@Override
 	public int deleteReply(int no) {
-		return ses.delete(ns + ".deleteReply", no);
+		return ses.update(ns + ".deleteReply", no);
 	}
 
 	@Override
@@ -46,20 +46,10 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 	public MissingReplyVo selectReply(int pid) {
 		return ses.selectOne(ns + ".selectReply", pid);
 	}
-
-	@Override
-	public int updateRef(MissingReplyVo mrv) {
-		return ses.update(ns + ".updateRef", mrv);
-	}
-
+	
 	@Override
 	public int insertReReply(MissingReplyVo mrv) {
 		return ses.insert(ns + ".insertReReply", mrv);
-	}
-
-	@Override
-	public int updateRollbackRef(MissingReplyVo mrv) {
-		return ses.update(ns + ".updateRollbakcRef", mrv);
 	}
 
 

@@ -10,15 +10,15 @@ public class MissingReplyVo {
 	private Timestamp lastmodifieddate;
 	private char issecret;
 	private char ismodified;
+	private char isdeleted;
 	private int pid;
 	private int depth;
-	private int reforder;
-	private int output;
+	private String reforder;
 	public MissingReplyVo() {
 		super();
 	}
 	public MissingReplyVo(int no, int pno, String contents, String replyer, Timestamp lastmodifieddate, char issecret,
-			char ismodified, int pid, int depth, int reforder) {
+			char ismodified, char isdeleted, int pid, int depth, String reforder) {
 		super();
 		this.no = no;
 		this.pno = pno;
@@ -27,6 +27,7 @@ public class MissingReplyVo {
 		this.lastmodifieddate = lastmodifieddate;
 		this.issecret = issecret;
 		this.ismodified = ismodified;
+		this.isdeleted = isdeleted;
 		this.pid = pid;
 		this.depth = depth;
 		this.reforder = reforder;
@@ -73,6 +74,12 @@ public class MissingReplyVo {
 	public void setIsmodified(char ismodified) {
 		this.ismodified = ismodified;
 	}
+	public char getIsdeleted() {
+		return isdeleted;
+	}
+	public void setIsdeleted(char isdeleted) {
+		this.isdeleted = isdeleted;
+	}
 	public int getPid() {
 		return pid;
 	}
@@ -85,23 +92,17 @@ public class MissingReplyVo {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	public int getReforder() {
+	public String getReforder() {
 		return reforder;
 	}
-	public void setReforder(int reforder) {
+	public void setReforder(String reforder) {
 		this.reforder = reforder;
-	}
-	public int getOutput() {
-		return output;
-	}
-	public void setOutput(int output) {
-		this.output = output;
 	}
 	@Override
 	public String toString() {
 		return "MissingReplyVo [no=" + no + ", pno=" + pno + ", contents=" + contents + ", replyer=" + replyer
 				+ ", lastmodifieddate=" + lastmodifieddate + ", issecret=" + issecret + ", ismodified=" + ismodified
-				+ ", pid=" + pid + ", depth=" + depth + ", reforder=" + reforder + "]";
+				+ ", isdeleted=" + isdeleted + ", pid=" + pid + ", depth=" + depth + ", reforder=" + reforder + "]";
 	}
-
+		
 }

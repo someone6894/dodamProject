@@ -10,12 +10,12 @@
   </insert>
   
   <select id="selectAllReply" resultType="com.dodam.domain.missing.MissingReplyVo">
-  	select * from missingboardreply where pno = #{pno} order by pid asc, reforder asc
+  	select * from missingboardreply where pno = #{pno} order by pid, reforder
   </select>
   
-  <delete id="deleteReply">
-  	delete from missingboardreply where no = #{no}
-  </delete>
+  <update id="deleteReply">
+  	update missingboardreply set isdeleted = 'Y' where no = #{no}
+  </update>
   
   <update id="updateReply">
   	update missingboardreply set contents = #{contents}, issecret = #{issecret}, lastmodifieddate = #{lastmodifieddate}, ismodified = 'Y' where no = #{no}
@@ -29,16 +29,8 @@
     SELECT ifnull(max(no)+1, 1) FROM missingboardreply;
   </select>
   
-  <update id="updateRef">
-  	update missingboardreply set reforder = reforder + 1 where pid = #{pid} and reforder > #{reforder};
-  </update>
-  
   <insert id="insertReReply">
   	insert into missingboardreply(pno, replyer, contents, pid, depth, reforder, issecret) 
-	values(#{pno}, #{replyer}, #{contents}, #{pid}, #{depth} + 1, #{reforder} + 1, #{issecret});
+	values(#{pno}, #{replyer}, #{contents}, #{pid}, #{depth}, #{reforder}, #{issecret})
   </insert>
-  
-  <update id="updateRollbackRef">
-  	update missingboardreply set reforder = reforder - 1 where pid = #{pid} and reforder > #{reforder};
-  </update>
   </mapper>

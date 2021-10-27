@@ -25,7 +25,27 @@
   		select * from adoptboarduser where writer=#{userid} limit #{startNum}, #{postPerPage}
   	</select>
   	
-  	<select id="selectList" resultType="java.util.List">
-  		select * from #{boardName} where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	<select id="selectProudBoard" resultType="com.dodam.domain.proud.ProudVo">
+  		select * from proudboard where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectQnaBoard" resultType="com.dodam.domain.proud.ProudVo">
+  		select * from qna where writer=#{userid} limit #{startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectMissingCntPost" resultType="int">
+  		select count(*) from missingboard
+  	</select>
+  	
+  	<select id="selectAdoptCntPost" resultType="int">
+  		select count(*) from adoptboarduser
+  	</select>
+  	
+  	<select id="selectProudCntPost" resultType="int">
+  		select count(*) from proudboard
+  	</select>
+  	
+  	<select id="selectQnaCntPost" resultType="int">
+  		select count(*) from qna
   	</select>
   </mapper>

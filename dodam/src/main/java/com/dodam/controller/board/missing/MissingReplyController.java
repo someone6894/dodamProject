@@ -26,7 +26,6 @@ public class MissingReplyController {
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public ResponseEntity<String> registerReply(@RequestBody MissingReplyVo mrv) {
-		
 		if (service.insertReply(mrv)) {
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 		}

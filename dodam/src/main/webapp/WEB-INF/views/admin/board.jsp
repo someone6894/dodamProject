@@ -54,6 +54,18 @@
                 <span class="nav-link-text">게시판 관리</span>
               </a>
             </li>
+             <li class="nav-item">
+              <a class="nav-link" href="/admin/board">
+                <i class="ni ni-align-left-2 text-primary"></i>
+                <span class="nav-link-text">공지사항</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/board">
+                <i class="ni ni-align-left-2 text-primary"></i>
+                <span class="nav-link-text">Q&A</span>
+              </a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="/admin/reply">
                 <i class="ni ni-chat-round text-yellow"></i>

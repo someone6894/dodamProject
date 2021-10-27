@@ -18,11 +18,8 @@ public interface MissingReplyDAO {
 
 	MissingReplyVo selectReply(int pid);
 
-	int updateRef(MissingReplyVo mrv);
-
+	
+	// 계층형 댓글을 위한 메서드
 	int insertReReply(MissingReplyVo mrv);
-
-	int updateRollbackRef(MissingReplyVo mrv);
-
 
 }
