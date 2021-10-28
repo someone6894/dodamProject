@@ -19,13 +19,22 @@
 <!-- <script type="text/javascript"> $.noConflict(); </script> -->
 <script>
 
+window.onload = function(){
+	hideCreateBoard();
+}
+
 // 상세페이지
 function readBoard(no) {
 	console.log("상세페이지 보기 : " + no);
 	location.href = '/board/adopt/readBoard?no=' + no;
 }
 
-
+// 세션 로그인 = null -> 로그인 하지않으면 글작성 버튼 안보이게 함.
+function hideCreateBoard() {
+	if(${loginSession == null}){
+		$('#openCreatePage').hide();
+	}
+}
 
 </script>
 <style>
@@ -60,7 +69,7 @@ function readBoard(no) {
 						<tr>
 							<th>번호</th>
 							<th>제목</th>
-<!-- 							<th>글쓴이</th> -->
+							<th>글쓴이</th>
 <!-- 							<th>품종</th> -->
 <!-- 							<th>성별</th> -->
 <!-- 							<th>사진</th> -->
@@ -80,7 +89,7 @@ function readBoard(no) {
 							<tr onclick="readBoard(${board.no});">
 								<td>${board.no }</td>
 								<td>${board.title }</td>
-<%-- 								<td>${board.writer }</td> --%>
+								<td>${board.writer }</td>
 <%-- 								<td>${board.adoptkind }</td> --%>
 <%-- 								<td>${board.gender }</td> --%>
 <!-- 								<td><img src= ../resources/${board.image } width= '100px' height= '100px' /></td> -->
@@ -106,17 +115,13 @@ function readBoard(no) {
 			</c:when>
 		</c:choose>
 	
-	<div>
-			<button type="button" class="btn btn-info btn-block" data-toggle="modal"
-				data-target="#myModal2">글 작성</button>
+		<div>
+			<button type="button" class="btn btn-info btn-block" 
+				id='openCreatePage' data-target='#createBoard' data-toggle="modal">글 작성</button>
+		</div>
 	</div>
-	
-		
-	</div>
-	
-	
-		
-		
+
+ 	<!-- 게시판 페이징 처리 -->		
 	<div style="text-align: center;">
 			<ul class="pagination">
 				<c:if test="${param.pageNo > 1 }">
@@ -144,11 +149,10 @@ function readBoard(no) {
 			</ul>
 		</div>
 	
-		
+	<!-- 글작성 페이지 모달창 -->
 	<!-- Modal -->
-	<div class="modal fade" id="myModal2" role="dialog">
+	<div class="modal fade" id="createBoard" role="dialog" style='display:none;'>
 		<div class="modal-dialog">
-
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-body" style="height: 100%;">
@@ -156,9 +160,9 @@ function readBoard(no) {
 					<jsp:include page="createBoard.jsp"></jsp:include>
 				</div>
 			</div>
-
 		</div>
 	</div>
+	
   <jsp:include page="../../footer.jsp"></jsp:include>
   
 </body>

@@ -17,18 +17,37 @@
 <title>Insert title here</title>
 </head>
 <script>
+window.onload = function(){
+	hideBtn();
+}
+
+// 로그인 세션 없으면 글 수정 삭제 버튼 아예 안보이게 함
+function hideBtn() {
+	if(${loginSession == null}){
+		$('#updateBtn').hide();
+		$('#deleteBtn').hide();
+	}
+}
 
 // 관리자권한, 글쓴이 삭제 권한 주기 -> 21.10.26 정상작동 확인함
 function removeBoard(no) {
 	var writer = $("#writer").val();
+	console.log(${loginSession == null});
+	
+	if(${loginSession == null}){
+		alert("게시글을 삭제할 권한이 없습니다.");
+	}
+	
+	
 	if ( writer == "${loginSession.userid}" || ${loginSession.isadmin == 'Y'} ){ 
 		// 글쓴이 == 로그인 아이디 -> 삭제기능 활성
 		// isadmin == Y -> 관리자 삭제기능 권한 부여
-// 		console.log("true");
+		console.log("게시글 삭제 가능");
 		location.href = '/board/adopt/remove?no=' + ${adoptBoardDetail.no};
-	} else if( writer != "${loginSession.userid}" || ${loginSession.userid == ''} ){
+	} else if( writer != "${loginSession.userid}" || ${loginSession == null} ){
+		// 글쓴이 != 로그인 아이디 -> 삭제기능 비활성
 		alert("게시글을 삭제할 권한이 없습니다.");
-		console.log("false");
+		console.log("게시글 삭제 불가");
 	}
 }
 
@@ -408,9 +427,9 @@ width: 15%;
 				<!-- 게시글 누구나 수정 삭제 권한 갖음 test용 -->
 <!-- 		<button type="button" class="btn btn-success" -->
 <%-- 			onclick="updateBoard(${adoptBoardDetail.no});">수정</button> --%>
-		<button type="button" class="btn btn-success" data-toggle="modal"
+		<button type="button" class="btn btn-success" id='updateBtn'  data-toggle="modal"
 				data-target="#updatePageModal">수정</button>
-		<button type="button" class="btn btn-warning"
+		<button type="button" class="btn btn-warning" id='deleteBtn'
 			onclick="removeBoard(${adoptBoardDetail.no});">삭제</button>
 		<!-- 상세페이지에서 목록으로.. -->
 		<button type="button" class="btn btn-info" style="float: right;"
