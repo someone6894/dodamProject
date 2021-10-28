@@ -246,6 +246,7 @@ public class ProudController {
 		return "redirect:/board/proud/listAll?pageNo=1";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/like", method=RequestMethod.POST)
 	public ResponseEntity<String> like(@RequestBody LikeHistory vo, HttpServletRequest request) throws NamingException, SQLException {
 
@@ -267,7 +268,8 @@ public class ProudController {
 		}
 		return result;
 	}
-	
+
+	@ResponseBody
 	@RequestMapping(value="/dislike", method=RequestMethod.POST)
 	public ResponseEntity<String> dislike(@RequestBody LikeHistory vo, HttpServletRequest request) throws NamingException, SQLException {
 

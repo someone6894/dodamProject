@@ -343,8 +343,8 @@
 		         success : function(data) { // 통신 성공시 수행될 콜백 함수
 				if(data == "success") {
 					alert("추천 되었습니다!");
-					$("#chang").hide(100);
-					$("#mo").show(100);
+					$("#chang").hide();
+					$("#mo").show();
 					location.reload();
 				} else if (data =="fail") {
 					alert('추천 실패!');
@@ -378,8 +378,8 @@
 		         success : function(data) { // 통신 성공시 수행될 콜백 함수
 				if(data == "success") {
 					alert("추천 취소하였습니다.!");
-					$("#mo").hide(100);
-					$("#chang").show(100);
+					$("#mo").hide();
+					$("#chang").show();
 					location.reload();
 				} else if (data =="fail") {
 					alert('추천 취소 실패!');

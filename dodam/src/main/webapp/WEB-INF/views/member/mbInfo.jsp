@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Dodam Dodam</title>
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
+<title>마이페이지</title>
 <script>
 	window.onload = function() {
 		let status = "${status}";
@@ -246,7 +247,7 @@ div {
 					<div class="grade">${grade} </div>
 					<div class="name">${loginSession.userid }</div>
 				</div>
-				<div class="modify">i</div>
+				<div class="modify"></div>
 			</div>
 			
 			<div class="summaryContainer">
@@ -369,11 +370,11 @@ div {
 			</div>
 			
 			<div class="infoContainer">
-				<a href="#" class="item">
+				<a href="/board/notice/listAll" class="item">
 					<div>icon</div>
 					<div>공지사항</div>
 				</a> <a href="#" class="item">
-					<div>icos</div>
+					<div>icon</div>
 					<div>이용안내</div>
 				</a> <a href="#" class="item">
 					<div>icon</div>
@@ -393,8 +394,8 @@ div {
 			<%-- 	<div>name : ${memberInfo.name }</div> --%>
 			<%-- 	<div>email : ${memberInfo.email }</div> --%>
 			<%-- 	<div>phone : ${memberInfo.phone }</div> --%>
-			<br />--%>
-
+			<br />
+			
 			 <%--	<div id='loginsession'> login_session : ${loginSession} </div> 
 			<div>login_session_userid : ${loginSession.userid }</div>
 			<div>login_session_password : ${loginSession.password }</div>
