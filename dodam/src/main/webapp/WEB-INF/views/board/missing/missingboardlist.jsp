@@ -329,7 +329,7 @@
 								<c:when test="${MissingBoard.img != ''}">
 									<c:choose>
 										<c:when test="${MissingBoard.dpchknum eq null }">
-											<img src="../../resources/uploads/kmj/missing${MissingBoard.img }" width="100%"/>
+											<img src="../../resources/uploads/kmj/missing${MissingBoard.img }" height="230px"/>
 										</c:when>
 										<c:otherwise>
 											<img src="${MissingBoard.img }" width="100%" onerror="deleteBoard(${MissingBoard.no });" />
@@ -337,7 +337,7 @@
 									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>
+									<img src="../../resources/images/kmj/missing/noimage.png" height="230px"/>
 								</c:otherwise>
 							</c:choose>
 						</div>

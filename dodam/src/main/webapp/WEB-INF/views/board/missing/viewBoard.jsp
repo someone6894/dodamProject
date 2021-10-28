@@ -392,9 +392,20 @@
 	    		$(data).each(function(i, element){
 	    			let secoutput ='';
 	    			let viewoutput = '';
+	    			let deletedoutput = '';
 	        		let loginUser = '${loginSession.userid}'; // 로그인 유저
 	        		let bwriter = '${MissingBoard.writer}'; // 부모글 작성자
 	        		let replyer = element.replyer;
+	        		
+	        		// ---------------- 삭제된 댓글 템플릿 ------------------------
+	        		deletedoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
+					if (element.depth != 0) {
+						secoutput += '<div class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
+					}
+					deletedoutput += '<td><div class="list-group-item">';
+					deletedoutput += '<div> 삭제된 댓글입니다. </div>';
+					deletedoutput += '<div id="secretDiv' + element.no + '" style="display: none;">' + element.issecret + '</div>';
+					deletedoutput += '</div></td></tr></table>';
 	        		
 					// -------------- 비밀글 템플릿 ---------------------------
 					secoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
@@ -430,40 +441,44 @@
 	        		
 	        		// -------------------------------------------------------
 	        		
-	        		if (element.issecret == 'Y') { // 비밀글이다
-						if (loginUser == bwriter || loginUser ==  replyer || loginUser == "admin123") { // 보이는 조건에 해당
-								viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
-								viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
-							if(loginUser == replyer || loginUser == "admin123" ) { // 댓글 작성자인 경우
-					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
-					       		viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
-					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
-							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
-					       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-					       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
-							}
-							viewoutput += '</div></td></tr></table>';
-							output += viewoutput;
-							
-						} else { // 로그인을 했지만 보이는 조건에 맞지 않는 경우 or 비밀글인데 로그인을 하지 않은 경우
-							output += secoutput;
-						}
+	        		if (element.isdeleted == 'Y') {
+	        			output += deletedoutput;
 	        		} else {
-	        			if (loginUser != "") {
-		        			if(loginUser == replyer) { // 댓글 작성자인 경우
-						       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-						       	viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
-						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
-							} else if (loginUser == bwriter) { // 부모글 작성자인 경우
-						       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
-						       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+		        		if (element.issecret == 'Y') { // 비밀글이다
+							if (loginUser == bwriter || loginUser ==  replyer || loginUser == "admin123") { // 보이는 조건에 해당
+									viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
+									viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
+								if(loginUser == replyer || loginUser == "admin123" ) { // 댓글 작성자인 경우
+						       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
+						       		viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
+						       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+								} else if (loginUser == bwriter) { // 부모글 작성자인 경우
+						       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+						       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+								}
+								viewoutput += '</div></td></tr></table>';
+								output += viewoutput;
+								
+							} else { // 로그인을 했지만 보이는 조건에 맞지 않는 경우 or 비밀글인데 로그인을 하지 않은 경우
+								output += secoutput;
 							}
-		        			viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
-	        			}
-	        			viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu"></ul></div>';
-	        			viewoutput += '</div></td></tr></table>';
-	
-	        			output += viewoutput;
+		        		} else {
+		        			if (loginUser != "") {
+			        			if(loginUser == replyer) { // 댓글 작성자인 경우
+							       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+							       	viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
+							       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+								} else if (loginUser == bwriter) { // 부모글 작성자인 경우
+							       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
+							       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
+								}
+			        			viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
+		        			}
+		        			viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu"></ul></div>';
+		        			viewoutput += '</div></td></tr></table>';
+		
+		        			output += viewoutput;
+		        		}
 	        		}
 	    		}); // 반복문 끝
 	    		output += "</div>";

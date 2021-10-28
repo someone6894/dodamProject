@@ -26,12 +26,7 @@ public class AdminController {
 	private AdminService service;
 	
 	@RequestMapping("")
-	public String callAdminPage() {
-		return "/admin/adminPage";
-	}
-	
-	@RequestMapping("/members")
-	public void members(Model model, @RequestParam(value="pageNo", defaultValue = "1") int pageNo) {
+	public String members(Model model, @RequestParam(value="pageNo", defaultValue = "1") int pageNo) {
 		Map<String, Object> map = null;
 		
 		try {
@@ -45,6 +40,8 @@ public class AdminController {
 		
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagingInfo", pi);
+		
+		return "/admin/adminPage";
 	}
 	
 	@RequestMapping("/board")

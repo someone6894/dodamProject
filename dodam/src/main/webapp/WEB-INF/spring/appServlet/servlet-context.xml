@@ -40,6 +40,20 @@
 	<context:component-scan base-package="com.dodam.controller.members" />
 	<context:component-scan base-package="com.dodam.controller.mypage" />
 	
+	<!-- 인터셉터 객체 -->
+	<beans:bean id="AuthInterceptor" class="com.dodam.interceptor.AuthInterceptor"></beans:bean>
+	<beans:bean id="AdminAuthInterceptor" class="com.dodam.interceptor.AdminAuthInterceptor"></beans:bean>
 	
+	<!-- 인터셉터 설정할 url지정 -->
+	<interceptors>
+		<interceptor>
+        	<mapping path="/board/missing/write" /> 
+        	<beans:ref bean="AuthInterceptor" />
+		</interceptor>
+		<!-- <interceptor>
+        	<mapping path="/admin/**" /> 
+        	<beans:ref bean="AdminAuthInterceptor" />
+		</interceptor> -->
+	</interceptors>
 	
 </beans:beans>

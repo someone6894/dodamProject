@@ -38,12 +38,6 @@
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="/admin">
-                <i class="ni ni-tv-2 text-primary"></i>
-                <span class="nav-link-text">관리자 메인</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/members">
                 <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">회원 정보 관리</span>
               </a>

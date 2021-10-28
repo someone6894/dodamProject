@@ -37,112 +37,9 @@
 </head>
 <script>
 	$(function() {
-		if ("${boardName}" == "missingboard") {
-			$("#missing").prop("checked", true);
-			parseMissingBoard();
-		} else if ("${boardName}" == "adoptboarduser") {
-			$("#adopt").prop("checked", true);
-			parseAdoptBoard();
-		} else if ("${boardName}" == "proudboard") {
-			$("#proud").prop("checked", true);
-			//parseProudBoard();
-		} else if ("${boardName}" == "qna") {
-			$("#qna").prop("checked", true);
-			//parseQnaBoard();
-		}
-
-		$("#adopt")
-				.click(
-						function() {
-							location.href = "/admin/userinfo?userid=${param.userid}&boardName=adoptboarduser";
-						});
-
-		$("#missing")
-				.click(
-						function() {
-							location.href = "/admin/userinfo?userid=${param.userid}&boardName=missingboard";
-						});
-
-		$("#proud")
-				.click(
-						function() {
-							location.href = "/admin/userinfo?userid=${param.userid}&boardName=proudboard";
-						});
-
-		$("#qna")
-				.click(
-						function() {
-							location.href = "/admin/userinfo?userid=${param.userid}&boardName=qna";
-						});
-	});
-
-	function parseMissingBoard() {
-		let output = '';
-		if ("${boardsize}" == "0") {
-			output += '<div>게시글이 없습니다.</div>';
-		} else {
-			// 테이블 jstl써서 파싱
-			output += '<table class="table align-items-center table-flush"><thead class="thead-light">';
-			output += '<tr><th scope="col" class="sort" data-sort="title">제목</th>';
-			output += '<th scope="col" class="sort" data-sort="writer">작성자</th>';
-			output += '<th scope="col" class="sort" data-sort="registerdate">작성일</th>';
-			output += '<th scope="col" class="sort" data-sort="readcount">조회수</th>';
-			output += '<th scope="col" class="sort" data-sort="bookmark">북마크 수</th>';
-			output += '<th scope="col" class="sort" data-sort="registerdate">특이사항</th></tr></thead>';
-			output += '<tbody class="list"><c:forEach var="board" items="${boardList }">';
-			output += '<tr><th scope="row"><a href="/board/missing/list?no=${board.no}">${board.title}</a></th>';
-			output += '<td class="writer">${board.writer }</td><td class="registerdate">${board.registerdate }</td>';
-			output += '<td class="readcount">${board.readcount}</td><td class="bookcount">${member.likecount }</td>';
-			output += '<td class="contents">${member.contents }</td></tr></c:forEach></tbody></table>';
-		}
-
-		$(".table-responsive").html(output);
-
-		parsePaging();
-	}
-
-	function parseAdoptBoard() {
-		let output = '';
-		if ("${boardsize}" == '0') {
-			output += '<div class="row">&nbsp;&nbsp;&nbsp;&nbsp;게시글이 없습니다.</div>';
-		} else {
-			// 테이블 jstl써서 파싱
-			output += '<table class="table align-items-center table-flush"><thead class="thead-light">';
-			output += '<tr><th scope="col" class="sort" data-sort="title">제목</th>';
-			output += '<th scope="col" class="sort" data-sort="writer">작성자</th>';
-			output += '<th scope="col" class="sort" data-sort="registerdate">작성일</th>';
-			output += '<th scope="col" class="sort" data-sort="readcount">조회수</th>';
-			output += '<th scope="col" class="sort" data-sort="bookmark">북마크 수</th>';
-			output += '<th scope="col" class="sort" data-sort="registerdate">특이사항</th></tr></thead>';
-			output += '<tbody class="list"><c:forEach var="board" items="${boardList }">';
-			output += '<tr><th scope="row"><a href="/board/missing/list?no=${board.no}">${board.title}</a></th>';
-			output += '<td class="writer">${board.writer }</td><td class="registerdate">${board.registerdate }</td>';
-			output += '<td class="readcount">${board.readcount}</td><td class="bookcount">${member.likecount }</td>';
-			output += '<td class="contents">${member.contents }</td></tr></c:forEach></tbody></table>';
-		}
-
-		$(".table-responsive").html(output);
 		
-		parsePaging();
-	}
-	
-	function parsePaging() {
-		let paging = '';
-		paging += '<nav aria-label="..."><ul class="pagination justify-content-end mb-0"><c:if test="${param.pageNo != 1 or param.pageNo != ''}">';
-        paging += '<i class="page-item"><a class="page-link" href="/admin/members?pageNo=${param.pageNo - 1}"><i class="fas fa-angle-left"></i>';
-        paging += '<span class="sr-only">Previous</span></a></li></c:if><c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }" end="${pagingInfo.endPageNoOfBlock }" step="1">';
-        paging += '<li class="page-item" id="li${i }"><a class="page-link" id="page${i }" href="/admin/members?pageNo=${i }">${i }</a></li>';
-        paging += '</c:forEach><c:if test="${param.pageNo != pagingInfo.totalPage }"><li class="page-item"><a class="page-link" href="/admin/members?pageNo=${param.pageNo + 1}">';
-        paging += '<i class="fas fa-angle-right"></i><span class="sr-only">Next</span></a></li></c:if></ul></nav>';
-        
-        $("#paging").html(paging);
-	}
+	});
 </script>
-<style>
-	.page-item {
-		float: left;
-	}
-</style>
 <body>
 	<!-- Sidenav -->
 	<nav
@@ -162,12 +59,8 @@
 				<div class="collapse navbar-collapse" id="sidenav-collapse-main">
 					<!-- Nav items -->
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="/admin"> <i
-								class="ni ni-tv-2 text-primary"></i> <span class="nav-link-text">관리자
-									메인</span>
-						</a></li>
 						<li class="nav-item"><a class="nav-link active"
-							href="/admin/members"> <i class="ni ni-single-02 text-orange"></i>
+							href="/admin"> <i class="ni ni-single-02 text-orange"></i>
 								<span class="nav-link-text">회원 정보 관리</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="/admin/board">
@@ -283,9 +176,11 @@
 							<h6 class="h2 text-white d-inline-block mb-0">${userInfo.userid }</h6>
 							<nav aria-label="breadcrumb"
 								class="d-none d-md-inline-block ml-md-4">
-								<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-									<li class="breadcrumb-item" aria-current="page">회원정보</li>
-								</ol>
+								<div class="row">
+									<ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+										<li class="breadcrumb-item" aria-current="page">회원정보</li>
+									</ol>
+								</div>
 							</nav>
 						</div>
 					</div>
@@ -303,6 +198,9 @@
 								<h1>${userInfo.userid } / ${userInfo.name }</h1>
 								<div class="row"></div>
 								<div class="h5 mt-4">
+									<i class="ni business_briefcase-25 mr-2"></i><span id="userGrade"></span>
+								</div>
+								<div class="h5 mt-4">
 									<i class="ni business_briefcase-25 mr-2"></i>email :
 									${userInfo.email }
 								</div>
@@ -314,7 +212,7 @@
 									<div class="card-profile-stats d-flex justify-content-center">
 										<div>
 											<span class="heading">${countMap.board }</span> <span
-												class="description">게시글</span>
+												class="description" onclick="href">게시글</span>
 										</div>
 										<div>
 											<span class="heading">${countMap.reply }</span> <span
@@ -347,7 +245,7 @@
 										<div class="col-lg-6">
 											<div class="form-group">
 												<label class="form-control-label" for="input-userid">아이디</label>
-												<input type="text" id="input-userid" class="form-control"
+												<input type="text" id="userid" class="form-control"
 													value="${userInfo.userid }" readonly>
 											</div>
 										</div>
@@ -356,7 +254,7 @@
 										<div class="col-lg-6">
 											<div class="form-group">
 												<label class="form-control-label" for="input-email">이메일</label>
-												<input type="email" id="input-email" class="form-control"
+												<input type="email" id="email" class="form-control"
 													value="${userInfo.email }">
 											</div>
 										</div>
@@ -365,7 +263,7 @@
 										<div class="col-lg-6">
 											<div class="form-group">
 												<label class="form-control-label" for="input-phone">전화번호</label>
-												<input type="text" id="input-phone" class="form-control"
+												<input type="text" id="phone" class="form-control"
 													value="${userInfo.phone }">
 											</div>
 										</div>
@@ -374,14 +272,14 @@
 										<div class="col-lg-6">
 											<div class="form-group">
 												<label class="form-control-label" for="input-name">이름</label>
-												<input type="text" id="input-name" class="form-control"
+												<input type="text" id="name" class="form-control"
 													value="${userInfo.name }">
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="col-12 text-right">
-									<a href="#!" class="btn btn-default">수정</a>
+									<a href="#!" class="btn btn-default">정보 수정</a>
 								</div>
 							</form>
 						</div>
@@ -391,27 +289,52 @@
 					<div class="card">
 						<div class="card-header">
 							<div class="row align-items-center">
-								<div class="col-6">
-									<h3 class="mb-0">회원 게시글</h3>
-								</div>
-								<div class="btn-group btn-group-toggle col-6"
-									data-toggle="buttons">
-									<label class="btn btn-secondary active"> <input
-										type="radio" name="options" id="missing" autocomplete="off">
-										찾아요
-									</label> <label class="btn btn-secondary"> <input type="radio"
-										name="options" id="adopt" autocomplete="off"> 분양해요
-									</label> <label class="btn btn-secondary"> <input type="radio"
-										name="options" id="proud" autocomplete="off"> 반려동물 자랑
-									</label> <label class="btn btn-secondary"> <input type="radio"
-										name="options" id="qna" autocomplete="off"> Q&A
-									</label>
+								<div class="col-12">
+									<h3 class="mb-0">비밀번호 변경</h3>
 								</div>
 							</div>
 						</div>
-						<!-- Light table -->
-						<div class="table-responsive"></div>
-						<div class="card-footer py-4" id="paging">
+						<div class="card-body">
+							<form>
+								<div class="pl-lg-4">
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<label class="form-control-label" for="password">현재 비밀번호</label>
+												<input type="text" id="nowPwd" class="form-control"
+													value="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="pl-lg-4">
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<label class="form-control-label" for="password2">새 비밀번호</label>
+												<input type="text" id="password" class="form-control"
+													value="">
+												<span id="passwordChk"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="pl-lg-4">
+									<div class="row">
+										<div class="col-lg-6">
+											<div class="form-group">
+												<label class="form-control-label" for="password2">비밀번호 확인</label>
+												<input type="text" id="password2" class="form-control"
+													value="">
+												<span id="passwordChk"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 text-right">
+									<a href="javascript:modifyPwd();" class="btn btn-default">비밀번호 수정</a>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
