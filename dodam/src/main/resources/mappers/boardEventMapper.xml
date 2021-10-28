@@ -86,16 +86,16 @@
 	select
 		* from eventboard 
 		
-	<if test='searchType.equals(".2018")'>
+	<if test='searchType.equals("year")'>
 		where year LIKE ('2018%')
 	</if>
-	<if test='searchType.equals(".2019")'>
+	<if test='searchType.equals("year")'>
 		where year LIKE ('2019%')
 	</if>
-	<if test='searchType.equals(".2020")'>
+	<if test='searchType.equals("year")'>
 		where year LIKE ('2020%')
 	</if>
-	<if test='searchType.equals(".2021")'>
+	<if test='searchType.equals("year")'>
 		where year LIKE ('2021%')
 	</if>
 		order by year desc

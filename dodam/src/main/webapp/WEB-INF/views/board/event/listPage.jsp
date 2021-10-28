@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +46,7 @@
 	<div class="w3-quarter" style="margin-bottom:35px;">
 	<a href="/board/event/view?no=${list.no}">
       <img src="${list.thumbimg }" style="height:350px">
-      <h3 style="font-family: 'Jua', sans-serif;">${list.title }</h3>
+      <h3 style="font-family: 'Jua', sans-serif; color:#232323;">${list.title }</h3>
      <!--   <p>${list.contents }</p> -->
       </a>
     </div>

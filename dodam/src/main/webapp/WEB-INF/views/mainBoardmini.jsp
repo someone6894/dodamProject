@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>dodam dodam</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- <script type="text/javascript"> $.noConflict(); </script> -->
@@ -20,6 +21,11 @@ function readBoard(no) {
 	location.href = '/board/notice/readBoard?no=' + no;
 }
 
+function view(no){
+	console.log("전시회 보기 :" + no);
+	location.href = '/board/event/view?no=' + no;
+}
+
 // 슬라이더 테스트
 
 
@@ -28,14 +34,35 @@ function readBoard(no) {
 <style>
 
 
-  
+table{
+	display : inline-block;
+	position : relative;
+	
+}
+
+img{
+  vertical-align:top;
+}
+
+a.relative{
+	position: relative;
+	left:600px;
+	bottom: 465px;
+}
+
+h2.move{
+	position: relative;
+	left:600px;
+	bottom: 490px;
+}
+
 </style>
 <body>
 	<div class="container">
-	<h1>공지사항</h1>
+	<h2>공지사항</h2>
 		<c:choose>
 			<c:when test="${noticeBoard != null }">
-				<table class="table table-hover">
+				<table class="table table-hover" style=" width:600px; height:400px;">
 					<thead>
 						<tr>
 							<th>번호</th>
@@ -45,7 +72,7 @@ function readBoard(no) {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="board" items="${noticeBoard}" begin="0" end="10">
+						<c:forEach var="board" items="${noticeBoard}" begin="0" end="8">
 							<tr onclick="readBoard(${board.no});">
 								<td>${board.no }</td>
 								<td>${board.title }</td>								
@@ -53,11 +80,17 @@ function readBoard(no) {
 							</tr>
 						</c:forEach>
 					</tbody>
-				</table>
+				</table><br/>
 			</c:when>
 		</c:choose>
-
-	</div> 
+			<h2 class="move">전시회 둘러보기</h2>
+				<c:forEach var="event" items="${list}" begin="0" end="1">
+				<a href="/board/event/view?no=${event.no}" class="relative">
+				
+      			<img src="${event.thumbimg }" class="relative"style="width: 250px; height:350px">
+      			</a>
+				</c:forEach>
+	</div>
 	
 	
 	
