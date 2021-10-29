@@ -55,7 +55,7 @@
 				value="${board.writer}" readonly>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" style="height:500px;">
 			<label for="content">내용 :</label>
 			<div>${board.contents }</div>
 
@@ -69,9 +69,9 @@
 			onclick="location.href='/board/notice/delete?no=${board.no }'">삭제</button>
 		<button type="button" class="btn btn-info"
 			onclick="location.href='/board/notice/listAll?pageNo=1'">목록으로</button>
-	</div>
+	</div><br/><br/>
 
-		<button type="button" class="btn btn-danger" onclick="">댓글달기</button>
+		<!--  <button type="button" class="btn btn-danger" onclick="">댓글달기</button>-->
 		
 		
 		

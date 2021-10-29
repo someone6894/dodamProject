@@ -22,7 +22,7 @@
 <jsp:include page="../../template.jsp"></jsp:include>
 
 	<div class="container"> <br/>
-		<h1 style="margin-bottom: 20px; margin-top: 30px; font-family: 'Jua', sans-serif;">전시회 목록</h1><br/>
+		<h1 style="margin-bottom: 20px; margin-top: 30px; font-family: 'Jua', sans-serif; font-size: 40px;">전시회 목록</h1><br/>
 		<!-- 카테고리 컬럼명 검색 -->
 		<!-- <div role="menubar">
 			<ul class="fusion-fiters" role="menu" aria-label="filters" style="display: block;">
@@ -74,7 +74,7 @@
 		</c:forEach>
 		<a href="#" class="w3-bar-item w3-button #3C6E9F">»</a>
 		
-	</div>
+	</div><br/><br/>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 	
 </div>

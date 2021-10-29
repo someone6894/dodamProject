@@ -9,6 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Favicon -->
 <link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -274,7 +277,7 @@
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
 	<div class="container wrap">
-		<h1>신고 목록</h1>
+		<h1 style="font-family: 'Jua', sans-serif; font-size: 43px;">신고 목록</h1>
 		<div class="above_search">
 			<div style="float: right;">
 				<button type="button" class="btn btn-primary" onclick="location.href='/board/missing/write'">글등록</button>

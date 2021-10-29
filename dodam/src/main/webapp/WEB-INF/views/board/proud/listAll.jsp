@@ -10,6 +10,9 @@
 	href="../../resources/assets/missing/assets/img/brand/favicon.png"
 	type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -75,14 +78,14 @@
 </style>
 <body>
 
-	<jsp:include page="../../template.jsp"></jsp:include>
+	<jsp:include page="../../template.jsp"></jsp:include><br/>
 
 	<div class="container" style="margin-top: 40px;">
 		<div>
-			<h2>
+			<h1 style="font-family: 'Jua', sans-serif;">
 				<span class="glyphicon glyphicon-menu-hamburger"> </span> 반려견 자랑하기
 				게시판
-			</h2>
+			</h1><br/><br/>
 		</div>
 		<c:choose>
 			<c:when test="${proudlistBoard != null }">
@@ -95,7 +98,7 @@
 							<c:forEach begin="0" end="35" step="1">
 								<th></th>
 							</c:forEach>
-
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -121,8 +124,10 @@
 								<c:forEach begin="0" end="35" step="1">
 									<td></td>
 								</c:forEach>
+								<td style="margin-top : 40px;">조회수 : ${board.readcount }</td>
 							</tr>
 						</c:forEach>
+						
 					</tbody>
 				</table>
 			</c:when>
@@ -138,7 +143,7 @@
 				</c:when>
 			</c:choose>
 
-			<div class="w300" style="margint-top: 20px;">
+			<div class="w300" style="margint-top: 20px; margin-left: 35%;">
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">
 
@@ -185,7 +190,7 @@
 		</div>
 
 
-	</div>
+	</div><br/><br/>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

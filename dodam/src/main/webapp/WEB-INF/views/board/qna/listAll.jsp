@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -26,8 +29,9 @@
 
 </style>
 <body>
-	<jsp:include page="../../template.jsp"></jsp:include>
-	<div class="container">
+	<jsp:include page="../../template.jsp"></jsp:include><br/><br/>
+	<div class="container" style="font-family: 'Gowun Dodum', sans-serif;">
+	<h1 style="font-weight: bold; border: 1px solid1blue; text-align:center; ">Q&A 게시판</h1><br/><br/>
 		<c:choose>
 			<c:when test="${qnaListBoard != null }">
 				<table class="table table-hover">

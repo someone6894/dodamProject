@@ -313,9 +313,9 @@
 	
  
 
-	<jsp:include page="../../template.jsp"></jsp:include>
+	<jsp:include page="../../template.jsp"></jsp:include><br/><br/>
 	<div class="container">
-		<h2>게시판 상세 페이지</h2>
+		<h2>게시판 상세 페이지</h2><br/><br/>
 
 		<div class="form-group">
 			<label for="title">글번호:</label> <input type="text"
@@ -346,7 +346,7 @@
 				</div>
 		</div>
 
-		<div class="form-group">
+		<div class="form-group" style="height:500px;">
 			<label for="content">내용 :</label>
 			<div>${board.contents }</div>
 
@@ -429,7 +429,7 @@
 			</div>
 		</div>
 		
-	</div>
+	</div><br/><br/>
 	
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>

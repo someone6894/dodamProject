@@ -52,10 +52,10 @@ function hideCreateBoard() {
 
   
   	
-	<jsp:include page="../../template.jsp"></jsp:include>
+	<jsp:include page="../../template.jsp"></jsp:include><br/><br/>
 	<h2 style="text-align: center; font-family: 'Nanum Pen Script', cursive; background-color: #FFFC94;">분양해요</h2>
 
-	<jsp:include page="adoptboardmini.jsp"></jsp:include>
+	<jsp:include page="adoptboardmini.jsp"></jsp:include><br/>
 	
 	<div class="container">
 		<br>
