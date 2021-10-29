@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>자랑하기 게시판</title>
-<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
+<link rel="icon"
+	href="../../resources/assets/missing/assets/img/brand/favicon.png"
+	type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -16,6 +18,10 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
+	function replycount(no) {
+		
+	}
+
 	function readBoard(no) {
 		location.href='/board/proud/readboard?no=' + no;
 	}
@@ -27,6 +33,10 @@
 	}
 </script>
 <style>
+.holup {
+	margin-top: 30px;
+}
+
 #searchType {
 	height: 37px;
 	width: 130px;
@@ -41,9 +51,8 @@
 }
 
 #write2 {
-	float : right;
+	float: right;
 }
-
 
 #keyword {
 	font-size: 16px;
@@ -67,31 +76,51 @@
 <body>
 
 	<jsp:include page="../../template.jsp"></jsp:include>
-	<div class="container">
+
+	<div class="container" style="margin-top: 40px;">
+		<div>
+			<h2>
+				<span class="glyphicon glyphicon-menu-hamburger"> </span> 반려견 자랑하기
+				게시판
+			</h2>
+		</div>
 		<c:choose>
 			<c:when test="${proudlistBoard != null }">
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>글번호</th>
-							<th>글제목</th>
-							<th>작성자</th>
-							<th>작성일</th>
-							<th>조회수</th>
-							<th>좋아요</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<c:forEach begin="0" end="35" step="1">
+								<th></th>
+							</c:forEach>
+
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="board" items="${proudlistBoard }">
 							<tr onclick="readBoard(${board.no});">
+								<td><h4>
+										<span class="holup glyphicon glyphicon-thumbs-up"
+											style="margin-top: 30px;"></span><br /> <strong>${board.likecount }
+									</h4>
+									</strong></td>
 								<td><img id='thumnail'
 									src='../../resources/${board.image }' width="120px"
 									height="120px;" /></td>
-								<td>${board.title }</td>
-								<td>${board.writer }</td>
-								<td>${board.postdate }</td>
-								<td>${board.readcount }</td>
-								<td>${board.likecount }</td>
+								<td><div class="container-fluid bg-grey">
+										<div class="row">
+											<h3 style="color: #3262c5;">${board.title }</h3>
+											<h4>
+												<strong>${board.writer }</strong>
+											</h4>
+											<p>${board.postdate }</p>
+										</div>
+									</div></td>
+								<c:forEach begin="0" end="35" step="1">
+									<td></td>
+								</c:forEach>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -100,16 +129,16 @@
 		</c:choose>
 
 		<div class="form-group row justify-content-center">
-			<div class="w100" style="padding-right: 10px"></div>
-			
+			<div class="w100" style="padding-top: 40px"></div>
+
 			<c:choose>
 				<c:when test="${userid != null}">
-					<button type="button" class="btn btn-success" id = "write2"
-						onclick="location.href='/board/proud/register';">글 등록</button>	
+					<button type="button" class="btn btn-success" id="write2"
+						onclick="location.href='/board/proud/register';">글 등록</button>
 				</c:when>
 			</c:choose>
-					
-			<div class="w300">
+
+			<div class="w300" style="margint-top: 20px;">
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">
 
@@ -120,15 +149,16 @@
 				</select> <input type="text" class="form-control form-control-sm"
 					id="keyword" name="keyword" id="keyword">
 				<button class="btn btn-sm btn-primary" name="btnSearch"
-					id="btnSearch" onclick = "searchflow();">검색</button>
+					id="btnSearch" onclick="searchflow();">검색</button>
 			</div>
 
 		</div>
 
 
 
-		<div style="margin-top: 15px; margin-left : 50px; clear: right;" align="center">
-			<ul class="pagination" >
+		<div style="margin-top: 20px; margin-left: 50px; clear: right;"
+			align="center">
+			<ul class="pagination">
 				<c:if test="${param.pageNo > 1 }">
 					<li><a
 						href="/board/proud/listAll?pageNo=1&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&lt;&lt;</a></li>

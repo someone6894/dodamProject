@@ -56,14 +56,14 @@ public class ProudController {
 	@RequestMapping(value ="/listAll", method=RequestMethod.GET)
 	public void listAll(Model model, @RequestParam(value="pageNo", required=false, defaultValue="1") String tmp,
 			@RequestParam(value ="searchBy", required = false, defaultValue="title") String type,
-			@RequestParam(value ="searchWord", required = false, defaultValue="") String word) throws Exception { 
+			@RequestParam(value ="searchWord", required = false, defaultValue="") String word) throws Exception {
 		int pageNo = 1;
 		if(!tmp.equals("") || tmp != null) {
 			pageNo = Integer.parseInt(tmp);
-		} 
+		}
 		
-		System.out.println("검색 타입 : " + type + ", 검색 단어 : " + word);		
-		
+		System.out.println("검색 타입 : " + type + ", 검색 단어 : " + word);
+
 		Map<String, Object> map = service.readAllBoard(pageNo, type, word);
 
 		List<ProudVo> lst = (List<ProudVo>)map.get("boardList");
@@ -71,7 +71,7 @@ public class ProudController {
 
 		model.addAttribute("pagingInfo", pi); // 페이징 정보0
 		model.addAttribute("proudlistBoard", lst); // 게시판 글 데이터
-		
+
 	}
 	
 	@RequestMapping(value = "/readboard", method=RequestMethod.GET)

@@ -26,6 +26,12 @@
 		// 현재글에 달려있는 모든 댓글을 읽어와서 출력
 		viewAllReplies();	
 	});
+	
+	function login() {
+		location.href='/member/login';
+		
+	}
+	
 	function deleteBoard(no) {
 		location.href='/board/proud/deleteboard?no=' + no;
 	}
@@ -585,6 +591,9 @@
 		<div id="replyLst"></div>
 		<br />
 
+
+		<c:choose>
+			<c:when test="${userid != null}">
 		<form role="form">
 			<div id="replyDiv" style="clear: both;">
 				<div class="form-group">
@@ -597,7 +606,22 @@
 				<button type="button" class="btn btn-success" onclick="addReply();">댓글등록</button>
 			</div>
 		</form>
-
+		</c:when>
+		<c:otherwise>
+		<form role="form">
+			<div id="replyDiv" style="clear: both;">
+				<div class="form-group">
+					<input type="hidden" class="form-control" id="replyer"
+						name="replyer" value=""> <label
+						for="replyContents"></label>
+					<textarea id="replyContents" rows="5" cols="158"
+						placeholder="로그인이 필요합니다."></textarea>
+				</div>
+				<button type="button" class="btn btn-success" onclick="login();">댓글등록</button>
+			</div>
+		</form>
+		</c:otherwise>
+		</c:choose>
 		<br /> <br />
 
 		<div id="myModal" class="modal fade" role="dialog">

@@ -1,7 +1,7 @@
 package com.dodam.domain.proud;
 
 public class PagingProud {
-	private int postPerPage = 5; // 페이지당 글 갯수
+	private int postPerPage = 6; // 페이지당 글 갯수
 	   private int pageCntPerBlock = 10; // 블럭 당 페이지 수
 	   
 	   private int totalPage; // 전체 페이지 수
