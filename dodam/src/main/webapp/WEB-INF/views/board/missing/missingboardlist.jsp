@@ -128,7 +128,8 @@
 	function parseResult(MissingBoard) {
 		let output = '';
 		for (let i in MissingBoard) {
-			output += '<a href="/board/missing/detail?no=' + MissingBoard[i].no + '&userid=${loginSession.userid}" class="detailAnchor"><div class="col-sm-3">';
+			output += '<a href="/board/missing/detail?no=' + MissingBoard[i].no + '&userid=${loginSession.userid}" class="detailAnchor">';
+			output +='<div class="col-sm-3">';
 			output += '<div class="img_container" style="padding: 20px 10px;">';
 			if (MissingBoard[i].img != '') {
 				if (MissingBoard[i].dpchknum == null) {
@@ -140,7 +141,8 @@
 				output += '<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>';
 			}
 			output += '</div><div class="contents_container"><table><tr><td><strong>' + MissingBoard[i].title + '</strong></td></tr><tr>';
-			output += '<td>' + MissingBoard[i].name + ' / ' + MissingBoard[i].breed + ' / ' + MissingBoard[i].gender + ' / ' + MissingBoard[i].age + '</td></tr><tr>';
+			output += '<td>' + MissingBoard[i].name + ' / ' + MissingBoard[i].breed + ' / ' + MissingBoard[i].gender + ' / ' + MissingBoard[i].age 
+			+ '</td></tr><tr>';
 			output += '<td>' + MissingBoard[i].location + '</td></tr><tr>';
 			output += '<td>' + MissingBoard[i].missingdateWithoutTime + '</td></tr></table></div></div></a>';
 		}
@@ -321,7 +323,12 @@
 			</select>
 		</div>
 		<div class="container_list">
-			<c:forEach var="MissingBoard" items="${listMissingBoard }">
+			<c:choose>
+				<c:when test="${listMissingBoard eq '' }">
+					<div> 검색 결과가 존재하지 않습니다. </div>
+				</c:when>
+				<c:otherwise>
+				<c:forEach var="MissingBoard" items="${listMissingBoard }">
 				<a href="/board/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
 					<div class="col-sm-3">
 						<div class="img_container" style="padding: 20px 10px;">
@@ -360,6 +367,8 @@
 					</div>
 				</a>
 			</c:forEach>
+			</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 		

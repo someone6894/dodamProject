@@ -55,7 +55,7 @@ let numOfImgs=0;
 							console.log(thumbImgs);
 							console.log(numOfImgs-files.length);
 							for(let i = 0; i < thumbImgs.length-1; i++) {
-								output += '<span id="imgPreview' + ((numOfImgs-files.length)+i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbImgs[i] + '" style="margin-right: 5px;" />' +
+								output += '<span id="imgPreview' + ((numOfImgs-files.length)+i+1) + '" style="margin-right: 50px;"><img src="../../resources/uploads/kmj/missing' + thumbImgs[i] + '" width="200px" style="margin-right: 5px;" />' +
 								'<img src="../../resources/images/kmj/missing/cancel.png" style="width: 20px;" onclick="delImg(this);" /></span>';
 								
 								// 썸네일과 원래이미지를 input hidden에 저장

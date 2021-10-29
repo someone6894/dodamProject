@@ -50,10 +50,12 @@
         	<mapping path="/board/missing/write" /> 
         	<beans:ref bean="AuthInterceptor" />
 		</interceptor>
-		<!-- <interceptor>
+		<interceptor>
         	<mapping path="/admin/**" /> 
+        	<mapping path="/board/event/write" />
+        	<mapping path="/board/notice/createBoard"/>
         	<beans:ref bean="AdminAuthInterceptor" />
-		</interceptor> -->
+		</interceptor>
 	</interceptors>
 	
 </beans:beans>

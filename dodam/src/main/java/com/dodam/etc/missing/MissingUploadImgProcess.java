@@ -45,7 +45,7 @@ public class MissingUploadImgProcess {
 		// originalImgName에 업로드 할 경로를 포함한 이미지 파일 이름 저장
 		this.imgs.setOriginalImgName(savePath + File.separator + saveName);
 		
-		// 파일을 경로에 복사
+		// 파일을 경로에 복사(저장)
 		File target = new File(uploadFolder + savePath + File.separator, saveName);
 		FileCopyUtils.copy(file, target); // file을 target에 복사해주는 메서드
 
