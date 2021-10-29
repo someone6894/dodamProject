@@ -56,7 +56,7 @@ h2.move{
 	position: relative;
 	left:600px;
 	bottom: 480px;
-}
+} 
 
 </style>
 <body>
@@ -94,8 +94,6 @@ h2.move{
 				</c:forEach>
 				
 	</div>
-	
-	
 	
 	
 <!-- 	listBoard -->

@@ -1,6 +1,7 @@
 package com.dodam.controller.main;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.adopt.PagingInfoDTO;
 import com.dodam.domain.event.EventBoardVO;
+import com.dodam.domain.members.MemberVo;
 import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.service.board.adopt.AdoptBoardService;
@@ -43,6 +45,9 @@ public class HomeController {
 	
 	@Inject
 	private EventBoardService eventservice;
+	
+	@Inject
+	private MissingBoardService missingservice;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -88,14 +93,29 @@ public class HomeController {
 		model.addAttribute("noticeBoard", noticelst); //개시판 글 데이터
 		
 		
-		// 전시회 추가
+		 // 전시회 추가
 		
 		 List<EventBoardVO> list = null;
 		 list = eventservice.list();
 		 
 		 model.addAttribute("list", list);  
+		 
+		 
+		 // 찾아요 추가
+		 
+		 HttpSession ses = request.getSession();
+	     MemberVo loginmember = (MemberVo)ses.getAttribute("loginSession");
+	     List<MissingBoardListDTO> missinglist = new ArrayList<MissingBoardListDTO>();
+	     	if (loginmember != null) {
+	     		missinglist = missingservice.getRecommendation(loginmember.getUserid(), 2);
+	      } else {
+	     missinglist = missingservice.getRandomAnimal(2);
+	     }
+	     model.addAttribute("otherList", missinglist);
 		
 		 return "index";
+		 
+		 
 		
 	}
 
