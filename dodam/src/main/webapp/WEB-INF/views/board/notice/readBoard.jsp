@@ -62,7 +62,7 @@
 		</div>
 
 
-
+		<br/><br/><br/>
 		<button type="button" class="btn btn-success"
 			onclick="location.href='/board/notice/updateBoard?no=${board.no }'">수정</button>
 		<button type="button" class="btn btn-warning"
