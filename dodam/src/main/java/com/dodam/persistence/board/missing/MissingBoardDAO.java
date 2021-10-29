@@ -10,6 +10,7 @@ import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.ReadCntVo;
+import com.dodam.domain.missing.RecommendVo;
 
 public interface MissingBoardDAO {
 
@@ -47,17 +48,34 @@ public interface MissingBoardDAO {
 	// 조회수 증가하는 메서드
 	int updateReadCount(int no);
 
+	// 북마크 횟수 증가
 	int updateBookmark(int no);
 
+	// 북마크 기록
 	int insertBookmarkHistory(Map<String, Object> likeMap);
 
+	// 북마크 횟수 감수
 	int updateUnbookmark(int no);
 	
+	// 북마크 기록 삭제
 	int deleteBookmarkHistory(Map<String, Object> likeMap);
 
+	// 북마크 수 가져오기
 	int selectBookmarkCount(int no);
 
+	// 북마크 기록 가져오기
 	BookmarkVo selectBookmark(Map<String, Object> likeMap);
+
+	// 가장 많이 북마크한 동물의 종류와 횟수 조회
+	RecommendVo getMostBookAnimal(String userid);
+
+	// 랜덤으로 3개의 게시글 불러오기
+	List<MissingBoardListDTO> getRandomAnimal(int no);
+
+	// 북마크를 많이 한 동물 종류로 게시글 불러오기
+	List<MissingBoardListDTO> getBookedAnimal(Map<String, Object> map);
+
+
 
 
 
