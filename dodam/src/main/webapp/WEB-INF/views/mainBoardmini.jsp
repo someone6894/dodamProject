@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 <title>dodam dodam</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- <script type="text/javascript"> $.noConflict(); </script> -->
@@ -21,9 +23,9 @@ function readBoard(no) {
 	location.href = '/board/notice/readBoard?no=' + no;
 }
 
-function view(no){
-	console.log("전시회 보기 :" + no);
-	location.href = '/board/event/view?no=' + no;
+function missingBoard(no){
+	console.log("찾아요 보기 :" + no);
+	location.href = '/board/missing/viewBoard?no=' + no;
 }
 
 // 슬라이더 테스트
@@ -53,12 +55,12 @@ a.relative{
 h2.move{
 	position: relative;
 	left:600px;
-	bottom: 490px;
+	bottom: 480px;
 }
 
 </style>
 <body>
-	<div class="container">
+	<div class="container" style="font-family: 'Gowun Dodum', sans-serif;">
 	<h2>공지사항</h2>
 		<c:choose>
 			<c:when test="${noticeBoard != null }">
@@ -83,13 +85,14 @@ h2.move{
 				</table><br/>
 			</c:when>
 		</c:choose>
-			<h2 class="move">전시회 둘러보기</h2>
+			<h2 class="move" style="font-family: 'Jua', sans-serif;">전시회 둘러보기</h2>
 				<c:forEach var="event" items="${list}" begin="0" end="1">
 				<a href="/board/event/view?no=${event.no}" class="relative">
 				
       			<img src="${event.thumbimg }" class="relative"style="width: 250px; height:350px">
       			</a>
 				</c:forEach>
+				
 	</div>
 	
 	

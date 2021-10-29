@@ -20,6 +20,7 @@ import com.dodam.domain.adopt.AdoptVo;
 import com.dodam.domain.adopt.PagingInfoDTO;
 import com.dodam.domain.event.EventBoardVO;
 import com.dodam.domain.missing.MissingBoardListDTO;
+import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.service.board.adopt.AdoptBoardService;
 import com.dodam.service.board.event.EventBoardService;
 import com.dodam.service.board.missing.MissingBoardService;
@@ -42,9 +43,6 @@ public class HomeController {
 	
 	@Inject
 	private EventBoardService eventservice;
-	
-	@Inject
-	private MissingBoardService missingservice;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -90,19 +88,14 @@ public class HomeController {
 		model.addAttribute("noticeBoard", noticelst); //개시판 글 데이터
 		
 		
+		// 전시회 추가
+		
 		 List<EventBoardVO> list = null;
 		 list = eventservice.list();
 		 
 		 model.addAttribute("list", list);  
 		
-		 
-//		Map<String, Object> missingmap = null;
-//		List<MissingBoardListDTO> missinglist = (List<MissingBoardListDTO>)missingmap.get("listMissingBoard");
-//
-//			
-//		model.addAttribute("listMissingBoard", missinglist);
-		
-		return "index";
+		 return "index";
 		
 	}
 

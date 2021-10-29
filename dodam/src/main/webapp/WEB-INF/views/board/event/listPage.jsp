@@ -13,7 +13,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <title>전시회 목록</title>
+<style>
 
+</style>
 </head>
 <body>
 
@@ -44,7 +46,7 @@
 	  <div class="w3-row-padding w3-padding-16 w3-center" id="event">
 	<c:forEach items = "${list }" var ="list">
 	<div class="w3-quarter" style="margin-bottom:35px;">
-	<a href="/board/event/view?no=${list.no}">
+	<a href="/board/event/view?no=${list.no}" class="atag">
       <img src="${list.thumbimg }" style="height:350px">
       <h3 style="font-family: 'Jua', sans-serif; color:#232323;">${list.title }</h3>
      <!--   <p>${list.contents }</p> -->
