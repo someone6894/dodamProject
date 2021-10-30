@@ -318,7 +318,6 @@ function validate() {
     
     let password = document.getElementById("password").value;
     let password2 = document.getElementById("password2").value;
-    let pwdCheckResult1 = pwdCheck1(password);
     let pwdCheckResult2 = pwdCheck2(password, password2);
 
     let name = document.getElementById("name").value;
@@ -340,7 +339,7 @@ function validate() {
 	console.log("emailCheckBoolean : " + emailCheckBoolean);
     
     
-    if (idCheckResult && pwdCheckResult1 &&pwdCheckResult2 && nameCheckResult && nicknameCheckResult && phoneCheckResult && emailCheckBoolean ) {
+    if (idCheckResult &&pwdCheckResult2 && nameCheckResult && nicknameCheckResult && phoneCheckResult && emailCheckBoolean ) {
     		
     	isCheckOk  = true;
     	console.log("everthing's checked ok!");

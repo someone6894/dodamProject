@@ -188,7 +188,7 @@ public class MemberController {
 			rt.addFlashAttribute("status", "fail");
 		}
 
-		return "redirect:/member/mbInfo";
+		return "redirect:/member/login";
 	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
