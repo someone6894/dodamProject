@@ -136,12 +136,8 @@
 		<div class="form-group row justify-content-center">
 			<div class="w100" style="padding-top: 40px"></div>
 
-			<c:choose>
-				<c:when test="${userid != null}">
 					<button type="button" class="btn btn-success" id="write2"
 						onclick="location.href='/board/proud/register';">글 등록</button>
-				</c:when>
-			</c:choose>
 
 			<div class="w300" style="margint-top: 20px; margin-left : 35%;" >
 				<select class="form-control form-control-sm" name="searchType"
