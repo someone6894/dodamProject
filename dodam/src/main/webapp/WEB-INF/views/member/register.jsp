@@ -31,6 +31,7 @@ $(function() {
 	} else if (status == "canUsed"){
 		//alert("사용가능한 아이디 입니다.");
 		document.getElementById("iderror").innerHTML = "사용가능한 아이디 입니다.";
+		$("#userid").val("${userid}");
 		$("#userid").focus();
 		
 		//$("#userid").val(${userid});
@@ -67,9 +68,15 @@ $(function() {
 	});
 	
 	$("#password").keyup( function(){
-		let password = $(this).val();
+		let password = $("#password").val();
+		pwdCheck1(password)
+	});
+	
+	
+	$("#password2").keyup( function(){
+		let password = $("#password").val();
 		let password2 = $("#password2").val();
-		pwdCheck(password, password2);
+		pwdCheck2(password, password2)
 	});
 	
 	$("#phone").keyup( function(){
@@ -120,7 +127,20 @@ function idCheck(userid) {
     
 }
 
-function pwdCheck(password, password2) {
+
+// 비밀번호 유효성 검사
+function pwdCheck1(password) {
+    // 검증 ok : true, 검증 실패 : false 
+    let result = false; 
+    if (password == "") {
+        document.getElementById("pwderror").innerHTML = "비밀번호는 필수 항목입니다.";
+    } else if (password.length < 8 || password.length > 12) {
+        document.getElementById("pwderror").innerHTML = "비밀번호는 8자 이상 12자 이하로 입력해 주세요";
+    }
+}
+    
+// 비밀번호 확인 검사
+function pwdCheck2(password, password2) {
     // 검증 ok : true, 검증 실패 : false 
     let result = false; 
     if (password == "") {
@@ -129,15 +149,11 @@ function pwdCheck(password, password2) {
         document.getElementById("pwderror").innerHTML = "비밀번호는 8자 이상 12자 이하로 입력해 주세요";
     } else if (password != password2) {
         document.getElementById("pwderror").innerHTML = "비밀번호가 서로 맞지 않습니다.";
-        document.getElementById("password2").value = "";
-    } else {
-    	document.getElementById("pwderror").innerHTML ="";
+    } else if (password == password2){
+    	document.getElementById("pwderror").innerHTML ="비밀번호가 서로 일치 합니다.";
         result = true;
     }
     
-    console.log(password);
-    console.log(password2);
-	console.log(result);
     return result;
 }
 
@@ -302,7 +318,8 @@ function validate() {
     
     let password = document.getElementById("password").value;
     let password2 = document.getElementById("password2").value;
-    let pwdCheckResult = pwdCheck(password, password2);
+    let pwdCheckResult1 = pwdCheck1(password);
+    let pwdCheckResult2 = pwdCheck2(password, password2);
 
     let name = document.getElementById("name").value;
     let nameCheckResult = nameCheck(name);
@@ -323,7 +340,7 @@ function validate() {
 	console.log("emailCheckBoolean : " + emailCheckBoolean);
     
     
-    if (idCheckResult && pwdCheckResult && nameCheckResult && nicknameCheckResult && phoneCheckResult && emailCheckBoolean ) {
+    if (idCheckResult && pwdCheckResult1 &&pwdCheckResult2 && nameCheckResult && nicknameCheckResult && phoneCheckResult && emailCheckBoolean ) {
     		
     	isCheckOk  = true;
     	console.log("everthing's checked ok!");
