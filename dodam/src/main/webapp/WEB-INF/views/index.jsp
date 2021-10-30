@@ -18,7 +18,7 @@
 </head>
 <script>
 </script>
-<body>
+<body style="overflow-x: hidden">
 <%
 	response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "private, no-store, must-revalidate");
