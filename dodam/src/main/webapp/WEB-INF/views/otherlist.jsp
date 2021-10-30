@@ -45,8 +45,8 @@
 
 </style>
 <body>
-	<div class="container" id="miss">
-		<div><h2 style="display: inline-block;">찾고있는 동물들</h2><div id="moreList" style="float:right;" onclick="location.href='/board/missing/list'">더보기</div></div>
+	<div class="container" id="miss" style="font-family: 'Gowun Dodum', sans-serif;">
+		<div><h2 style="display: inline-block;"><strong>찾고있는 동물들</strong></h2><div id="moreList" style="float:right;" onclick="location.href='/board/missing/list'">더보기</div></div>
 				<c:forEach var="otherboard" items="${otherList }">
 					<a href="/board/missing/detail?no=${otherboard.no}&userid=${loginSession.userid}" class="detailAnchor">
 						<div class="col-sm-3">
