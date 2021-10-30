@@ -2,6 +2,7 @@ package com.dodam.controller.board.missing;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,6 +129,7 @@ public class MissingBoardController {
 	@RequestMapping("/detail")
 	public String viewDetailPage(@RequestParam("no") int no,
 								@RequestParam("userid") String userid,
+								HttpServletRequest request,
 								Model model) {
 		MissingBoardVo mb = null;
 		try {
@@ -137,7 +139,16 @@ public class MissingBoardController {
 			e.printStackTrace();
 		}
 		
+		HttpSession ses = request.getSession();
+		MemberVo loginmember = (MemberVo)ses.getAttribute("loginSession");
+		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
+		if (loginmember != null) {
+			lst = service.getRecommendation(loginmember.getUserid(), no);
+		} else {
+			lst = service.getRandomAnimal(no);
+		}
 		model.addAttribute("MissingBoard", mb);
+		model.addAttribute("otherList", lst);
 		return "/board/missing/viewBoard";
 	}
 	

@@ -15,6 +15,7 @@ import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.ReadCntVo;
+import com.dodam.domain.missing.RecommendVo;
 
 @Repository
 public class MissingBoardDAOImpl implements MissingBoardDAO {
@@ -104,5 +105,20 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	@Override
 	public BookmarkVo selectBookmark(Map<String, Object> bookMap) {
 		return ses.selectOne(ns + ".selectBookmarkHistory", bookMap);
+	}
+
+	@Override
+	public RecommendVo getMostBookAnimal(String userid) {
+		return ses.selectOne(ns + ".selectRecommAnimal", userid);
+	}
+
+	@Override
+	public List<MissingBoardListDTO> getRandomAnimal(int no) {
+		return ses.selectList(ns + ".selectRandom", no);
+	}
+
+	@Override
+	public List<MissingBoardListDTO> getBookedAnimal(Map<String, Object> map) {
+		return ses.selectList(ns + ".selectBookAnimal", map);
 	}
 }

@@ -142,7 +142,6 @@
 			</c:choose>
 
 			<div class="w300" style="margint-top: 20px;">
-			<div class="w300" style="margint-top: 20px; margin-left : 70px;" >
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">
 

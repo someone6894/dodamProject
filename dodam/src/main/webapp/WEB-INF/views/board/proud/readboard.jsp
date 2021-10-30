@@ -20,6 +20,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 </head>
 <script>
 	$(function() {
@@ -644,10 +645,10 @@
 			</div>
 		</div>
 
-		<br /> <br /> <br />
+		<br /> 
 
 
-		<div style="margin-bottom: 100px"></div>
+		<div style="margin-bottom: 30px"></div>
 	</div>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>

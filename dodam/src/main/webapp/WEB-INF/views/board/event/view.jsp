@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>전시회 상세페이지</title>
+<link rel="icon" href="../../resources/assets/missing/assets/img/brand/favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">

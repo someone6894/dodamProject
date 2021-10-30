@@ -1,8 +1,10 @@
 package com.dodam.service.board.missing;
 
+import java.util.List;
 import java.util.Map;
 
 import com.dodam.domain.missing.ListParamDTO;
+import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 
@@ -42,6 +44,12 @@ public interface MissingBoardService {
 
 
 	MissingBoardVo getMissingBoard(int no) throws Exception;
+
+
+	List<MissingBoardListDTO> getRecommendation(String userid, int no);
+
+
+	List<MissingBoardListDTO> getRandomAnimal(int no);
 	
 }
 

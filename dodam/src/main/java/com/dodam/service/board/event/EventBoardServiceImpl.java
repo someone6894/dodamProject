@@ -61,4 +61,10 @@ public class EventBoardServiceImpl implements EventBoardService {
 		return dao.listPage(displayPost, postNum);
 	}
 
+	@Override
+	public List<EventBoardVO> listPageSearch(int displayPost, int postNum, String searchType, String keyword)
+			throws Exception {
+		 return  dao.yearSearch(displayPost, postNum, searchType, keyword);
+	}
+
 }

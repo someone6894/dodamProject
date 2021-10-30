@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>도담도담 공지사항</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
@@ -39,17 +42,17 @@
 
 <body>
 
-	<jsp:include page="../../template.jsp"></jsp:include>
+	<jsp:include page="../../template.jsp"></jsp:include><br/><br/>
 
 	<!-- 상단 디자인 -->
 
 	<div class="header_container"
-		style="font-weight: bold; border: 1px solid1blue; width: 50%; margin: 0 auto;">
-		<h3>공지사항 게시판</h3>
-		<div></div>
+		style=" border: 1px solid1blue; width: 50%; margin: 0 auto; font-family: 'Gowun Dodum', sans-serif;">
+		<h1><strong>공지사항 게시판</strong></h1>
+		<br/>
 		<p>누군가의 가족이자, 누군가의 집사인 우리들을 위한 공지사항 및 관리 팁 들이 있는 게시판입니다.</p>
 
-	</div>
+	</div><br/><br/>
 
 
 	<!--  -->
@@ -58,7 +61,7 @@
 	<div class="container">
 		<c:choose>
 			<c:when test="${listBoard != null }">
-				<table class="table table-hover">
+				<table class="table table-hover" style="font-family: 'Gowun Dodum', sans-serif;">
 					<thead class="table_title">
 						<tr>
 							<th>글번호</th>
@@ -123,7 +126,7 @@
 		</div>
 	</div>
 
-</div>
+</div><br/><br/>
 <jsp:include page="../../footer.jsp"></jsp:include>
 
 </body>

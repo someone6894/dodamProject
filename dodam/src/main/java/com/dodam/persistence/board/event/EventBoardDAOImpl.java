@@ -69,6 +69,19 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 		return sql.selectList(namespace + ".listPage", data);
 	}
 
+	@Override
+	public List<EventBoardVO> yearSearch(int displayPost,int postNum, String searchType, String keyword) throws Exception {
+		  HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		data.put("displayPost", displayPost);
+		data.put("postNum", postNum);
+		
+		data.put("searchType", searchType);
+		data.put("keyword", keyword);
+		
+		return sql.selectList(namespace + ".listPage", data);
+	}
+
 
 
 }
