@@ -8,7 +8,8 @@
   <select id="selectAll" resultType="com.dodam.domain.missing.MissingBoardListDTO">
   	select no, title, writer, contact, age, breed, location, gender, img, thumbimg, missingdate, name, dpchknum 
   	from missingboard 
-  	where (title like concat('%', #{searchWord}, '%') or contents like concat('%', #{searchWord}, '%'))
+  	where (title like concat('%', #{searchWord}, '%') or contents like concat('%', #{searchWord}, '%') or breed like concat('%', #{searchWord}, '%')
+  	or writer like concat('%', #{searchWord}, '%'))
   	and location like concat('%', #{location}) and animal like concat('%', #{animal}) and category like concat('%', #{category})
   	order by registerdate desc 
   	limit #{startNum}, #{postPerPage}

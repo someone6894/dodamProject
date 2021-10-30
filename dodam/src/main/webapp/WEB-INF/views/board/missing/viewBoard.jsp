@@ -383,13 +383,11 @@
 		
 		// 댓글 파싱하기----------------------------------------------------------------------------------
 		function parseReply(data) {
-			if (data == null) {
-				
-			} else if (data != null) {
+			if (data.sizeOflst != 0) {
 				console.log(data);
 				$("#replyLst").empty();
-				let output = '<div class="list-group">'; // 보이는 댓글
-	    		$(data).each(function(i, element){
+				let output = '<div class="list-group"><h4>댓글 목록 <span id="numOfreply">(' + data.sizeOflst + '개의 댓글)</span></h4>'; // 보이는 댓글
+	    		$(data.lst).each(function(i, element){
 	    			let secoutput ='';
 	    			let viewoutput = '';
 	    			let deletedoutput = '';

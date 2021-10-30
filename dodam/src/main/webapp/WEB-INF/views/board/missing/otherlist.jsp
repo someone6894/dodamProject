@@ -34,7 +34,14 @@
 												<img src="../../resources/uploads/kmj/missing${otherboard.img }" width="100%"/>
 											</c:when>
 											<c:otherwise>
-												<img src="${otherboard.img }" width="100%" onerror="deleteBoard(${otherboard.no });" />
+												<c:choose>
+													<c:when test="${otherboard.img == ''}">
+														<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>
+													</c:when>
+													<c:otherwise>
+														<img src="${otherboard.img }" width="100%" onerror="deleteBoard(${otherboard.no });" />
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									</c:when>

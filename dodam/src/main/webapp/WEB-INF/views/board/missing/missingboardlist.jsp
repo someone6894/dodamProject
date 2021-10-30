@@ -92,7 +92,7 @@
 			type : "POST", // 통신 방식
 			success : function(data) { // 통신 성공시 수행될 콜백 함수
 				console.log(data);
-				parseResult(data.listMissingBoard);
+				parseResult(data);
 				parsePaging(data.pagingInfo);
 				
 				$("#li1").children("a").css("color", "#ff7f00");
@@ -128,26 +128,32 @@
 		
 	}
 	
-	function parseResult(MissingBoard) {
+	function parseResult(data) {
 		let output = '';
-		for (let i in MissingBoard) {
-			output += '<a href="/board/missing/detail?no=' + MissingBoard[i].no + '&userid=${loginSession.userid}" class="detailAnchor">';
-			output +='<div class="col-sm-3">';
-			output += '<div class="img_container" style="padding: 20px 10px;">';
-			if (MissingBoard[i].img != '') {
-				if (MissingBoard[i].dpchknum == null) {
-					output += '<img src="../../resources/uploads/kmj/missing' + MissingBoard[i].img + '" width="100%"/>';
+		let MissingBoard = data.listMissingBoard;
+		if (MissingBoard != '') {
+			output += '<div style="margin-left: 10px;"><span id="numOflist">' + data.numOflist + '</span>개의 검색결과</div>';
+			for (let i in MissingBoard) {
+				output += '<a href="/board/missing/detail?no=' + MissingBoard[i].no + '&userid=${loginSession.userid}" class="detailAnchor">';
+				output +='<div class="col-sm-3">';
+				output += '<div class="img_container" style="padding: 20px 10px;">';
+				if (MissingBoard[i].img != '') {
+					if (MissingBoard[i].dpchknum == null) {
+						output += '<img src="../../resources/uploads/kmj/missing' + MissingBoard[i].img + '" width="100%"/>';
+					} else {
+						output += '<img src="' + MissingBoard[i].img + '" width="100%" onerror="deleteBoard(${MissingBoard.no });"/>';  
+					}
 				} else {
-					output += '<img src="' + MissingBoard[i].img + '" width="100%" onerror="deleteBoard(${MissingBoard.no });"/>';  
+					output += '<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>';
 				}
-			} else {
-				output += '<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>';
+				output += '</div><div class="contents_container"><table><tr><td><strong>' + MissingBoard[i].title + '</strong></td></tr><tr>';
+				output += '<td>' + MissingBoard[i].name + ' / ' + MissingBoard[i].breed + ' / ' + MissingBoard[i].gender + ' / ' + MissingBoard[i].age 
+				+ '</td></tr><tr>';
+				output += '<td>' + MissingBoard[i].location + '</td></tr><tr>';
+				output += '<td>' + MissingBoard[i].missingdateWithoutTime + '</td></tr></table></div></div></a>';
 			}
-			output += '</div><div class="contents_container"><table><tr><td><strong>' + MissingBoard[i].title + '</strong></td></tr><tr>';
-			output += '<td>' + MissingBoard[i].name + ' / ' + MissingBoard[i].breed + ' / ' + MissingBoard[i].gender + ' / ' + MissingBoard[i].age 
-			+ '</td></tr><tr>';
-			output += '<td>' + MissingBoard[i].location + '</td></tr><tr>';
-			output += '<td>' + MissingBoard[i].missingdateWithoutTime + '</td></tr></table></div></div></a>';
+		} else {
+			output = '<div style="margin-left: 30px; font-size: 20px;"> 검색 결과가 존재하지 않습니다. </div>';
 		}
 		
 		$(".container_list").html(output);
@@ -280,7 +286,7 @@
 		<h1 style="font-family: 'Jua', sans-serif; font-size: 43px;">신고 목록</h1>
 		<div class="above_search">
 			<div style="float: right;">
-				<button type="button" class="btn btn-primary" onclick="location.href='/board/missing/write'">글등록</button>
+				<button type="button" class="btn btn-primary" style="margin-bottom: 3px;" onclick="location.href='/board/missing/write'">글등록</button>
 			</div>
 			<div style="clear: right;">
 				<select id="location">
@@ -327,49 +333,57 @@
 		</div>
 		<div class="container_list">
 			<c:choose>
-				<c:when test="${listMissingBoard eq '' }">
-					<div> 검색 결과가 존재하지 않습니다. </div>
+				<c:when test="${listMissingBoard eq '[]' }">
+					<div style="margin-left: 30px; font-size: 20px;"> 검색 결과가 존재하지 않습니다. </div>
 				</c:when>
 				<c:otherwise>
-				<c:forEach var="MissingBoard" items="${listMissingBoard }">
-				<a href="/board/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
-					<div class="col-sm-3">
-						<div class="img_container" style="padding: 20px 10px;">
-							<c:choose>
-								<c:when test="${MissingBoard.img != ''}">
-									<c:choose>
-										<c:when test="${MissingBoard.dpchknum eq null }">
-											<img src="../../resources/uploads/kmj/missing${MissingBoard.img }" height="230px"/>
-										</c:when>
-										<c:otherwise>
-											<img src="${MissingBoard.img }" width="100%" onerror="deleteBoard(${MissingBoard.no });" />
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								<c:otherwise>
-									<img src="../../resources/images/kmj/missing/noimage.png" height="230px"/>
-								</c:otherwise>
-							</c:choose>
+					<div style="margin-left: 10px;"><span id="numOflist">${numOflist }</span>개의 검색결과</div>
+					<c:forEach var="MissingBoard" items="${listMissingBoard }">
+					<a href="/board/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
+						<div class="col-sm-3">
+							<div class="img_container" style="padding: 20px 10px;">
+								<c:choose>
+									<c:when test="${MissingBoard.img != ''}">
+										<c:choose>
+											<c:when test="${MissingBoard.dpchknum eq null }">
+												<img src="../../resources/uploads/kmj/missing${MissingBoard.img }" height="230px"/>
+											</c:when>
+											<c:otherwise>
+												<c:choose>
+													<c:when test="${MissingBoard.img == ''}">
+														<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>
+													</c:when>
+													<c:otherwise>
+														<img src="${MissingBoard.img }" width="100%" onerror="deleteBoard(${MissingBoard.no });" />
+													</c:otherwise>
+												</c:choose>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<img src="../../resources/images/kmj/missing/noimage.png" height="230px"/>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="contents_container">
+								<table>
+									<tr>
+										<td><strong>${MissingBoard.title }</strong></td>
+									</tr>
+									<tr>
+										<td>${MissingBoard.name} / ${MissingBoard.breed } / ${MissingBoard.gender } / ${MissingBoard.age }</td>
+									</tr>
+									<tr>
+										<td>${MissingBoard.location }</td>
+									</tr>
+									<tr>
+										<td>실종일 : ${MissingBoard.missingdateWithoutTime }</td>
+									</tr>
+								</table>
+							</div>
 						</div>
-						<div class="contents_container">
-							<table>
-								<tr>
-									<td><strong>${MissingBoard.title }</strong></td>
-								</tr>
-								<tr>
-									<td>${MissingBoard.name} / ${MissingBoard.breed } / ${MissingBoard.gender } / ${MissingBoard.age }</td>
-								</tr>
-								<tr>
-									<td>${MissingBoard.location }</td>
-								</tr>
-								<tr>
-									<td>실종일 : ${MissingBoard.missingdateWithoutTime }</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-				</a>
-			</c:forEach>
+					</a>
+				</c:forEach>
 			</c:otherwise>
 			</c:choose>
 		</div>

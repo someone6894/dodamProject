@@ -51,7 +51,6 @@ public class MissingBoardController {
 								@RequestParam(value="category", defaultValue = "missing") String category,
 								@RequestParam(value="itemsPerPage", defaultValue = "20") int itemsPerPage,
 								Model model) {
-		
 		ListParamDTO lpd = new ListParamDTO(pageNo, location, animal, category, searchWord);
 		
 		Map<String, Object> map = null;
@@ -63,11 +62,15 @@ public class MissingBoardController {
 			e.printStackTrace();
 		}
 		
+		
+		int numOflist = service.getTotalPost(lpd);
+		
 		List<MissingBoardListDTO> lst = (List<MissingBoardListDTO>)map.get("listMissingBoard");
 		PagingInfoDTO pi = (PagingInfoDTO)map.get("pagingInfo");
 		
 		model.addAttribute("listMissingBoard", lst);
 		model.addAttribute("pagingInfo", pi);
+		model.addAttribute("numOflist", numOflist);
 		
 		System.out.println(map);
 		
@@ -283,7 +286,9 @@ public class MissingBoardController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		int numOflist = service.getTotalPost(lpd);
 		
+		map.put("numOflist", numOflist);
 		System.out.println(map.get("pagingInfo"));
 		
 		return map;

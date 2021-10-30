@@ -1,6 +1,8 @@
 package com.dodam.controller.board.missing;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -34,11 +36,14 @@ public class MissingReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value="/viewAll/{pno}", method=RequestMethod.GET)
-	public List<MissingReplyVo> viewAllReply(@PathVariable("pno") int pno) {
+	public Map<String, Object> viewAllReply(@PathVariable("pno") int pno) {
 		
 		List<MissingReplyVo> lst = service.selectAllReply(pno);
 		System.out.println(lst);
-		return lst;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("lst", lst);
+		map.put("sizeOflst", lst.size());
+		return map;
 	}
 	
 	@RequestMapping(value="/{no}", method=RequestMethod.DELETE)

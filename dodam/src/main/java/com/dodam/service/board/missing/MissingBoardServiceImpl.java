@@ -285,4 +285,11 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		 
 		return lst;
 	}
+
+	@Override
+	public int getTotalPost(ListParamDTO lpd) {
+		return dao.selectCntPost(lpd);
+	}
+
+
 }

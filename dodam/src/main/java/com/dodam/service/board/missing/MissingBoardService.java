@@ -50,6 +50,9 @@ public interface MissingBoardService {
 
 
 	List<MissingBoardListDTO> getRandomAnimal(int no);
+
+
+	int getTotalPost(ListParamDTO lpd);
 	
 }
 

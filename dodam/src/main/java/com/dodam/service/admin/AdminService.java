@@ -31,4 +31,6 @@ public interface AdminService {
 	// 회원 댓글 수
 	int getMemberReply(String userid) throws NamingException, SQLException;
 
+	int getNumOfMembers();
+
 }

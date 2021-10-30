@@ -22,11 +22,6 @@
   <link rel="stylesheet" href="../resources/assets/missing/assets/css/argon.css?v=1.2.0" type="text/css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-// 관리자가 아니면 접근할 수 없도록
-// aop로 구현해보자!
-//	if ("${loginSession.isadmin}" != 'Y') {
-//		location.href = "/";
-//	}
 
 	$(function () {
 		
@@ -41,7 +36,16 @@
 			}
 		}
 	});
+	
+	function showHomepage () {
+		$("#home").show();
+		$("#members").hide();
+	}
 
+	function showMember() {
+		$("#members").show();
+		$("#home").hide();
+	}
 </script>
 </head>
 <body>
@@ -62,7 +66,7 @@
             <li class="nav-item">
               <a class="nav-link active" href="/admin">
                 <i class="ni ni-single-02 text-orange"></i>
-                <span class="nav-link-text">회원 정보 관리</span>
+                <span class="nav-link-text">전체 관리</span>
               </a>
             </li>
             <li class="nav-item">
@@ -124,122 +128,6 @@
                 </div>
               </div>
             </li>
-            <li class="nav-item d-sm-none">
-              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                <i class="ni ni-zoom-split-in"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-bell-55"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
-                <!-- Dropdown header -->
-                <div class="px-3 py-3">
-                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
-                </div>
-                <!-- List group -->
-                <div class="list-group list-group-flush">
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="../assets/img/theme/team-2.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="../assets/img/theme/team-3.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>5 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Your posts have been liked a lot.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="../assets/img/theme/team-4.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="../assets/img/theme/team-5.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <!-- View all -->
-                <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
-              </div>
-            </li>
           </ul>
         </div>
       </div>
@@ -251,11 +139,11 @@
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">회원 관리</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">전체 관리</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item active" aria-current="page">회원 리스트</li>
-                  <li class="breadcrumb-item"><a href="#">회원 통계</a></li>
+                  <li class="breadcrumb-item" style="cursor: pointer;" onclick="showHomepage();">홈페이지 통계</li>
+                  <li class="breadcrumb-item" style="cursor: pointer;"  onclick="showMember();">회원 관리</li>
                 </ol>
               </nav>
             </div>
@@ -263,14 +151,17 @@
         </div>
       </div>
     </div>
-    <!-- Page content -->
-    <div class="container-fluid mt--6">
+    
+    
+    <!-- ------------------------------------------------------------------------ -->
+    <!-- 회원 리스트 -->
+    <div class="container-fluid mt--6" id="members" style="display : none;">
       <div class="row">
         <div class="col">
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
-              <h3 class="mb-0">회원 리스트</h3>
+              <h3 class="mb-0">회원 리스트<span id="numOfMembers"> (전체 : ${numOfMembers }명)</span></h3>
             </div>
             <!-- Light table -->
             <div class="table-responsive">
@@ -303,7 +194,7 @@
                 <ul class="pagination justify-content-end mb-0">
                   <c:if test="${param.pageNo != 1 or param.pageNo != ''}">
                   	<li class="page-item">
-                    	<a class="page-link" href="/admin/members?pageNo=${param.pageNo - 1}">
+                    	<a class="page-link" href="/admin?pageNo=1">
                       		<i class="fas fa-angle-left"></i>
                       	<span class="sr-only">Previous</span>
                     	</a>
@@ -312,12 +203,12 @@
                   <c:forEach var="i" begin="${pagingInfo.startPageNoOfBlock }"
 				end="${pagingInfo.endPageNoOfBlock }" step="1">
                   	<li class="page-item" id="li${i }">
-                    	<a class="page-link" id="page${i }" href="/admin/members?pageNo=${i }">${i }</a>
+                    	<a class="page-link" id="page${i }" href="/admin?pageNo=${i }">${i }</a>
                   	</li>
                   </c:forEach>
                   <c:if test="${param.pageNo != pagingInfo.totalPage }">
                   <li class="page-item">
-                    <a class="page-link" href="/admin/members?pageNo=${param.pageNo + 1}">
+                    <a class="page-link" href="/admin?pageNo=${pagingInfo.endPageNoOfBlock }">
                       <i class="fas fa-angle-right"></i>
                       <span class="sr-only">Next</span>
                     </a>
@@ -356,7 +247,153 @@
         </div>
       </footer>
     </div>
-  </div>
+  
+
+	<!-- ------------------------------------------------------------------------ -->
+	<!-- 회원통계 -->
+    <div class="container-fluid mt--6" id="home" style="">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0">
+              <h3 class="mb-0">홈페이지 통계</h3>
+            </div>
+            
+            
+            <!-- 통계 결과 출력 -->
+            <div class="row">
+	            <div style="width: 18rem; margin-left: 30px;">
+					<div class="card card-stats">    
+	    				<!-- Card body -->
+	    				<div class="card-body">        
+							<div class="row">
+	    						<div class="col">
+	        						<h5 class="card-title text-uppercase text-muted mb-0">이번 달 신규 회원</h5>
+	        						<span class="h2 font-weight-bold mb-0" id="newMembers">2,356</span>
+	    						</div>
+	    						<div class="col-auto">
+	      							<div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+	          							<i class="ni ni-chart-pie-35"></i>
+	      							</div>
+	    						</div>
+							</div>
+							<p class="mt-3 mb-0 text-sm">
+	    						<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+	    						<span class="text-nowrap">Since last month</span>
+							</p>
+	    				</div>    
+					</div>
+				</div>
+				
+				
+				<div style="width: 18rem; margin-left: 30px;">
+					<div class="card card-stats">    
+	    				<!-- Card body -->
+	    				<div class="card-body">        
+							<div class="row">
+	    						<div class="col">
+	        						<h5 class="card-title text-uppercase text-muted mb-0">이번 주 실종 새 글</h5>
+	        						<span class="h2 font-weight-bold mb-0" id="newMembers">2,356</span>
+	    						</div>
+	    						<div class="col-auto">
+	      							<div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+	          							<i class="ni ni-chart-pie-35"></i>
+	      							</div>
+	    						</div>
+							</div>
+							<p class="mt-3 mb-0 text-sm">
+	    						<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+	    						<span class="text-nowrap">Since last month</span>
+							</p>
+	    				</div>    
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row">				
+				<div style="width: 18rem; margin-left: 30px;">
+					<div class="card card-stats">    
+	    				<!-- Card body -->
+	    				<div class="card-body">        
+							<div class="row">
+	    						<div class="col">
+	        						<h5 class="card-title text-uppercase text-muted mb-0">이번 주 분양 새 글</h5>
+	        						<span class="h2 font-weight-bold mb-0" id="newMembers">2,356</span>
+	    						</div>
+	    						<div class="col-auto">
+	      							<div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+	          							<i class="ni ni-chart-pie-35"></i>
+	      							</div>
+	    						</div>
+							</div>
+							<p class="mt-3 mb-0 text-sm">
+	    						<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+	    						<span class="text-nowrap">Since last month</span>
+							</p>
+	    				</div>    
+					</div>
+				</div>
+				
+				<div style="width: 18rem; margin-left: 30px;">
+					<div class="card card-stats">    
+	    				<!-- Card body -->
+	    				<div class="card-body">        
+							<div class="row">
+	    						<div class="col">
+	        						<h5 class="card-title text-uppercase text-muted mb-0">이번 주 Q&A 새 글</h5>
+	        						<span class="h2 font-weight-bold mb-0" id="newMembers">2,356</span>
+	    						</div>
+	    						<div class="col-auto">
+	      							<div class="icon icon-shape bg-orange text-white rounded-circle shadow">
+	          							<i class="ni ni-chart-pie-35"></i>
+	      							</div>
+	    						</div>
+							</div>
+							<p class="mt-3 mb-0 text-sm">
+	    						<span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+	    						<span class="text-nowrap">Since last month</span>
+							</p>
+	    				</div>    
+					</div>
+				</div>
+			</div>
+			
+			
+            </div>
+            <!-- Card footer -->
+          </div>
+        </div>
+      </div>
+      <!-- Footer -->
+      <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6">
+            <div class="copyright text-center  text-lg-left  text-muted">
+              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+   </div>
   <!-- Argon Scripts -->
   <!-- Core -->
   <script src="../resources/assets/missing/assets/vendor/jquery/dist/jquery.min.js"></script>

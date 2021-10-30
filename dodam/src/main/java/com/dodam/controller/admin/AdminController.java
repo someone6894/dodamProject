@@ -38,10 +38,14 @@ public class AdminController {
 		List<MemberVo> memberList = (List<MemberVo>)map.get("memberList");
 		PagingInfoDTO pi = (PagingInfoDTO)map.get("pagingInfo");
 		
+		int numOfMembers = service.getNumOfMembers();
+		
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagingInfo", pi);
+		model.addAttribute("numOfMembers", numOfMembers);
+		System.out.println(pi);
 		
-		return "/admin/adminPage";
+		return "/admin/members";
 	}
 	
 	@RequestMapping("/board")

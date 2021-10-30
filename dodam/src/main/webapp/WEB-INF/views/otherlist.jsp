@@ -25,10 +25,25 @@
 		text-decoration: none;
 		color : black;
 	}
+	
+	#moreList {
+		background-color: #e9e7ea;
+		margin-top: 20px;
+  		margin-bottom: 10px;
+		width: 60px;
+		height: 30px;
+		float: right;
+		cursor:pointer;
+		border: 1px solid black;
+		border-radius: 4px;
+		text-align: center;
+		padding-top:6px;
+	}
+
 </style>
 <body>
 	<div class="container" id="miss">
-		<h2>찾고있는 동물들</h2>
+		<div><h2 style="display: inline-block;">찾고있는 동물들</h2><div id="moreList" style="float:right;" onclick="location.href='/board/missing/list'">더보기</div></div>
 				<c:forEach var="otherboard" items="${otherList }">
 					<a href="/board/missing/detail?no=${otherboard.no}&userid=${loginSession.userid}" class="detailAnchor">
 						<div class="col-sm-3">
@@ -40,7 +55,14 @@
 												<img src="../../resources/uploads/kmj/missing${otherboard.img }" width="100%"/>
 											</c:when>
 											<c:otherwise>
-												<img src="${otherboard.img }" width="100%" onerror="deleteBoard(${otherboard.no });" />
+												<c:choose>
+													<c:when test="${otherboard.img eq ''}">
+														<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>
+													</c:when>
+													<c:otherwise>
+														<img src="${otherboard.img }" width="100%" onerror="deleteBoard(${otherboard.no });" />
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									</c:when>

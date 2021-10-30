@@ -182,6 +182,11 @@ public class AdminServiceImpl implements AdminService {
 		return memberdao.countreplyer(userid);
 	}
 
+	@Override
+	public int getNumOfMembers() {
+		return dao.selectCntPost();
+	}
+
 
 
 }

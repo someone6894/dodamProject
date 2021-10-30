@@ -61,7 +61,7 @@
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link active"
 							href="/admin"> <i class="ni ni-single-02 text-orange"></i>
-								<span class="nav-link-text">회원 정보 관리</span>
+								<span class="nav-link-text">전체 관리</span>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="/admin/board">
 								<i class="ni ni-align-left-2 text-primary"></i> <span
@@ -228,6 +228,9 @@
 						</div>
 					</div>
 				</div>
+				
+				<!-- --------------------------------------------------------------------------------- -->
+				<!-- 회원정보 변경 -->
 				<div class="col-xl-12 order-xl-1">
 					<div class="card">
 						<div class="card-header">
@@ -279,12 +282,16 @@
 									</div>
 								</div>
 								<div class="col-12 text-right">
-									<a href="#!" class="btn btn-default">정보 수정</a>
+									<a href="#!" class="btn btn-default" id="changeInfo">정보 수정</a>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
+				
+				
+				<!-- ------------------------------------------------------------------ -->
+				<!-- 비밀번호 변경 -->
 				<div class="col-xl-12 order-xl-1">
 					<div class="card">
 						<div class="card-header">
@@ -332,7 +339,7 @@
 									</div>
 								</div>
 								<div class="col-12 text-right">
-									<a href="javascript:modifyPwd();" class="btn btn-default">비밀번호 수정</a>
+									<a href="javascript:modifyPwd();" class="btn btn-default" id="changePwd">비밀번호 수정</a>
 								</div>
 							</form>
 						</div>
