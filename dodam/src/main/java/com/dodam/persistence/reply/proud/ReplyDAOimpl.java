@@ -37,7 +37,9 @@ public class ReplyDAOimpl implements ReplyDAO {
 
 	@Override
 	public int delete(ReplyVo vo) throws Exception {
+		System.out.println(vo.toString());
 		return ses.delete(ns + ".delete", vo);
+		
 	}
 
 	@Override
@@ -59,6 +61,11 @@ public class ReplyDAOimpl implements ReplyDAO {
 	@Override
 	public int maxreplyno() throws Exception {
 		return ses.selectOne(ns + ".maxreplyno");
+	}
+
+	@Override
+	public int updatereplycount(ReplyVo vo) throws Exception {
+		return ses.update(ns + ".updatereplycount", vo);
 	}
 
 }

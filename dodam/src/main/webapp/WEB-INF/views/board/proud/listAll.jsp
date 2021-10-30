@@ -10,15 +10,15 @@
 	href="../../resources/assets/missing/assets/img/brand/favicon.png"
 	type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <script>
 	function replycount(no) {
@@ -78,14 +78,14 @@
 </style>
 <body>
 
-	<jsp:include page="../../template.jsp"></jsp:include><br/>
+	<jsp:include page="../../template.jsp"></jsp:include>
 
 	<div class="container" style="margin-top: 40px;">
 		<div>
-			<h1 style="font-family: 'Jua', sans-serif;">
+            <h1 style="font-family: 'Jua', sans-serif;">
 				<span class="glyphicon glyphicon-menu-hamburger"> </span> 반려견 자랑하기
 				게시판
-			</h1><br/><br/>
+			</h1><br/>
 		</div>
 		<c:choose>
 			<c:when test="${proudlistBoard != null }">
@@ -99,6 +99,7 @@
 								<th></th>
 							</c:forEach>
 							<th></th>
+
 						</tr>
 					</thead>
 					<tbody>
@@ -114,11 +115,11 @@
 									height="120px;" /></td>
 								<td><div class="container-fluid bg-grey">
 										<div class="row">
-											<h3 style="color: #3262c5;">${board.title }</h3>
+											<h3 style="color: #3262c5;">${board.title }  [${board.replycount }]</h3>
 											<h4>
 												<strong>${board.writer }</strong>
 											</h4>
-											<p>${board.postdate }</p>
+											<p>작성일 : ${board.postdate }</p>
 										</div>
 									</div></td>
 								<c:forEach begin="0" end="35" step="1">
@@ -127,7 +128,6 @@
 								<td style="margin-top : 40px;">조회수 : ${board.readcount }</td>
 							</tr>
 						</c:forEach>
-						
 					</tbody>
 				</table>
 			</c:when>
@@ -143,7 +143,7 @@
 				</c:when>
 			</c:choose>
 
-			<div class="w300" style="margint-top: 20px; margin-left: 35%;">
+			<div class="w300" style="margint-top: 20px; margin-left : 35%;" >
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">
 
@@ -187,10 +187,10 @@
 						href="/board/proud/listAll?pageNo=${pagingInfo.totalPage }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;&gt;</a></li>
 				</c:if>
 			</ul>
-		</div>
+		</div><br/><br/>
 
 
-	</div><br/><br/>
+	</div>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>
 </html>

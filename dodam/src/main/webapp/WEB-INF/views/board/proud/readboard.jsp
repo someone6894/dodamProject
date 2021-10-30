@@ -85,7 +85,7 @@
 	    					viewoutput += '<div id="regreg' + element.no + '"></div>';
 	    					if(element.replyer == $("#replyer").val()) {
 	    					viewoutput += '<div class ="fdb_nav"><a href="javascript:;" class = "far" onclick="UpReply(' + element.no + ')";><img class="fa fa-pencil" src="../../resources/images/lcj/replyupdate.png" /> 수정</a>';
-	    					viewoutput += '<a href="javascript:;" class = "far" onclick="DeReply(' + element.no + ')";><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
+	    					viewoutput += '<a href="javascript:;" class = "far" onclick="DeReply(' + element.bno + ',' + element.reforder + ')";><img class="fa fa-eraser" src="../../resources/images/lcj/replydelete.png" /> 삭제</a>';
 	    					viewoutput += '<a href="javascript:;" class = "far" onclick="ReReply(' + element.no + ')";><img class="fa fa-talk" src="../../resources/images/lcj/replyreply.png" /> 댓글</a></div>';
 	    					}else if( element.replyer != $("#replyer").val() && $("#replyer").val() != null){
 	    						viewoutput += '<div class ="fdb_nav">';
@@ -288,14 +288,14 @@
 		$("#reReply" + no).hide(300);
 	}
 	
-	function DeReply(no){
+	function DeReply(bno, reforder){
 
 		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
 			
 			let url = '/replies/delete';
 		
 			let sendData = JSON.stringify({ // json 타입의 객체로 보이는 문자열 생성
-				no : no
+				bno : bno , reforder : reforder
 			});
 			
 			 $.ajax({
@@ -311,7 +311,8 @@
   		         success : function(data) { // 통신 성공시 수행될 콜백 함수
 					if(data == "success") {
 						alert("댓글 삭제 완료!");
-						viewAllReplies();
+						location.reload();
+						
 					} else if (data =="fail") {
 						alert('댓글 삭제 실패!');
 					}
@@ -507,6 +508,10 @@
 	width : 30px;
 	height : 30px;
 }
+
+#textleft {
+	text-aligh : left;
+}
 </style>
 <body>
 	<jsp:include page="../../template.jsp"></jsp:include>
@@ -521,8 +526,9 @@
 		${board.writer}, ${board.postdate }
 		<hr>
 		<h4>
-			조회 수 : <span class="label label-danger">${board.readcount }</span> 추천
-			수 : <span class="label label-primary">${board.likecount }</span>
+			조회 수 : <span class="label label-danger">${board.readcount }</span> 
+			추천 수 : <span class="label label-primary">${board.likecount }</span>
+			댓글 수 : <span class="label label-warning">${board.replycount }</span>
 		</h4>
 		<hr>
 		<br />
@@ -589,6 +595,7 @@
 		<hr>
 		<br />
 
+		<div><button type="button" id="textleft" class="btn btn-info btn-lg btn-block" active>댓글 ${board.replycount } 개</button></div>
 		<div id="replyLst"></div>
 		<br />
 

@@ -13,13 +13,15 @@ public class ProudVo {
 	private String image;
 	private String noimage;
 	private String thumbimage;
+	private int replycount;
 	
 	public ProudVo() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public ProudVo(int no, String title, String writer, String content, Timestamp postdate, int likecount,
-			int readcount, String image, String noimage, String thumbimage) {
+			int readcount, String image, String noimage, String thumbimage, int replycount) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -31,6 +33,7 @@ public class ProudVo {
 		this.image = image;
 		this.noimage = noimage;
 		this.thumbimage = thumbimage;
+		this.replycount = replycount;
 	}
 
 	public int getNo() {
@@ -113,12 +116,22 @@ public class ProudVo {
 		this.thumbimage = thumbimage;
 	}
 
+	public int getReplycount() {
+		return replycount;
+	}
+
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+
 	@Override
 	public String toString() {
 		return "ProudVo [no=" + no + ", title=" + title + ", writer=" + writer + ", content=" + content + ", postdate="
 				+ postdate + ", likecount=" + likecount + ", readcount=" + readcount + ", image=" + image + ", noimage="
-				+ noimage + ", thumbimage=" + thumbimage + "]";
+				+ noimage + ", thumbimage=" + thumbimage + ", replycount=" + replycount + "]";
 	}
-
+	
+	
+	
 }
 
