@@ -9,7 +9,6 @@ public class MissingBoardVo {
 	private String animal;
 	private String writer;
 	private String contents;
-	private String password;
 	private Timestamp registerdate;
 	private int readcount;
 	private int likecount;
@@ -28,9 +27,9 @@ public class MissingBoardVo {
 		super();
 	}
 	public MissingBoardVo(int no, String category, String title, String animal, String writer, String contents,
-			String password, Timestamp registerdate, int readcount, int likecount, String img, String thumbimg,
-			String location, String dlocation, Timestamp missingdate, char gender, String breed, String age,
-			String name, String contact, String dpchknum) {
+			Timestamp registerdate, int readcount, int likecount, String img, String thumbimg, String location,
+			String dlocation, Timestamp missingdate, char gender, String breed, String age, String name, String contact,
+			String dpchknum) {
 		super();
 		this.no = no;
 		this.category = category;
@@ -38,7 +37,6 @@ public class MissingBoardVo {
 		this.animal = animal;
 		this.writer = writer;
 		this.contents = contents;
-		this.password = password;
 		this.registerdate = registerdate;
 		this.readcount = readcount;
 		this.likecount = likecount;
@@ -89,12 +87,6 @@ public class MissingBoardVo {
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public Timestamp getRegisterdate() {
 		return registerdate;
@@ -183,11 +175,12 @@ public class MissingBoardVo {
 	@Override
 	public String toString() {
 		return "MissingBoardVo [no=" + no + ", category=" + category + ", title=" + title + ", animal=" + animal
-				+ ", writer=" + writer + ", contents=" + contents + ", password=" + password + ", registerdate="
-				+ registerdate + ", readcount=" + readcount + ", likecount=" + likecount + ", img=" + img
-				+ ", thumbimg=" + thumbimg + ", location=" + location + ", dlocation=" + dlocation + ", missingdate="
-				+ missingdate + ", gender=" + gender + ", breed=" + breed + ", age=" + age + ", name=" + name
-				+ ", contact=" + contact + ", dpchknum=" + dpchknum + "]";
+				+ ", writer=" + writer + ", contents=" + contents + ", registerdate=" + registerdate + ", readcount="
+				+ readcount + ", likecount=" + likecount + ", img=" + img + ", thumbimg=" + thumbimg + ", location="
+				+ location + ", dlocation=" + dlocation + ", missingdate=" + missingdate + ", gender=" + gender
+				+ ", breed=" + breed + ", age=" + age + ", name=" + name + ", contact=" + contact + ", dpchknum="
+				+ dpchknum + "]";
 	}
+
 	
 }

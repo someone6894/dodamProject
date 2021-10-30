@@ -36,9 +36,6 @@
 	crossorigin="anonymous"></script>
 </head>
 <script>
-	$(function() {
-		
-	});
 </script>
 <body>
 	<!-- Sidenav -->
@@ -268,6 +265,7 @@
 												<label class="form-control-label" for="input-phone">전화번호</label>
 												<input type="text" id="phone" class="form-control"
 													value="${userInfo.phone }">
+												<span id="phone_error"></span>
 											</div>
 										</div>
 									</div>
