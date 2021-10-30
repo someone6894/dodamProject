@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -27,8 +30,8 @@
 	}
 </style>
 <body>
-	<div class="container" id="miss">
-		<h2>찾고있는 동물들</h2>
+	<div class="container" id="miss" style="font-family: 'Gowun Dodum', sans-serif;">
+		<h2><strong>찾고있는 동물들</strong></h2>
 				<c:forEach var="otherboard" items="${otherList }">
 					<a href="/board/missing/detail?no=${otherboard.no}&userid=${loginSession.userid}" class="detailAnchor">
 						<div class="col-sm-3">

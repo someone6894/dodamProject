@@ -61,7 +61,7 @@ h2.move{
 </style>
 <body>
 	<div class="container" style="font-family: 'Gowun Dodum', sans-serif;">
-	<h2>공지사항</h2>
+	<h2><strong>공지사항</strong></h2>
 		<c:choose>
 			<c:when test="${noticeBoard != null }">
 				<table class="table table-hover" style=" width:600px; height:400px;">
