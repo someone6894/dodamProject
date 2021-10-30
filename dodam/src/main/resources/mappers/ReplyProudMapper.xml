@@ -33,10 +33,14 @@
   	 </update>
   	 
   	 <delete id="delete">
-	 	delete from proudreply where no = #{no}
+		delete from proudreply where reforder like concat("%", #{reforder}, "%");
 	 </delete>
 	 
 	 <select id="replycount" resultType="int">
 		select count(*) from proudreply where ref = #{no} and step = #{step} + 1;
   	</select>
+  	
+  	 <update id="updatereplycount">
+		update proudboard set replycount = (select count(*) from proudreply where bno= #{bno}) where no = #{bno};
+  	 </update>
  </mapper>

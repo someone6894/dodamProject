@@ -30,4 +30,6 @@ public interface ReplyDAO {
 		public int replycount(ReplyVo vo) throws Exception;
 
 		public int maxreplyno() throws Exception;
+
+		public int updatereplycount(ReplyVo vo) throws Exception;
 }

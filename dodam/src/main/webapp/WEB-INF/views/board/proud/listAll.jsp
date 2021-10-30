@@ -85,7 +85,7 @@
             <h1 style="font-family: 'Jua', sans-serif;">
 				<span class="glyphicon glyphicon-menu-hamburger"> </span> 반려견 자랑하기
 				게시판
-			</h1><br/><br/>
+			</h1><br/>
 		</div>
 		<c:choose>
 			<c:when test="${proudlistBoard != null }">
@@ -115,11 +115,10 @@
 									height="120px;" /></td>
 								<td><div class="container-fluid bg-grey">
 										<div class="row">
-											<h3 style="color: #3262c5;">${board.title }</h3>
+											<h3 style="color: #3262c5;">${board.title }  [${board.replycount }]</h3>
 											<h4>
 												<strong>${board.writer }</strong>
 											</h4>
-											<p>${board.postdate }</p>
 											<p>작성일 : ${board.postdate }</p>
 										</div>
 									</div></td>
@@ -144,7 +143,7 @@
 				</c:when>
 			</c:choose>
 
-			<div class="w300" style="margint-top: 20px;">
+			<div class="w300" style="margint-top: 20px; margin-left : 35%;" >
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">
 
@@ -162,7 +161,7 @@
 
 
 
-		<div style="margin-top: 20px; margin-left: 35%x; clear: right;"
+		<div style="margin-top: 20px; margin-left: 50px; clear: right;"
 			align="center">
 			<ul class="pagination">
 				<c:if test="${param.pageNo > 1 }">

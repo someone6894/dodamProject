@@ -40,9 +40,11 @@ public class ReplyController {
 	    	 maxno = service.maxreplyno();
 	    	 vo.setNo(maxno);
 	    	 System.out.println(vo);
-	         service.addReply(vo);
+	         if(service.addReply(vo)) {
 			 service.addpoint(new MypointVo(userid, null, 2, "댓글 작성"));
+			 service.updatereplycount(vo);
 	         result = new ResponseEntity<String>("success", HttpStatus.OK);
+	         }
 	      } catch (Exception e) {
 	         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 	      }
@@ -69,6 +71,7 @@ public class ReplyController {
 		    	 System.out.println(vo);
 	    	  	if(service.reReply(vo, result2)) {
 				service.addpoint(new MypointVo(userid, null, 2, "댓글 작성"));
+				service.updatereplycount(vo);
 				result = new ResponseEntity<String>("success", HttpStatus.OK);
 	    	  	}
 	    	  	else {
@@ -117,8 +120,10 @@ public class ReplyController {
 		   System.out.println(vo.toString());
 		   ResponseEntity<String> result = null;		   
 		   try { // ajax니까 공통서블릿 말고 여기서 처리하도록 한다.
-		         service.deleteReply(vo);
+		         if(service.deleteReply(vo)) {
+				 service.updatereplycount(vo);
 		         result = new ResponseEntity<String>("success", HttpStatus.OK);
+		         }
 		      } catch (Exception e) {
 		         result = new ResponseEntity<String>("fail", HttpStatus.BAD_REQUEST);
 		      }

@@ -97,4 +97,17 @@ public class ReplyServiceImpl implements ReplyService {
 		
 	}
 
+	@Override
+	public boolean updatereplycount(ReplyVo vo) throws Exception {
+		boolean result = false;
+
+		int row = dao.updatereplycount(vo);
+		if (row == 1) {
+			result = true;
+		}
+		
+		return result;
+		
+	}
+
 }

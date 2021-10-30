@@ -30,5 +30,7 @@ public interface ReplyService {
 			public int replycount(ReplyVo vo) throws Exception;
 
 			public int maxreplyno() throws Exception;
+
+			public boolean updatereplycount(ReplyVo vo) throws Exception;
 			
 }
