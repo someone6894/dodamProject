@@ -16,6 +16,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 </head>
 <script>
 	function replycount(no) {
@@ -79,10 +82,10 @@
 
 	<div class="container" style="margin-top: 40px;">
 		<div>
-			<h2>
+            <h1 style="font-family: 'Jua', sans-serif;">
 				<span class="glyphicon glyphicon-menu-hamburger"> </span> 반려견 자랑하기
 				게시판
-			</h2>
+			</h1><br/><br/>
 		</div>
 		<c:choose>
 			<c:when test="${proudlistBoard != null }">
@@ -159,7 +162,7 @@
 
 
 
-		<div style="margin-top: 20px; margin-left: 50px; clear: right;"
+		<div style="margin-top: 20px; margin-left: 35%x; clear: right;"
 			align="center">
 			<ul class="pagination">
 				<c:if test="${param.pageNo > 1 }">
@@ -185,7 +188,7 @@
 						href="/board/proud/listAll?pageNo=${pagingInfo.totalPage }&searchBy=${param.searchBy}&searchWord=${param.searchWord}">&gt;&gt;</a></li>
 				</c:if>
 			</ul>
-		</div>
+		</div><br/><br/>
 
 
 	</div>
