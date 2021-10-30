@@ -95,6 +95,7 @@
 							<c:forEach begin="0" end="35" step="1">
 								<th></th>
 							</c:forEach>
+							<th></th>
 
 						</tr>
 					</thead>
@@ -116,11 +117,13 @@
 												<strong>${board.writer }</strong>
 											</h4>
 											<p>${board.postdate }</p>
+											<p>작성일 : ${board.postdate }</p>
 										</div>
 									</div></td>
 								<c:forEach begin="0" end="35" step="1">
 									<td></td>
 								</c:forEach>
+								<td style="margin-top : 40px;">조회수 : ${board.readcount }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -139,6 +142,7 @@
 			</c:choose>
 
 			<div class="w300" style="margint-top: 20px;">
+			<div class="w300" style="margint-top: 20px; margin-left : 70px;" >
 				<select class="form-control form-control-sm" name="searchType"
 					id="searchType">
 
