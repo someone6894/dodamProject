@@ -160,8 +160,8 @@
 				</c:when></c:choose> 
 				<a href="/board/event/listPage" class="btn3">글 목록</a>
 				<span class="button gray medium"><a href="#" onclick="clip(); return false;" > <!-- 공유하기 버튼 -->
-				<img src="https://cdn-icons.flaticon.com/png/512/2990/premium/2990295.png?token=exp=1635133206~hmac=f7d1162a99aec4e36596eddbd27dabca" style="width:40px;">
-				공유</a></span>
+				<img src="../../resources/images/yjw/share2.png" style="width:40px;">
+				</a></span>
 			</div>
 		</div>	
 	<div class="container">
@@ -176,7 +176,7 @@
 		<div class="img">
 		<img src = "${view.mallLocation}" style="width:1140px; 
 		height: 700px; margin-bottom:50px;" 
-		onclick="location.href='${view.mallLocation}'" onerror="this.src='../../resources/images/main/dodam.jpg'">
+		onclick="location.href='${view.mallLocation}'" onerror="this.src='../../resources/images/yjw/waiting.jpg'">
 		</div>
 		
 	</div><br/>
