@@ -18,7 +18,7 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter {
 		MemberVo loginmem = (MemberVo)ses.getAttribute("loginSession");
 		
 		// 로그인 하지 않았거나 아이디가 admin123이 아니면
-		if (loginmem == null || !(loginmem.getUserid().equals("admin123"))) {
+		if (loginmem == null || !(loginmem.getIsadmin().equals("Y"))) {
 			
 			// index페이지로 이동
 			response.sendRedirect("/");
