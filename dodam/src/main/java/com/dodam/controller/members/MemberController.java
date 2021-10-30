@@ -311,7 +311,9 @@ public class MemberController {
 		String content = "도담 홈페이지를 방문해주셔서 감사합니다." + " <br><br>" + "인증 번호는 " + checkNum + " 입니다." + "<br>"
 				+ "해당 인증번호를 인증 번호 확인란에 기입하여 주세요." + "<br><br>" + "Thank you for visitng Dodam. " + "<br>"
 				+ "certification code is " + checkNum + "<br>" + "Please write this in Dodam's register email checkbox."
-				+ "<br><br>" + "<img src=\"cid:dodam.jpg\">";
+				+ "<br><br>";
+				
+//"<img src=\"cid:dodam.jpg\">";
 
 		try {
 			MimeMessage message = mailSender2.createMimeMessage();
@@ -322,9 +324,10 @@ public class MemberController {
 			helper.setText(content, true);
 
 			// 이메일 내용에 파일 업로드할 때
-			FileSystemResource file = new FileSystemResource(new File(
-					"C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
-			helper.addInline("dodam.jpg", file);
+//			FileSystemResource file = new FileSystemResource(new File(
+//					"C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
+			
+//			helper.addInline("dodam.jpg", file);
 
 			mailSender2.send(message);
 			result = new ResponseEntity<String>("success", HttpStatus.OK);
@@ -539,7 +542,9 @@ public class MemberController {
 					
 							+ "로그인 후 다른 비밀번호로 변경해 주시기 바랍니다.<br>"
 							
-							+ "<br>" + "<img src=\"cid:dodam.jpg\">";
+							+ "<br>";
+					
+//					+ "<img src=\"cid:dodam.jpg\">";
 
 					
 							try {
@@ -551,9 +556,9 @@ public class MemberController {
 								helper.setText(content, true);
 
 								// 이메일 내용에 파일 업로드할 때
-								FileSystemResource file = new FileSystemResource(new File(
-										"C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
-								helper.addInline("dodam.jpg", file);
+//								FileSystemResource file = new FileSystemResource(new File(
+//										"C:\\lecture\\dodamProject\\dodam\\src\\main\\webapp\\resources\\images\\main\\dodam.jpg"));
+//								helper.addInline("dodam.jpg", file);
 
 								mailSender2.send(message);
 								result = new ResponseEntity<String>("success", HttpStatus.OK);
