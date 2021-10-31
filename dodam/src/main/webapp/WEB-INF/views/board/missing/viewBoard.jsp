@@ -398,11 +398,10 @@
 	        		// ---------------- 삭제된 댓글 템플릿 ------------------------
 	        		deletedoutput += '<table id="reply' + element.no + '"><tr><td style="width: 10px;">';
 					if (element.depth != 0) {
-						secoutput += '<div class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
+						deletedoutput += '<div class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
 					}
 					deletedoutput += '<td><div class="list-group-item">';
 					deletedoutput += '<div> 삭제된 댓글입니다. </div>';
-					deletedoutput += '<div id="secretDiv' + element.no + '" style="display: none;">' + element.issecret + '</div>';
 					deletedoutput += '</div></td></tr></table>';
 	        		
 					// -------------- 비밀글 템플릿 ---------------------------
@@ -423,7 +422,7 @@
 					}
 	    			viewoutput += '<td><div class="list-group-item">';
 	        		viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
-					viewoutput += '<div>작성자 : <span id="replyer'+ element.no +'">' + element.replyer + '</span></div>';
+					viewoutput += '<div><span id="replyer'+ element.no +'">' + element.replyer + '</span></div><hr />';
 	        		viewoutput += '<div>내용';
 	        		if (element.ismodified == 'Y') {
 	        			viewoutput += '(수정됨)'

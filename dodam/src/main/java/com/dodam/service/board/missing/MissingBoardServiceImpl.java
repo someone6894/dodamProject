@@ -49,9 +49,12 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 			 }
 		 }
 		 
+		int numOflist = dao.selectCntPost(lpd);
+		 
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("listMissingBoard", lst);
 		 map.put("pagingInfo", pi);
+		 map.put("numOflist", numOflist);
 		 
 		 return map;
 	}
@@ -284,11 +287,6 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		 }
 		 
 		return lst;
-	}
-
-	@Override
-	public int getTotalPost(ListParamDTO lpd) {
-		return dao.selectCntPost(lpd);
 	}
 
 

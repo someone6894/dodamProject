@@ -63,10 +63,11 @@ public class MissingBoardController {
 		}
 		
 		
-		int numOflist = service.getTotalPost(lpd);
+		// int numOflist = service.getTotalPost(lpd);
 		
 		List<MissingBoardListDTO> lst = (List<MissingBoardListDTO>)map.get("listMissingBoard");
 		PagingInfoDTO pi = (PagingInfoDTO)map.get("pagingInfo");
+		int numOflist = (Integer)map.get("numOflist");
 		
 		model.addAttribute("listMissingBoard", lst);
 		model.addAttribute("pagingInfo", pi);
@@ -286,9 +287,7 @@ public class MissingBoardController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int numOflist = service.getTotalPost(lpd);
 		
-		map.put("numOflist", numOflist);
 		System.out.println(map.get("pagingInfo"));
 		
 		return map;

@@ -69,8 +69,7 @@ public class MemberController {
 		ses.removeAttribute("userid"); // 로그인한 아이디 갱신
 		System.out.println("ses.toString() : " + ses.toString());
 
-		return "index";
-
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)

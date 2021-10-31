@@ -53,8 +53,8 @@
         <!-- <li><a href="/admin/adminhome"><i class="fas fa-user-cog"></i>&nbsp;&nbsp;관리자페이지
 							메인</a></li> -->
         <li><a href="/admin/members"><i class="fas fa-user-friends"></i>&nbsp;&nbsp;회원관리</a></li>
-        <li class="active"><a href="/admin/board"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;게시판 관리</a></li>
-        <li><a href="/admin/comment"><i class="far fa-comment"></i>&nbsp;&nbsp;&nbsp;댓글관리</a></li>
+        <li><a href="/admin/board"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;게시판 관리</a></li>
+        <li class="active"><a href="/admin/comment"><i class="far fa-comment"></i>&nbsp;&nbsp;&nbsp;댓글관리</a></li>
         <li>------------------------------------------------</li>
         <li><a href="/"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;나가기</a></li>
       </ul><br>
