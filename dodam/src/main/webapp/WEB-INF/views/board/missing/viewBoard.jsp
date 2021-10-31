@@ -421,7 +421,10 @@
 		    			viewoutput += '<div  class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
 					}
 	    			viewoutput += '<td><div class="list-group-item">';
-	        		viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;"><img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
+	    			if (loginUser == bwriter || loginUser == replyer) {
+	        			viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;">';
+	        			viewoutput += '<img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
+	        		}
 					viewoutput += '<div><span id="replyer'+ element.no +'">' + element.replyer + '</span></div><hr />';
 	        		viewoutput += '<div>내용';
 	        		if (element.ismodified == 'Y') {
@@ -471,7 +474,6 @@
 								}
 			        			viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
 		        			}
-		        			viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu"></ul></div>';
 		        			viewoutput += '</div></td></tr></table>';
 		
 		        			output += viewoutput;
