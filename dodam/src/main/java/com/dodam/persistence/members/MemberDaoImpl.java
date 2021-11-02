@@ -2,6 +2,7 @@ package com.dodam.persistence.members;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.inject.Inject;
@@ -208,6 +209,11 @@ public class MemberDaoImpl implements MemberDao {
 	public int bookmarkcount(String userid) throws NamingException, SQLException {
 
 		return ses.selectOne(namespace + ".bookmarkcount", userid);
+	}
+
+	@Override
+	public MemberVo pwdCheck(Map<String, String> map) {
+		return ses.selectOne(namespace + ".selectPwdCheck", map);
 	}
 
 	

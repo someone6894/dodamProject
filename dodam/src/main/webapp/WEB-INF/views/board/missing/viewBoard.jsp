@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script>
 		$(function() {
 			
@@ -94,6 +96,7 @@
 						$("#bookmarkSpan").html(output);
 					}
 				});
+				
 			}
 			
 			
@@ -121,6 +124,78 @@
 					deleteReply(no);
 				}
 			});
+			
+			url="/board/missing/getOtherList";
+			
+			$.ajax({
+				url : url,
+				data : {no : "${param.no}"},
+				dataType : "json", // 수신될 데이터의 타입
+				type : "POST", // 통신 방식
+				success : function(data) { // 통신 성공시 수행될 콜백 함수
+					console.log(data);
+					let output = '';
+					for (let i in data) {
+						output += '<div class="slickDiv">';
+						output += '<a href="/board/missing/detail?no=' + data[i].no + '&userid=${loginSession.userid}" class="detailAnchor">';
+						output += '<div class="img_container_S" style="padding: 20px 10px;">';
+						if (data[i].img != '') {
+							if (data[i].dpchknum == null) {
+								output += '<img src="../../resources/uploads/kmj/missing' + data[i].img + '" width="100%"/>';
+							} else {
+								output += '<img src="' + data[i].img + '" width="100%" onerror="deleteBoard(' + data[i].no + ');"/>';  
+							}
+						} else {
+							output += '<img src="../../resources/images/kmj/missing/noimage.png" width="100%"/>';
+						}
+						output += '</div><div class="contents_container"><table><tr><td><strong>' + data[i].title + '</strong></td></tr><tr>';
+						output += '<td>' + data[i].name + ' / ' + data[i].breed + ' / ' + data[i].gender + ' / ' + data[i].age 
+						+ '</td></tr><tr>';
+						output += '<td>' + data[i].location + '</td></tr><tr>';
+						output += '<td>' + data[i].missingdateWithoutTime + '</td></tr></table></div></a></div>';
+					}
+					
+					$(".container_list").html(output);
+				
+					$('.container_list').slick({
+						  dots: false,
+						  infinite: true,
+						  speed: 300,
+						  slidesToShow: 4,
+						  slidesToScroll: 4,
+						  
+						  prevArrow: '<img src="../../resources/images/kmj/missing/left-arrow.png" id="preIcon" width="40px;"/>',
+						  nextArrow: '<img src="../../resources/images/kmj/missing/right-arrow.png" id="nextIcon" width="40px;"/>',
+						  responsive: [
+						    {
+						      breakpoint: 1024,
+						      settings: {
+						        slidesToShow: 3,
+						        slidesToScroll: 3,
+						        infinite: true,
+						        dots: true
+						      }
+						    },
+						    {
+						      breakpoint: 600,
+						      settings: {
+						        slidesToShow: 2,
+						        slidesToScroll: 2
+						      }
+						    },
+						    {
+						      breakpoint: 480,
+						      settings: {
+						        slidesToShow: 1,
+						        slidesToScroll: 1
+						      }
+						    }
+						  ]
+					});
+
+				}
+			});
+			
 		});
 		
 		// esc키 누르면 삭제모달 사라지면서 화면 잠김 해제--------------------------------------------------------- 
@@ -421,7 +496,7 @@
 		    			viewoutput += '<div  class="replyImg" style="margin-left: ' + 40*parseInt(element.depth) + 'px;"><img src="../../resources/images/kmj/missing/reply.png" width="15px;" /></div></td>';
 					}
 	    			viewoutput += '<td><div class="list-group-item">';
-	    			if (loginUser == bwriter || loginUser == replyer) {
+	    			if (loginUser == bwriter || loginUser == replyer || "${loginSession.isadmin}" == 'Y') {
 	        			viewoutput += '<div id="reply_menu' + element.no + '" style="float: right;">';
 	        			viewoutput += '<img src="../../resources/images/kmj/missing/more.png" width="15px" class="target" onclick="showReplyMenu(' + element.no + ');"/></div>';
 	        		}
@@ -448,7 +523,7 @@
 							if (loginUser == bwriter || loginUser ==  replyer || loginUser == "admin123") { // 보이는 조건에 해당
 									viewoutput += "<div style='color:red;'><img src='../../resources/images/kmj/missing/lock.png' width='15px'>이 글은 비밀글 입니다.</div>";
 									viewoutput += '<a href="javascript:showReReply(' + element.no + ');">답글달기</a>';
-								if(loginUser == replyer || loginUser == "admin123" ) { // 댓글 작성자인 경우
+								if(loginUser == replyer || "${loginSession.isadmin}" == "Y") { // 댓글 작성자인 경우
 						       		viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">'
 						       		viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
 						       		viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
@@ -464,7 +539,7 @@
 							}
 		        		} else {
 		        			if (loginUser != "") {
-			        			if(loginUser == replyer) { // 댓글 작성자인 경우
+			        			if(loginUser == replyer || "${loginSession.isadmin}" == 'Y') { // 댓글 작성자인 경우
 							       	viewoutput += '<div><ul id="replyMenu' + element.no + '" class="replyMenu">';
 							       	viewoutput += '<li class="target" onclick="showModifyReply(' + element.no + ')">수정하기</li>';
 							       	viewoutput += '<li class="target" onclick="remove(this, ' + element.no + ');">삭제하기</li></ul></div>';
@@ -840,6 +915,42 @@
 		.replyImg {
 			 display: inline-block;
 		}
+		
+		.container_list {
+			clear: both;
+			margin-top: 60px;
+		}
+		
+		.slickDiv {
+		padding: 10px;
+		height : 380px;
+		}
+	
+		.slickDiv:hover {
+			background-color: lightblue;
+		}
+		
+		.img_container_S {
+			height : 74%;
+		}
+		
+		#preIcon {
+			position:absolute;
+			top: 170px;
+			left: -50px;
+		}
+		
+		#nextIcon {
+			position:absolute;
+			top: 170px;
+			right:-50px;
+		}
+		
+		.contents_container {
+			margin-top : 10px;
+		}
+		
+		.contents_container > 
 	</style>
 </head>
 <body>
@@ -923,7 +1034,7 @@
 				<c:if test="${loginSession.userid != null }">
 					<div>
 						<button type="button" class="btn" onclick="showReply();">댓글달기</button>
-						<c:if test="${loginSession.userid == MissingBoard.writer or loginSession.userid == 'admin123'}">
+						<c:if test="${loginSession.userid == MissingBoard.writer or loginSession.isadmin == 'Y'}">
 							<button type="button" class="btn" onclick="location.href='/board/missing/modify?no=${MissingBoard.no}&userid=${loginSession.userid }'">수정</button>
 							<button type="button" class="btn btn-danger" onclick="remove(this, ${MissingBoard.no});">삭제</button>
 						</c:if>
@@ -975,7 +1086,6 @@
 	         	<button type="button" class="btn" onclick="closeReReply();">닫기</button>
 			</div>
 		</div>
-	</div>
 	
 	<div class='backLayer' style='position: absolute;' ></div>
 	<div id="remove">
@@ -989,7 +1099,8 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="otherlist.jsp"></jsp:include>
+	<div class="container_list"></div>
+	</div>
 	<br/><br/><br/>
 	<jsp:include page="../../footer.jsp"></jsp:include>
 </body>

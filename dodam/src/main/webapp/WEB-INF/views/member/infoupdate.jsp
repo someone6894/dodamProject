@@ -26,7 +26,7 @@
 			<div>
 				<br />
 
-				<form id="myForm" action="/member/infoupdatecomp" method="post">
+				<form id="myForm" action="/admin/infoupdate" method="post">
 					<p>
 						<label>아이디 <em style="color:red"> *</em></label> <input class="w3-input" type="text" id="userid"
 							name="userid" style="background-color:#e9e9e9" value="${loginSession.userid }" readonly>

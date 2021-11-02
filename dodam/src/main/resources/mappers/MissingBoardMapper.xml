@@ -90,12 +90,12 @@
   
   <select id="selectRandom" resultType="com.dodam.domain.missing.MissingBoardListDTO">
 	select no, title, writer, contact, age, breed, location, gender, img, thumbimg, missingdate, name, dpchknum 
-  		from missingboard where category='missing' and no != #{no} order by rand() limit 0, 4;
+  		from missingboard where category='missing' and no != #{no} order by rand() limit 0, 20;
   </select>
   
   <select id="selectBookAnimal" resultType="com.dodam.domain.missing.MissingBoardListDTO">
   	select no, title, writer, contact, age, breed, location, gender, img, thumbimg, missingdate, name, dpchknum 
-  		from missingboard where category='missing' and animal=#{animal} and no != #{no} order by rand() limit 0, 4;
+  		from missingboard where category='missing' and animal=#{animal} and no != #{no} order by rand() limit 0, 20;
   </select>
   
   </mapper>

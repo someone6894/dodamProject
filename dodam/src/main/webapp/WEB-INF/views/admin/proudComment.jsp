@@ -42,17 +42,6 @@ footer {
 	padding: 15px;
 }
 
-.board {
-	margin: 0px 0px 20px 0px;
-	float:left;
-}
-
-.boardLink {
-	font-weight: bold;
-	cursor: pointer;
-	color: #337ab7;
-}
-
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
 	.sidenav {
@@ -64,11 +53,6 @@ footer {
 	}
 }
 </style>
-<script>
-	$(function(){
-		
-	});
-</script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -93,11 +77,12 @@ footer {
 				<br>
 			</div>
 
-			<div class="col-sm-9" style="margin: 20px;">
-				<button onclick="location.href='/admin/comment'" class="btn btn-primary board">찾아요</button>
-				<button class="btn btn-default board" onclick="location.href='/admin/proud'">반려동물 자랑</button>
-				<button class="btn btn-default board">Q&A</button>
-				<h2 style="clear: left;">찾아요 게시판 댓글</h2>
+			<div class="col-sm-9">
+				<button onclick="location.href='/admin/comment'"
+					class="btn btn-default">찾아요</button>
+				<button class="btn btn-primary" onclick="location.href='/admin/proud'">반려동물 자랑</button>
+				<button class="btn btn-default">Q&A</button>
+				<h2>찾아요 게시판 댓글</h2>
 				<p>
 					총 댓글 개수 : <span id="numOfComments">${numOfComments }</span>개
 				</p>
@@ -115,30 +100,25 @@ footer {
 						<c:forEach var="comment" items="${Comments }">
 							<tr>
 								<c:choose>
-									<c:when test="${fn:contains(comment.isdeleted, 'Y')}">
-										<c:choose>
-											<c:when test="${comment.pno == 0 }">
-												<td colspan="3" style="color: #b8bfc2"><strike>삭제됨</strike><i class="fas fa-paw" style="color: pink; font-size: 18px; margin-left: 10px;"></i></td>
-												<!-- <td>삭제됨</td> -->
-												<!-- <td>삭제됨</td> -->		
-			     								<td>${comment.recontents }</td>
-			     								<td>${comment.replyer }</td>
-											</c:when>
-											<c:otherwise>
-												<td>${comment.pno }</td>
-												<td class="boardLink"
-												onclick="location.href='/board/missing/detail?no=${comment.pno}&userid=';">${comment.title }</td>
-												<td>${comment.pcontents }</td>
-												<td id="${comment.no }" colspan="2" style="color: #b8bfc2"><strike>삭제됨</strike><i class="fas fa-paw" style="color: pink; font-size: 18px; margin-left: 10px;"></i></td>
-												<!-- <td>삭제됨</td> -->
-											</c:otherwise>
-										</c:choose>
+									<c:when test="${comment.pno == 0 }">
+										<td colspan="3">삭제됨<i class="fas fa-paw" style="color: #337ab7; font-size: 20px; margin-left: 10px;"></i></td>
+										<!-- <td>삭제됨</td>
+			     						<td>삭제됨</td> -->
 									</c:when>
 									<c:otherwise>
 										<td>${comment.pno }</td>
-										<td class="boardLink"
-											onclick="location.href='/board/missing/detail?no=${comment.pno}&userid=';">${comment.title }</td>
-										<td>${comment.pcontents }</td>
+										<td>${comment.title }</td>
+										<td style="cursor: pointer;"
+											onclick="location.href='/board/missing/detail?no=${comment.pno}&userid=';">${comment.pcontents }</td>
+									</c:otherwise>
+								</c:choose>
+								<c:choose>
+									<c:when test="${fn:contains(comment.isdeleted, 'Y')}">
+										<td colspan="3">삭제됨<i class="fas fa-paw" style="color: #337ab7; font-size: 20px; margin-left: 10px;"></i></td>
+										<!-- <td>삭제됨</td>
+			     						<td>삭제됨</td> -->
+									</c:when>
+									<c:otherwise>
 										<td>${comment.recontents}</td>
 										<td>${comment.replyer }</td>
 									</c:otherwise>

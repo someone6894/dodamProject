@@ -22,4 +22,7 @@ public interface MissingReplyDAO {
 	// 계층형 댓글을 위한 메서드
 	int insertReReply(MissingReplyVo mrv);
 
+	// 부모글 번호를 보고 그 글에 달린 댓글을 삭제하는 메서드
+	int deleteReplyBypno(int pno);
+
 }

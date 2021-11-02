@@ -133,7 +133,6 @@ public class MissingBoardController {
 	@RequestMapping("/detail")
 	public String viewDetailPage(@RequestParam("no") int no,
 								@RequestParam("userid") String userid,
-								HttpServletRequest request,
 								Model model) {
 		MissingBoardVo mb = null;
 		try {
@@ -142,6 +141,15 @@ public class MissingBoardController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		model.addAttribute("MissingBoard", mb);
+		return "/board/missing/viewBoard";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getOtherList", method=RequestMethod.POST)
+	public List<MissingBoardListDTO> getOtherList(@RequestParam("no") int no, HttpServletRequest request) {
+		System.out.println(no);
 		
 		HttpSession ses = request.getSession();
 		MemberVo loginmember = (MemberVo)ses.getAttribute("loginSession");
@@ -151,9 +159,8 @@ public class MissingBoardController {
 		} else {
 			lst = service.getRandomAnimal(no);
 		}
-		model.addAttribute("MissingBoard", mb);
-		model.addAttribute("otherList", lst);
-		return "/board/missing/viewBoard";
+		System.out.println("컨트롤러 : " + lst + ", " + loginmember);
+		return lst;
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
