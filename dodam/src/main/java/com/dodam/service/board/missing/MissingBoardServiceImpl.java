@@ -235,16 +235,13 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public List<MissingBoardListDTO> getRecommendation(String userid, int no) {
-		RecommendVo rec = dao.getMostBookAnimal(userid);
-		
+	public List<MissingBoardListDTO> getRecommendation(Map<String, Object> map) {
+		RecommendVo rec = dao.getMostBookAnimal((String)map.get("userid"));
 		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
 		if (rec == null) { // 북마크 기록이 없으면, 랜덤으로 조회하여 출력
-			lst = dao.getRandomAnimal(no);
+			lst = dao.getRandomAnimal(map);
 		} else { // 북마크 기록이 있으면 가장 북마크를 많이한 동물로 출력
-			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("animal", rec.getAnimal());
-			map.put("no", no);
 			lst = dao.getBookedAnimal(map);
 		}
 		
@@ -267,9 +264,9 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public List<MissingBoardListDTO> getRandomAnimal(int no) {
+	public List<MissingBoardListDTO> getRandomAnimal(Map<String, Object> map) {
 		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
-		lst = dao.getRandomAnimal(no);
+		lst = dao.getRandomAnimal(map);
 		System.out.println("서비스 : " + lst);
 		
 		 for(MissingBoardListDTO ld : lst) {

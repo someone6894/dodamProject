@@ -2,16 +2,13 @@ package com.dodam.service.admin;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.naming.NamingException;
 
-import org.mariadb.jdbc.internal.com.read.ReadInitialHandShakePacket;
 import org.springframework.stereotype.Service;
 
-import com.dodam.domain.admin.Comments;
 import com.dodam.domain.admin.PagingInfoDTO;
 import com.dodam.domain.members.MemberVo;
 import com.dodam.persistence.admin.AdminDAO;

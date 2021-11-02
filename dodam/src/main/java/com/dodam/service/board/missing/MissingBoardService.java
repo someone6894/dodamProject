@@ -46,10 +46,10 @@ public interface MissingBoardService {
 	MissingBoardVo getMissingBoard(int no) throws Exception;
 
 
-	List<MissingBoardListDTO> getRecommendation(String userid, int no);
+	List<MissingBoardListDTO> getRandomAnimal(Map<String, Object> map);
 
 
-	List<MissingBoardListDTO> getRandomAnimal(int no);
+	List<MissingBoardListDTO> getRecommendation(Map<String, Object> paramMap);
 	
 }
 

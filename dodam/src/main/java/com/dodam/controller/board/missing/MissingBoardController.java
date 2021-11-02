@@ -165,10 +165,16 @@ public class MissingBoardController {
 		HttpSession ses = request.getSession();
 		MemberVo loginmember = (MemberVo)ses.getAttribute("loginSession");
 		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		if (loginmember != null) {
-			lst = service.getRecommendation(loginmember.getUserid(), no);
+			map.put("no", no);
+			map.put("userid", loginmember.getUserid());
+			map.put("howmany", 20);
+			lst = service.getRecommendation(map);
 		} else {
-			lst = service.getRandomAnimal(no);
+			map.put("no", no);
+			map.put("howmany", 20);
+			lst = service.getRandomAnimal(map);
 		}
 		System.out.println("컨트롤러 : " + lst + ", " + loginmember);
 		return lst;
