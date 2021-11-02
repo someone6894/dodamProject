@@ -20,12 +20,16 @@ import com.dodam.domain.missing.ReadCntVo;
 import com.dodam.domain.missing.RecommendVo;
 import com.dodam.etc.missing.IPChecking;
 import com.dodam.persistence.board.missing.MissingBoardDAO;
+import com.dodam.persistence.board.missing.MissingReplyDAO;
 
 @Service
 public class MissingBoardServiceImpl implements MissingBoardService{
 
 	@Inject
 	private MissingBoardDAO dao;
+	
+	@Inject
+	private MissingReplyDAO replydao;
 
 	@Override
 	public Map<String, Object> selectMissingBoardList(ListParamDTO lpd, int itemsPerPage) throws Exception {
@@ -123,8 +127,10 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	@Override
 	public boolean deleteBoard(int no) throws Exception {
 		boolean result = false;
-		if (dao.deleteBoard(no)==1) {
-			result = true;
+		if (replydao.deleteReplyBypno(no) >= 0) {
+			if (dao.deleteBoard(no)==1) {
+				result = true;
+			}
 		}
 		
 		return result;
@@ -241,7 +247,6 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 		if (rec == null) { // 북마크 기록이 없으면, 랜덤으로 조회하여 출력
 			lst = dao.getRandomAnimal(no);
 		} else { // 북마크 기록이 있으면 가장 북마크를 많이한 동물로 출력
-			System.out.println(rec.getAnimal());
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("animal", rec.getAnimal());
 			map.put("no", no);

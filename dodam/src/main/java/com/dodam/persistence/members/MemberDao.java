@@ -2,6 +2,7 @@ package com.dodam.persistence.members;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -74,4 +75,7 @@ public interface MemberDao {
 
 	// 회원가입시 중복 아이디 확인
 	MemberVo checkDupliactedId(String userid);
+
+	// 비밀번호 변경시 기존 비밀번호 확인
+	MemberVo pwdCheck(Map<String, String> map);
 }

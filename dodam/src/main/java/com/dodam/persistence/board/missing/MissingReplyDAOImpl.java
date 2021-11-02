@@ -52,5 +52,10 @@ public class MissingReplyDAOImpl implements MissingReplyDAO {
 		return ses.insert(ns + ".insertReReply", mrv);
 	}
 
+	@Override
+	public int deleteReplyBypno(int pno) {
+		return ses.update(ns + ".deleteReplyBypno", pno);
+	}
+
 
 }
