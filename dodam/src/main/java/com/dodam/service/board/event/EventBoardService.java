@@ -31,5 +31,5 @@ public interface EventBoardService {
 		public List listPage(int displayPost, int postNum) throws NamingException, SQLException;
 		
 		public List<EventBoardVO> listPageSearch(
-				  int displayPost, int postNum, String searchType, String keyword) throws Exception;
+				 String keyword) throws Exception;
 	}

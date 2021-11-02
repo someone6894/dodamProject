@@ -80,26 +80,15 @@ public class HomeController {
 		
 		//공지사항
 		
-
 		Map<String, Object> noticemap = noticeservice.selectnoticeall(pageNo);
 		List<NoticeVo> noticelst = (List<NoticeVo>)noticemap.get("boardList");
-//		PagingInfoDTO noticepi = (PagingInfoDTO)noticemap.get("pagingInfo");
-	
-//		System.out.println(noticelst);
-		
-//		logger.info(pageNo + "페이지 게시물 출력");
-		
-//		model.addAttribute("pagingInfo", noticepi); //페이징 정보
 		model.addAttribute("noticeBoard", noticelst); //개시판 글 데이터
-		
 		
 		 // 전시회 추가
 		
 		 List<EventBoardVO> list = null;
 		 list = eventservice.list();
-		 
 		 model.addAttribute("list", list);  
-		 
 		 
 		 // 찾아요 추가
 		 
