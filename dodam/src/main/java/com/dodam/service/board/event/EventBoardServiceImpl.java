@@ -62,9 +62,13 @@ public class EventBoardServiceImpl implements EventBoardService {
 	}
 
 	@Override
-	public List<EventBoardVO> listPageSearch(int displayPost, int postNum, String searchType, String keyword)
-			throws Exception {
-		 return  dao.yearSearch(displayPost, postNum, searchType, keyword);
+	public List<EventBoardVO> listPageSearch(String keyword)
+			throws Exception { 
+		 System.out.println("서비스단에서 찍은 sysout :"+ dao.yearSearch(keyword));
+		 
+		 return  dao.yearSearch(keyword);
+		 
+		
 	}
 
 }

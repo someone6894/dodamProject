@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dodam.domain.event.EventBoardVO;
 import com.dodam.service.board.event.EventBoardService;
@@ -81,8 +82,7 @@ import com.dodam.service.board.event.EventBoardService;
 		  return"redirect:/board/event/listPage";
 		 }
 		 
-		// 게시물 목록 , 페이징 추가
-		 @SuppressWarnings("unchecked")
+//		 게시물 목록 , 페이징 추가
 		@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 		 public void getListpage(Model model, @RequestParam(value="num", required= false, defaultValue="1") int num) throws Exception {
 			 
@@ -102,51 +102,56 @@ import com.dodam.service.board.event.EventBoardService;
 			 //출력할 게시물 //매개변수 num은 페이지 번호 
 			 int displayPost = (num -1) * postNum;
 			 
-			 
-			 
 			 List<EventBoardVO> list= null; 
 			 list= service.listPage(displayPost, postNum);
 			 
-			 System.out.println(pageNum);
+			 System.out.println("출력되는 전시회 : " +list);
+			 
+			 System.out.println("출력되는 페이지 수 : " + pageNum);
 			 
 			 model.addAttribute("list",list);
 			 model.addAttribute("pageNum", pageNum);
 			 
 		 }
-//			@RequestMapping(value = "/listPage", method = RequestMethod.GET)
-//			 public void yearSearch(Model model, @RequestParam(value="num", required= false, defaultValue="1") int num, 
-//					 @RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) throws Exception {
-//				 
-//				 //게시물의 총갯수를 구하고, 한 페이지당 출력할 게시물 갯수 정하고, 
-//				 //하단에 표시할 페이징 번호 갯수 구하고
-//				 //현재 페이지를 기준으로 10개의 데이터를 출력함
-//				 
-//				 //게시물 총 갯수
-//				 int count = service.count();
-//				 
-//				 //한 페이지에 출력할 게시물 갯수
-//				 int postNum = 12;
-//				 
-//				 //하단 페이징 번호 [ (게시물 총 갯수 % 한페이지에 출력할 갯수) 의 올림]
-//				 int pageNum = (int)Math.ceil((double)count/postNum);
-//				 
-//				 //출력할 게시물 //매개변수 num은 페이지 번호 
-//				 int displayPost = (num -1) * postNum;
-//				 
-//				 
-//				 
-//				 
-//				 List<EventBoardVO> list= null; 
-//				 //list = service.listPage(page.getDisplayPost(), page.getPostNum());
-//				 list = service.listPageSearch(displayPost, postNum, searchType, keyword);
-//				 
-//				 System.out.println(pageNum);
-//				 
-//				 model.addAttribute("list",list);
-//				 model.addAttribute("pageNum", pageNum);
-//				 model.addAttribute("select", num);
-//				 
-//			 }
+		 	@ResponseBody
+			@RequestMapping(value = "/listSearchPage", method = RequestMethod.POST) 
+			 public List<EventBoardVO> getYearSearch(@RequestParam(value="num", required= false, defaultValue="1") int num, 
+					  @RequestParam("year") String keyword) throws Exception {
+				 
+				 //게시물의 총갯수를 구하고, 한 페이지당 출력할 게시물 갯수 정하고, 
+				 //하단에 표시할 페이징 번호 갯수 구하고
+				 //현재 페이지를 기준으로 10개의 데이터를 출력함
+				 
+				 //게시물 총 갯수
+				 int count = service.count();
+				 
+				 //한 페이지에 출력할 게시물 갯수
+				 int postNum = 12;
+				 
+				 //하단 페이징 번호 [ (게시물 총 갯수 % 한페이지에 출력할 갯수) 의 올림]
+				 int pageNum = (int)Math.ceil((double)count/postNum);
+				 
+				 //출력할 게시물 //매개변수 num은 페이지 번호 
+				 int displayPost = (num -1) * postNum;
+				 
+				 
+				  
+				 
+				 List<EventBoardVO> list= null; 
+		
+				 list = service.listPageSearch (keyword );
+				 System.out.println("컨트롤러단 키워드 :" + keyword);
+				
+				 
+				 System.out.println(list.toString());
+				 	for(EventBoardVO e: list) {
+				 		System.out.println(e.toString());
+				 	}
+				 return list;
+				
+				 
+				 
+			 }
 		}
 
 	

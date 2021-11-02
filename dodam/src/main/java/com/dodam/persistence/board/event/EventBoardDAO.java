@@ -31,7 +31,8 @@ public interface EventBoardDAO {
 		public List listPage(int displayPost, int postNum) throws NamingException, SQLException;
 		
 		// 검색
-		public List<EventBoardVO> yearSearch(int displayPost, int postNum, String searchType, String keyword) throws Exception;
+		public List<EventBoardVO> yearSearch(String keyword) throws Exception;
+		
 	}
 
 

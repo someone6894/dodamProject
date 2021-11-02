@@ -23,10 +23,7 @@ function readBoard(no) {
 	location.href = '/board/notice/readBoard?no=' + no;
 }
 
-function missingBoard(no){
-	console.log("찾아요 보기 :" + no);
-	location.href = '/board/missing/viewBoard?no=' + no;
-}
+
 
 // 슬라이더 테스트
 
@@ -70,7 +67,6 @@ h2.move{
 							<th>번호</th>
 							<th>제목</th>
 							<th>작성일</th>
-						
 						</tr>
 					</thead>
 					<tbody>
@@ -92,7 +88,6 @@ h2.move{
       			<img src="${event.thumbimg }" class="relative"style="width: 250px; height:350px">
       			</a>
 				</c:forEach>
-				
 	</div>
 	
 	
