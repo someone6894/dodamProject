@@ -7,8 +7,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Repository;
 
 import com.dodam.domain.event.EventBoardVO;
@@ -66,20 +68,18 @@ public class EventBoardDAOImpl implements EventBoardDAO {
 		data.put("displayPost", displayPost);
 		data.put("postNum", postNum);
 		
+		System.out.println("dao에서 보내는 : " + data);
+		
 		return sql.selectList(namespace + ".listPage", data);
 	}
 
 	@Override
-	public List<EventBoardVO> yearSearch(int displayPost,int postNum, String searchType, String keyword) throws Exception {
-		  HashMap<String, Object> data = new HashMap<String, Object>();
+	public List<EventBoardVO> yearSearch( String keyword) throws Exception {		  
 		
-		data.put("displayPost", displayPost);
-		data.put("postNum", postNum);
 		
-		data.put("searchType", searchType);
-		data.put("keyword", keyword);
+		System.out.println("dao단에서 보내는 키워드" + keyword);
 		
-		return sql.selectList(namespace + ".listPage", data);
+		return sql.selectList(namespace + ".yearSearch",keyword);
 	}
 
 

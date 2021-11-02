@@ -80,21 +80,21 @@ public class UploadFileProcess {
 		System.out.println(upPath + savePath + File.separator+ savedName);
 		String originUpFileName = upPath + savePath + File.separator + savedName; // 업로드된 원본 파일 이름
 		
-		BufferedImage originFile = ImageIO.read(new File(originUpFileName)); // 원본 이미지 파일 객체
+//		BufferedImage originFile = ImageIO.read(new File(originUpFileName)); // 원본 이미지 파일 객체
 		// 높이 100px 기준으로 리사이즈
-		BufferedImage destFile = Scalr.resize(originFile, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100); // 높이 100 px 기준으로 리사이즈
+//		BufferedImage destFile = Scalr.resize(originFile, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 100); // 높이 100 px 기준으로 리사이즈
 		
-		System.out.println(upPath);
+//		System.out.println(upPath);
 		
-		String thumbNailImgName = upPath + savePath + File.separator + "thumb_" + savedName;
+//		String thumbNailImgName = upPath + savePath + File.separator + "thumb_" + savedName;
 		
-		File newThumbNailFile = new File(thumbNailImgName);
+//		File newThumbNailFile = new File(thumbNailImgName);
 //		
-		System.out.println("썸네일 이미지의 파일 이름 : " + thumbNailImgName);
-		String ext = savedName.substring(savedName.lastIndexOf(".") + 1);
-		ImageIO.write(destFile, ext, newThumbNailFile); // 썸네일 파일을 실제 저장
+//		System.out.println("썸네일 이미지의 파일 이름 : " + thumbNailImgName);
+//		String ext = savedName.substring(savedName.lastIndexOf(".") + 1);
+//		ImageIO.write(destFile, ext, newThumbNailFile); // 썸네일 파일을 실제 저장
 		
-		this.files.setThumbNailImgFileName(thumbNailImgName.substring(upPath.length()).replace(File.separatorChar, '/'));
+//		this.files.setThumbNailImgFileName(thumbNailImgName.substring(upPath.length()).replace(File.separatorChar, '/'));
 		// 역슬래쉬를 슬러쉬로 바꾼다. jsp에서는 경로를 슬러쉬로 하니까 바꿔줘야 하다.
 	}
 
