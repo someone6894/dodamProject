@@ -31,8 +31,8 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public List<Comments> getMissingCommnets() {
-		return ses.selectList(ns+".selectMComments");
+	public List<Comments> getMissingComments(PagingInfoDTO pi) {
+		return ses.selectList(ns+".selectMComments", pi);
 	}
 
 	@Override
@@ -43,5 +43,40 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public List<MemberVo> searchMembers(Map<String, Object> param) {
 		return ses.selectList(ns + ".searchMembers", param);
+	}
+	
+	@Override
+	public List<Comments> getProudComments(PagingInfoDTO pi) {
+		return ses.selectList(ns + ".selectPComments", pi);
+	}
+
+	@Override
+	public int cntProudComment() {
+		return ses.selectOne(ns + ".selectCntPComments");
+	}
+	
+	@Override
+	public List<Comments> getQNAComments(PagingInfoDTO pi) {
+		return ses.selectList(ns + ".selectQComments", pi);
+	}
+
+	@Override
+	public int cntQNAComments() {
+		return ses.selectOne(ns + ".selectCntQComments");
+	}
+
+	@Override
+	public int deleteProudComment(int no) {
+		return ses.delete(ns + ".deletePComment", no);
+	}
+	
+	@Override
+	public int deleteQNAComment(int no) {
+		return ses.delete(ns + ".deleteQComment", no);
+	}
+	
+	@Override
+	public int deleteMissingComment(int no) {
+		return ses.update(ns + ".deleteMComment", no);
 	}
 }

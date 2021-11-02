@@ -70,7 +70,7 @@ footer {
 	});
 	
 	function deleteReply(no) {
-		let url = '/admin/proud/deleteReply';
+		let url = '/admin/qna/deleteReply';
 		
 		if (!confirm("댓글을 삭제하시겠습니까?")) {
 	        // 취소(아니오) 버튼 클릭 시 이벤트
@@ -119,9 +119,9 @@ footer {
 
 			<div class="col-sm-9" style="margin: 20px;">
 				<button onclick="location.href='/admin/comment'" class="btn btn-default board">찾아요</button>
-				<button class="btn btn-primary board">반려동물 자랑</button>
-				<button class="btn btn-default board" onclick="location.href='/admin/qna'">Q&A</button>
-				<h2 style="clear: left;">반려동물 자랑 게시판 댓글</h2>
+				<button class="btn btn-default board" onclick="location.href='/admin/proud'">반려동물 자랑</button>
+				<button class="btn btn-primary board">Q&A</button>
+				<h2 style="clear: left;">Q&A 게시판 댓글</h2>
 				<p>
 					총 댓글 개수 : <span id="numOfComments">${numOfComments }</span>개
 				</p>
@@ -130,18 +130,18 @@ footer {
 						<tr>
 							<th>게시글 번호</th>
 							<th>게시글 제목</th>
-							<th style="width: 500px;">게시글 내용</th>
-							<th>댓글 내용</th>
+							<th style="width: 300px;">게시글 내용</th>
+							<th style="width: 400px;">댓글 내용</th>
 							<th>댓글 작성자</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="comment" items="${Comments.pcommentList }">
+						<c:forEach var="comment" items="${Comments.qcommentList }">
 							<tr>
 								<td>${comment.pno }</td>
 								<td class="boardLink"
-									onclick="location.href='/board/proud/readboard?no=${comment.pno}'">${comment.title }</td>
+									onclick="location.href='/board/qna/readBoard?no=${comment.pno}&userid=';">${comment.title }</td>
 								<td>${comment.pcontents }</td>
 								<td>${comment.recontents}</td>
 								<td>${comment.replyer }</td>
@@ -150,20 +150,6 @@ footer {
 						</c:forEach>
 					</tbody>
 				</table>
-				<div style="padding: 0 50px; text-align: right;">
-					<ul class="pagination">
-						<c:if test="${param.pageNo > 1}">
-							<li><a href="/admin/proud?pageNo=1"><<</a></li>
-						</c:if>
-						<c:forEach var="i" begin="${Comments.pagingInfo.startPageNoOfBlock }"
-							end="${Comments.pagingInfo.endPageNoOfBlock }">
-							<li><a href="/admin/proud?pageNo=${i }">${i }</a></li>
-						</c:forEach>
-						<c:if test="${param.pageNo == null or param.pageNo < Comments.pagingInfo.totalPage }">
-							<li><a href="/admin/proud?pageNo=${Comments.pagingInfo.totalPage }">>></a></li>
-						</c:if>
-					</ul>
-				</div>
 			</div>
 		</div>
 	</div>

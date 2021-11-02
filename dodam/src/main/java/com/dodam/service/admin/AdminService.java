@@ -21,14 +21,28 @@ public interface AdminService {
 
 	boolean pwdCheck(String password, String password2);
 
-	List<Comments> getMissingComments();
+	Map<String, Object> getMissingComments(int pageNo);
 
 	int cntMissingComment();
+	
+	int cntProudComment();
 
 	boolean changePwd(String userid, String password) throws NamingException, SQLException;
 
 	boolean deleteUser(String userid) throws NamingException, SQLException;
 
 	Map<String, Object> searchMembers(int PageNo, String searchId) throws Exception;
+
+	Map<String, Object> getProudComments(int pageNo);
+
+	int cntQNAComment();
+
+	Map<String, Object> getQNAComments(int pageNo);
+
+	boolean deleteProudComment(int no);
+
+	boolean deleteQNAComment(int no);
+
+	boolean deleteMissingComment(int no);
 
 }

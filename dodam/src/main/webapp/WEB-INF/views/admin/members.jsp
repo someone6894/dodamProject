@@ -217,8 +217,8 @@ let pwdOriginalCheck = false;
 		let newPwd = $("#newPwd").val();
 		let newPwd2 = $("#newPwd2").val();
 		
-		let pwdCheckResult = pwdCheck(originalPwd, newPwd, newPwd2);
-		if (pwdCheckResult && pwdOriginalCheck) {
+		let pwdCheckResult = pwdCheck(newPwd, newPwd2);
+		if (pwdCheckResult) {
 			let url = "/admin/pwdChange";
 			
 			$.ajax({
@@ -239,13 +239,9 @@ let pwdOriginalCheck = false;
 		}
 	}
 	
-	function pwdCheck(originalPwd, newPwd, newPwd2) {
+	function pwdCheck(newPwd, newPwd2) {
 		let result = false;
-		if (originalPwd.length == 0) {
-			$("#pwdCheck").html("기존 비밀번호를 입력해주세요");
-			$("#originalPwd").focus();
-			pwdOriginalCheck = false;
-		} else if (newPwd.length == 0) {
+		if (newPwd.length == 0) {
 			$("#newPwdCheck").html("새 비밀번호를 입력해주세요!");
 			$("#newPwd").focus();
 		} else if (newPwd.length < 8) {
@@ -401,8 +397,8 @@ let pwdOriginalCheck = false;
 							메인</a></li> -->
 					<li class="active"><a href="/admin/members"><i
 							class="fas fa-user-friends"></i>&nbsp;&nbsp;회원관리</a></li>
-					<li><a href="/admin/board"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;게시판
-							관리</a></li>
+					<!-- <li><a href="/admin/board"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;게시판
+							관리</a></li> -->
 					<li><a href="/admin/comment"><i class="far fa-comment"></i>&nbsp;&nbsp;&nbsp;댓글관리</a></li>
 					<li>------------------------------------------------</li>
 					<li><a href="/"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;나가기</a></li>
@@ -500,13 +496,13 @@ let pwdOriginalCheck = false;
 			</div>
 			<div class="col-sm-7" id="changePwd" style="width: 500px;">
 				<h3 style="font-weight: bold;">비밀번호 변경</h3><br/>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="originalPwd">기존 비밀번호:</label> <input type="password"
 						class="form-control" id="originalPwd"
 						name="originalPwd">
 						<span id="pwdCheck" style="color: red;"></span>
 						<span id="pwdOk" style="color: green;"></span>
-				</div>
+				</div> -->
 				<div class="form-group">
 					<label for="newPwd">새 비밀번호 :</label> <input type="password"
 						class="form-control" id="newPwd"

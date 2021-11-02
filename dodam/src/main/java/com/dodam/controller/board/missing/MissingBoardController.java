@@ -30,6 +30,7 @@ import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.PagingInfoDTO;
+import com.dodam.etc.missing.IPChecking;
 import com.dodam.etc.missing.MissingUploadImgProcess;
 import com.dodam.etc.missing.MissingUploadImgs;
 import com.dodam.service.board.missing.MissingBoardService;
@@ -131,11 +132,21 @@ public class MissingBoardController {
 	}
 	
 	@RequestMapping("/detail")
-	public String viewDetailPage(@RequestParam("no") int no,
-								@RequestParam("userid") String userid,
+	public String viewDetailPage(@RequestParam("no") int no, HttpServletRequest request,
 								Model model) {
 		MissingBoardVo mb = null;
+		HttpSession ses = request.getSession();
+		MemberVo loginmem = (MemberVo)ses.getAttribute("loginSession");
+		String userid = "";
+		
 		try {
+			if (loginmem == null) {
+				IPChecking ipCheck = new IPChecking();
+				userid = ipCheck.getIp(); // ip 주소
+			} else {
+				userid = loginmem.getUserid();
+			}
+	
 			mb = service.getMissingBoard(no, userid);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

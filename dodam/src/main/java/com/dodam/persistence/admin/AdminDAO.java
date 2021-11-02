@@ -13,10 +13,24 @@ public interface AdminDAO {
 
 	List<MemberVo> selectAllMembers(PagingInfoDTO pi);
 
-	List<Comments> getMissingCommnets();
+	List<Comments> getMissingComments(PagingInfoDTO pi);
 
 	int cntMissingComment();
 
 	List<MemberVo> searchMembers(Map<String, Object> param);
+
+	List<Comments> getProudComments(PagingInfoDTO pi);
+
+	int cntProudComment();
+
+	List<Comments> getQNAComments(PagingInfoDTO pi);
+
+	int cntQNAComments();
+
+	int deleteProudComment(int no);
+
+	int deleteQNAComment(int no);
+
+	int deleteMissingComment(int no);
 
 }

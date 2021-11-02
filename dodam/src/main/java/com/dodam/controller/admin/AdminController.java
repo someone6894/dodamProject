@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dodam.domain.admin.PagingInfoDTO;
 import com.dodam.domain.members.MemberVo;
 import com.dodam.service.admin.AdminService;
+import com.dodam.service.board.missing.MissingBoardService;
 import com.sun.mail.iap.Response;
 
 @Controller
@@ -36,6 +37,9 @@ public class AdminController {
 	@Inject
 	private AdminService service;
 	
+	@Inject
+	private MissingBoardService missservice;
+
 	@RequestMapping("/members")
 	public void members(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -61,9 +65,10 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/comment")
-	public void comment(Model model) {
+	public String comment(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) {
 		model.addAttribute("numOfComments", service.cntMissingComment());
-		model.addAttribute("Comments", service.getMissingComments());
+		model.addAttribute("Comments", service.getMissingComments(pageNo));
+		return "/admin/missingComment";
 	}
 	
 	@ResponseBody
@@ -145,8 +150,46 @@ public class AdminController {
 		return map;
 	}
 	
-	@RequestMapping("/admin/proud")
-	public String proudComment() {
+	@RequestMapping("/proud")
+	public String proudComment(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) {
+		model.addAttribute("numOfComments", service.cntProudComment());
+		model.addAttribute("Comments", service.getProudComments(pageNo));
 		return "/admin/proudComment";
 	}
+	
+	@RequestMapping("/qna")
+	public String qnaComment(Model model, @RequestParam(value="pageNo", defaultValue="1") int pageNo) {
+		model.addAttribute("numOfComments", service.cntQNAComment());
+		model.addAttribute("Comments", service.getQNAComments(pageNo));
+		return "/admin/qnaComment";
+	}
+	
+	@RequestMapping(value="/proud/deleteReply", method=RequestMethod.POST)
+	public ResponseEntity<String> deleteProudComment(@RequestParam("no") int no) {
+		System.out.println(no);
+		if (service.deleteProudComment(no)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/qna/deleteReply", method=RequestMethod.POST)
+	public ResponseEntity<String> deleteQNAComment(@RequestParam("no") int no) {
+		System.out.println(no);
+		if (service.deleteQNAComment(no)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/missing/deleteReply", method=RequestMethod.POST)
+	public ResponseEntity<String> deleteMissingComment(@RequestParam("no") int no) {
+		System.out.println(no);
+		if (service.deleteMissingComment(no)) {
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("fail", HttpStatus.OK);
+	}
+	
+	
 }

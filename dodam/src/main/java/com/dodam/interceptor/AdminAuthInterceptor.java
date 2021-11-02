@@ -23,6 +23,8 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter {
 		// 로그인 하지 않았거나 아이디가 admin123이 아니면
 		if (loginmem == null) {
 			returnPath = "/member/login";
+			
+			response.sendRedirect(returnPath);
 		} else if (!(loginmem.getIsadmin().equals("Y"))) {
 			if (path.equals("/board/event")) {
 				returnPath = "/board/event/listPage";
@@ -31,9 +33,9 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter {
 			} else {
 				returnPath = "/";
 			}
-		}
 			
-		response.sendRedirect(returnPath);
+			response.sendRedirect(returnPath);
+		}
 		
 		return super.preHandle(request, response, handler);
 	}

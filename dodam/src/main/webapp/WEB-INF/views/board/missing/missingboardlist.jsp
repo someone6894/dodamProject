@@ -339,7 +339,7 @@
 				<c:otherwise>
 					<div style="margin-left: 10px;"><span id="numOflist">${numOflist }</span>개의 검색결과</div>
 					<c:forEach var="MissingBoard" items="${listMissingBoard }">
-					<a href="/board/missing/detail?no=${MissingBoard.no}&userid=${loginSession.userid}" class="detailAnchor">
+					<a href="/board/missing/detail?no=${MissingBoard.no}" class="detailAnchor">
 						<div class="col-sm-3">
 							<div class="img_container" style="padding: 20px 10px;">
 								<c:choose>

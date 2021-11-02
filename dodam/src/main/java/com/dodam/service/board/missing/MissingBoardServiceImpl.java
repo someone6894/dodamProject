@@ -18,7 +18,6 @@ import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.PagingInfoDTO;
 import com.dodam.domain.missing.ReadCntVo;
 import com.dodam.domain.missing.RecommendVo;
-import com.dodam.etc.missing.IPChecking;
 import com.dodam.persistence.board.missing.MissingBoardDAO;
 import com.dodam.persistence.board.missing.MissingReplyDAO;
 
@@ -85,10 +84,6 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	@Transactional(isolation = Isolation.READ_COMMITTED) // 조회수 update문이 commit된 데이터(DML문이 먼저 나와야 한다)에 한해 select되도록 격리 레벨을 올림
 	@Override
 	public MissingBoardVo getMissingBoard(int no, String userid) throws Exception {
-		if (userid == "") {
-			IPChecking ipCheck = new IPChecking();
-			userid = ipCheck.getIp(); // ip 주소
-		}
 
 		ReadCntVo ri = new ReadCntVo(no, userid, null, null); 
 		

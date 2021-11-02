@@ -100,8 +100,18 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Comments> getMissingComments() {
-		return dao.getMissingCommnets();
+	public Map<String, Object> getMissingComments(int pageNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		PagingInfoDTO pi = null;
+		try {
+			pi = pagingProcessComment(pageNo, "missing");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("mcommentList", dao.getMissingComments(pi));
+		map.put("pagingInfo", pi);
+		return map;
 	}
 
 	@Override
@@ -145,5 +155,101 @@ public class AdminServiceImpl implements AdminService {
 		map.put("searchResult", dao.searchMembers(param));
 		
 		return map;
+	}
+
+	@Override
+	public int cntProudComment() {
+		return dao.cntProudComment();
+	}
+
+	@Override
+	public Map<String, Object> getProudComments(int pageNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		PagingInfoDTO pi = null;
+		try {
+			pi = pagingProcessComment(pageNo, "proud");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("pcommentList", dao.getProudComments(pi));
+		map.put("pagingInfo", pi);
+		return map;
+	}
+
+	@Override
+	public int cntQNAComment() {
+		return dao.cntQNAComments();
+	}
+
+	@Override
+	public  Map<String, Object> getQNAComments(int pageNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		PagingInfoDTO pi = null;
+		try {
+			pi = pagingProcessComment(pageNo, "proud");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("qcommentList", dao.getQNAComments(pi));
+		map.put("pagingInfo", pi);
+		return map;
+	}
+	
+	private PagingInfoDTO pagingProcessComment(int pageNo, String board) throws Exception {
+		PagingInfoDTO pi = new PagingInfoDTO();
+		
+		pi.setPostPerPage(10);
+		pi.setPageCntPerBlock(10);
+		
+		pi.setStartNum(pageNo); // 출력 시작할 번호
+		int totalPost = 0;
+		if (board.equals("missing")) {
+			totalPost = dao.cntMissingComment(); // 각 게시판의 댓글 총 수를 얻음
+		} else if (board.equals("proud")) {
+			totalPost = dao.cntProudComment();
+		} else {
+			totalPost = dao.cntQNAComments();
+		}
+		pi.setTotalPage(totalPost); // 전체 페이지 수
+		pi.setCurrentPagingBlock(pageNo); // 현재 페이지가 속한 블록
+		
+		pi.setStartPageNoOfBlock(pi.getCurrentPagingBlock()); // 시작 페이지 블록
+		pi.setEndPageNoOfBlock(pi.getStartPageNoOfBlock()); // 끝 페이지 블록
+		pi.setTotalPagingBlockCnt(pi.getTotalPage()); // 페이지 블록의 개수
+		
+		System.out.println(pi.toString());
+		
+		return pi;
+	}
+
+	@Override
+	public boolean deleteProudComment(int no) {
+		boolean result = false;
+		if (dao.deleteProudComment(no)==1) {
+			result = true;
+		}
+		return result;
+	}
+	
+
+	@Override
+	public boolean deleteQNAComment(int no) {
+		boolean result = false;
+		if (dao.deleteQNAComment(no)==1) {
+			result = true;
+		}
+		return result;
+	}
+	
+
+	@Override
+	public boolean deleteMissingComment(int no) {
+		boolean result = false;
+		if (dao.deleteMissingComment(no)==1) {
+			result = true;
+		}
+		return result;
 	}
 }

@@ -53,6 +53,10 @@ footer {
 	color: #337ab7;
 }
 
+.deleted {
+	color: #b8bfc2;
+}
+
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
 	.sidenav {
@@ -68,6 +72,30 @@ footer {
 	$(function(){
 		
 	});
+	
+	function deleteReply(no) {
+		let url = '/admin/missing/deleteReply';
+		
+		if (!confirm("댓글을 삭제하시겠습니까?")) {
+	        // 취소(아니오) 버튼 클릭 시 이벤트
+	    } else {
+			$.ajax({
+				url : url, // ajax와 통신 할 곳
+				data : {no : no}, // 서블릿에 보낼 데이터
+				dataType : "text", // 수신될 데이터의 타입
+				type : "post", // 통신 방식
+				success : function(data) { // 통신 성공시 수행될 콜백 함수
+					console.log(data);
+					if(data == "success") {
+						alert("삭제 완료!");
+						history.go(0);
+					} else {
+						alert("댓글 삭제에 실패했습니다. \r\n잠시후 다시 시도해주세요.");
+					}
+				}
+			});	
+	    }
+	}
 </script>
 </head>
 <body>
@@ -83,8 +111,8 @@ footer {
 							메인</a></li> -->
 					<li><a href="/admin/members"><i
 							class="fas fa-user-friends"></i>&nbsp;&nbsp;회원관리</a></li>
-					<li><a href="/admin/board"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;게시판
-							관리</a></li>
+					<!-- <li><a href="/admin/board"><i class="fas fa-chalkboard"></i>&nbsp;&nbsp;게시판
+							관리</a></li> -->
 					<li class="active"><a href="/admin/comment"><i
 							class="far fa-comment"></i>&nbsp;&nbsp;&nbsp;댓글관리</a></li>
 					<li>------------------------------------------------</li>
@@ -94,9 +122,9 @@ footer {
 			</div>
 
 			<div class="col-sm-9" style="margin: 20px;">
-				<button onclick="location.href='/admin/comment'" class="btn btn-primary board">찾아요</button>
+				<button class="btn btn-primary board">찾아요</button>
 				<button class="btn btn-default board" onclick="location.href='/admin/proud'">반려동물 자랑</button>
-				<button class="btn btn-default board">Q&A</button>
+				<button class="btn btn-default board" onclick="location.href='/admin/qna'">Q&A</button>
 				<h2 style="clear: left;">찾아요 게시판 댓글</h2>
 				<p>
 					총 댓글 개수 : <span id="numOfComments">${numOfComments }</span>개
@@ -109,10 +137,11 @@ footer {
 							<th>게시글 내용</th>
 							<th>댓글 내용</th>
 							<th>댓글 작성자</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="comment" items="${Comments }">
+						<c:forEach var="comment" items="${Comments.mcommentList }">
 							<tr>
 								<c:choose>
 									<c:when test="${fn:contains(comment.isdeleted, 'Y')}">
@@ -123,14 +152,16 @@ footer {
 												<!-- <td>삭제됨</td> -->		
 			     								<td>${comment.recontents }</td>
 			     								<td>${comment.replyer }</td>
+			     								<td></td>
 											</c:when>
 											<c:otherwise>
-												<td>${comment.pno }</td>
-												<td class="boardLink"
-												onclick="location.href='/board/missing/detail?no=${comment.pno}&userid=';">${comment.title }</td>
-												<td>${comment.pcontents }</td>
-												<td id="${comment.no }" colspan="2" style="color: #b8bfc2"><strike>삭제됨</strike><i class="fas fa-paw" style="color: pink; font-size: 18px; margin-left: 10px;"></i></td>
-												<!-- <td>삭제됨</td> -->
+												<td class="deleted"><strike>${comment.pno }</strike></td>
+												<td class="deleted"
+												onclick="location.href='/board/missing/detail?no=${comment.pno}'"><strike>${comment.title }</strike></td>
+												<td class="deleted"><strike>${comment.pcontents }</strike></td>
+												<td id="${comment.no }" class="deleted"><strike>${comment.recontents }</strike></td>
+												<td class="deleted"><strike>${comment.replyer }</strike></td>
+												<td></td>
 											</c:otherwise>
 										</c:choose>
 									</c:when>
@@ -141,12 +172,27 @@ footer {
 										<td>${comment.pcontents }</td>
 										<td>${comment.recontents}</td>
 										<td>${comment.replyer }</td>
+										<td><button class="btn btn-default" onclick="deleteReply(${comment.no});">댓글 삭제</button></td>
 									</c:otherwise>
 								</c:choose>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				<div style="padding: 0 50px; text-align: right;">
+					<ul class="pagination">
+						<c:if test="${param.pageNo > 1}">
+							<li><a href="/admin/comment?pageNo=1"><<</a></li>
+						</c:if>
+						<c:forEach var="i" begin="${Comments.pagingInfo.startPageNoOfBlock }"
+							end="${Comments.pagingInfo.endPageNoOfBlock }">
+							<li><a href="/admin/comment?pageNo=${i }">${i }</a></li>
+						</c:forEach>
+						<c:if test="${param.pageNo == '' or param.pageNo < Comments.pagingInfo.totalPage }">
+							<li><a href="/admin/comment?pageNo=${Comments.pagingInfo.totalPage }">>></a></li>
+						</c:if>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
