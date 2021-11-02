@@ -16,7 +16,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <script>
-	
+function readBoard(no) {
+	location.href='/board/missing/detail?no=' + no + '&userid=';
+}
 </script>
 <body>
 
@@ -40,7 +42,7 @@
 			</thead>
 			<tbody>
 				<c:forEach var="point" items="${bookmark }">
-					<tr>
+					<tr onclick="readBoard(${point.no});">
 						<td>${point.category }</td>
 						<td>${point.title }</td>
 						<td>${point.writer }</td>

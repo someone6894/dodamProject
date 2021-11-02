@@ -31,10 +31,10 @@
 						<label>아이디 <em style="color:red"> *</em></label> <input class="w3-input" type="text" id="userid"
 							name="userid" style="background-color:#e9e9e9" value="${loginSession.userid }" readonly>
 					</p>
-					<p>
-						<label><em style="color:red">* </em>이메일</label> <input class="w3-input" type="text" id="email"
-							name="email" value="${loginSession.email }" >
-					</p>
+	                <p>
+                        <label><em style="color:red">* </em>이메일</label> <input class="w3-input" type="text" id="email"
+                            name="email" value="${loginSession.email }" >
+                    </p>
 					<p>
 						<label><em style="color:red">* </em>전화번호</label> <input class="w3-input" type="text" id="phone"
 							name="phone" value="${loginSession.phone }" >
