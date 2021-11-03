@@ -17,7 +17,7 @@
 </head>
 <script>
 function readBoard(no) {
-	location.href='/board/missing/detail?no=' + no + '&userid=';
+	location.href='/board/missing/detail?no=' + no;
 }
 </script>
 <body>

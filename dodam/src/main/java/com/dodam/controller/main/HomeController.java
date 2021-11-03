@@ -3,6 +3,7 @@ package com.dodam.controller.main;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -92,13 +93,19 @@ public class HomeController {
 		 
 		 // 찾아요 추가
 		 
+		 Map<String, Object> paramMap = new HashMap<String, Object>();
 		 HttpSession ses = request.getSession();
 	     MemberVo loginmember = (MemberVo)ses.getAttribute("loginSession");
 	     List<MissingBoardListDTO> missinglist = new ArrayList<MissingBoardListDTO>();
 	     	if (loginmember != null) {
-	     		missinglist = missingservice.getRecommendation(loginmember.getUserid(), 2);
+	     		paramMap.put("userid", loginmember.getUserid());
+	     		paramMap.put("no", 2);
+	     		paramMap.put("howmany", 8);
+	     		missinglist = missingservice.getRecommendation(paramMap);
 	      } else {
-	     missinglist = missingservice.getRandomAnimal(2);
+	    	  paramMap.put("no", 2);
+	    	  paramMap.put("howmany", 8);
+	     missinglist = missingservice.getRandomAnimal(paramMap);
 	     }
 	     model.addAttribute("otherList", missinglist);
 		

@@ -30,6 +30,7 @@ import com.dodam.domain.missing.MissingBoardListDTO;
 import com.dodam.domain.missing.MissingBoardVo;
 import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.PagingInfoDTO;
+import com.dodam.etc.missing.IPChecking;
 import com.dodam.etc.missing.MissingUploadImgProcess;
 import com.dodam.etc.missing.MissingUploadImgs;
 import com.dodam.service.board.missing.MissingBoardService;
@@ -131,29 +132,52 @@ public class MissingBoardController {
 	}
 	
 	@RequestMapping("/detail")
-	public String viewDetailPage(@RequestParam("no") int no,
-								@RequestParam("userid") String userid,
-								HttpServletRequest request,
+	public String viewDetailPage(@RequestParam("no") int no, HttpServletRequest request,
 								Model model) {
 		MissingBoardVo mb = null;
+		HttpSession ses = request.getSession();
+		MemberVo loginmem = (MemberVo)ses.getAttribute("loginSession");
+		String userid = "";
+		
 		try {
+			if (loginmem == null) {
+				IPChecking ipCheck = new IPChecking();
+				userid = ipCheck.getIp(); // ip 주소
+			} else {
+				userid = loginmem.getUserid();
+			}
+	
 			mb = service.getMissingBoard(no, userid);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		model.addAttribute("MissingBoard", mb);
+		return "/board/missing/viewBoard";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getOtherList", method=RequestMethod.POST)
+	public List<MissingBoardListDTO> getOtherList(@RequestParam("no") int no, HttpServletRequest request) {
+		System.out.println(no);
 		
 		HttpSession ses = request.getSession();
 		MemberVo loginmember = (MemberVo)ses.getAttribute("loginSession");
 		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		if (loginmember != null) {
-			lst = service.getRecommendation(loginmember.getUserid(), no);
+			map.put("no", no);
+			map.put("userid", loginmember.getUserid());
+			map.put("howmany", 20);
+			lst = service.getRecommendation(map);
 		} else {
-			lst = service.getRandomAnimal(no);
+			map.put("no", no);
+			map.put("howmany", 20);
+			lst = service.getRandomAnimal(map);
 		}
-		model.addAttribute("MissingBoard", mb);
-		model.addAttribute("otherList", lst);
-		return "/board/missing/viewBoard";
+		System.out.println("컨트롤러 : " + lst + ", " + loginmember);
+		return lst;
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)

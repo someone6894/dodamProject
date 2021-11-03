@@ -180,7 +180,7 @@ function ActiveBar(){
           	 <c:choose>
          		<c:when test="${loginSession != null and loginSession.isadmin == 'Y' }">
 				 	<li>
-				 	 	<a href="/admin/adminhome"> <span class="glyphicon glyphicon-user"></span> 관리자페이지 </a>
+				 	 	<a href="/admin/members"> <span class="glyphicon glyphicon-user"></span> 관리자페이지 </a>
          			</li>
 				</c:when>
 			</c:choose>

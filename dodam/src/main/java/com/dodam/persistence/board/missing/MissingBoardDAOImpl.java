@@ -113,8 +113,8 @@ public class MissingBoardDAOImpl implements MissingBoardDAO {
 	}
 
 	@Override
-	public List<MissingBoardListDTO> getRandomAnimal(int no) {
-		return ses.selectList(ns + ".selectRandom", no);
+	public List<MissingBoardListDTO> getRandomAnimal(Map<String, Object> map) {
+		return ses.selectList(ns + ".selectRandom", map);
 	}
 
 	@Override

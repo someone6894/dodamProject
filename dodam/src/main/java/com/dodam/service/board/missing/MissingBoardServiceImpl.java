@@ -18,14 +18,17 @@ import com.dodam.domain.missing.MissingWriteDTO;
 import com.dodam.domain.missing.PagingInfoDTO;
 import com.dodam.domain.missing.ReadCntVo;
 import com.dodam.domain.missing.RecommendVo;
-import com.dodam.etc.missing.IPChecking;
 import com.dodam.persistence.board.missing.MissingBoardDAO;
+import com.dodam.persistence.board.missing.MissingReplyDAO;
 
 @Service
 public class MissingBoardServiceImpl implements MissingBoardService{
 
 	@Inject
 	private MissingBoardDAO dao;
+	
+	@Inject
+	private MissingReplyDAO replydao;
 
 	@Override
 	public Map<String, Object> selectMissingBoardList(ListParamDTO lpd, int itemsPerPage) throws Exception {
@@ -81,10 +84,6 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	@Transactional(isolation = Isolation.READ_COMMITTED) // 조회수 update문이 commit된 데이터(DML문이 먼저 나와야 한다)에 한해 select되도록 격리 레벨을 올림
 	@Override
 	public MissingBoardVo getMissingBoard(int no, String userid) throws Exception {
-		if (userid == "") {
-			IPChecking ipCheck = new IPChecking();
-			userid = ipCheck.getIp(); // ip 주소
-		}
 
 		ReadCntVo ri = new ReadCntVo(no, userid, null, null); 
 		
@@ -123,8 +122,10 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	@Override
 	public boolean deleteBoard(int no) throws Exception {
 		boolean result = false;
-		if (dao.deleteBoard(no)==1) {
-			result = true;
+		if (replydao.deleteReplyBypno(no) >= 0) {
+			if (dao.deleteBoard(no)==1) {
+				result = true;
+			}
 		}
 		
 		return result;
@@ -234,17 +235,13 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public List<MissingBoardListDTO> getRecommendation(String userid, int no) {
-		RecommendVo rec = dao.getMostBookAnimal(userid);
-		
+	public List<MissingBoardListDTO> getRecommendation(Map<String, Object> map) {
+		RecommendVo rec = dao.getMostBookAnimal((String)map.get("userid"));
 		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
 		if (rec == null) { // 북마크 기록이 없으면, 랜덤으로 조회하여 출력
-			lst = dao.getRandomAnimal(no);
+			lst = dao.getRandomAnimal(map);
 		} else { // 북마크 기록이 있으면 가장 북마크를 많이한 동물로 출력
-			System.out.println(rec.getAnimal());
-			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("animal", rec.getAnimal());
-			map.put("no", no);
 			lst = dao.getBookedAnimal(map);
 		}
 		
@@ -267,9 +264,9 @@ public class MissingBoardServiceImpl implements MissingBoardService{
 	}
 
 	@Override
-	public List<MissingBoardListDTO> getRandomAnimal(int no) {
+	public List<MissingBoardListDTO> getRandomAnimal(Map<String, Object> map) {
 		List<MissingBoardListDTO> lst = new ArrayList<MissingBoardListDTO>();
-		lst = dao.getRandomAnimal(no);
+		lst = dao.getRandomAnimal(map);
 		System.out.println("서비스 : " + lst);
 		
 		 for(MissingBoardListDTO ld : lst) {

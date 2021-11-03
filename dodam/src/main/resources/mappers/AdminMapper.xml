@@ -5,10 +5,56 @@
   
   <mapper namespace="com.dodam.mappers.AdminMapper">
   	<select id="selectCntAll" resultType="int">
-  		select count(*) from members
+  		select count(*) from members where userid like concat('%', #{searchId}, '%')
   	</select>
   	
   	<select id="selectAllMembers" resultType="com.dodam.domain.members.MemberVo">
   		select * from members limit #{startNum}, #{postPerPage}
   	</select>
+  	
+  	<select id="selectMComments" resultType="com.dodam.domain.admin.Comments">
+		select ifnull(b.no, 0) as pno, b.title, r.replyer, r.contents as recontents, b.contents as pcontents,
+		r.replyer, r.no, r.isdeleted from missingboardreply r left outer join missingboard b
+		on b.no = r.pno order by lastmodifieddate desc limit #{startNum}, #{postPerPage};
+  	</select>
+  	
+  	<select id="selectCntMComments" resultType="int">
+  		select count(*) from missingboardreply where isdeleted != 'Y';
+  	</select>
+  	
+  	<select id="searchMembers" resultType="com.dodam.domain.members.MemberVo">
+  		select * from members where userid like concat('%', #{searchId}, '%') limit ${startNum}, #{postPerPage}
+  	</select>
+
+	<select id="selectPComments" resultType="com.dodam.domain.admin.Comments">
+		select ifnull(b.no, 0) as pno, b.title, r.replyer, r.contents as recontents, b.content as pcontents,
+		r.replyer, r.no from proudreply r left outer join proudboard b
+		on b.no = r.bno order by registerdate desc limit ${startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectCntPComments" resultType="int">
+  		select count(*) from proudreply;
+  	</select>
+  	
+  		<select id="selectQComments" resultType="com.dodam.domain.admin.Comments">
+		select ifnull(b.no, 0) as pno, b.title, r.replyer, r.contents as recontents, b.contents as pcontents,
+		r.replyer, r.no from qnareply r left outer join qna b
+		on b.no = r.bno limit ${startNum}, #{postPerPage}
+  	</select>
+  	
+  	<select id="selectCntQComments" resultType="int">
+  		select count(*) from qnareply;
+  	</select>
+  	
+  	<delete id="deletePComment">
+  		delete from proudreply where no = #{no}
+  	</delete>
+  	
+  	<delete id="deleteQComment">
+  		delete from qnareply where no = #{no}
+  	</delete>
+  	
+  	<delete id="deleteMComment">
+  		update missingboardreply set isdeleted = 'Y' where no = #{no}
+  	</delete>
   </mapper>

@@ -33,4 +33,9 @@
   	insert into missingboardreply(pno, replyer, contents, pid, depth, reforder, issecret) 
 	values(#{pno}, #{replyer}, #{contents}, #{pid}, #{depth}, #{reforder}, #{issecret})
   </insert>
+  
+  <update id="deleteReplyBypno">
+  	update missingboardreply set isdeleted = 'Y' where pno = #{pno}
+  </update>
+  
   </mapper>

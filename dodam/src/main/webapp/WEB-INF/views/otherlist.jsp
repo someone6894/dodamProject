@@ -49,7 +49,7 @@
 		<div><h2 style="display: inline-block;"><strong>찾고있는 동물들</strong></h2><div id="moreList" style="float:right;" onclick="location.href='/board/missing/list'">더보기</div></div>
 				<c:forEach var="otherboard" items="${otherList }">
 					<a href="/board/missing/detail?no=${otherboard.no}&userid=${loginSession.userid}" class="detailAnchor">
-						<div class="col-sm-3">
+						<div class="col-sm-3" style="height: 355px;">
 							<div class="img_Reccontainer" style="padding: 20px 10px;">
 								<c:choose>
 									<c:when test="${otherboard.img != ''}">

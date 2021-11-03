@@ -70,10 +70,11 @@ public interface MissingBoardDAO {
 	RecommendVo getMostBookAnimal(String userid);
 
 	// 랜덤으로 3개의 게시글 불러오기
-	List<MissingBoardListDTO> getRandomAnimal(int no);
+	List<MissingBoardListDTO> getRandomAnimal(Map<String, Object> map);
 
 	// 북마크를 많이 한 동물 종류로 게시글 불러오기
 	List<MissingBoardListDTO> getBookedAnimal(Map<String, Object> map);
+
 
 
 

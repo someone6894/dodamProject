@@ -53,7 +53,7 @@
         	<beans:ref bean="AuthInterceptor" />
 		</interceptor>
 		<interceptor>
-        	<!-- <mapping path="/admin/**" />  --> 
+        	<mapping path="/admin/**" />
         	<mapping path="/board/event/write" />
         	<mapping path="/board/notice/createBoard"/>
         	<beans:ref bean="AdminAuthInterceptor" />
