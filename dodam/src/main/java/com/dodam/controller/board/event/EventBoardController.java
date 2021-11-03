@@ -84,8 +84,8 @@ import com.dodam.service.board.event.EventBoardService;
 		 
 //		 게시물 목록 , 페이징 추가
 		@RequestMapping(value = "/listPage", method = RequestMethod.GET)
-		 public void getListpage(Model model, @RequestParam(value="num", required= false, defaultValue="1") int num) throws Exception {
-			 
+		 public void getListpage(Model model, 
+				 @RequestParam(value="num", required= false, defaultValue="1") int num) throws Exception {
 			 //게시물의 총갯수를 구하고, 한 페이지당 출력할 게시물 갯수 정하고, 
 			 //하단에 표시할 페이징 번호 갯수 구하고
 			 //현재 페이지를 기준으로 10개의 데이터를 출력함
@@ -106,34 +106,15 @@ import com.dodam.service.board.event.EventBoardService;
 			 list= service.listPage(displayPost, postNum);
 			 
 			 System.out.println("출력되는 전시회 : " +list);
-			 
 			 System.out.println("출력되는 페이지 수 : " + pageNum);
 			 
 			 model.addAttribute("list",list);
 			 model.addAttribute("pageNum", pageNum);
-			 
 		 }
 		 	@ResponseBody
 			@RequestMapping(value = "/listSearchPage", method = RequestMethod.POST) 
 			 public List<EventBoardVO> getYearSearch(@RequestParam(value="num", required= false, defaultValue="1") int num, 
 					  @RequestParam("year") String keyword) throws Exception {
-				 
-				 //게시물의 총갯수를 구하고, 한 페이지당 출력할 게시물 갯수 정하고, 
-				 //하단에 표시할 페이징 번호 갯수 구하고
-				 //현재 페이지를 기준으로 10개의 데이터를 출력함
-				 
-				 //게시물 총 갯수
-				 int count = service.count();
-				 
-				 //한 페이지에 출력할 게시물 갯수
-				 int postNum = 12;
-				 
-				 //하단 페이징 번호 [ (게시물 총 갯수 % 한페이지에 출력할 갯수) 의 올림]
-				 int pageNum = (int)Math.ceil((double)count/postNum);
-				 
-				 //출력할 게시물 //매개변수 num은 페이지 번호 
-				 int displayPost = (num -1) * postNum;
-				 
 				 
 				  
 				 

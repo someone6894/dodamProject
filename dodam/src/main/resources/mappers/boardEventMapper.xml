@@ -4,27 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dodam.mapper.boardEventMapper">
-
 <select id="list" resultType="com.dodam.domain.event.EventBoardVO">
   		select	
   			*
   		from eventboard
   	</select>
-  	
 	<!-- 게시물 작성 -->
 	<insert id="write" parameterType="com.dodam.domain.event.EventBoardVO">
 	 insert into
 	  eventboard (title, contents, admin, img)
 	   values(#{title}, #{contents}, #{admin}, #{img})
 	</insert>
-  	
   	<!-- 게시물 조회 -->
 	<select id="view" parameterType="int" resultType="com.dodam.domain.event.EventBoardVO">
 	 select 
 	 * from eventboard
 	 where no = #{no}   
 	</select>
-	
 	<!-- 게시물 수정 -->
 	<update id="modify" parameterType="com.dodam.domain.event.EventBoardVO" >
 		 update eventboard
@@ -34,19 +30,16 @@
 		   admin = #{admin}
 		  where no = #{no}
 	</update>
-  
 	  <!-- 게시물 삭제 -->
 	<delete id="delete" parameterType="int">
 		 delete
 		  from eventboard
 		 where no = #{no}
 	</delete>
-	
 		<!-- 게시물 총 갯수 -->
 	<select id="count" resultType="int">
 	 select count(no) from eventboard
 	</select>
-	
 		<!-- 게시물 목록 + 페이징 -->
 	<select id="listPage" parameterType="hashMap" resultType="com.dodam.domain.event.EventBoardVO">
 	 select
@@ -54,15 +47,12 @@
 	 from eventboard
 	 order by year desc
 	 limit #{displayPost}, #{postNum}
-	 
 	</select>
-	
 	<!-- 연도별 검색 + 페이징 -->
 	<select id="yearSearch" parameterType="String" resultType="com.dodam.domain.event.EventBoardVO">
 	select
 		* from eventboard 
 	where year like concat (#{keyword},'%')
-		order by year desc
-	 
+		order by year desc 
 	</select>
   </mapper>
